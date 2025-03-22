@@ -9,3 +9,5 @@
 /.vite/
 
 /dist/
+
+.env*
