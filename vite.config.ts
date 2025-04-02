@@ -15,7 +15,7 @@ export default defineConfig(async ({ mode }) => {
   Object.assign(process.env, loadEnv(mode, process.cwd(), 'ME_CONFIG_'))
 
   globalThis.config = getConfigDefault()
-  await connectClient(globalThis.config)
+  await connectClient()
 
   return {
     root: 'src',
