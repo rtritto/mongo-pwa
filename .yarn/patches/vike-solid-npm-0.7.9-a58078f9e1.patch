@@ -1,0 +1,29 @@
+diff --git a/dist/hooks/useData.d.ts b/dist/hooks/useData.d.ts
+index ccf9484ed04ac8b46622160f2496172dc5a9063a..6a4957be0baf49c6f16a5748bfd6bdc5b19f7f66 100644
+--- a/dist/hooks/useData.d.ts
++++ b/dist/hooks/useData.d.ts
+@@ -1,9 +1,10 @@
++import { SetStoreFunction } from 'solid-js/store';
+ /** Access `pageContext.data` from any SolidJS component
+  *
+  * See
+  * - https://vike.dev/data
+  * - https://vike.dev/pageContext-anywhere
+  */
+-declare function useData<Data>(): Data;
++declare function useData<Data>(): [Data, SetStoreFunction<Data>];
+ 
+ export { useData };
+diff --git a/dist/hooks/useData.js b/dist/hooks/useData.js
+index 1ac40d76b3b311c5b6871fe4ba23cfb906c8930c..3367e7623054e9d4961399e3a62e47eea807a691 100644
+--- a/dist/hooks/useData.js
++++ b/dist/hooks/useData.js
+@@ -17,7 +17,7 @@ function useData() {
+   createEffect(() => {
+     setData(pageContext?.data);
+   });
+-  return data;
++  return [data, setData];
+ }
+ 
+ export { useData };

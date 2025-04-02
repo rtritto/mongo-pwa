@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+@layer utilities {
+  .menu {
+    & :where(li) {
+      /* change column to default row */
+      flex-direction: row
+    }
+  }
+}

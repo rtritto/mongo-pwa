@@ -1,113 +1,64 @@
-import { Paper, SvgIcon, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@suid/material'
-import { useSetAtom } from 'solid-jotai'
-import { type Component, For } from 'solid-js'
+import { type Component, For, Show } from 'solid-js'
 
-import { EP_DB } from '../../configs/endpoints'
-import { Visibility } from '../../components/SvgIcons'
-import CustomLink from '../../components/common/CustomLink'
+import IconVisibility from '@/components/Icons/IconVisibility'
 import CreateDatabase from './CreateDatabase'
-import DeleteDatabase from './DeleteDatabase'
-import { selectedDatabaseState } from '../../components/store/globalAtoms'
-
-const TableCellStyle = {
-  // border: 1,
-  p: 0.5
-}
+// import DeleteDatabase from './DeleteDatabase'
 
 const ShowDatabases: Component<{
-  databases: string[]
+  databases: Mongo['databases']
   show: {
     create: boolean
     delete: boolean
   }
 }> = (props) => {
-  const setSelectedDatabaseState = useSetAtom(selectedDatabaseState)
-
   return (
-    <TableContainer component={Paper}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell sx={{ borderRight: 'none', p: 1.5 }}>
-              <Typography component='h6' variant='h6' sx={{ fontWeight: 'bold' }}>
-                Databases
-              </Typography>
-            </TableCell>
+    <div class="overflow-x-auto">
+      <table class="table">
+        <thead>
+          <tr>
+            {/* <TableCell sx={{ borderRight: 'none', p: 1.5 }}> */}
+            <th class="p-1.5"><h6><b>Databases</b></h6></th>
 
-            <TableCell sx={{ px: 1.5, borderLeft: 'none' }} align="right" colSpan={2}>
-              {props.show.create === true && <CreateDatabase />}
-            </TableCell>
-          </TableRow>
-        </TableHead>
+            {/* <TableCell sx={{ px: 1.5, borderLeft: 'none' }} align="right" colSpan={2}> */}
+            <th class="col-span-2 p-1.5 text-right">
+              <Show when={props.show.create}>
+                {/* TODO */}
+                <CreateDatabase />
+              </Show>
+            </th>
+          </tr>
+        </thead>
 
-        <TableBody>
+        <tbody>
           <For each={props.databases}>
-            {(database) => {
-              const encodedDatabase = encodeURIComponent(database)
-              const hrefView = `${EP_DB}/${encodedDatabase}`
-              return (
-                <TableRow>
-                  <TableCell sx={TableCellStyle}>
-                    <CustomLink
-                      LinkProps={{
-                        href: hrefView,
-                        style: {
-                          margin: '1px',
-                          // textDecoration: 'none'  // remove text underline  // missing, not necessary
-                        }
-                      }}
-                      ButtonProps={{
-                        startIcon: <SvgIcon><path d={Visibility} /></SvgIcon>,
-                        variant: 'contained',
-                        sx: {
-                          backgroundColor: 'rgb(86, 124, 86)',
-                          flexDirection: 'column',
-                          py: 0.5,
-                          textTransform: 'none',
-                          width: '100%'
-                        }
-                      }}
-                    >
-                      View
-                    </CustomLink>
-                  </TableCell>
+            {(database) => (
+              <tr>
+                <td class="p-0.5">
+                  <a class="btn" href={`/db/${encodeURIComponent(database)}`}>
+                    <IconVisibility />
 
-                  <TableCell sx={TableCellStyle} width="100%">
-                    <CustomLink
-                      LinkProps={{
-                        href: hrefView,
-                        style: {
-                          margin: '1px',
-                          // textDecoration: 'none'  // remove text underline
-                        }
-                      }}
-                      ButtonProps={{
-                        fullWidth: true,
-                        variant: "text",
-                        sx: {
-                          // py: 2,
-                          justifyContent: 'flex-start',
-                          textTransform: 'none' // remove uppercase
-                        },
-                        onClick: () => setSelectedDatabaseState(database)
-                      }}
-                    >
-                      <Typography component='h6' variant='h6'>{database}</Typography>
-                    </CustomLink>
-                  </TableCell>
+                    View
+                  </a>
+                </td>
 
-                  {props.show.delete === true && (
-                    <TableCell align="right" sx={TableCellStyle}>
+                <td class="p-0.5">
+                  <a class="btn" href={`/db/${encodeURIComponent(database)}`}>
+                    <h6>{database}</h6>
+                  </a>
+                </td>
+
+                {/* TODO */}
+                {/* <Show when={props.show.delete}>
+                    <td class="p-0.5 text-right">
                       <DeleteDatabase database={database} />
-                    </TableCell>
-                  )}
-                </TableRow>
-              )
-            }}
+                    </td>
+                  </Show> */}
+              </tr>
+            )}
           </For>
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </tbody>
+      </table>
+    </div>
   )
 }
 

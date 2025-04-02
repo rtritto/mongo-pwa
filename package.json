@@ -32,7 +32,7 @@
     "typescript-eslint": "^8.26.1",
     "vike": "^0.4.225",
     "vike-node": "^0.3.7",
-    "vike-solid": "^0.7.9",
+    "vike-solid": "patch:vike-solid@npm%3A0.7.9#~/.yarn/patches/vike-solid-npm-0.7.9-a58078f9e1.patch",
     "vite": "^6.2.2",
     "vite-plugin-pwa": "^0.21.1"
   },

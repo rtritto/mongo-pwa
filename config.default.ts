@@ -7,7 +7,7 @@ function getBlueMixConfig() {
   const dbLabel = 'mongodb-2.4'
   const env = JSON.parse(process.env.VCAP_SERVICES!)
   if (env[dbLabel]) {
-    return env[dbLabel][0].credentials
+    return env[dbLabel][0].credentials as string
   }
 }
 
@@ -47,7 +47,7 @@ const getConfigDefault = () => ({
     // Setting the connection string will only give access to that database
     // to see more databases you need to set mongodb.admin to true
     // If a connection string options such as server/port/etc are ignored
-    connectionString: process.env.VCAP_SERVICES ? getBlueMixConfig() : process.env.ME_CONFIG_MONGODB_URL,
+    connectionString: process.env.VCAP_SERVICES ? getBlueMixConfig()! : process.env.ME_CONFIG_MONGODB_URL!,
 
     /** @type {import('mongodb').MongoClientOptions} */
     connectionOptions: {
@@ -81,6 +81,9 @@ const getConfigDefault = () => ({
     // if admin is true, the auth list below will be ignored
     // if admin is true, you will need to enter an admin username/password below (if it is needed)
     admin: getBoolean(process.env.ME_CONFIG_MONGODB_ENABLE_ADMIN),
+
+    // This flag enhance AWS DocumentDB compatibility
+    awsDocumentDb: getBoolean(process.env.ME_CONFIG_MONGODB_AWS_DOCUMENTDB, false),
 
     // whitelist: hide all databases except the ones in this list  (empty list for no whitelist)
     whitelist: [],
@@ -194,7 +197,9 @@ const getConfigDefault = () => ({
 })
 
 export type Config = ReturnType<typeof getConfigDefault>
-export type MongoDb = Config['mongodb']
+export type MongoDb = Config['mongodb'] & {
+  connectionName?: string
+}
 
 // global.config = configDefault
 // static load at runtime doesn't work with Vite because env var aren't loaded by default;

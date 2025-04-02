@@ -14,9 +14,9 @@ export default defineConfig(async ({ mode }) => {
   // Add ME_CONFIG_ env vars to process.env
   Object.assign(process.env, loadEnv(mode, process.cwd(), 'ME_CONFIG_'))
 
-  global.config = getConfigDefault()
-  global.mongo = getMongo()
-  await global.mongo.connect(global.config)
+  globalThis.config = getConfigDefault()
+  globalThis.mongo = getMongo()
+  await globalThis.mongo.connect(globalThis.config)
 
   return {
     root: 'src',

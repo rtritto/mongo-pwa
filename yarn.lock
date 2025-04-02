@@ -5755,7 +5755,7 @@ __metadata:
     typescript-eslint: "npm:^8.26.1"
     vike: "npm:^0.4.225"
     vike-node: "npm:^0.3.7"
-    vike-solid: "npm:^0.7.9"
+    vike-solid: "patch:vike-solid@npm%3A0.7.9#~/.yarn/patches/vike-solid-npm-0.7.9-a58078f9e1.patch"
     vite: "npm:^6.2.2"
     vite-plugin-pwa: "npm:^0.21.1"
   languageName: unknown
@@ -7748,7 +7748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike-solid@npm:^0.7.9":
+"vike-solid@npm:0.7.9":
   version: 0.7.9
   resolution: "vike-solid@npm:0.7.9"
   dependencies:
@@ -7759,6 +7759,20 @@ __metadata:
     vike: ">=0.4.195"
     vite: ">=5.0.0"
   checksum: 10c0/b768f6b0f6e67237ff095c6c4bac58881d50c62af03eef6f45fc249585536ce26f9d0b66e1e4ac1da4afcdd259ef1fa399902f6ad257b76f2ee7013988a8a436
+  languageName: node
+  linkType: hard
+
+"vike-solid@patch:vike-solid@npm%3A0.7.9#~/.yarn/patches/vike-solid-npm-0.7.9-a58078f9e1.patch":
+  version: 0.7.9
+  resolution: "vike-solid@patch:vike-solid@npm%3A0.7.9#~/.yarn/patches/vike-solid-npm-0.7.9-a58078f9e1.patch::version=0.7.9&hash=db8dc0"
+  dependencies:
+    isbot-fast: "npm:^1.2.0"
+    vite-plugin-solid: "npm:^2.11.6"
+  peerDependencies:
+    solid-js: ^1.8.7
+    vike: ">=0.4.195"
+    vite: ">=5.0.0"
+  checksum: 10c0/d28f97228aabcbf6ca59fb8e313b8acab6f08cf05fecd90cd13c2e610568f013d02fcd3e1b70b29da943fa9ba0c427cfeb9f2cfedc033fe821beb0ab79e71845
   languageName: node
   linkType: hard
 

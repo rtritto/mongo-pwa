@@ -4,7 +4,7 @@ import type { PrimitiveAtom } from 'jotai'
 import { useAtom } from 'solid-jotai'
 import { type Component, For, type JSXElement } from 'solid-js'
 
-import CustomLink from './CustomLink'
+import CustomLink from './Link'
 
 const SelectLink: Component<{
   baseUrl: string

@@ -110,12 +110,7 @@ interface Index extends MongoDocument {
 
 type Indexes = Index[]
 
-type Fields = {
-  [field: string]: {
-    label: string
-    value: string | undefined
-  }
-}
+type ServerStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapServerStats']>
 
 // type of connections<connectionInfo> or clients<{info}>
 type ClientInfo = {
@@ -143,9 +138,9 @@ type Connections = {
 // type Mongo = import('middlewares/db.mts').Mongo
 type Mongo = {
   clients: ClientInfo[]
-  collections: Collections
   connections: Connections
   databases: string[]
+  collections: Collections
   // gridFSBuckets?  TODO
   mainClient: ClientInfo | null
   adminDb: ClientInfo['adminDb'] | null

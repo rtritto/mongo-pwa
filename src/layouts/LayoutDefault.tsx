@@ -1,58 +1,18 @@
 import './styles.css'
 import './tailwind.css'
 
-import type { JSX } from 'solid-js'
+import type { Component, JSX } from 'solid-js'
 
-import { Link } from '@/components/Link'
+import NavBar from './NavBar'
 
-function Sidebar(props: { children: JSX.Element }) {
+export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
   return (
-    <div
-      id="sidebar"
-      style={{
-        padding: '20px',
-        'flex-shrink': 0,
-        display: 'flex',
-        'flex-direction': 'column',
-        'line-height': '1.8em',
-        'border-right': '2px solid #eee'
-      }}
-    >
-      {props.children}
-    </div>
-  )
-}
+    <div class="flex flex-col min-h-screen">
+      <NavBar />
 
-function Content(props: { children: JSX.Element }) {
-  return (
-    <div id="page-container">
-      <div
-        id="page-content"
-        style={{
-          padding: '20px',
-          'padding-bottom': '50px',
-          'min-height': '100vh'
-        }}
-      >
+      <main class="flex justify-center">
         {props.children}
-      </div>
-    </div>
-  )
-}
-
-export function LayoutDefault(props: { children?: JSX.Element }) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        'max-width': '900px',
-        margin: 'auto'
-      }}
-    >
-      <Sidebar>
-        <Link href="/">Welcome</Link>
-      </Sidebar>
-      <Content>{props.children}</Content>
+      </main>
     </div>
   )
 }

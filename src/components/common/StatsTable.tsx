@@ -1,54 +1,42 @@
 import type { Component } from 'solid-js'
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@suid/material'
 
 const getRowsComponent = (fields: Fields) => {
   const outRaw = []
   for (const cell in fields) {
     outRaw.push([
-      <TableCell>
-        <strong>{fields[cell].label}</strong>
-      </TableCell>,
-      <TableCell>
-        {fields[cell].value}
-      </TableCell>
+      <td><strong>{fields[cell].label}</strong></td>,
+      <td>{fields[cell].value}</td>
     ])
   }
   const out = []
-  for (let index = 0, length_ = outRaw.length; index < length_; index += 2) {
+  for (let index = 0, len = outRaw.length; index < len; index += 2) {
     const tableRow = [
       ...outRaw[index]
     ]
-    if (index + 1 < length_) {
+    if (index + 1 < len) {
       tableRow.push(...outRaw[index + 1])
     }
-    out.push(
-      <TableRow>
-        {tableRow}
-      </TableRow>
-    )
+    out.push(<tr>{tableRow}</tr>)
   }
   return out
 }
 
-const StatsTable: Component<{ label: string, fields: Fields }> = (props) => {
+const StatsTable: Component<{ label: string, fields: ServerStats }> = (props) => {
   return (
-    <TableContainer component={Paper}>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell colSpan={4}>
-              <Typography component='h6' variant='h6' sx={{ fontWeight: 'bold', pt: 0.5 }}>
-                {props.label}
-              </Typography>
-            </TableCell>
-          </TableRow>
-        </TableHead>
+    <div class="overflow-x-auto">
+      <table class="table table-zebra">
+        <thead>
+          <tr>
+            <td colSpan={4}>
+              {/* <h6 component='h6' variant='h6' sx={{ fontWeight: 'bold', pt: 0.5 }}> */}
+              <h6><b>{props.label}</b></h6>
+            </td>
+          </tr>
+        </thead>
 
-        <TableBody>
-          {getRowsComponent(props.fields)}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        <tbody>{getRowsComponent(props.fields)}</tbody>
+      </table>
+    </div>
   )
 }
 

@@ -16,9 +16,9 @@ let mongoClient: MongoClient
 // connectionData = 
 const getMongo = () => ({
   clients: [] as ClientInfo[],
-  collections: {} as Collections,
   connections: {} as Connections,
   databases: [] as string[],
+  collections: {} as Collections,
   mainClient: null as ClientInfo | null,
   adminDb: null as ClientInfo['adminDb'] | null,
   // update the collections list

@@ -3,7 +3,7 @@ import { bytesToSize, convertBytes } from './mapUtils'
 const EMPTY_COLLECTION_SIZE = 4096
 
 // TODO add global lock time stats and replica set stats
-export const mapServerStatus = (serverStatus: ServerStatus) => ({
+export const mapServerStats = (serverStatus: ServerStatus) => ({
   dbHost: {
     label: 'Hostname',
     value: serverStatus.host
@@ -68,7 +68,7 @@ export const mapServerStatus = (serverStatus: ServerStatus) => ({
       }
     }
   },
-  /* deprecated? */ ...'backgroundFlushing' in serverStatus && {
+  /* (?) deprecated */ ...'backgroundFlushing' in serverStatus && {
     diskFlushes: {
       label: 'Disk Flushes',
       value: serverStatus.backgroundFlushing.flushes
@@ -119,7 +119,7 @@ export const mapDatabaseStats = (dbStats: DbStats) => ({
     label: 'Collections (incl. system.namespaces)',
     value: dbStats.collections
   },
-  /* deprecated? */ ...'dataFileVersion' in dbStats && {
+  /* (?) deprecated */ ...'dataFileVersion' in dbStats && {
     dataFileVersion: {
       label: 'Data File Version',
       value: `${dbStats.dataFileVersion.major}.${dbStats.dataFileVersion.minor}`
@@ -129,13 +129,13 @@ export const mapDatabaseStats = (dbStats: DbStats) => ({
     label: 'Data Size',
     value: bytesToSize(dbStats.dataSize)
   },
-  /* deprecated? */ ...'extentFreeList' in dbStats && {
+  /* (?) deprecated */ ...'extentFreeList' in dbStats && {
     extentFreeListNum: {
       label: 'Extents Free List',
       value: dbStats.extentFreeList.num
     }
   },
-  /* deprecated? */ ...'fileSize' in dbStats && {
+  /* (?) deprecated */ ...'fileSize' in dbStats && {
     fileSize: {
       label: 'File Size',
       value: bytesToSize(dbStats.fileSize)
@@ -150,7 +150,7 @@ export const mapDatabaseStats = (dbStats: DbStats) => ({
     original: dbStats.indexSize,
     value: bytesToSize(dbStats.indexSize)
   },
-  /* deprecated? */ ...'numExtents' in dbStats && {
+  /* (?) deprecated */ ...'numExtents' in dbStats && {
     numExtents: {
       label: 'Extents #',
       value: dbStats.numExtents.toString()
@@ -218,13 +218,13 @@ export const mapCollectionStats = (collStats: CollStats) => ({
     label: 'Total index size',
     value: convertBytes(collStats.totalIndexSize)
   },
-  /* deprecated? */ ...'paddingFactor' in collStats && {
+  /* (?) deprecated */ ...'paddingFactor' in collStats && {
     paddingFactor: {
       label: 'Padding factor',
       value: collStats.paddingFactor
     }
   },
-  /* deprecated? */ ...'numExtents' in collStats && {
+  /* (?) deprecated */ ...'numExtents' in collStats && {
     numExtents: {
       label: 'Extents',
       value: collStats.numExtents
