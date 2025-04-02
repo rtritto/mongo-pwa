@@ -40,13 +40,13 @@ export const isValidDatabaseName = (name = '') => {
 }
 
 export const checkDatabase = (dbName: string) => {
-  if (!(dbName in global.mongo.connections)) {
+  if (!(dbName in globalThis.mongo.connections)) {
     throw new Error(`Database "${dbName}" not found!`)
   }
 }
 
 export const checkCollection = (dbName: string, collectionName: string) => {
-  if (!global.mongo.collections[dbName].includes(collectionName)) {
+  if (!globalThis.mongo.collections[dbName].includes(collectionName)) {
     throw new Error(`Collection "${collectionName}" not found!`)
   }
 }
@@ -59,8 +59,8 @@ export const checkDocument = (document: string) => {
   }
 }
 
-export const checkOption = (option: string, value: any) => {
-  if (global.config.options[option] === value) {
+export const checkOption = (option: keyof typeof globalThis.config.options, value: unknown) => {
+  if (globalThis.config.options[option] === value) {
     throw new Error(`Error: config.options.${option} is set to ${value}`)
   }
 }

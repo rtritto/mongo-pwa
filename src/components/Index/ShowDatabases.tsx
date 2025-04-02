@@ -2,7 +2,7 @@ import { type Component, For, Show } from 'solid-js'
 
 import IconVisibility from '@/components/Icons/IconVisibility'
 import CreateDatabase from './CreateDatabase'
-// import DeleteDatabase from './DeleteDatabase'
+import DeleteDatabase from './DeleteDatabase'
 
 const ShowDatabases: Component<{
   databases: Mongo['databases']
@@ -47,12 +47,11 @@ const ShowDatabases: Component<{
                   </a>
                 </td>
 
-                {/* TODO */}
-                {/* <Show when={props.show.delete}>
-                    <td class="p-0.5 text-right">
-                      <DeleteDatabase database={database} />
-                    </td>
-                  </Show> */}
+                <Show when={props.show.delete}>
+                  <td class="p-0.5 text-right">
+                    <DeleteDatabase database={database} />
+                  </td>
+                </Show>
               </tr>
             )}
           </For>

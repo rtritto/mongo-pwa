@@ -1,11 +1,11 @@
 import type { Component } from 'solid-js'
 
-const getRowsComponent = (fields: Fields) => {
+const getRowsComponent = (fields: ServerStats) => {
   const outRaw = []
   for (const cell in fields) {
     outRaw.push([
-      <td><strong>{fields[cell].label}</strong></td>,
-      <td>{fields[cell].value}</td>
+      <td><strong>{fields[cell as keyof ServerStats]!.label}</strong></td>,
+      <td>{fields[cell as keyof ServerStats]!.value}</td>
     ])
   }
   const out = []

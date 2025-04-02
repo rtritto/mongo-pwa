@@ -1,45 +1,47 @@
-import { useSetAtom } from 'solid-jotai'
-import { Component } from 'solid-js'
+import type { Component } from 'solid-js'
+import { useData } from 'vike-solid/useData'
 
-import { EP_API_DATABASE } from '../../configs/endpoints'
-import DeleteDialog from '../../components/common/DeleteDialog'
-import { databasesState, messageErrorState, messageSuccessState } from '../../components/store/globalAtoms'
+// import DeleteDialog from '@/components/common/DeleteDialog'
+import { HEADERS_JSON } from '@/utils/constants'
 
 const tooltipTitle = 'Do you want to delete this database? All collections and documents will be deleted.'
 
 const DeleteDatabase: Component<{ database: string }> = (props) => {
-  const setDatabases = useSetAtom(databasesState)
-  const setSuccess = useSetAtom(messageSuccessState)
-  const setError = useSetAtom(messageErrorState)
+  const [data, setData] = useData<DataIndex>()
+  // TODO handle success and error messages
 
   const handleDelete = async (database: string) => {
-    await fetch(EP_API_DATABASE(database), {
-      method: 'DELETE'
+    await fetch('/api/databaseDelete', {
+      method: 'POST',
+      headers: HEADERS_JSON,
+      body: JSON.stringify({
+        database
+      })
     }).then(async (res) => {
       if (res.ok === true) {
         // Remove database from global database to update viewing databases
-        setDatabases((databases) => {
-          const indexToRemove = databases.indexOf(database)
-          return [
-            ...databases.slice(0, indexToRemove),
-            ...databases.slice(indexToRemove + 1)
-          ]
-        })
-        setSuccess(`Database "${database}" deleted!`)
+        const indexToRemove = data.databases.indexOf(database)
+        setData('databases', [
+          ...data.databases.slice(0, indexToRemove),
+          ...data.databases.slice(indexToRemove + 1)
+        ])
+        // setSuccess(`Database "${database}" deleted!`)
       } else {
-        const { error } = await res.json()
-        setError(error)
+        // const { error } = await res.json()
+        // setError(error)
       }
-    }).catch((error) => { setError(error.message) })
+    })
+    // .catch((error) => { setError(error.message) })
   }
 
   return (
-    <DeleteDialog
-      value={props.database}
-      entity="database"
-      tooltipTitle={tooltipTitle}
-      handleDelete={() => handleDelete(props.database)}
-    />
+    <>a</>
+    // <DeleteDialog
+    //   value={props.database}
+    //   entity="database"
+    //   tooltipTitle={tooltipTitle}
+    //   handleDelete={() => handleDelete(props.database)}
+    // />
   )
 }
 

@@ -1,4 +1,4 @@
-import { BSON, Document, ObjectId } from 'mongodb'
+import { BSON, ObjectId } from 'mongodb'
 import parser, { toJSString } from 'mongodb-query-parser'
 
 export const toBSON = parser
@@ -25,10 +25,10 @@ export const parseObjectId = (string: string) => {
 }
 
 // Convert BSON documents to string
-export const toString = (doc: Document) => {
+export const toString = (doc: BSON.Document) => {
   return toJSString(doc, '  ')
 }
 
-export const toJsonString = (doc: Document) => {
+export const toJsonString = (doc: BSON.Document) => {
   return EJSON.stringify(EJSON.serialize(doc))
 }

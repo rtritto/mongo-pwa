@@ -8,15 +8,14 @@ import { defineConfig, loadEnv, type UserConfig } from 'vite'
 // import { VitePWA } from 'vite-plugin-pwa'
 
 import getConfigDefault from './config.default'
-import getMongo from './src/server/db'
+import { connectClient } from './src/server/db'
 
 export default defineConfig(async ({ mode }) => {
   // Add ME_CONFIG_ env vars to process.env
   Object.assign(process.env, loadEnv(mode, process.cwd(), 'ME_CONFIG_'))
 
   globalThis.config = getConfigDefault()
-  globalThis.mongo = getMongo()
-  await globalThis.mongo.connect(globalThis.config)
+  await connectClient(globalThis.config)
 
   return {
     root: 'src',

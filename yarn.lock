@@ -1766,6 +1766,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mongodb-js/shell-bson-parser@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@mongodb-js/shell-bson-parser@npm:1.2.1"
+  dependencies:
+    acorn: "npm:^8.1.0"
+  peerDependencies:
+    bson: ^4.6.3 || ^5 || ^6
+  checksum: 10c0/28adb866a2b79cc1ba91934f63ff96b209b6dc2ac9ed81a8bdf0fe81343217a14261ddfd89d07315ba0b89568c8a02df6aa2d68a61dd75b24a088589a2209a17
+  languageName: node
+  linkType: hard
+
 "@nitedani/shrink-ray-current@npm:^4.3.0":
   version: 4.3.0
   resolution: "@nitedani/shrink-ray-current@npm:4.3.0"
@@ -2737,7 +2748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.0.0, acorn@npm:^8.14.0, acorn@npm:^8.6.0, acorn@npm:^8.8.2":
+"acorn@npm:^8.0.0, acorn@npm:^8.1.0, acorn@npm:^8.14.0, acorn@npm:^8.6.0, acorn@npm:^8.8.2":
   version: 8.14.1
   resolution: "acorn@npm:8.14.1"
   bin:
@@ -5129,6 +5140,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"javascript-stringify@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "javascript-stringify@npm:2.1.0"
+  checksum: 10c0/374e74ebff29b94de78da39daa6e530999c58a145aeb293dc21180c4584459b14d9e5721d9bc6ed4eba319c437ef0145c157c946b70ecddcff6668682a002bcc
+  languageName: node
+  linkType: hard
+
 "jiti@npm:^2.4.2":
   version: 2.4.2
   resolution: "jiti@npm:2.4.2"
@@ -5437,7 +5455,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.15, lodash@npm:^4.17.20":
+"lodash@npm:^4.17.15, lodash@npm:^4.17.20, lodash@npm:^4.17.21":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
@@ -5749,6 +5767,7 @@ __metadata:
     eslint-plugin-unicorn: "npm:^57.0.0"
     hono: "npm:^4.7.4"
     mongodb: "npm:^6.15.0"
+    mongodb-query-parser: "npm:^4.3.1"
     solid-js: "npm:^1.9.5"
     tailwindcss: "npm:^4.0.14"
     typescript: "npm:^5.8.2"
@@ -5768,6 +5787,20 @@ __metadata:
     "@types/whatwg-url": "npm:^11.0.2"
     whatwg-url: "npm:^14.1.0 || ^13.0.0"
   checksum: 10c0/8b7ac99634f167dbe690e90fa10528e3ffc029faf2feabf36efb84299a04831130b3dba114dbe132f05a8a38022976904b625976996a4534bca4368e8fa5ba33
+  languageName: node
+  linkType: hard
+
+"mongodb-query-parser@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "mongodb-query-parser@npm:4.3.1"
+  dependencies:
+    "@mongodb-js/shell-bson-parser": "npm:^1.2.1"
+    debug: "npm:^4.3.4"
+    javascript-stringify: "npm:^2.1.0"
+    lodash: "npm:^4.17.21"
+  peerDependencies:
+    bson: ^4.6.3 || ^5 || ^6
+  checksum: 10c0/66d812e62e99b6e65b4ef8f8d0f87f568b07dbcbdec0517351346b3eb0d380319fa537a342ff1b6625d76dc8c8100b25ab41422bcb398f96cff0847340a2fe96
   languageName: node
   linkType: hard
 

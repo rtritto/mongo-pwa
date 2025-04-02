@@ -1,12 +1,11 @@
 import {
-  Button, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, SvgIcon, TextField
-  /* TODO , Tooltip*/
+  Button, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, TextField
 } from '@suid/material'
 import type OutlinedInputProps from '@suid/material/OutlinedInput/OutlinedInputProps'
 import { type Component, createSignal } from 'solid-js'
 
-import { Delete } from '../SvgIcons'
 import CustomDialog from './CustomDialog'
+import IconDelete from '@/components/Icons/IconDelete'
 
 const DeleteDialog: Component<{
   value: string
@@ -26,25 +25,15 @@ const DeleteDialog: Component<{
 
   return (
     <>
-      {/* <Tooltip title={props.tooltipTitle}> */}
-      <Button
-        onClick={handleOpen}
-        startIcon={<SvgIcon><path d={Delete} /></SvgIcon>}
-        value={props.value}
-        variant="contained"
-        sx={{
-          backgroundColor: 'rgb(108, 49, 47)',
-          flexDirection: 'column',
-          // px: 4,
-          py: 0.5,
-          textTransform: 'none'
-        }}
-      >
-        Del
-      </Button>
-      {/* </Tooltip> */}
+      <div class="tooltip" data-tip={props.tooltipTitle}>
+        <button class="btn bg-red-700 py-0.5" onClick={handleOpen}>
+          <IconDelete />
 
-      {open() === true && (
+          Del
+        </button>
+      </div>
+
+      {open() && (
         <CustomDialog disableBackdropClick disableEscapeKeyDown open={open()} onClose={handleClose}>
           <DialogTitle>
             Delete {props.entity}

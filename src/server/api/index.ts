@@ -1,5 +1,5 @@
-import { userRetrieve } from './userRetrieve'
+import databaseDelete from './databaseDelete'
 
 export default {
-  userRetrieve
+  databaseDelete
 }

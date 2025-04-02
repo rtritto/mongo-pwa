@@ -137,6 +137,7 @@ type Connections = {
 
 // type Mongo = import('middlewares/db.mts').Mongo
 type Mongo = {
+  mongoClient: MongoClient
   clients: ClientInfo[]
   connections: Connections
   databases: string[]
