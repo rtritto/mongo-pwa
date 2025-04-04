@@ -7,15 +7,9 @@ import { defineConfig, loadEnv, type UserConfig } from 'vite'
 // TODO Enable PWA
 // import { VitePWA } from 'vite-plugin-pwa'
 
-import getConfigDefault from './config.default'
-import { connectClient } from './src/server/db'
-
 export default defineConfig(async ({ mode }) => {
   // Add ME_CONFIG_ env vars to process.env
   Object.assign(process.env, loadEnv(mode, process.cwd(), 'ME_CONFIG_'))
-
-  globalThis.config = getConfigDefault()
-  await connectClient()
 
   return {
     root: 'src',

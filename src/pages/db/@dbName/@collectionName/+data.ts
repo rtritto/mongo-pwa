@@ -1,5 +1,6 @@
 import type { DataSync, PageContext } from 'vike/types'
 
+import { connectClient } from '@/server/db'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
 
 export const data: DataSync<DataCollection> = async (pageContext: PageContext) => {
@@ -13,6 +14,7 @@ export const data: DataSync<DataCollection> = async (pageContext: PageContext) =
   // if ('error' in validationCollRes) {
   //   throw new Error(validationCollRes.error)
   // }
+  await connectClient()
   const { config, mongo } = globalThis
 
   const _data = {

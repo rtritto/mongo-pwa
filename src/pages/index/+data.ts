@@ -1,8 +1,10 @@
 import type { DataAsync } from 'vike/types'
 
+import { connectClient } from '@/server/db'
 import { mapServerStats } from '@/utils/mappers/mapInfo'
 
 export const data: DataAsync<DataIndex> = async () => {
+  await connectClient()
   const { config, mongo } = globalThis
 
   const _data = {

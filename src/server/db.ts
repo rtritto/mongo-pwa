@@ -1,6 +1,6 @@
 import { type Db, MongoClient } from 'mongodb'
 
-import type { MongoDb } from '../../config.default'
+import getConfigDefault, { type MongoDb } from '../../config.default'
 
 /**
 * Global is used here to maintain a cached connection across hot reloads
@@ -81,8 +81,9 @@ export async function connectClient() {
     await Promise.all(
       Object.values(globalThis.mongo.connections).map((connection) => updateCollections(connection))
     )
-    return globalThis.mongo.mongoClient
+    // return globalThis.mongo.mongoClient
   }
+  globalThis.config = getConfigDefault()
 
   // database connections
   const connections = Array.isArray(globalThis.config.mongodb) ? globalThis.config.mongodb : [globalThis.config.mongodb]
@@ -111,5 +112,5 @@ export async function connectClient() {
   } as Mongo
   await updateDatabases()
 
-  return globalThis.mongo.mongoClient
+  // return globalThis.mongo.mongoClient
 }

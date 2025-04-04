@@ -1,5 +1,6 @@
 import type { DataAsync, PageContext } from 'vike/types'
 
+import { connectClient } from '@/server/db'
 import { mapDatabaseStats } from '@/utils/mappers/mapInfo'
 
 // TODO
@@ -39,6 +40,7 @@ export const data: DataAsync<DataDB> = async (pageContext: PageContext) => {
   // if ('error' in validationRes) {
   //   throw new Error(validationRes.error)
   // }
+  await connectClient()
   const { config, mongo } = globalThis
 
   const _data = {
