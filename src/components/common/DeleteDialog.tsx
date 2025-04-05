@@ -13,17 +13,15 @@ const DeleteDialog: Component<{
 
   return (
     <div>
-      <div class="tooltip" data-tip="Delete">
-        <button class="btn bg-red-700 py-0.5" onClick={() => {
-          dialogRef.showModal()
-          // Reset
-          setInput('')
-        }}>
-          <IconDelete />
+      <button class="btn bg-red-700 py-0.5" onClick={() => {
+        dialogRef.showModal()
+        // Reset
+        setInput('')
+      }}>
+        <IconDelete />
 
-          Del
-        </button>
-      </div>
+        Delete
+      </button>
 
       <dialog id="modal_drawer" class="modal" ref={dialogRef}>
         <div class="modal-box">

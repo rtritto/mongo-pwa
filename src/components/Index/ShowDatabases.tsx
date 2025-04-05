@@ -34,7 +34,7 @@ const ShowDatabases: Component<{
             {(database) => (
               <tr>
                 <td class="p-0.5">
-                  <a class="btn" href={`/db/${encodeURIComponent(database)}`}>
+                  <a class="btn bg-green-600" href={`/db/${encodeURIComponent(database)}`}>
                     <IconVisibility />
 
                     View
