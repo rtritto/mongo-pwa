@@ -1,96 +1,56 @@
-import {
-  Button, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, TextField
-} from '@suid/material'
-import type OutlinedInputProps from '@suid/material/OutlinedInput/OutlinedInputProps'
 import { type Component, createSignal } from 'solid-js'
 
-import CustomDialog from './CustomDialog'
 import IconDelete from '@/components/Icons/IconDelete'
 
 const DeleteDialog: Component<{
+  title: string
   value: string
-  entity: string
-  tooltipTitle: string
+  message: string
   handleDelete: (input: string) => void
 }> = (props) => {
-  const [open, setOpen] = createSignal(false)
+  let dialogRef!: HTMLDialogElement
   const [input, setInput] = createSignal('')
 
-  const handleOpen = () => { setOpen(true) }
-  const handleClose = () => { setOpen(false) }
-
-  const handleOnChange = (event: OutlinedInputProps['onChange']) => {
-    setInput(event.currentTarget.value)
-  }
-
   return (
-    <>
-      <div class="tooltip" data-tip={props.tooltipTitle}>
-        <button class="btn bg-red-700 py-0.5" onClick={handleOpen}>
+    <div>
+      <div class="tooltip" data-tip="Delete">
+        <button class="btn bg-red-700 py-0.5" onClick={() => {
+          dialogRef.showModal()
+          // Reset
+          setInput('')
+        }}>
           <IconDelete />
 
           Del
         </button>
       </div>
 
-      {open() && (
-        <CustomDialog disableBackdropClick disableEscapeKeyDown open={open()} onClose={handleClose}>
-          <DialogTitle>
-            Delete {props.entity}
-          </DialogTitle>
+      <dialog id="modal_drawer" class="modal" ref={dialogRef}>
+        <div class="modal-box">
+          <h3 class="text-lg font-bold">{props.title} <b>"{props.value}"</b></h3>
 
-          <Divider />
+          <form onSubmit={async (event) => {
+            event.preventDefault()  // Disable page reload after submit
+          }}>
+            <p class="text-sm">{props.message}</p>
 
-          <DialogContent>
-            <DialogContentText>
-              You are about to delete whole <strong>{props.value}</strong> {props.entity}.
-            </DialogContentText>
+            <input type="text" placeholder={`Type "${props.value}"`} class="input m-3 w-full" value={input()} onKeyUp={(event) => {
+              setInput(event.currentTarget.value.trim())
+            }} />
 
-            <TextField
-              autoFocus
-              fullWidth
-              margin="dense"
-              onChange={handleOnChange}
-              placeholder={props.value}
-              size="small"
-              type="string"
-              value={input()}
-              variant="outlined"
-              sx={{ pl: 0.5 }}
-            />
-          </DialogContent>
-
-          <Divider />
-
-          <DialogActions>
-            <Button
-              id="delete"
-              onClick={() => {
-                props.handleDelete(input())
-                handleClose()
-                setInput('')  // Reset value
-              }}
-              disabled={input() !== props.value}
-              size="small"
-              value={props.value}
-              variant="contained"
-              sx={{ backgroundColor: 'rgb(108, 49, 47)', m: 1 }}
-            >
+            <button type="submit" class="btn bg-red-700 py-0.5" onClick={() => {
+              props.handleDelete(input())
+            }} disabled={input() !== props.value}>
               Delete
-            </Button>
+            </button>
+          </form>
+        </div>
 
-            <Button
-              onClick={handleClose}
-              size="small"
-              variant="contained"
-              sx={{ m: 1 }}
-            >
-              Cancel
-            </Button>
-          </DialogActions>
-        </CustomDialog>
-      )}
-    </>
+        <form method="dialog" class="modal-backdrop">
+          <button>Close</button>
+        </form>
+      </dialog>
+    </div>
   )
 }
 

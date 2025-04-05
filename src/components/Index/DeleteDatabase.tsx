@@ -1,10 +1,8 @@
 import type { Component } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
-// import DeleteDialog from '@/components/common/DeleteDialog'
+import DeleteDialog from '@/components/common/DeleteDialog'
 import { HEADERS_JSON } from '@/utils/constants'
-
-const tooltipTitle = 'Do you want to delete this database? All collections and documents will be deleted.'
 
 const DeleteDatabase: Component<{ database: string }> = (props) => {
   const [data, setData] = useData<DataIndex>()
@@ -35,13 +33,12 @@ const DeleteDatabase: Component<{ database: string }> = (props) => {
   }
 
   return (
-    <>a</>
-    // <DeleteDialog
-    //   value={props.database}
-    //   entity="database"
-    //   tooltipTitle={tooltipTitle}
-    //   handleDelete={() => handleDelete(props.database)}
-    // />
+    <DeleteDialog
+      title="Delete Database"
+      value={props.database}
+      message="Be careful! You are about to delete the database (all collections and documents will be deleted)"
+      handleDelete={() => handleDelete(props.database)}
+    />
   )
 }
 
