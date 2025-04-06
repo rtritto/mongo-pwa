@@ -2,18 +2,18 @@ import type { DataSync, PageContext } from 'vike/types'
 
 import { connectClient } from '@/server/db'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
+import { isValidCollectionName, isValidDatabaseName } from '@/utils/validations'
 
 export const data: DataSync<DataCollection> = async (pageContext: PageContext) => {
   const { dbName, collectionName } = pageContext.routeParams
-  // TODO
-  // const validationDbRes = isValidDatabaseName(dbName)
-  // if ('error' in validationDbRes) {
-  //   throw new Error(validationDbRes.error)
-  // }
-  // const validationCollRes = isValidCollectionName(collectionName)
-  // if ('error' in validationCollRes) {
-  //   throw new Error(validationCollRes.error)
-  // }
+  const validationDbRes = isValidDatabaseName(dbName)
+  if (validationDbRes.error) {
+    throw new Error(validationDbRes.error)
+  }
+  const validationCollRes = isValidCollectionName(collectionName)
+  if (validationCollRes.error) {
+    throw new Error(validationCollRes.error)
+  }
   await connectClient()
   const { config, mongo } = globalThis
 

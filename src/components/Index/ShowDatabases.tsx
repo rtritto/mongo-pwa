@@ -16,15 +16,16 @@ const ShowDatabases: Component<{
       <table class="table">
         <thead>
           <tr>
-            {/* <TableCell sx={{ borderRight: 'none', p: 1.5 }}> */}
-            <th class="p-1.5"><h6><b>Databases</b></h6></th>
+            <th class="p-0"><h6><b>Databases</b></h6></th>
 
-            {/* <TableCell sx={{ px: 1.5, borderLeft: 'none' }} align="right" colSpan={2}> */}
-            <th class="col-span-2 p-1.5 text-right">
-              <Show when={props.show.create}>
-                {/* TODO */}
-                <CreateDatabase />
-              </Show>
+            <th />
+
+            <th class="p-0">
+              <span class="text-right">
+                <Show when={props.show.create}>
+                  <CreateDatabase />
+                </Show>
+              </span>
             </th>
           </tr>
         </thead>

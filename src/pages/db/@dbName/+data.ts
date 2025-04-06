@@ -2,6 +2,7 @@ import type { DataAsync, PageContext } from 'vike/types'
 
 import { connectClient } from '@/server/db'
 import { mapDatabaseStats } from '@/utils/mappers/mapInfo'
+import { isValidDatabaseName } from '@/utils/validations'
 
 // TODO
 // const _getItemsAndCount = async function (req, queryOptions) {
@@ -35,11 +36,10 @@ import { mapDatabaseStats } from '@/utils/mappers/mapInfo'
 
 export const data: DataAsync<DataDB> = async (pageContext: PageContext) => {
   const { dbName } = pageContext.routeParams
-  // TODO
-  // const validationRes = isValidDatabaseName(dbName)
-  // if ('error' in validationRes) {
-  //   throw new Error(validationRes.error)
-  // }
+  const validationRes = isValidDatabaseName(dbName)
+  if (validationRes.error) {
+    throw new Error(validationRes.error)
+  }
   await connectClient()
   const { config, mongo } = globalThis
 

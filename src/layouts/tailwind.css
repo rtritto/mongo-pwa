@@ -4,8 +4,25 @@
 @layer utilities {
   .menu {
     & :where(li) {
-      /* change column to default row */
-      flex-direction: row
+      /* Change column to default row */
+      flex-direction: row;
+    }
+  }
+
+  .btn {
+    border-color: transparent;
+
+    /* Enforce TailwindCSS v3 styles */
+    @apply rounded-md;
+
+    outline: none;
+  }
+
+  .input {
+    &:focus-within {
+      border-color: #0054c9;
+      /* Remove border */
+      outline: none;
     }
   }
 }

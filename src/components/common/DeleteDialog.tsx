@@ -23,28 +23,22 @@ const DeleteDialog: Component<{
         Delete
       </button>
 
-      <dialog id="modal_drawer" class="modal" ref={dialogRef}>
+      <dialog class="modal" id="modal_drawer" ref={dialogRef}>
         <div class="modal-box">
           <h3 class="text-lg font-bold">{props.title} <b>"{props.value}"</b></h3>
 
-          <form onSubmit={async (event) => {
-            event.preventDefault()  // Disable page reload after submit
-          }}>
+          <form onSubmit={async (event) => event.preventDefault()  /* Disable page reload after submit */}>
             <p class="text-sm">{props.message}</p>
 
-            <input type="text" placeholder={`Type "${props.value}"`} class="input m-3 w-full" value={input()} onKeyUp={(event) => {
-              setInput(event.currentTarget.value.trim())
-            }} />
+            <input class="input m-3 w-full" type="text" placeholder={`Type "${props.value}"`} value={input()} onKeyUp={(event) => setInput(event.currentTarget.value.trim())} />
 
-            <button type="submit" class="btn bg-red-700 py-0.5" onClick={() => {
-              props.handleDelete(input())
-            }} disabled={input() !== props.value}>
+            <button class="btn bg-red-700 py-0.5" type="submit" onClick={() => props.handleDelete(input())} disabled={input() !== props.value}>
               Delete
             </button>
           </form>
         </div>
 
-        <form method="dialog" class="modal-backdrop">
+        <form class="modal-backdrop" method="dialog">
           <button>Close</button>
         </form>
       </dialog>

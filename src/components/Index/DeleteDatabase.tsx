@@ -12,9 +12,7 @@ const DeleteDatabase: Component<{ database: string }> = (props) => {
     await fetch('/api/databaseDelete', {
       method: 'POST',
       headers: HEADERS_JSON,
-      body: JSON.stringify({
-        database
-      })
+      body: JSON.stringify({ database })
     }).then(async (res) => {
       if (res.ok === true) {
         // Remove database from global database to update viewing databases
