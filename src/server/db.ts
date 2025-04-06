@@ -81,6 +81,7 @@ export async function connectClient() {
     await Promise.all(
       Object.values(globalThis.mongo.connections).map((connection) => updateCollections(connection))
     )
+    return
     // return globalThis.mongo.mongoClient
   }
   globalThis.config = getConfigDefault()
