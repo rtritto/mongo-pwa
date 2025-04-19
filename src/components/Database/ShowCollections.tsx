@@ -3,6 +3,7 @@ import { useData } from 'vike-solid/useData'
 import { usePageContext } from 'vike-solid/usePageContext'
 
 import CreateForm from '@/components/common/CreateForm'
+import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportButton from '@/components/common/ExportButton'
 import ImportButton from '@/components/common/ImportButton'
 import IconVisibility from '@/components/Icons/IconVisibility'
@@ -116,6 +117,36 @@ const ShowCollections: Component<{
                       <h6>{collection}</h6>
                     </a>
                   </td>
+
+                  <Show when={props.show.delete}>
+                    <td class="p-0.5 text-right">
+                      <DeleteDialog
+                        title="Delete Collection"
+                        value={collection}
+                        message="Be careful! You are about to delete the collection (all documents will be deleted)"
+                        handleDelete={() => fetch('/api/collectionDelete', {
+                          method: 'POST',
+                          headers: HEADERS_JSON,
+                          body: JSON.stringify({ database: props.dbName, collection })
+                        }).then(async (res) => {
+                          if (res.ok) {
+                            // Remove database from global database to update viewing databases
+                            const indexToRemove = data.collections.indexOf(collection)
+                            setData('collections', [
+                              ...data.collections.slice(0, indexToRemove),
+                              ...data.collections.slice(indexToRemove + 1)
+                            ])
+                            // setSuccess(`Collection "${collection}" deleted!`)
+                          } else {
+                            // const { error } = await res.json()
+                            // setError(error)
+                          }
+                        })
+                          // .catch((error) => { setError(error.message) })
+                        }
+                      />
+                    </td>
+                  </Show>
                 </tr>
               )
             }}
@@ -130,28 +161,6 @@ export default ShowCollections
 
 
 // TODO
-// <td width="100%">
-// <CustomLink
-//   // Link
-//   href={hrefView}
-//   style={{
-//     margin: 1,
-//     textDecoration: 'none'  // remove text underline
-//   }}
-//   // Button
-//   fullWidth
-//   sx={{
-//     // py: 2,
-//     justifyContent: 'flex-start',
-//     textTransform: 'none' /* remove uppercase */
-//   }}
-//   onClick={() => setSelectedCollectionState(collection)}
-//   variant="text"
-// >
-//   <h6>{collection}</h6>
-// </CustomLink>
-// </td>
-// 
 // {props.show.delete && (
 // <td align="right">
 //   <DeleteCollection database={dbName} collection={collection} />

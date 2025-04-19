@@ -1,8 +1,8 @@
 import { type Component, For, Show } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
-import CreateForm from '../common/CreateForm'
-import DeleteDatabase from './DeleteDatabase'
+import CreateForm from '@/components/common/CreateForm'
+import DeleteDialog from '@/components/common/DeleteDialog'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import { HEADERS_JSON } from '@/utils/constants'
 import { isValidDatabaseName } from '@/utils/validations-client'
@@ -78,7 +78,31 @@ const ShowDatabases: Component<{
 
                 <Show when={props.show.delete}>
                   <td class="p-0.5 text-right">
-                    <DeleteDatabase database={database} />
+                    <DeleteDialog
+                      title="Delete Database"
+                      value={database}
+                      message="Be careful! You are about to delete the database (all collections and documents will be deleted)"
+                      handleDelete={() => fetch('/api/databaseDelete', {
+                        method: 'POST',
+                        headers: HEADERS_JSON,
+                        body: JSON.stringify({ database })
+                      }).then(async (res) => {
+                        if (res.ok) {
+                          // Remove database from global database to update viewing databases
+                          const indexToRemove = data.databases.indexOf(database)
+                          setData('databases', [
+                            ...data.databases.slice(0, indexToRemove),
+                            ...data.databases.slice(indexToRemove + 1)
+                          ])
+                          // setSuccess(`Database "${database}" deleted!`)
+                        } else {
+                          // const { error } = await res.json()
+                          // setError(error)
+                        }
+                      })
+                        // .catch((error) => { setError(error.message) })
+                      }
+                    />
                   </td>
                 </Show>
               </tr>
