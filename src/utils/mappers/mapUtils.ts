@@ -1,9 +1,4 @@
-import { Binary, ObjectId } from 'mongodb'
-
-const ALLOWED_SUBTYPES = new Set([
-  Binary.SUBTYPE_UUID_OLD,
-  Binary.SUBTYPE_UUID,
-])
+import { Binary, ObjectId } from 'bson'
 
 const K = 1000
 const LOG = Math.log(K)
@@ -16,7 +11,7 @@ const BYTES_MAP = {
   PB: 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
   EB: 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
   ZB: 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
-  YB: 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
+  YB: 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024
 } as const
 const SIZES = Object.keys(BYTES_MAP)
 
@@ -25,8 +20,7 @@ const SIZES = Object.keys(BYTES_MAP)
 export const bytesToSize = (bytes: number) => {
   if (bytes === 0) return '0 Byte'
   const i = Math.floor(Math.log(bytes) / LOG)
-  // eslint-disable-next-line no-restricted-properties
-  return (bytes / (K ** i)).toPrecision(3) + ' ' + SIZES[i]
+  return `${(bytes / (K ** i)).toPrecision(3)} ${SIZES[i]}`
 }
 
 export const convertBytes = (input: number | undefined) => {
@@ -145,22 +139,15 @@ export const addHyphensToUUID = (hex: string) => {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20, 32)}`
 }
 
-export const buildId = (id: string, { subtype }: QueryParameter) => {
+export const buildId = (_id: string | number, _subtype: number | undefined) => {
   // Case 1 : ObjectId
-  if (ObjectId.isValid(id)) {
-    return ObjectId.createFromHexString(id)
+  if (ObjectId.isValid(_id)) {
+    return new ObjectId(_id as string)
   }
-  // Case 2 : BinaryID (only subtype 3 and 4)
-  if (subtype) {
-    const _subtype = Number.parseInt(subtype, 10)
-    if (ALLOWED_SUBTYPES.has(_subtype)) {
-      if (_subtype === Binary.SUBTYPE_UUID) {
-        return new Binary(Buffer.from(id.replaceAll('-', ''), 'hex'), _subtype)
-      }
-      // mongodb.Binary.SUBTYPE_UUID_OLD
-      return new Binary(Buffer.from(id, 'base64'), _subtype)
-    }
+  // Case 2 : BinaryID (only subtype 4)
+  if (_subtype === Binary.SUBTYPE_UUID) {
+    return new Binary(Buffer.from((_id as string).replaceAll('-', ''), 'hex'), _subtype)
   }
-  // Case 3 : Try as raw ID
-  return id
+  // Case 3 : Try as raw ID (e.g. number)
+  return _id as number
 }

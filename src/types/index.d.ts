@@ -17,6 +17,10 @@ type Redirect = import('next').Redirect
 
 type Config = import('./../config.default.mts').Config
 type MongoDb = import('./../config.default.mts').MongoDb
+type ServerStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapServerStats']>
+type DBStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapDatabaseStats']>
+type CollectionStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapCollectionStats']>
+type Options = import('../../config.default.ts').Config['options']
 
 type PrimitiveTypes = boolean | string | number
 
@@ -110,8 +114,6 @@ interface Index extends MongoDocument {
 
 type Indexes = Index[]
 
-type ServerStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapServerStats']>
-
 // type of connections<connectionInfo> or clients<{info}>
 type ClientInfo = {
   connectionName: string
@@ -149,7 +151,6 @@ type Mongo = {
   getDatabases: () => string[]
   updateCollections: (dbConnection: Connection) => Promise<void>
   updateDatabases: () => Promise<void>
-  connect: (config?: Config) => Promise<MongoClient>
 }
 
 interface Params extends ParsedUrlQuery {

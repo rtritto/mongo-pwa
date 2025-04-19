@@ -1,7 +1,7 @@
 type DataIndex = {
   title: string
   databases: Mongo['databases']
-  options: import('../../config.default.ts').Config['options']
+  options: Options
   serverStats?: ServerStats
 
   success?: string
@@ -11,14 +11,14 @@ type DataIndex = {
 type DataDB = DataIndex & {
   dbName: string
   collections: Mongo['collections'][string]
-  dbStats?: ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapDatabaseStats']>
+  dbStats?: DBStats
 
   selectedDatabase: string
 }
 
 type DataCollection = DataDB & {
   collectionName: string
-  collectionStats?: ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapCollectionStats']>
+  collectionStats?: CollectionStats
 
   selectedCollection: string
 }

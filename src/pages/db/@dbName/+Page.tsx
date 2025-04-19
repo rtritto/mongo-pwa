@@ -1,12 +1,34 @@
 import type { Component } from 'solid-js'
+import { useData } from 'vike-solid/useData'
 
-const Page: Component<DataDB> = (props) => {
+import ShowCollections from '@/components/Database/ShowCollections'
+import StatsTable from '@/components/common/StatsTable'
+
+const Page: Component<DataDB> = () => {
+  const [data] = useData<DataDB>()
+
   return (
-    <>
-      <h1>dbName</h1>
+    <div class="p-1">
+      <h4>Viewing Database: <strong>{data.selectedDatabase}</strong></h4>
 
-      {/* {props.dbName} */}
-    </>
+      <div class="divider m-1.5" />
+
+      <ShowCollections
+        collections={data.collections}
+        dbName={data.selectedDatabase}
+        show={{
+          create: !data.options.readOnly,
+          export: !data.options.noExport,
+          delete: !data.options.noDelete
+        }}
+      />
+
+      {/* TODO GridFS Buckets grids.length && settings.gridFSEnabled */}
+
+      {/* TODO Create GridFS Bucket */}
+
+      <StatsTable label="Database Stats" fields={data.dbStats!} />
+    </div>
   )
 }
 

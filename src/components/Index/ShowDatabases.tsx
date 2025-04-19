@@ -1,8 +1,11 @@
 import { type Component, For, Show } from 'solid-js'
+import { useData } from 'vike-solid/useData'
 
-import IconVisibility from '@/components/Icons/IconVisibility'
-import CreateDatabase from './CreateDatabase'
+import CreateForm from '../common/CreateForm'
 import DeleteDatabase from './DeleteDatabase'
+import IconVisibility from '@/components/Icons/IconVisibility'
+import { HEADERS_JSON } from '@/utils/constants'
+import { isValidDatabaseName } from '@/utils/validations-client'
 
 const ShowDatabases: Component<{
   databases: Mongo['databases']
@@ -11,6 +14,8 @@ const ShowDatabases: Component<{
     delete: boolean
   }
 }> = (props) => {
+  const [data, setData] = useData<DataIndex>()
+
   return (
     <div class="overflow-x-auto">
       <table class="table">
@@ -23,7 +28,30 @@ const ShowDatabases: Component<{
             <th class="p-0">
               <span class="text-right">
                 <Show when={props.show.create}>
-                  <CreateDatabase />
+                  <CreateForm
+                    entity="Database"
+                    isValidInput={(input) => isValidDatabaseName(input)}
+                    onButtonClick={(database: string) => (
+                      fetch('/api/databaseCreate', {
+                        method: 'POST',
+                        body: JSON.stringify({ database }),
+                        headers: HEADERS_JSON
+                      }).then(async (res) => {
+                        if (res.ok) {
+                          // Add database to global databases to update viewing databases
+                          setData({
+                            databases: [...data.databases, database].sort(),
+                            success: `Database "${database}" created!`
+                          })
+                        } else {
+                          const { error } = await res.json()
+                          setData({ error })
+                        }
+                      }).catch((error) => {
+                        setData({ error })
+                      })
+                    )}
+                  />
                 </Show>
               </span>
             </th>
@@ -35,7 +63,7 @@ const ShowDatabases: Component<{
             {(database) => (
               <tr>
                 <td class="p-0.5">
-                  <a class="btn bg-green-600" href={`/db/${encodeURIComponent(database)}`}>
+                  <a class="btn btn-sm bg-green-600" href={`/db/${encodeURIComponent(database)}`}>
                     <IconVisibility />
 
                     View

@@ -13,7 +13,7 @@ const DeleteDialog: Component<{
 
   return (
     <div>
-      <button class="btn bg-red-700 py-0.5" onClick={() => {
+      <button class="btn btn-sm bg-red-700 py-0.5" onClick={() => {
         dialogRef.showModal()
         // Reset
         setInput('')
