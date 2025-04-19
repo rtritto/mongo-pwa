@@ -3,7 +3,7 @@ import type { Context } from 'hono'
 import { connectClient } from '@/server/db'
 import { toJsonString } from '@/utils/bson'
 import { getQuery, getQueryOptions } from '@/utils/queries'
-import { checkCollection, checkDatabase } from '@/utils/validations-server'
+import { checkCollection, checkDatabase } from '@/utils/validationsServer'
 
 export default async function collectionExportArray(c: Context) {
   const { database, collection, query } = await c.req.json()

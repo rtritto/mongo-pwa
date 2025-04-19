@@ -2,7 +2,7 @@ import { EJSON } from 'bson'
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkCollection, checkDatabase } from '@/utils/validations-server'
+import { checkCollection, checkDatabase } from '@/utils/validationsServer'
 
 const ALLOWED_MIME_TYPES = new Set([
   'text/csv',

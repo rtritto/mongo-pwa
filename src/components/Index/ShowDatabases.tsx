@@ -5,7 +5,7 @@ import CreateForm from '@/components/common/CreateForm'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import { HEADERS_JSON } from '@/utils/constants'
-import { isValidDatabaseName } from '@/utils/validations-client'
+import { isValidDatabaseName } from '@/utils/validationsClient'
 
 const ShowDatabases: Component<{
   databases: Mongo['databases']

@@ -2,7 +2,7 @@ import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
 import { getQuery } from '@/utils/queries'
-import { checkCollection, checkDatabase, checkOption } from '@/utils/validations-server'
+import { checkCollection, checkDatabase, checkOption } from '@/utils/validationsServer'
 
 export default async function collectionDelete(c: Context) {
   // TODO (?) remove checkOption

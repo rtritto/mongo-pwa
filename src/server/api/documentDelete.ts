@@ -2,7 +2,7 @@ import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
 import { buildId } from '@/utils/mappers/mapUtils'
-import { checkCollection, checkDatabase, checkOption } from '@/utils/validations-server'
+import { checkCollection, checkDatabase, checkOption } from '@/utils/validationsServer'
 
 export default async function documentDelete(c: Context) {
   // TODO (?) remove checkOption

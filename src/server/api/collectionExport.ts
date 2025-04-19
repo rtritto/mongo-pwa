@@ -4,7 +4,7 @@ import type { Sort } from 'mongodb'
 import { connectClient } from '@/server/db'
 import { toJsonString } from '@/utils/bson'
 import { getProjection, getQuery, getSort } from '@/utils/queries'
-import { checkCollection, checkDatabase } from '@/utils/validations-server'
+import { checkCollection, checkDatabase } from '@/utils/validationsServer'
 
 export default async function collectionExport(c: Context) {
   const { database, collection, query } = await c.req.json<{

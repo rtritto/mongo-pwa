@@ -1,7 +1,7 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkDatabase } from '@/utils/validations-server'
+import { checkDatabase } from '@/utils/validationsServer'
 
 export default async function databaseDelete(c: Context) {
   const { database } = await c.req.json()

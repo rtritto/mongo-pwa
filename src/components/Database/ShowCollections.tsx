@@ -8,7 +8,7 @@ import ExportButton from '@/components/common/ExportButton'
 import ImportButton from '@/components/common/ImportButton'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import { HEADERS_JSON } from '@/utils/constants'
-import { isValidCollectionName } from '@/utils/validations-client'
+import { isValidCollectionName } from '@/utils/validationsClient'
 
 const ShowCollections: Component<{
   collections: string[]

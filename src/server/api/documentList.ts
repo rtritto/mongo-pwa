@@ -1,7 +1,7 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkCollection, checkDatabase } from '@/utils/validations-server'
+import { checkCollection, checkDatabase } from '@/utils/validationsServer'
 
 export default async function documentList(c: Context) {
   const { database, collection, limit, skip } = await c.req.json<{

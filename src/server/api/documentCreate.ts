@@ -1,7 +1,7 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkCollection, checkDatabase, checkDocument } from '@/utils/validations-server'
+import { checkCollection, checkDatabase, checkDocument } from '@/utils/validationsServer'
 
 export default async function documentCreate(c: Context) {
   const { database, collection, doc } = await c.req.json()

@@ -1,8 +1,8 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { isValidCollectionName } from '@/utils/validations-client'
-import { checkDatabase } from '@/utils/validations-server'
+import { isValidCollectionName } from '@/utils/validationsClient'
+import { checkDatabase } from '@/utils/validationsServer'
 
 export default async function collectionCreate(c: Context) {
   const { database, collection } = await c.req.json()

@@ -2,7 +2,7 @@ import type { DataSync, PageContext } from 'vike/types'
 
 import { connectClient } from '@/server/db'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
-import { isValidCollectionName, isValidDatabaseName } from '@/utils/validations-client'
+import { isValidCollectionName, isValidDatabaseName } from '@/utils/validationsClient'
 
 export const data: DataSync<DataCollection> = async (pageContext: PageContext) => {
   const { dbName, collectionName } = pageContext.routeParams

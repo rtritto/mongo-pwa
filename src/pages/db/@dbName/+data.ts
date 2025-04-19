@@ -2,7 +2,7 @@ import type { DataAsync, PageContext } from 'vike/types'
 
 import { connectClient } from '@/server/db'
 import { mapDatabaseStats } from '@/utils/mappers/mapInfo'
-import { isValidDatabaseName } from '@/utils/validations-client'
+import { isValidDatabaseName } from '@/utils/validationsClient'
 
 // TODO
 // const _getItemsAndCount = async function (req, queryOptions) {

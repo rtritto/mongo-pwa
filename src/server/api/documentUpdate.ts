@@ -1,7 +1,7 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkCollection, checkDatabase, checkDocument } from '@/utils/validations-server'
+import { checkCollection, checkDatabase, checkDocument } from '@/utils/validationsServer'
 import { buildId } from '@/utils/mappers/mapUtils'
 
 export default async function documentList(c: Context) {
