@@ -17,13 +17,11 @@ const ShowDatabases: Component<{
   const [data, setData] = useData<DataIndex>()
 
   return (
-    <div class="overflow-x-auto">
+    <div>
       <table class="table">
         <thead>
           <tr>
             <th class="p-0"><h6><b>Databases</b></h6></th>
-
-            <th />
 
             <th class="p-0">
               <span class="text-right">
@@ -57,7 +55,9 @@ const ShowDatabases: Component<{
             </th>
           </tr>
         </thead>
+      </table>
 
+      <table class="table">
         <tbody>
           <For each={props.databases}>
             {(database) => (

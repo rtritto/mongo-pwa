@@ -23,17 +23,11 @@ const ShowCollections: Component<{
   const [data, setData] = useData<DataDB>()
 
   return (
-    <div class="overflow-x-auto">
+    <div>
       <table class="table">
         <thead>
           <tr>
             <th class="p-0"><h6><b>Collections</b></h6></th>
-
-            <th />
-
-            <th />
-
-            <th />
 
             <th class="p-0">
               <span class="text-right">
@@ -67,7 +61,9 @@ const ShowCollections: Component<{
             </th>
           </tr>
         </thead>
+      </table>
 
+      <table class="table">
         <tbody>
           <For each={props.collections}>
             {(collection) => {
