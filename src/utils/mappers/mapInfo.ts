@@ -112,11 +112,11 @@ export const mapServerStats = (serverStatus: ServerStatus) => ({
 
 export const mapDatabaseStats = (dbStats: DbStats) => ({
   avgObjSize: {
-    label: 'Avg Obj Size #',
+    label: 'Average Document Size',
     value: bytesToSize(dbStats.avgObjSize || 0)
   },
   collections: {
-    label: 'Collections (incl. system.namespaces)',
+    label: 'Total Collections (incl. system.namespaces)',
     value: dbStats.collections
   },
   /* (?) deprecated */ ...'dataFileVersion' in dbStats && {
@@ -142,7 +142,7 @@ export const mapDatabaseStats = (dbStats: DbStats) => ({
     }
   },
   indexes: {
-    label: 'Indexes #',
+    label: 'Total Indexes',
     value: dbStats.indexes
   },
   indexSize: {
@@ -152,12 +152,12 @@ export const mapDatabaseStats = (dbStats: DbStats) => ({
   },
   /* (?) deprecated */ ...'numExtents' in dbStats && {
     numExtents: {
-      label: 'Extents #',
+      label: 'Total Extents',
       value: dbStats.numExtents.toString()
     }
   },
   objects: {
-    label: 'Objects #',
+    label: 'Total Documents',
     value: dbStats.objects
   },
   storageSize: {
