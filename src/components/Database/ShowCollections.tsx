@@ -154,11 +154,3 @@ const ShowCollections: Component<{
 }
 
 export default ShowCollections
-
-
-// TODO
-// {props.show.delete && (
-// <td align="right">
-//   <DeleteCollection database={dbName} collection={collection} />
-// </td>
-// )}
