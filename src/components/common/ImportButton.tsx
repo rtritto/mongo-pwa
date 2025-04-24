@@ -8,7 +8,6 @@ const ImportButton: Component<{
 }> = (props) => {
   const onChange: JSX.ChangeEventHandlerUnion<HTMLInputElement, Event> = async (event) => {
     event.preventDefault()
-    const formData = new FormData()
 
     const { files } = event.target
 
@@ -19,9 +18,9 @@ const ImportButton: Component<{
       // console.info('Multiple files selected')
       return
     }
-    const file = files[0]
 
-    formData.append('file', file)
+    const formData = new FormData()
+    formData.append('file', files[0])
     formData.append('database', props.database)
     formData.append('collection', props.collection)
 
