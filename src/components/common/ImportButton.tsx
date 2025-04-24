@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js'
+import type { Component, JSX } from 'solid-js'
 
 import IconImport from '@/components/Icons/IconImport'
 
@@ -6,10 +6,7 @@ const ImportButton: Component<{
   database: string
   collection: string
 }> = (props) => {
-  const onChange = async (event: Event & {
-    currentTarget: HTMLInputElement
-    target: HTMLInputElement
-  }) => {
+  const onChange: JSX.ChangeEventHandlerUnion<HTMLInputElement, Event> = async (event) => {
     event.preventDefault()
     const formData = new FormData()
 
