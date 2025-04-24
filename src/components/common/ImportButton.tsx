@@ -34,7 +34,7 @@ const ImportButton: Component<{
       return
     }
     const { insertedCount } = await response.json()
-    console.log(`Inserted ${insertedCount} documents`)
+    console.log(`${insertedCount} document(s) inserted`)
   }
 
   return (
