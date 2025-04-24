@@ -124,10 +124,10 @@ export const getQuery = (query: QueryParameter): MongoDocument => {
 const getBaseAggregatePipeline = (pipeline: Pipeline, queryOptions: QueryOptions): Pipeline => {
   const baseAggregatePipeline = [...pipeline]
   const { sort, projection } = queryOptions
-  if (sort !== undefined) {
+  if (sort) {
     baseAggregatePipeline.push({ $sort: sort })
   }
-  if (projection !== undefined) {
+  if (projection) {
     baseAggregatePipeline.push({ $project: projection })
   }
   return baseAggregatePipeline
@@ -165,6 +165,29 @@ export const getComplexAggregatePipeline = (pipeline: Pipeline, queryOptions: Qu
       }
     }
   ]
+}
+
+export const getAggregatePipeline = (pipeline: Pipeline, queryOptions: QueryOptions) => {
+  // https://stackoverflow.com/a/48307554/10413113
+  const aggregatePipeline = [...pipeline] as Pipeline
+  const { sort, projection, limit, skip = 0 } = queryOptions
+  if (sort) {
+    aggregatePipeline.push({ $sort: sort })
+  }
+  const items = [
+    { $skip: skip },
+    { $limit: limit + skip }
+  ] as Pipeline
+  if (projection) {
+    items.push({ $project: projection })
+  }
+  aggregatePipeline.push({
+    $facet: {
+      count: [{ $count: 'count' }],
+      items
+    }
+  })
+  return aggregatePipeline
 }
 
 export const getLastPage = (pageSize: number, totalCount: number): number => {
