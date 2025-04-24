@@ -1,10 +1,10 @@
-import type { DataSync, PageContext } from 'vike/types'
+import type { DataAsync, PageContext } from 'vike/types'
 
 import { connectClient } from '@/server/db'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
 import { isValidCollectionName, isValidDatabaseName } from '@/utils/validationsClient'
 
-export const data: DataSync<DataCollection> = async (pageContext: PageContext) => {
+export const data: DataAsync<DataCollection> = async (pageContext: PageContext) => {
   const { dbName, collectionName } = pageContext.routeParams
   const validationDbRes = isValidDatabaseName(dbName)
   if (validationDbRes.error) {
@@ -29,11 +29,10 @@ export const data: DataSync<DataCollection> = async (pageContext: PageContext) =
 
   if (mongo.adminDb && !config.mongodb.awsDocumentDb) {
     const collection = mongo.connections[dbName].db.collection(collectionName)
-    const [stats, indexes] = await Promise.all([
+    const [{ indexSizes }, indexes] = await Promise.all([
       collection.aggregate<CollStats>([{ $collStats: { storageStats: {} } }]).next().then((s) => s.storageStats),
       collection.indexes()
     ])
-    const { indexSizes } = stats
     for (let n = 0, len = indexes.length; n < len; n++) {
       indexes[n].size = indexSizes[indexes[n].name]
     }
