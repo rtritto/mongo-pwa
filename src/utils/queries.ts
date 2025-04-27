@@ -10,6 +10,7 @@ interface QueryOptions {
   }
   skip?: number
   sort?: Sort
+  allowDiskUse?: boolean
 }
 interface StageMatch { $match: MongoDocument }
 interface StageSort { $sort: Sort }
@@ -91,7 +92,7 @@ const converters = {
  * Simple/Advanced parameters input.
  * Returns {} if no query parameters were passed in request.
  */
-export const getQuery = (query: QueryParameter): MongoDocument => {
+export const getQuery = (query: QueryParameter): MongoDocument | Pipeline => {
   const { key, value } = query
   if (key && value) {
     // if it is a simple query
@@ -113,10 +114,10 @@ export const getQuery = (query: QueryParameter): MongoDocument => {
   if (jsonQuery) {
     // if it is a complex query, take it as is
     const result = toSafeBSON(jsonQuery)
-    if (result === undefined) {
-      throw new Error('Query entered is not valid')
+    if (result) {
+      return result as Pipeline
     }
-    return result
+    throw new Error('Query entered is not valid')
   }
   return {}
 }
@@ -188,6 +189,45 @@ export const getAggregatePipeline = (pipeline: Pipeline, queryOptions: QueryOpti
     }
   })
   return aggregatePipeline
+}
+
+export const getItemsAndCount = async (
+  query: QueryParameter,
+  queryOptions: QueryOptions,
+  collection: import('mongodb').Collection<MongoDocument>,
+  config: Config
+) => {
+  let _query = getQuery(query)
+  if (query.runAggregate === 'on' && _query.constructor.name === 'Array') {
+    if (_query.length > 0) {
+      const queryAggregate = getAggregatePipeline(_query as Pipeline, queryOptions)
+      const [{ items, count }] = await collection.aggregate<{
+        items: Document[]
+        count: { count: number }[]
+      }>(queryAggregate, { allowDiskUse: config.mongodb.allowDiskUse }).toArray()
+      return {
+        items,
+        count: count[0].count
+      }
+    }
+    _query = {}
+  }
+
+  if (config.mongodb.allowDiskUse && !config.mongodb.awsDocumentDb) {
+    queryOptions.allowDiskUse = true
+  }
+
+  const [items, count] = await Promise.all([
+    // eslint-disable-next-line unicorn/no-array-callback-reference, unicorn/no-array-method-this-argument
+    collection.find(_query as MongoDocument, queryOptions).toArray(),
+    // TODO maybe replace count with countDocuments
+    // Read related discussion on https://github.com/mongo-express/mongo-express/issues/1518
+    collection.count(_query as MongoDocument)
+  ])
+  return {
+    items,
+    count
+  }
 }
 
 export const getLastPage = (pageSize: number, totalCount: number): number => {

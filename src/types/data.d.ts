@@ -21,6 +21,9 @@ type DataCollection = DataDB & {
   collectionStats?: CollectionStats
 
   selectedCollection: string
+
+  count: number
+  items: Document[]
 }
 
 type DataDocument = DataCollection & {
