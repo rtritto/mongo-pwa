@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vike dev",
     "build": "vike build",
-    "prod": "NODE_ENV=production node dist/server/index.mjs",
+    "prod": "NODE_ENV=production node dist/server/index.js",
     "serve": "yarn build && yarn prod",
     "lint": "eslint src/**/*.{ts,tsx} *.ts",
     "od": "yarn outdated"
@@ -31,8 +31,8 @@
     "tailwindcss": "^4.1.5",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.32.0",
-    "vike": "^0.4.225",
-    "vike-node": "^0.3.7",
+    "vike": "^0.4.229",
+    "vike-server": "^1.0.15",
     "vike-solid": "patch:vike-solid@npm%3A0.7.9#~/.yarn/patches/vike-solid-npm-0.7.9-a58078f9e1.patch",
     "vite": "^6.3.5",
     "vite-plugin-pwa": "^1.0.0"
