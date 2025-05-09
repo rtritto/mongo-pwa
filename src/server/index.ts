@@ -1,8 +1,7 @@
-import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 // import { logger } from 'hono/logger'
-import vike from 'vike-node/hono'
+import { apply } from 'vike-server/hono'
 
 import { handlerApi } from './handlers/handlerApi'
 
@@ -14,11 +13,6 @@ app.use(cors())
 
 app.post('/api/:functionName', handlerApi)
 
-app.use(vike())
+apply(app)
 
-const port = +(process.env.PORT || 3000)
-
-serve({
-  fetch: app.fetch,
-  port
-}, () => console.log(`Server running at http://localhost:${port}`))
+export default app

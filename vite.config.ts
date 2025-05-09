@@ -1,7 +1,6 @@
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import vike from 'vike/plugin'
-import { vikeNode } from 'vike-node/plugin'
 import vikeSolid from 'vike-solid/vite'
 import { defineConfig, loadEnv, type UserConfig } from 'vite'
 // TODO Enable PWA
@@ -17,22 +16,7 @@ export default defineConfig(async ({ mode }) => {
     plugins: [
       tailwindcss(),
       vike(),
-      vikeSolid(),
-      vikeNode('server/index.ts'),
-      // Enable to start the server with `yarn prod` command
-      // vikeNode('server/entry.node.ts'),
-      // vikeNode(process.env.NODE_ENV === 'production' ? 'server/index.ts' : 'server/entry.node.ts'),
-      // TODO this throws an error in vike-node into vike-node:edge:build
-      // Maybe it's used only with Edge Runtime in Vercel
-      // vikeNode({
-      //   entry: {
-      //     index: 'server/entry.node.ts',
-      //     app: {
-      //       entry: 'server/app.ts',
-      //       runtime: 'vercel'
-      //     }
-      //   }
-      // }),
+      vikeSolid()
       // VitePWA({
       //   registerType: 'autoUpdate', // Automatically updates the service worker
       //   devOptions: {
