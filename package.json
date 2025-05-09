@@ -14,27 +14,27 @@
   },
   "dependencies": {
     "bson": "^6.10.3",
-    "hono": "^4.7.7",
-    "mongodb": "^6.15.0",
+    "hono": "^4.7.9",
+    "mongodb": "^6.16.0",
     "mongodb-query-parser": "^4.3.2",
-    "solid-js": "^1.9.5"
+    "solid-js": "^1.9.6"
   },
   "devDependencies": {
     "@hono/node-server": "^1.14.1",
-    "@tailwindcss/vite": "^4.1.4",
-    "@types/node": "^22.14.1",
+    "@tailwindcss/vite": "^4.1.5",
+    "@types/node": "^22.15.17",
     "@yarnpkg/sdks": "^3.2.1",
-    "daisyui": "^5.0.27",
-    "eslint": "^9.25.0",
+    "daisyui": "^5.0.35",
+    "eslint": "^9.26.0",
     "eslint-plugin-solid": "^0.14.5",
-    "eslint-plugin-unicorn": "^58.0.0",
-    "tailwindcss": "^4.1.4",
+    "eslint-plugin-unicorn": "^59.0.1",
+    "tailwindcss": "^4.1.5",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.30.1",
+    "typescript-eslint": "^8.32.0",
     "vike": "^0.4.225",
     "vike-node": "^0.3.7",
     "vike-solid": "patch:vike-solid@npm%3A0.7.9#~/.yarn/patches/vike-solid-npm-0.7.9-a58078f9e1.patch",
-    "vite": "^6.3.2",
+    "vite": "^6.3.5",
     "vite-plugin-pwa": "^1.0.0"
   },
   "engines": {
