@@ -1,5 +1,5 @@
-import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import { Hono } from 'hono/quick'
 // import { logger } from 'hono/logger'
 import { apply } from 'vike-server/hono'
 
