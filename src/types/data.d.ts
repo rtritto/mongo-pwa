@@ -28,6 +28,8 @@ type DataCollection = DataDB & {
 
 type DataDocument = DataCollection & {
   documentName: string
+  doc: Document | null
 
   selectedDocument: string
+  readOnly: boolean
 }
