@@ -1,6 +1,7 @@
 import type { DataAsync, PageContext } from 'vike/types'
 
 import { connectClient } from '@/server/db'
+import { toString } from '@/utils/bson'
 import { buildId } from '@/utils/mappers/mapUtils'
 import { isValidCollectionName, isValidDatabaseName } from '@/utils/validationsClient'
 
@@ -33,7 +34,7 @@ export const data: DataAsync<DataCollection> = async (pageContext: PageContext) 
   const { readOnly } = config.options
   const _data = {
     title: `${readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
-    doc,
+    docString: toString(doc!),
     readOnly
   } as DataDocument
 

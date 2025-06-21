@@ -28,7 +28,7 @@ type DataCollection = DataDB & {
 
 type DataDocument = DataCollection & {
   documentName: string
-  doc: Document | null
+  docString: string
 
   selectedDocument: string
   readOnly: boolean
