@@ -58,7 +58,8 @@ const MenuList: Component = () => {
       </Show>
 
       <Show when={data.selectedDocument}>
-        <li>
+        <li class="disabled">
+          {/* TODO disable text decorator underline */}
           <label>Document: <b>{data.selectedDocument}</b></label>
         </li>
       </Show>

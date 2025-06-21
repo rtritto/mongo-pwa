@@ -35,7 +35,10 @@ export const data: DataAsync<DataCollection> = async (pageContext: PageContext) 
   const _data = {
     title: `${readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
     docString: toString(doc!),
-    readOnly
+    readOnly,
+    selectedDatabase: dbName,
+    selectedCollection: collectionName,
+    selectedDocument: document
   } as DataDocument
 
   return _data
