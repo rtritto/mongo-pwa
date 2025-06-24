@@ -9,7 +9,7 @@ const Page: Component<DataDocument> = () => {
     <>
       <h1>{data.title}</h1>
 
-      <Editor docString={data.docString} readOnly={data.readOnly} highlighted={data.highlighted} />
+      <Editor docString={data.docString} readOnly={data.readOnly} />
     </>
   )
 }

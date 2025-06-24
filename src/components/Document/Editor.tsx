@@ -2,10 +2,7 @@ import { createSignal, onMount, type Component } from 'solid-js'
 
 import EditorCodeMirror from './EditorCodeMirror'
 
-const Editor: Component<{
-  docString: string
-  readOnly: boolean
-}> = (props) => {
+const Editor: Component<{ docString: string, readOnly: boolean }> = (props) => {
   let containerRef: HTMLDivElement | undefined
   let hiddenTextarea: HTMLTextAreaElement | undefined
 
