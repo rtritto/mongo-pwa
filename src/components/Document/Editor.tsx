@@ -9,13 +9,11 @@ const Editor: Component<{ docString: string, readOnly: boolean }> = (props) => {
   const [view, setView] = createSignal<any>()
 
   onMount(() => {
-    if (!containerRef) return
-
     // Create hidden textarea to use in editor factory
     hiddenTextarea = document.createElement('textarea')
     hiddenTextarea.style.display = 'none'
     hiddenTextarea.value = props.docString
-    containerRef.append(hiddenTextarea)
+    containerRef!.append(hiddenTextarea)
 
     setView(EditorCodeMirror(hiddenTextarea, { readOnly: props.readOnly }))
   })
