@@ -13,6 +13,7 @@
     "od": "yarn outdated"
   },
   "dependencies": {
+    "@speed-highlight/core": "^1.2.7",
     "bson": "^6.10.3",
     "hono": "^4.7.9",
     "mongodb": "^6.16.0",

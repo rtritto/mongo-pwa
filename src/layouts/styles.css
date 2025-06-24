@@ -11,3 +11,69 @@ details {
 a.disabled {
   pointer-events: none;
 }
+
+#editing,
+#highlighting {
+  /* Both elements need the same text and space styling so they are directly on top of each other */
+  margin: 10px;
+  padding: 10px;
+  border: 0;
+  width: calc(100% - 32px);
+  height: 150px;
+}
+
+#editing,
+#highlighting,
+#highlighting * {
+  /* Also add text styles to highlighing tokens */
+  font-size: 15pt;
+  font-family: monospace;
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+
+#editing,
+#highlighting {
+  /* In the same place */
+  position: absolute;
+}
+
+
+/* Move the textarea in front of the result */
+
+#editing {
+  z-index: 5;
+  padding-left: 36px;
+}
+
+#highlighting {
+  z-index: 4;
+}
+
+
+/* Make textarea almost completely transparent */
+
+#editing {
+  color: transparent;
+  background: transparent;
+  caret-color: white;
+}
+
+/* Can be scrolled */
+#editing,
+#highlighting {
+  /* Allows textarea to scroll horizontally */
+  overflow: auto;
+  white-space: pre;
+}
+
+/* No resize on textarea */
+#editing {
+  resize: none;
+}
+
+/* Paragraphs; First Image */
+/* * {
+  font-family: "Fira Code", monospace;
+} */
