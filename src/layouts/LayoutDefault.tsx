@@ -1,4 +1,3 @@
-import '@speed-highlight/core/themes/dark.css'
 import './styles.css'
 import './tailwind.css'
 
