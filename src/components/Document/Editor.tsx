@@ -1,7 +1,7 @@
 import { highlightText } from '@speed-highlight/core'
 import { createSignal, onMount, type Component } from 'solid-js'
 
-const CodeHighlighter: Component<{
+const Editor: Component<{
   docString: string
   readOnly: boolean
   highlighted: (code: string) => Promise<string>
@@ -9,31 +9,30 @@ const CodeHighlighter: Component<{
   const [code, setCode] = createSignal<string>()
   const [codeHighlight, setCodeHighlight] = createSignal<string>()
 
-  onMount(async () => {
-    const _codeHighlight = await highlightText(props.docString, 'json')
-    setCode(props.docString)
+  const updateCode = async (_code: string) => {
+    const _codeHighlight = await highlightText(_code, 'json')
+    setCode(_code)
     setCodeHighlight(_codeHighlight)
+  }
+
+  onMount(async () => {
+    await updateCode(props.docString)
   })
 
   return (
     <div class="flex">
       <textarea
         id="editing"
-        class="textarea shj-lang-js z-1"
+        class="textarea shj-lang-js"
         readonly={props.readOnly}
-        onInput={(e) => {
-          highlightText(e.currentTarget.value, 'json').then((_codeHighlight) => {
-            setCode(e.currentTarget.value)
-            setCodeHighlight(_codeHighlight)
-          })
-        }}
+        onInput={(e) => updateCode(e.currentTarget.value)}
       >
         {code()}
       </textarea>
 
-      <div id="highlighting" class="shj-lang-js z-0" innerHTML={codeHighlight()} />
+      <div id="highlighting" class="shj-lang-js" innerHTML={codeHighlight()} />
     </ div>
   )
 }
 
-export default CodeHighlighter
+export default Editor
