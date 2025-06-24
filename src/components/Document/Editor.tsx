@@ -11,7 +11,6 @@ const Editor: Component<{ docString: string, readOnly: boolean }> = (props) => {
   onMount(() => {
     // Create hidden textarea to use in editor factory
     hiddenTextarea = document.createElement('textarea')
-    hiddenTextarea.style.display = 'none'
     hiddenTextarea.value = props.docString
     containerRef!.append(hiddenTextarea)
 
