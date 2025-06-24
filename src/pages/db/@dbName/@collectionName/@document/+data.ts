@@ -21,15 +21,12 @@ export const data: DataAsync<DataCollection> = async (pageContext: PageContext) 
   // const collection = mongo.connections[dbName].db.collection(collectionName)
   const collection = mongo.mongoClient.db(dbName).collection(collectionName)
 
-  const doc = await collection.findOne({ _id: document }).then((_doc) => {
-    if (_doc) {
-      return _doc
-    }
-    // No document found with obj_id, try again with straight id
-    const { _subtype } = pageContext.urlParsed.search
-    const _id = buildId(document, _subtype ? Number.parseInt(_subtype) : undefined)
-    return collection.findOne({ _id })
-  })
+  // (?) TODO add decodeURIComponent(document)
+  const _id = buildId(document, pageContext.urlParsed.search._subtype)
+
+  const doc = await collection.findOne({ _id })
+
+  // TODO handle 404 not found
 
   const { readOnly } = config.options
   const _data = {
