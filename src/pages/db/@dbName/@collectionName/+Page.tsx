@@ -1,6 +1,6 @@
 import type { Component } from 'solid-js'
 
-import { JsonViewer } from '@/components/Collection/JsonViewer'
+import JsonViewer from '@/components/Collection/JsonViewer'
 
 const data = {
   id: 42,
