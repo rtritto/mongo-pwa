@@ -24,7 +24,7 @@ export const data: DataAsync<DataDB> = async (pageContext: PageContext) => {
   } as DataDB
 
   if (mongo.adminDb) {
-    _data.dbStats = mapDatabaseStats(await mongo.connections[dbName].db.stats() as DbStats)
+    _data.stats = mapDatabaseStats(await mongo.connections[dbName].db.stats() as DbStats)
   }
 
   return _data

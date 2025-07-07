@@ -23,7 +23,7 @@ const Page: Component<DataIndex> = () => {
 
       <div class="mb-2">
         <Show
-          when={data.serverStats}
+          when={data.stats}
           fallback={(
             <>
               <h4>Server Stats</h4>
@@ -31,7 +31,7 @@ const Page: Component<DataIndex> = () => {
             </>
           )}
         >
-          <StatsTable label="Server Status" fields={data.serverStats!} />
+          <StatsTable label="Server Status" fields={data.stats! as ServerStats} />
         </Show>
       </div>
     </div>

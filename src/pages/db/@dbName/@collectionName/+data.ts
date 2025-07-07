@@ -87,14 +87,15 @@ export const data: DataAsync<DataCollection> = async (pageContext: PageContext) 
   // const pagination = count > limit
 
   if (mongo.adminDb && !config.mongodb.awsDocumentDb) {
-    const [{ indexSizes }, indexes] = await Promise.all([
+    const [stats, indexes] = await Promise.all([
       collection.aggregate<CollStats>([{ $collStats: { storageStats: {} } }]).next().then((s) => s.storageStats),
       collection.indexes()
-    ])
+    ]) as [CollStats, Index]
+    const { indexSizes } = stats
     for (let n = 0, len = indexes.length; n < len; n++) {
       indexes[n].size = indexSizes[indexes[n].name]
     }
-    _data.collectionStats = mapCollectionStats(await mongo.adminDb.serverStatus() as ServerStatus)
+    _data.stats = mapCollectionStats(stats)
   }
 
   return _data

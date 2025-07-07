@@ -16,7 +16,7 @@ export const data: DataAsync<DataIndex> = async () => {
   } as DataIndex
 
   if (mongo.adminDb) {
-    _data.serverStats = mapServerStats(await mongo.adminDb.serverStatus() as ServerStatus)
+    _data.stats = mapServerStats(await mongo.adminDb.serverStatus() as ServerStatus)
   }
 
   return _data

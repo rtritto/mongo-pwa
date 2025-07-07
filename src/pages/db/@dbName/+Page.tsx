@@ -1,4 +1,4 @@
-import type { Component } from 'solid-js'
+import { type Component, Show } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
 import ShowCollections from '@/components/Database/ShowCollections'
@@ -27,7 +27,19 @@ const Page: Component<DataDB> = () => {
 
       {/* TODO Create GridFS Bucket */}
 
-      <StatsTable label="Database Stats" fields={data.dbStats!} />
+      <div class="mb-2">
+        <Show
+          when={data.stats}
+          fallback={(
+            <>
+              <h4>Database Stats</h4>
+              Turn on admin in <b>config.js</b> to view database stats!
+            </>
+          )}
+        >
+          <StatsTable label="Database Stats" fields={data.stats! as DBStats} />
+        </Show>
+      </div>
     </div>
   )
 }
