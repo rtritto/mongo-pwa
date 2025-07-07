@@ -1,10 +1,12 @@
 import type { DataAsync, PageContext } from 'vike/types'
 
 import { connectClient } from '@/server/db'
+// import { toString } from '@/utils/bson'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
 import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
-import { bytesToSize, roughSizeOfObject } from '@/utils/mappers/mapUtils'
+// import { bytesToSize, roughSizeOfObject } from '@/utils/mappers/mapUtils'
 import { isValidCollectionName, isValidDatabaseName } from '@/utils/validationsClient'
+import { stringDocIDs } from '@/utils/mappers/mapId'
 
 export const data: DataAsync<DataCollection> = async (pageContext: PageContext) => {
   const { dbName, collectionName } = pageContext.routeParams
@@ -25,6 +27,52 @@ export const data: DataAsync<DataCollection> = async (pageContext: PageContext) 
   const collection = mongo.mongoClient.db(dbName).collection(collectionName)
   const { count, items } = await getItemsAndCount(search, queryOptions, collection, config)
 
+  const docs = [] as typeof items
+  const columns = [] as string[][]
+
+  for (const i in items) {
+    // // Prep items with stubs so as not to send large info down the wire
+    // for (const prop in items[i]) {
+    //   if (roughSizeOfObject(items[i][prop]) > config.options.maxPropSize) {
+    //     items[i][prop] = {
+    //       attribu: prop,
+    //       display: '*** LARGE PROPERTY ***',
+    //       humanSz: bytesToSize(roughSizeOfObject(items[i][prop])),
+    //       maxSize: bytesToSize(config.options.maxPropSize),
+    //       preview: JSON.stringify(items[i][prop]).slice(0, 25),
+    //       roughSz: roughSizeOfObject(items[i][prop]),
+    //       _id: items[i]._id
+    //     }
+    //   }
+    // }
+
+    // // If after prepping the row is still too big
+    // if (roughSizeOfObject(items[i]) > config.options.maxRowSize) {
+    //   for (const prop in items[i]) {
+    //     if (prop !== '_id' && roughSizeOfObject(items[i][prop]) > 200) {
+    //       items[i][prop] = {
+    //         attribu: prop,
+    //         display: '*** LARGE ROW ***',
+    //         humanSz: bytesToSize(roughSizeOfObject(items[i][prop])),
+    //         maxSize: bytesToSize(config.options.maxRowSize),
+    //         preview: JSON.stringify(items[i][prop]).slice(0, 25),
+    //         roughSz: roughSizeOfObject(items[i][prop]),
+    //         _id: items[i]._id
+    //       }
+    //     }
+    //   }
+    // }
+
+    const itemKeys = Object.keys(items[i])
+    columns.push(itemKeys)
+    // docs[i] = items[i]
+    docs[i] = {}
+    for (const key of itemKeys) {
+      docs[i][key] = stringDocIDs(items[i][key])
+    }
+    // items[i] = toString(items[i])
+  }
+
   const _data = {
     title: `Collection: ${collectionName} - Mongo PWA`,
     databases: mongo.databases,
@@ -34,57 +82,16 @@ export const data: DataAsync<DataCollection> = async (pageContext: PageContext) 
     selectedCollection: collectionName,
     selectedDocument: undefined,
     count,
-    items
+    items,
+    docs,
+    // Generate an array of columns used by all documents visible on this page
+    columns: columns.flat()
+      .filter((value, index, arr) => arr.indexOf(value) === index),  // Remove duplicates
+    // Pagination
+    pagination: count > queryOptions.limit,
+    skip: queryOptions.skip,
+    sort: queryOptions.sort
   } as DataCollection
-
-  // const docs = []
-  // let columns = []
-
-  // for (const i in items) {
-  //   // Prep items with stubs so as not to send large info down the wire
-  //   for (const prop in items[i]) {
-  //     if (roughSizeOfObject(items[i][prop]) > config.options.maxPropSize) {
-  //       items[i][prop] = {
-  //         attribu: prop,
-  //         display: '*** LARGE PROPERTY ***',
-  //         humanSz: bytesToSize(roughSizeOfObject(items[i][prop])),
-  //         maxSize: bytesToSize(config.options.maxPropSize),
-  //         preview: JSON.stringify(items[i][prop]).slice(0, 25),
-  //         roughSz: roughSizeOfObject(items[i][prop]),
-  //         _id: items[i]._id
-  //       }
-  //     }
-  //   }
-
-  //   // If after prepping the row is still too big
-  //   if (roughSizeOfObject(items[i]) > config.options.maxRowSize) {
-  //     for (const prop in items[i]) {
-  //       if (prop !== '_id' && roughSizeOfObject(items[i][prop]) > 200) {
-  //         items[i][prop] = {
-  //           attribu: prop,
-  //           display: '*** LARGE ROW ***',
-  //           humanSz: bytesToSize(roughSizeOfObject(items[i][prop])),
-  //           maxSize: bytesToSize(config.options.maxRowSize),
-  //           preview: JSON.stringify(items[i][prop]).slice(0, 25),
-  //           roughSz: roughSizeOfObject(items[i][prop]),
-  //           _id: items[i]._id
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   docs[i] = items[i]
-  //   columns.push(Object.keys(items[i]))
-  //   items[i] = bson.toString(items[i])
-  // }
-
-  // // Generate an array of columns used by all documents visible on this page
-  // columns = columns.flat()
-  //   .filter((value, index, arr) => arr.indexOf(value) === index)  // Remove duplicates
-
-  // // Pagination
-  // const { limit, skip, sort } = queryOptions
-  // const pagination = count > limit
 
   if (mongo.adminDb && !config.mongodb.awsDocumentDb) {
     const [stats, indexes] = await Promise.all([

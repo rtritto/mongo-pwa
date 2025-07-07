@@ -22,6 +22,10 @@ type DataCollection = DataDB & {
 
   count: number
   items: Document[]
+  columns: string[]
+  pagination: number
+  skip: number
+  sort: number
 }
 
 type DataDocument = DataCollection & {

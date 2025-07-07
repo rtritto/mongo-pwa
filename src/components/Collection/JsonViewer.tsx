@@ -79,7 +79,7 @@ function JsonNode(props: {
             <span class="text-gray-400">: </span>
           </Show>
 
-          <span class="text-green-300">{JSON.stringify(props.value)}</span>
+          <span class="text-green-300">{props.value}</span>
 
           <Show when={!props.isLast}>
             <span class="text-gray-500">,</span>
@@ -92,7 +92,7 @@ function JsonNode(props: {
 
 const JsonViewer: Component<{ data: any }> = (props) => {
   return (
-    <div class="font-mono text-sm bg-gray-900 text-white p-4 rounded-xl shadow overflow-auto max-h-[80vh]">
+    <div class="font-mono text-sm bg-gray-900 text-white p-4 rounded-xl shadow overflow-auto">
       <JsonNode keyName={null} value={props.data} level={0} isLast={true} />
     </div>
   )
