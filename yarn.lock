@@ -1149,10 +1149,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brillout/json-serializer@npm:^0.5.15":
-  version: 0.5.15
-  resolution: "@brillout/json-serializer@npm:0.5.15"
-  checksum: 10c0/eb04c5f8f4d736a5494eb7b7e6ec8f80a913fd76bf462ff593c886e17e67729270a2aaaba17523d34a8b8b660ed9999ee18af04b6b77a9c68179ef4a83a00759
+"@brillout/json-serializer@npm:^0.5.16":
+  version: 0.5.17
+  resolution: "@brillout/json-serializer@npm:0.5.17"
+  checksum: 10c0/0fdf57adc4d479b4c11d703e2567f63b4161f537e3ee755834cc420844b2ee61cc3ee165ae5756278c74be1d5fab027420fbdde41da8ae8f97203df51d833df4
   languageName: node
   linkType: hard
 
@@ -5626,9 +5626,9 @@ __metadata:
     tailwindcss: "npm:^4.1.11"
     typescript: "npm:5.8.3"
     typescript-eslint: "npm:^8.39.1"
-    vike: "npm:^0.4.235"
-    vike-server: "npm:^1.0.19"
-    vike-solid: "patch:vike-solid@npm%3A0.7.11#~/.yarn/patches/vike-solid-npm-0.7.11-67358b5775.patch"
+    vike: "npm:^0.4.236"
+    vike-server: "npm:^1.0.22"
+    vike-solid: "npm:^0.7.12"
     vite: "npm:^6.3.5"
     vite-plugin-pwa: "npm:^1.0.2"
   languageName: unknown
@@ -7328,9 +7328,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike-server@npm:^1.0.19":
-  version: 1.0.19
-  resolution: "vike-server@npm:1.0.19"
+"vike-server@npm:^1.0.22":
+  version: 1.0.22
+  resolution: "vike-server@npm:1.0.22"
   dependencies:
     "@brillout/picocolors": "npm:^1.0.26"
     "@brillout/vite-plugin-server-entry": "npm:^0.7.5"
@@ -7350,44 +7350,30 @@ __metadata:
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 10c0/b95592034734f33b1f9b98172812873e4c07eb75d2ba4c9f412505d544a22ecb592d8f89111efdbd0449db74758c669acbcdc4b76c2ef71a1771ec76c9308559
+  checksum: 10c0/4f2d8c3d73d4344dae9f0b77d97bef3837c4540e849ef623bdfd4d58f6ae1bcb09112c4970105b942bb33f87c26d6c52e9853341a1ee0ad0a81e17d609a7908d
   languageName: node
   linkType: hard
 
-"vike-solid@npm:0.7.11":
-  version: 0.7.11
-  resolution: "vike-solid@npm:0.7.11"
+"vike-solid@npm:^0.7.12":
+  version: 0.7.12
+  resolution: "vike-solid@npm:0.7.12"
   dependencies:
     isbot-fast: "npm:^1.2.0"
-    vite-plugin-solid: "npm:^2.11.6"
+    vite-plugin-solid: "npm:^2.11.8"
   peerDependencies:
     solid-js: ^1.8.7
     vike: ">=0.4.195"
     vite: ">=5.0.0"
-  checksum: 10c0/bbe679773f3b2e2bc0510713e23810fcc3ee43f7acec70bcac2c884e83a49061f143fdfdbfaae917986968a9638e12b46cb57170033f65b133ca2edbf514b325
+  checksum: 10c0/537a849f599f0bf21fefeeca76d433c7e618fa67feae2dda326c1229dd7fc991e69e32006a9bc63216b446ca9c04499d712679590d095bbd6cfe810a8b72b53a
   languageName: node
   linkType: hard
 
-"vike-solid@patch:vike-solid@npm%3A0.7.11#~/.yarn/patches/vike-solid-npm-0.7.11-67358b5775.patch":
-  version: 0.7.11
-  resolution: "vike-solid@patch:vike-solid@npm%3A0.7.11#~/.yarn/patches/vike-solid-npm-0.7.11-67358b5775.patch::version=0.7.11&hash=db8dc0"
-  dependencies:
-    isbot-fast: "npm:^1.2.0"
-    vite-plugin-solid: "npm:^2.11.6"
-  peerDependencies:
-    solid-js: ^1.8.7
-    vike: ">=0.4.195"
-    vite: ">=5.0.0"
-  checksum: 10c0/1070bb366c7833693ba55f1db412465b456a058ec4ec002d53e506e55d8dbf8536b2e37e71c895ff9fd40304febd804c9b8290fea7bbf9d52b7c697aeb85a4d0
-  languageName: node
-  linkType: hard
-
-"vike@npm:^0.4.235":
-  version: 0.4.235
-  resolution: "vike@npm:0.4.235"
+"vike@npm:^0.4.236":
+  version: 0.4.236
+  resolution: "vike@npm:0.4.236"
   dependencies:
     "@brillout/import": "npm:^0.2.6"
-    "@brillout/json-serializer": "npm:^0.5.15"
+    "@brillout/json-serializer": "npm:^0.5.16"
     "@brillout/picocolors": "npm:^1.0.26"
     "@brillout/require-shim": "npm:^0.1.2"
     "@brillout/vite-plugin-server-entry": "npm:^0.7.8"
@@ -7413,7 +7399,7 @@ __metadata:
       optional: true
   bin:
     vike: node/cli/bin.js
-  checksum: 10c0/b8d14fef53d50f441c9f433ff3d9ee5c5ad61c15782fb8ddbbaac84e2838dfc3e4f6fe784b1d25ddfb7f94c5bdde52c104407ced4b523832679f0ad8b7d21db4
+  checksum: 10c0/78e9541457507efddad32df94bc789590848b5514b3ec57913a83fe69e82b7c7c210c85704f6cf9283a85b2b43215f37499b924f3cabe83b6525b1051b298465
   languageName: node
   linkType: hard
 
@@ -7438,9 +7424,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-solid@npm:^2.11.6":
-  version: 2.11.6
-  resolution: "vite-plugin-solid@npm:2.11.6"
+"vite-plugin-solid@npm:^2.11.8":
+  version: 2.11.8
+  resolution: "vite-plugin-solid@npm:2.11.8"
   dependencies:
     "@babel/core": "npm:^7.23.3"
     "@types/babel__core": "npm:^7.20.4"
@@ -7451,11 +7437,11 @@ __metadata:
   peerDependencies:
     "@testing-library/jest-dom": ^5.16.6 || ^5.17.0 || ^6.*
     solid-js: ^1.7.2
-    vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
+    vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
   peerDependenciesMeta:
     "@testing-library/jest-dom":
       optional: true
-  checksum: 10c0/11db3158ef596f879c6abd326036fad6ebf4d6d3693dac39932a0bfb9182cb155cc92a11d9c958c1774b154b8cfcb42cbf470a723aac71dd7bc7abb00101e90c
+  checksum: 10c0/c48204f9863b95d9cb958a7fc00f769f9940bd529ac46832f6f6deca21dee8c21ec377ab0b8ddb8f4daf3d10c17e75861dbe423b3e2227fee12a75718d20a7bd
   languageName: node
   linkType: hard
 
