@@ -1,7 +1,5 @@
 import { createSignal, For, Show, type Component } from 'solid-js'
 
-const isExpandable = (v: any) => v?.constructor.name === 'Object'
-
 const MAX_LEN = 50
 
 const RenderText = (props: { text: string }) => {
@@ -34,7 +32,7 @@ function JsonNode(props: {
 
   const isArray = Array.isArray(props.value)
   const isObject = props.value?.constructor.name === 'Object'
-  const isExpandableNode = isExpandable(props.value)
+  const isExpandableNode = isArray || isObject
 
   return (
     <div class="ml-2">
