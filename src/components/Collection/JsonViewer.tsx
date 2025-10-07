@@ -1,6 +1,6 @@
 import { createSignal, For, Show, type Component } from 'solid-js'
 
-const isExpandable = (v: any) => v && typeof v === 'object'
+const isExpandable = (v: any) => v?.constructor.name === 'Object'
 
 const MAX_LEN = 50
 
@@ -33,7 +33,7 @@ function JsonNode(props: {
   const [open, setOpen] = createSignal(props.level < 1)
 
   const isArray = Array.isArray(props.value)
-  const isObject = !isArray && typeof props.value === 'object'
+  const isObject = props.value?.constructor.name === 'Object'
   const isExpandableNode = isExpandable(props.value)
 
   return (
