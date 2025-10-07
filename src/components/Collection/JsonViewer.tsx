@@ -27,7 +27,7 @@ function JsonNode(props: {
   keyName: string | null
   value: any
   level: number
-  isArrayItem?: boolean
+  isObjectItem?: boolean
   isLast?: boolean
 }) {
   const [open, setOpen] = createSignal(props.level < 1)
@@ -46,7 +46,7 @@ function JsonNode(props: {
         <span class="flex cursor-pointer" onClick={() => setOpen(!open())}>
           <span class="text-purple-300 select-none">{open() ? '▼ ' : '▶ '}</span>
 
-          <Show when={!props.isArrayItem && props.keyName !== null}>
+          <Show when={props.isObjectItem}>
             <span class="text-blue-300">{props.keyName}</span>
 
             <span class="text-gray-400">{': '}</span>
@@ -66,7 +66,7 @@ function JsonNode(props: {
                     keyName={null}
                     value={item}
                     level={props.level + 1}
-                    isArrayItem={true}
+                    isObjectItem={false}
                     isLast={i() === props.value.length - 1}
                   />
                 )}
@@ -80,7 +80,7 @@ function JsonNode(props: {
                     keyName={k}
                     value={v}
                     level={props.level + 1}
-                    isArrayItem={false}
+                    isObjectItem={true}
                     isLast={i() === Object.entries(props.value).length - 1}
                   />
                 )}
@@ -98,7 +98,7 @@ function JsonNode(props: {
 
       <Show when={!isExpandableNode}>
         <span class="flex">
-          <Show when={!props.isArrayItem && props.keyName !== null}>
+          <Show when={props.isObjectItem}>
             <span class="text-blue-300">{props.keyName}</span>
 
             <span class="text-gray-400">{': '}</span>
