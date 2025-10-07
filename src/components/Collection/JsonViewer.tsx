@@ -49,7 +49,7 @@ function JsonNode(props: {
           <Show when={!props.isArrayItem && props.keyName !== null}>
             <span class="text-blue-300">{props.keyName}</span>
 
-            <span class="text-gray-400">: </span>
+            <span class="text-gray-400">{': '}</span>
           </Show>
 
           <span class="text-gray-500">
@@ -101,7 +101,7 @@ function JsonNode(props: {
           <Show when={!props.isArrayItem && props.keyName !== null}>
             <span class="text-blue-300">{props.keyName}</span>
 
-            <span class="text-gray-400">: </span>
+            <span class="text-gray-400">{': '}</span>
           </Show>
 
           <span class="text-green-300">
