@@ -2,6 +2,26 @@ import { createSignal, For, Show, type Component } from 'solid-js'
 
 const isExpandable = (v: any) => v && typeof v === 'object'
 
+const MAX_LEN = 60
+
+const RenderText = (props: { text: string }) => {
+  const [expanded, setExpanded] = createSignal(false)
+
+  const displayValue = () => expanded() || props.text.length <= MAX_LEN
+    ? props.text
+    : props.text.slice(0, MAX_LEN) + '…'
+
+  return (
+    <span
+      class="cursor-pointer break-all whitespace-nowrap"
+      title={props.text}
+      onClick={() => setExpanded(!expanded())}
+    >
+      "{displayValue()}"
+    </span>
+  )
+}
+
 function JsonNode(props: {
   keyName: string | null
   value: any
@@ -79,7 +99,7 @@ function JsonNode(props: {
             <span class="text-gray-400">: </span>
           </Show>
 
-          <span class="text-green-300">{props.value}</span>
+          <span class="text-green-300">{(typeof props.value === 'string') ? <RenderText text={props.value} /> : props.value}</span>
 
           <Show when={!props.isLast}>
             <span class="text-gray-500">,</span>
