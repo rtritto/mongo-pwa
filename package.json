@@ -39,9 +39,9 @@
     "tailwindcss": "^4.1.12",
     "typescript": "5.8.3",
     "typescript-eslint": "^8.39.1",
-    "vike": "^0.4.237",
-    "vike-server": "^1.0.22",
-    "vike-solid": "^0.7.12",
+    "vike": "^0.4.242",
+    "vike-server": "^1.0.24",
+    "vike-solid": "patch:vike-solid@npm%3A0.7.13#~/.yarn/patches/vike-solid-npm-0.7.13-40ff8cb857.patch",
     "vite": "^6.3.5",
     "vite-plugin-pwa": "^1.0.2"
   },
