@@ -2,7 +2,7 @@ import { createSignal, For, Show, type Component } from 'solid-js'
 
 const isExpandable = (v: any) => v && typeof v === 'object'
 
-const MAX_LEN = 60
+const MAX_LEN = 50
 
 const RenderText = (props: { text: string }) => {
   const [expanded, setExpanded] = createSignal(false)
@@ -11,6 +11,7 @@ const RenderText = (props: { text: string }) => {
     ? props.text
     : props.text.slice(0, MAX_LEN) + '…'
 
+  // break-all split text; remove it to make it one line
   return (
     <span
       class="cursor-pointer break-all whitespace-nowrap"
