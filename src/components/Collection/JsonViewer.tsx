@@ -44,17 +44,17 @@ function JsonNode(props: {
           - implement display all divs on same line and add " "
         */}
         <span class="flex cursor-pointer" onClick={() => setOpen(!open())}>
-          <div class="text-purple-300 select-none">{open() ? '▼ ' : '▶ '}</div>
+          <span class="text-purple-300 select-none">{open() ? '▼ ' : '▶ '}</span>
 
           <Show when={!props.isArrayItem && props.keyName !== null}>
-            <div class="text-blue-300">{props.keyName}</div>
+            <span class="text-blue-300">{props.keyName}</span>
 
-            <div class="text-gray-400">: </div>
+            <span class="text-gray-400">: </span>
           </Show>
 
-          <div class="text-gray-500">
+          <span class="text-gray-500">
             {isArray ? (open() ? '[' : '[ … ]') : (open() ? '{' : '{ … }')}
-          </div>
+          </span>
         </span>
 
         <Show when={open()}>
@@ -97,19 +97,21 @@ function JsonNode(props: {
       </Show>
 
       <Show when={!isExpandableNode}>
-        <div>
+        <span class="flex">
           <Show when={!props.isArrayItem && props.keyName !== null}>
             <span class="text-blue-300">{props.keyName}</span>
 
-            <span class="text-gray-400">: </span>
+            <span class="text-gray-400">: </span>
           </Show>
 
-          <span class="text-green-300">{(typeof props.value === 'string') ? <RenderText text={props.value} /> : props.value}</span>
+          <span class="text-green-300">
+            {(typeof props.value === 'string') ? <RenderText text={props.value} /> : props.value}
+          </span>
 
           <Show when={!props.isLast}>
             <span class="text-gray-500">,</span>
           </Show>
-        </div>
+        </span>
       </Show>
     </div>
   )
