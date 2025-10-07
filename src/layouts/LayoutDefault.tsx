@@ -7,11 +7,13 @@ import NavBar from './NavBar'
 
 export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
   return (
-    <div class="flex flex-col min-h-screen">
+    <div>
       <NavBar />
 
       <main class="flex justify-center">
-        {props.children}
+        <div class="max-w-7xl">
+          {props.children}
+        </div>
       </main>
     </div>
   )
