@@ -39,19 +39,23 @@ function JsonNode(props: {
   return (
     <div class="ml-2">
       <Show when={isExpandableNode}>
-        <div class="cursor-pointer" onClick={() => setOpen(!open())}>
-          <span class="text-purple-300 select-none">{open() ? '▼ ' : '▶ '}</span>
+        {/* TODO
+          - remove flex and " "
+          - implement display all divs on same line and add " "
+        */}
+        <span class="flex cursor-pointer" onClick={() => setOpen(!open())}>
+          <div class="text-purple-300 select-none">{open() ? '▼ ' : '▶ '}</div>
 
           <Show when={!props.isArrayItem && props.keyName !== null}>
-            <span class="text-blue-300">{props.keyName}</span>
+            <div class="text-blue-300">{props.keyName}</div>
 
-            <span class="text-gray-400">: </span>
+            <div class="text-gray-400">: </div>
           </Show>
 
-          <span class="text-gray-500">
-            {isArray ? (open() ? '[' : '[ … ]') : (open() ? '{' : '{ … }')}
-          </span>
-        </div>
+          <div class="text-gray-500">
+            {isArray ? (open() ? '[' : '[ … ]') : (open() ? '{' : '{ … }')}
+          </div>
+        </span>
 
         <Show when={open()}>
           <div class="ml-1 border-l border-gray-600 pl-2 mt-1">
