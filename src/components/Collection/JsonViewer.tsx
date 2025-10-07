@@ -26,7 +26,7 @@ function JsonNode(props: {
   value: any
   level: number
   isObjectItem?: boolean
-  isLast?: boolean
+  isLast: boolean
 }) {
   const [open, setOpen] = createSignal(props.level < 1)
 
