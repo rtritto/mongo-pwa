@@ -105,7 +105,11 @@ function JsonNode(props: {
           </Show>
 
           <span class="text-green-300">
-            {(typeof props.value === 'string') ? <RenderText text={props.value} /> : props.value}
+            {typeof props.value === 'string'
+              ? <RenderText text={props.value} />
+              : props.value?.constructor.name === 'Date'
+                ? props.value.toISOString()
+                : props.value}
           </span>
 
           <Show when={!props.isLast}>
