@@ -38,7 +38,7 @@ const ShowDatabases: Component<{
                         if (res.ok) {
                           // Add database to global databases to update viewing databases
                           setData({
-                            databases: [...data.databases, database].sort(),
+                            databases: [...data.databases, database].toSorted(),
                             success: `Database "${database}" created!`
                           })
                         } else {

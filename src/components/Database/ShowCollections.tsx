@@ -44,7 +44,7 @@ const ShowCollections: Component<{
                         if (res.ok) {
                           // Add database to global collections to update viewing collections
                           setData({
-                            collections: [...data.collections, collection].sort(),
+                            collections: [...data.collections, collection].toSorted(),
                             success: `Collection "${collection}" created!`
                           })
                         } else {
