@@ -21,6 +21,7 @@ type DataCollection = DataDB & {
   selectedCollection: string
 
   count: number
+  docs: Record<string, any>[]
   items: Document[]
   columns: string[]
   pagination: number
