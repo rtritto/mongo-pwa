@@ -3,6 +3,19 @@ import { createSignal, For, Show, type Component } from 'solid-js'
 const MAX_LEN = 50
 
 const RenderText = (props: { text: string }) => {
+  // Image/Audio/Video inline preview
+  if (props.text.startsWith('data:')) {
+    if (props.text.startsWith('data:image')) {
+      return <img src={props.text} alt="inline image" />
+    }
+    if (props.text.startsWith('data:audio')) {
+      return <audio controls src={props.text} />
+    }
+    if (props.text.startsWith('data:video')) {
+      return <video controls><source src={props.text} /></video>
+    }
+  }
+
   const [expanded, setExpanded] = createSignal(false)
 
   const displayValue = () => expanded() || props.text.length <= MAX_LEN
