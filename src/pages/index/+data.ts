@@ -1,5 +1,3 @@
-import type { DataAsync } from 'vike/types'
-
 import { connectClient } from '@/server/db'
 import { mapServerStats } from '@/utils/mappers/mapInfo'
 

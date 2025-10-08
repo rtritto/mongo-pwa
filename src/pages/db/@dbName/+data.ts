@@ -1,10 +1,8 @@
-import type { DataAsync, PageContext } from 'vike/types'
-
 import { connectClient } from '@/server/db'
 import { mapDatabaseStats } from '@/utils/mappers/mapInfo'
 import { isValidDatabaseName } from '@/utils/validationsClient'
 
-export const data: DataAsync<DataDB> = async (pageContext: PageContext) => {
+export const data: DataAsync<DataDB> = async (pageContext) => {
   const { dbName } = pageContext.routeParams
   const validationRes = isValidDatabaseName(dbName)
   if (validationRes.error) {
