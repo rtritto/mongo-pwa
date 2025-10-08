@@ -2,6 +2,12 @@
 @plugin "daisyui";
 
 @layer utilities {
+  .table {
+    & :where(th, td) {
+      vertical-align: top;
+    }
+  }
+
   .menu {
     & :where(li) {
       /* Change column to default row */
