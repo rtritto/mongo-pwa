@@ -1,24 +1,12 @@
-import { createSignal, For, Show, type Component } from 'solid-js'
+import { createSignal, For, Match, Show, Switch, untrack, type Component } from 'solid-js'
 
 const MAX_LEN = 50
 
-const RenderText = (props: { text: string }) => {
-  // Image/Audio/Video inline preview
-  if (props.text.startsWith('data:')) {
-    if (props.text.startsWith('data:image')) {
-      return <img src={props.text} alt="inline image" />
-    }
-    if (props.text.startsWith('data:audio')) {
-      return <audio controls src={props.text} />
-    }
-    if (props.text.startsWith('data:video')) {
-      return <video controls><source src={props.text} /></video>
-    }
-  }
-
+const RenderLongText: Component<{ text: string }> = (props) => {
+  // On click expand/collapse long text
   const [expanded, setExpanded] = createSignal(false)
 
-  const displayValue = () => expanded() || props.text.length <= MAX_LEN
+  const displayLongTextValue = () => expanded()
     ? props.text
     : props.text.slice(0, MAX_LEN) + '…'
 
@@ -29,23 +17,64 @@ const RenderText = (props: { text: string }) => {
       title={props.text}
       onClick={() => setExpanded(!expanded())}
     >
-      "{displayValue()}"
+      "{displayLongTextValue()}"
     </span>
   )
 }
 
-function JsonNode(props: {
+const RenderText: Component<{ text: string }> = (props) => {
+  return (
+    <Switch fallback={<RenderLongText text={props.text} />}>
+      {/* Image/Audio/Video inline preview */}
+      <Match when={props.text.startsWith('data:')}>
+        <Switch fallback={<span>"{props.text}"</span>}>
+          <Match when={props.text.startsWith('data:image')}>
+            <img src={props.text} alt="inline image" />
+          </Match>
+
+          <Match when={props.text.startsWith('data:audio')}>
+            <audio controls src={props.text} />
+          </Match>
+
+          <Match when={props.text.startsWith('data:video')}>
+            <video controls><source src={props.text} /></video>
+          </Match>
+        </Switch>
+      </Match>
+
+      <Match when={props.text.length <= MAX_LEN}>
+        <span>"{props.text}"</span>
+      </Match>
+    </Switch>
+  )
+}
+
+const JsonNode: Component<{
   keyName: string | null
   value: any
   level: number
   isObjectItem?: boolean
   isLast: boolean
-}) {
-  const [open, setOpen] = createSignal(props.level < 1)
+}> = (props) => {
+  const [open, setOpen] = createSignal(untrack(() => props.level < 1))
 
-  const isArray = Array.isArray(props.value)
-  const isObject = props.value?.constructor.name === 'Object'
+  const isArray = Array.isArray(untrack(() => props.value))
+  const isObject = untrack(() => props.value?.constructor.name === 'Object')
   const isExpandableNode = isArray || isObject
+
+  const displayValue = () => {
+    if (typeof props.value === 'number')
+      return <span class="text-cyan-300">{props.value}</span>
+    if (typeof props.value === 'string')
+      return <span class="text-green-300"><RenderText text={props.value} /></span>
+    if (typeof props.value === 'boolean')
+      return <span class="text-yellow-300">{props.value.toString()}</span>
+    if (props.value?.constructor.name === 'Date')
+      return <span class="text-green-300">{props.value.toISOString()}</span>
+    if (props.value === null || props.value === undefined)
+      return <span class="text-gray-400">{props.value}</span>
+    return props.value
+  }
 
   return (
     <div class="ml-2">
@@ -115,13 +144,7 @@ function JsonNode(props: {
             <span class="text-gray-400">{': '}</span>
           </Show>
 
-          <span class="text-green-300">
-            {typeof props.value === 'string'
-              ? <RenderText text={props.value} />
-              : (props.value?.constructor.name === 'Date'
-                ? props.value.toISOString()
-                : props.value)}
-          </span>
+          {displayValue()}
 
           <Show when={!props.isLast}>
             <span class="text-gray-500">,</span>
