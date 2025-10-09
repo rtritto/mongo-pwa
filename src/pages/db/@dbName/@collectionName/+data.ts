@@ -61,12 +61,12 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     //   }
     // }
 
-    const itemKeys = Object.keys(items[i])
-    columns.push(itemKeys)
+    const currentColumns = Object.keys(items[i])
+    columns.push(currentColumns)
     // docs[i] = items[i]
     docs[i] = {}
-    for (const key of itemKeys) {
-      docs[i][key] = stringDocIDs(items[i][key])
+    for (const column of currentColumns) {
+      docs[i][column] = stringDocIDs(items[i][column])
     }
     // items[i] = toString(items[i])
   }
