@@ -1,4 +1,4 @@
-import { type Component, createSignal } from 'solid-js'
+import { type Component, createSignal, Show } from 'solid-js'
 
 import IconDelete from '@/components/Icons/IconDelete'
 
@@ -6,6 +6,8 @@ const DeleteDialog: Component<{
   title: string
   value: string
   message: string
+  enableInput?: boolean
+  showLabel?: boolean
   handleDelete: (input: string) => void
 }> = (props) => {
   let dialogRef!: HTMLDialogElement
@@ -20,7 +22,7 @@ const DeleteDialog: Component<{
       }}>
         <IconDelete />
 
-        Delete
+        {props.showLabel && 'Delete'}
       </button>
 
       <dialog class="modal" id="modal_drawer" ref={dialogRef}>
@@ -28,13 +30,17 @@ const DeleteDialog: Component<{
           <h3 class="text-lg font-bold">{props.title} <b>"{props.value}"</b></h3>
 
           <form onSubmit={async (event) => event.preventDefault()  /* Disable page reload after submit */}>
-            <p class="text-sm">{props.message}</p>
+            <p class="text-sm m-1">{props.message}</p>
 
-            <input class="input m-3 w-full" type="text" placeholder={`Type "${props.value}"`} value={input()} onKeyUp={(event) => setInput(event.currentTarget.value.trim())} />
+            <Show when={props.enableInput}>
+              <input class="input m-3 w-full" type="text" placeholder={`Type "${props.value}"`} value={input()} onKeyUp={(event) => setInput(event.currentTarget.value.trim())} />
+            </Show>
 
-            <button class="btn bg-red-700 py-0.5" type="submit" onClick={() => props.handleDelete(input())} disabled={input() !== props.value}>
-              Delete
-            </button>
+            <div class="text-center">
+              <button class="btn bg-red-700 m-1 py-0.5" type="submit" onClick={() => props.handleDelete(input())} disabled={props.enableInput ? input() !== props.value : false}>
+                Delete
+              </button>
+            </div>
           </form>
         </div>
 
