@@ -19,10 +19,9 @@ export default async function documentDelete(c: Context) {
   checkCollection(database, collection)
   const filter = { _id: buildId(_id, _subtype) }
   const _collection = globalThis.mongo.mongoClient.db(database).collection(collection)
-  const _doc = await _collection.findOne(filter)
-  if (_doc === null) {
-    throw new Error('Document not found!')
+  const { deletedCount } = await _collection.deleteOne(filter)
+  if (!deletedCount) {
+    throw new Error('Document not deleted!')
   }
-  await _collection.deleteOne(filter)
   return c.json({})
 }
