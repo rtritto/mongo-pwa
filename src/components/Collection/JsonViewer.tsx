@@ -2,6 +2,8 @@ import { createSignal, For, Match, Show, Switch, untrack, type Component } from 
 
 const MAX_LEN = 50
 
+const EXPANDABLE_TYPES = new Set(['Object', 'DBRef', 'Timestamp', 'MinKey', 'MaxKey'])
+
 const RenderLongText: Component<{ text: string }> = (props) => {
   // On click expand/collapse long text
   const [expanded, setExpanded] = createSignal(false)
@@ -43,7 +45,7 @@ const RenderText: Component<{ text: string }> = (props) => {
       </Match>
 
       <Match when={props.text.length <= MAX_LEN}>
-        <span>"{props.text}"</span>
+        <span>{props.text}</span>
       </Match>
     </Switch>
   )
@@ -59,7 +61,7 @@ const JsonNode: Component<{
   const [open, setOpen] = createSignal(untrack(() => props.level < 1))
 
   const isArray = Array.isArray(untrack(() => props.value))
-  const isObject = untrack(() => props.value?.constructor.name === 'Object')
+  const isObject = untrack(() => props.value && EXPANDABLE_TYPES.has(props.value?.constructor.name))
   const isExpandableNode = isArray || isObject
 
   const displayValue = () => {
