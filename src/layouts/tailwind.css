@@ -4,6 +4,7 @@
 @layer utilities {
   .table {
     & :where(th, td) {
+      padding-inline: 0.2rem;
       vertical-align: top;
     }
   }
