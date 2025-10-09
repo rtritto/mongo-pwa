@@ -80,7 +80,7 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     selectedCollection: collectionName,
     selectedDocument: undefined,
     count,
-    items,
+    // items,
     docs,
     // Generate an array of columns used by all documents visible on this page
     columns: columns.flat()
