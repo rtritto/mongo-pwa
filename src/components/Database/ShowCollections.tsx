@@ -115,7 +115,7 @@ const ShowCollections: Component<{
                   </td>
 
                   <Show when={props.show.delete}>
-                    <td class="p-0.5 text-right">
+                    <td class="p-0.5">
                       <DeleteDialog
                         title="Delete Collection"
                         value={collection}

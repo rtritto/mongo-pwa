@@ -57,7 +57,7 @@ const ShowDatabases: Component<{
         </thead>
       </table>
 
-      <table class="table">
+      <table class="table text-center">
         <tbody>
           <For each={props.databases}>
             {(database) => (
@@ -77,7 +77,7 @@ const ShowDatabases: Component<{
                 </td>
 
                 <Show when={props.show.delete}>
-                  <td class="p-0.5 text-right">
+                  <td class="p-0.5">
                     <DeleteDialog
                       title="Delete Database"
                       value={database}

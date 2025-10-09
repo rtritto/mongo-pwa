@@ -14,9 +14,8 @@ const DeleteDialog: Component<{
   const [input, setInput] = createSignal('')
 
   return (
-    // reset (parent component uses another text-*) or force text-left
-    <div class="inline-block text-left">
-      <button class="btn btn-sm bg-red-700 py-0.5" onClick={() => {
+    <div>
+      <button class="btn btn-sm bg-red-700 py-0.5 text-right" onClick={() => {
         dialogRef.showModal()
         // Reset
         setInput('')
