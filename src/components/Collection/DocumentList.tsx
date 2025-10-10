@@ -28,7 +28,12 @@ const DocumentList: Component<{ data: DataCollection }> = (props) => {
                     <IconSearch />
                   </a>
 
-                  <DeleteDocument database={props.data.selectedDatabase} collection={props.data.selectedCollection} documentId={document._id} />
+                  <DeleteDocument
+                    database={props.data.selectedDatabase}
+                    collection={props.data.selectedCollection}
+                    _id={document._id}
+                    _subtype={document._subtype}
+                  />
                 </th>
 
                 <For each={props.data.columns}>

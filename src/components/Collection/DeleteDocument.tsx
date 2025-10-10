@@ -8,12 +8,14 @@ const DeleteDocument: Component<{
   documentId: string
   database: string
   collection: string
+  _id: string
+  _subtype: number | undefined
   // setError: (error: string) => void
 }> = (props) => {
   return (
     <DeleteDialog
       title="Delete Document"
-      value={props.documentId}
+      value={props._id}
       message={`Are you sure you want to delete the document?`}
       enableInput={false}
       handleDelete={(_input) => {
@@ -23,7 +25,8 @@ const DeleteDocument: Component<{
           body: JSON.stringify({
             database: props.database,
             collection: props.collection,
-            _id: props.documentId
+            _id: props._id,
+            _subtype: props._subtype
           })
         }).then(async (res) => {
           if (res.ok) {
