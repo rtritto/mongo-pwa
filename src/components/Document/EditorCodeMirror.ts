@@ -34,7 +34,7 @@ const EditorCodeMirror = (textarea: HTMLTextAreaElement, options: { readOnly: bo
     ]
   })
 
-  const view = new EditorView()
+  const view = new EditorView() as EditorView & { isClean: () => boolean }
   view.setState(state)
 
   textarea.parentNode!.insertBefore(view.dom, textarea)
