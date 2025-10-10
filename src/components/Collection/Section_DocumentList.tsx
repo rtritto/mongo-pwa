@@ -25,7 +25,7 @@ const Section_DocumentList: Component<{ data: DataCollection }> = (props) => {
               <tr>
                 <th>
                   <a
-                    class="btn btn-sm bg-blue-500 m-1"
+                    class="btn btn-sm w-full bg-blue-500 m-1"
                     href={`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`}
                   >
                     <IconSearch />
