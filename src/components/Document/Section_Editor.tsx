@@ -18,7 +18,7 @@ const Section_Editor: Component<{ docString: string, readOnly: boolean }> = (pro
   })
 
   return (
-    <div ref={containerRef} class="w-full h-full">{view()}</div>
+    <div ref={containerRef}>{view()}</div>
   )
 }
 
