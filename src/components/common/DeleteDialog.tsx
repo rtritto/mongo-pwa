@@ -6,6 +6,7 @@ const DeleteDialog: Component<{
   title: string
   value: string
   message: string
+  fullWidth?: boolean
   enableInput?: boolean
   showLabel?: boolean
   handleDelete: () => void
@@ -15,7 +16,7 @@ const DeleteDialog: Component<{
 
   return (
     <div>
-      <button class="btn btn-sm w-full bg-red-700 py-0.5" onClick={() => {
+      <button class={`btn btn-sm${props.fullWidth ? ' w-full' : ''} bg-red-700 py-0.5`} onClick={() => {
         dialogRef.showModal()
         // Reset
         setInput('')

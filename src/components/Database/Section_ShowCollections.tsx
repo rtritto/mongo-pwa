@@ -120,6 +120,7 @@ const Section_ShowCollections: Component<{
                         title="Delete Collection"
                         value={collection}
                         message="Be careful! You are about to delete the collection (all documents will be deleted)"
+                        fullWidth={true}
                         enableInput={true}
                         showLabel={true}
                         handleDelete={() => fetch('/api/collectionDelete', {
