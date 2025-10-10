@@ -148,6 +148,6 @@ export const buildId = (_id: string | number, sub_type: number | undefined) => {
       return new Binary(Buffer.from((_id as string).replaceAll('-', ''), 'hex'), sub_type)
     }
     // Case 3 : Try as raw ID (e.g. number)
-    return _id
+    return Number(_id)
   }
 }
