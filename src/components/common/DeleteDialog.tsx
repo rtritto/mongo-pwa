@@ -8,7 +8,7 @@ const DeleteDialog: Component<{
   message: string
   enableInput?: boolean
   showLabel?: boolean
-  handleDelete: (input: string) => void
+  handleDelete: () => void
 }> = (props) => {
   let dialogRef!: HTMLDialogElement
   const [input, setInput] = createSignal('')
@@ -41,7 +41,7 @@ const DeleteDialog: Component<{
             </Show>
 
             <div class="text-center m-2">
-              <button class="btn bg-red-700 py-0.5" type="submit" onClick={() => props.handleDelete(input())} disabled={props.enableInput ? input() !== props.value : false}>
+              <button class="btn bg-red-700 py-0.5" type="submit" onClick={() => props.handleDelete()} disabled={props.enableInput ? input() !== props.value : false}>
                 Delete
               </button>
             </div>

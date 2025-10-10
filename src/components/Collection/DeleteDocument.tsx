@@ -19,7 +19,7 @@ const DeleteDocument: Component<{
       message={`Are you sure you want to delete the document?`}
       showLabel={props.showLabel}
       enableInput={false}
-      handleDelete={(_input) => {
+      handleDelete={() => {
         fetch('/api/documentDelete', {
           method: 'POST',
           headers: HEADERS_JSON,
