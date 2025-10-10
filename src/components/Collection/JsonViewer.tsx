@@ -80,7 +80,7 @@ const JsonNode: Component<{
   return (
     <div class="ml-2">
       <Show when={isExpandableNode}>
-        {/* TODO remove " " */}
+        {/* (?) TODO remove " " */}
         <span class="cursor-pointer" onClick={() => setOpen(!open())}>
           <span class="text-purple-300 select-none">{open() ? '▼ ' : '▶ '}</span>
 
