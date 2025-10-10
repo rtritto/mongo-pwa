@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
-import Editor from '@/components/Document/Editor'
+import Section_Editor from '@/components/Document/Section_Editor'
 
 const Page: Component<DataDocument> = () => {
   const [data] = useData<DataDocument>()
@@ -9,7 +9,7 @@ const Page: Component<DataDocument> = () => {
     <>
       <h1>{data.title}</h1>
 
-      <Editor docString={data.docString} readOnly={data.readOnly} />
+      <Section_Editor docString={data.docString} readOnly={data.readOnly} />
     </>
   )
 }

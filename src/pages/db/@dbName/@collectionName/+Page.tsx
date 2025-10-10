@@ -1,7 +1,7 @@
 import { type Component, Show } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
-import DocumentList from '@/components/Collection/DocumentList'
+import Section_DocumentList from '@/components/Collection/Section_DocumentList'
 import StatsTable from '@/components/common/StatsTable'
 // TODO remove
 // import JsonViewer from '@/components/Collection/JsonViewer'
@@ -31,7 +31,7 @@ const Page: Component<DataCollection> = () => {
 
       {/* <JsonViewer data={_data} /> */}
 
-      <DocumentList data={data} />
+      <Section_DocumentList data={data} />
 
       <div class="mb-2">
         <Show

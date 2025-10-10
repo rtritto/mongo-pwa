@@ -10,7 +10,7 @@ import IconVisibility from '@/components/Icons/IconVisibility'
 import { HEADERS_JSON } from '@/utils/constants'
 import { isValidCollectionName } from '@/utils/validationsClient'
 
-const ShowCollections: Component<{
+const Section_ShowCollections: Component<{
   collections: string[]
   dbName: string
   show: {
@@ -155,4 +155,4 @@ const ShowCollections: Component<{
   )
 }
 
-export default ShowCollections
+export default Section_ShowCollections

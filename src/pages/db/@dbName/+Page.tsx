@@ -1,7 +1,7 @@
 import { type Component, Show } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
-import ShowCollections from '@/components/Database/ShowCollections'
+import Section_ShowCollections from '@/components/Database/Section_ShowCollections'
 import StatsTable from '@/components/common/StatsTable'
 
 const Page: Component<DataDB> = () => {
@@ -13,7 +13,7 @@ const Page: Component<DataDB> = () => {
 
       <div class="divider m-1.5" />
 
-      <ShowCollections
+      <Section_ShowCollections
         collections={data.collections}
         dbName={data.selectedDatabase}
         show={{

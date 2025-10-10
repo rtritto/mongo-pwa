@@ -4,7 +4,7 @@ import IconSearch from '@/components/Icons/IconSearch'
 import DeleteDocument from './DeleteDocument'
 import JsonViewer from './JsonViewer'
 
-const DocumentList: Component<{ data: DataCollection }> = (props) => {
+const Section_DocumentList: Component<{ data: DataCollection }> = (props) => {
   return (
     <div class="overflow-x-auto">
       <table class="table table-zebra text-center">
@@ -48,4 +48,4 @@ const DocumentList: Component<{ data: DataCollection }> = (props) => {
   )
 }
 
-export default DocumentList
+export default Section_DocumentList
