@@ -18,6 +18,7 @@ const Page: Component<DataDocument> = () => {
           collection={data.selectedCollection}
           _id={data._id}
           sub_type={data.subtype}
+          doReload={false}
           showLabel={true}
         />
       </div>

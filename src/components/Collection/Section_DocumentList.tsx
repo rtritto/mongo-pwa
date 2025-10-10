@@ -33,6 +33,7 @@ const Section_DocumentList: Component<{ data: DataCollection }> = (props) => {
                     collection={props.data.selectedCollection}
                     _id={document._id}
                     sub_type={document.sub_type}
+                    doReload={true}
                   />
                 </th>
 

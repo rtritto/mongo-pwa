@@ -1,5 +1,5 @@
-import type { Component } from 'solid-js'
-import { reload } from 'vike/client/router'
+import { untrack, type Component } from 'solid-js'
+import { navigate, reload } from 'vike/client/router'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
 import { HEADERS_JSON } from '@/utils/constants'
@@ -9,6 +9,7 @@ const DeleteDocument: Component<{
   collection: string
   _id: string
   sub_type: number | undefined
+  doReload: boolean
   showLabel?: boolean
   // setError: (error: string) => void
 }> = (props) => {
@@ -31,7 +32,9 @@ const DeleteDocument: Component<{
           })
         }).then(async (res) => {
           if (res.ok) {
-            await reload()
+            await (untrack(() => props.doReload)
+              ? reload()
+              : navigate(`/db/${untrack(() => props.database)}/${untrack(() => props.collection)}`))
           } else {
             // const { error } = await res.json()
             // setError(error)
