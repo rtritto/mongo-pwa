@@ -1,11 +1,11 @@
-import { type Component, untrack } from 'solid-js'
-import { navigate } from 'vike/client/router'
+import { type Component, createSignal, Show, untrack } from 'solid-js'
 
 import DeleteDocument from '@/components/Collection/DeleteDocument'
 import createCodeMirror from './createCodeMirror'
-import IconBack from '@/components/Icons/IconBack'
+import BackButton from './BackButton'
 
 const Section_Editor: Component<{ data: DataDocument }> = (props) => {
+  const [showBanner, setShowBanner] = createSignal(false)
   const { editorView, ref: editorRef } = createCodeMirror(
     untrack(() => props.data.docString),
     { readOnly: untrack(() => props.data.readOnly) }
@@ -13,17 +13,15 @@ const Section_Editor: Component<{ data: DataDocument }> = (props) => {
 
   return (
     <div>
+      <Show when={showBanner()}>
+        <div role="alert" class="alert alert-warning alert-outline">
+          <span>Document has changed! Do you want to go back?</span>
+        </div>
+      </Show>
+
       <div ref={editorRef} />
 
-      <div class="m-2">
-        <button class="btn btn-sm bg-yellow-500 py-0.5 text-right" onClick={async () => {
-          await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}`)
-        }}>
-          <IconBack />
-
-          Back
-        </button>
-      </div>
+      <BackButton view={editorView()!} data={props.data} setShowBanner={setShowBanner} />
 
       <div class="m-2">
         <DeleteDocument
