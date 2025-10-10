@@ -15,7 +15,7 @@ const DeleteDialog: Component<{
 
   return (
     <div>
-      <button class="btn btn-sm bg-red-700 py-0.5 text-right" onClick={() => {
+      <button class="btn btn-sm w-full bg-red-700 py-0.5 text-right" onClick={() => {
         dialogRef.showModal()
         // Reset
         setInput('')
@@ -40,7 +40,7 @@ const DeleteDialog: Component<{
               </div>
             </Show>
 
-            <div class="text-center m-2">
+            <div class="m-2">
               <button class="btn bg-red-700 py-0.5" type="submit" onClick={() => props.handleDelete()} disabled={props.enableInput ? input() !== props.value : false}>
                 Delete
               </button>

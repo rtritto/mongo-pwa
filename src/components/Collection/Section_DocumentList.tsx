@@ -7,7 +7,7 @@ import JsonViewer from './JsonViewer'
 const Section_DocumentList: Component<{ data: DataCollection }> = (props) => {
   return (
     <div class="overflow-x-auto">
-      <table class="table table-zebra text-center">
+      <table class="table table-zebra">
         <thead>
           <tr>
             <th />

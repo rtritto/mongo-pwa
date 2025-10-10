@@ -57,13 +57,13 @@ const ShowDatabases: Component<{
         </thead>
       </table>
 
-      <table class="table text-center">
+      <table class="table">
         <tbody>
           <For each={props.databases}>
             {(database) => (
               <tr>
                 <td class="p-0.5">
-                  <a class="btn btn-sm bg-green-600" href={`/db/${encodeURIComponent(database)}`}>
+                  <a class="btn btn-sm w-full bg-green-600" href={`/db/${encodeURIComponent(database)}`}>
                     <IconVisibility />
 
                     View
@@ -71,7 +71,7 @@ const ShowDatabases: Component<{
                 </td>
 
                 <td class="p-0.5">
-                  <a class="btn" href={`/db/${encodeURIComponent(database)}`}>
+                  <a class="btn w-full" href={`/db/${encodeURIComponent(database)}`}>
                     <h6>{database}</h6>
                   </a>
                 </td>
