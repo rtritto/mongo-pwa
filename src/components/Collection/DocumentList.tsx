@@ -1,6 +1,7 @@
 import { For, type Component } from 'solid-js'
 
 import IconSearch from '@/components/Icons/IconSearch'
+import DeleteDocument from './DeleteDocument'
 import JsonViewer from './JsonViewer'
 
 const DocumentList: Component<{ data: DataCollection }> = (props) => {
@@ -20,14 +21,14 @@ const DocumentList: Component<{ data: DataCollection }> = (props) => {
 
         <tbody>
           <For each={props.data.docs}>
-            {(document, index) => (
+            {(document) => (
               <tr>
                 <th>
-                  <a class="btn btn-sm bg-blue-500" href={`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}`}>
+                  <a class="btn btn-sm bg-blue-500 m-1" href={`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}`}>
                     <IconSearch />
                   </a>
 
-                  TODO Del {index() + 1}
+                  <DeleteDocument database={props.data.selectedDatabase} collection={props.data.selectedCollection} documentId={document._id} />
                 </th>
 
                 <For each={props.data.columns}>
