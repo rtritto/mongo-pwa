@@ -24,20 +24,24 @@ const Section_DocumentList: Component<{ data: DataCollection }> = (props) => {
             {(document) => (
               <tr>
                 <th>
-                  <a
-                    class="btn btn-sm w-full bg-blue-500 m-1"
-                    href={`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`}
-                  >
-                    <IconSearch />
-                  </a>
+                  <div class="my-2">
+                    <a
+                      class="btn btn-sm w-full bg-blue-500"
+                      href={`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`}
+                    >
+                      <IconSearch />
+                    </a>
+                  </div>
 
-                  <DeleteDocument
-                    database={props.data.selectedDatabase}
-                    collection={props.data.selectedCollection}
-                    _id={document._id}
-                    sub_type={document.sub_type}
-                    doReload={true}
-                  />
+                  <div class="my-2">
+                    <DeleteDocument
+                      database={props.data.selectedDatabase}
+                      collection={props.data.selectedCollection}
+                      _id={document._id}
+                      sub_type={document.sub_type}
+                      doReload={true}
+                    />
+                  </div>
                 </th>
 
                 <For each={props.data.columns}>
