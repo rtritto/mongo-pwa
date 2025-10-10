@@ -145,11 +145,11 @@ export const buildId = (_id: string, _subtype: string | undefined) => {
   }
   // Case 2 : BinaryID (only subtype 4)
   if (_subtype) {
-    const subtype = Number.parseInt(_subtype as string)
+    const subtype = Number(_subtype as string)
     if (subtype === Binary.SUBTYPE_UUID) {
       return new Binary(Buffer.from((_id as string).replaceAll('-', ''), 'hex'), subtype)
     }
   }
   // Case 3 : Try as raw ID (e.g. number)
-  return Number.parseInt(_id as string)
+  return Number(_id as string)
 }
