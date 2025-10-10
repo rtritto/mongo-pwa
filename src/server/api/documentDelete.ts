@@ -17,9 +17,10 @@ export default async function documentDelete(c: Context) {
   await connectClient()
   checkDatabase(database)
   checkCollection(database, collection)
-  const filter = { _id: buildId(_id, _subtype) }
-  const _collection = globalThis.mongo.mongoClient.db(database).collection(collection)
-  const { deletedCount } = await _collection.deleteOne(filter)
+  const { deletedCount } = await globalThis.mongo.mongoClient
+    .db(database)
+    .collection(collection)
+    .deleteOne({ _id: buildId(_id, _subtype) })
   if (!deletedCount) {
     throw new Error('Document not deleted!')
   }
