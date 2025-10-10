@@ -8,6 +8,8 @@ import { EditorView, keymap, lineNumbers } from '@codemirror/view'
 import { tags as t } from '@lezer/highlight'
 import { createEffect, createSignal, on, onCleanup, onMount } from 'solid-js'
 
+type CustomEditorView = EditorView & { isClean: () => boolean }
+
 const customHighlightStyle = HighlightStyle.define([
   {
     tag: [t.labelName],
@@ -26,7 +28,7 @@ const customOneDark = [
  */
 const createCodeMirror = (doc: string, options: { readOnly: boolean }) => {
   const [ref, setRef] = createSignal<HTMLElement>()
-  const [editorView, setEditorView] = createSignal<EditorView>()
+  const [editorView, setEditorView] = createSignal<CustomEditorView>()
 
   createEffect(
     on(ref, (ref) => {
@@ -47,7 +49,7 @@ const createCodeMirror = (doc: string, options: { readOnly: boolean }) => {
       const view = new EditorView({
         state,
         parent: ref
-      }) as EditorView & { isClean: () => boolean }
+      }) as CustomEditorView
 
       // Method "isClean" was removed in CodeMirror 6
       // See https://discuss.codemirror.net/t/is-dirty-flag-available-in-codemirror/2716
@@ -68,3 +70,5 @@ const createCodeMirror = (doc: string, options: { readOnly: boolean }) => {
 }
 
 export default createCodeMirror
+
+export type { CustomEditorView }
