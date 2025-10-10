@@ -10,6 +10,7 @@ import { createEffect, createSignal, on, onCleanup, onMount } from 'solid-js'
 
 type CustomEditorView = EditorView & { isClean: () => boolean }
 
+// Add color to key values
 const customHighlightStyle = HighlightStyle.define([
   {
     tag: [t.labelName],
