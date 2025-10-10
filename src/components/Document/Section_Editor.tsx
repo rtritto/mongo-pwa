@@ -6,7 +6,10 @@ import createCodeMirror from './createCodeMirror'
 import IconBack from '@/components/Icons/IconBack'
 
 const Section_Editor: Component<{ data: DataDocument }> = (props) => {
-  const { editorView, ref: editorRef } = createCodeMirror(untrack(() => props.data.docString), { readOnly: untrack(() => props.data.readOnly) })
+  const { editorView, ref: editorRef } = createCodeMirror(
+    untrack(() => props.data.docString),
+    { readOnly: untrack(() => props.data.readOnly) }
+  )
 
   return (
     <div>
