@@ -138,17 +138,14 @@ export const addHyphensToUUID = (hex: string) => {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20, 32)}`
 }
 
-export const buildId = (_id: string | number, _subtype: string | undefined) => {
+export const buildId = (_id: string | number, sub_type: number | undefined) => {
   // Case 1 : ObjectId
   try {
     return ObjectId.createFromHexString(_id as string)
   } catch {
     // Case 2 : BinaryID (only subtype 4)
-    if (_subtype) {
-      const subtype = Number(_subtype as string)
-      if (subtype === Binary.SUBTYPE_UUID) {
-        return new Binary(Buffer.from((_id as string).replaceAll('-', ''), 'hex'), subtype)
-      }
+    if (sub_type === Binary.SUBTYPE_UUID) {
+      return new Binary(Buffer.from((_id as string).replaceAll('-', ''), 'hex'), sub_type)
     }
     // Case 3 : Try as raw ID (e.g. number)
     return _id

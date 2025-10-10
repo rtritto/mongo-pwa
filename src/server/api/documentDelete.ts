@@ -8,11 +8,11 @@ export default async function documentDelete(c: Context) {
   // TODO (?) remove checkOption
   checkOption('readOnly', true)
   checkOption('noDelete', true)
-  const { database, collection, _id, _subtype } = await c.req.json<{
+  const { database, collection, _id, sub_type } = await c.req.json<{
     database: string
     collection: string
     _id: string | number
-    _subtype: number | undefined
+    sub_type: number | undefined
   }>()
   await connectClient()
   checkDatabase(database)
@@ -20,7 +20,7 @@ export default async function documentDelete(c: Context) {
   const { deletedCount } = await globalThis.mongo.mongoClient
     .db(database)
     .collection(collection)
-    .deleteOne({ _id: buildId(_id, _subtype) })
+    .deleteOne({ _id: buildId(_id, sub_type) })
   if (!deletedCount) {
     throw new Error('Document not deleted!')
   }

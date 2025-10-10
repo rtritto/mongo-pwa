@@ -64,7 +64,10 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     const currentColumns = Object.keys(items[i])
     columns.push(currentColumns)
     // docs[i] = items[i]
-    docs[i] = {}
+    docs[i] = {
+      // Used by DELETE document
+      sub_type: items[i]._id.sub_type
+    }
     for (const column of currentColumns) {
       docs[i][column] = stringDocIDs(items[i][column])
     }

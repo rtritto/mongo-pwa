@@ -5,11 +5,10 @@ import DeleteDialog from '@/components/common/DeleteDialog'
 import { HEADERS_JSON } from '@/utils/constants'
 
 const DeleteDocument: Component<{
-  documentId: string
   database: string
   collection: string
   _id: string
-  _subtype: number | undefined
+  sub_type: number | undefined
   // setError: (error: string) => void
 }> = (props) => {
   return (
@@ -26,7 +25,7 @@ const DeleteDocument: Component<{
             database: props.database,
             collection: props.collection,
             _id: props._id,
-            _subtype: props._subtype
+            sub_type: props.sub_type
           })
         }).then(async (res) => {
           if (res.ok) {

@@ -32,7 +32,7 @@ const DocumentList: Component<{ data: DataCollection }> = (props) => {
                     database={props.data.selectedDatabase}
                     collection={props.data.selectedCollection}
                     _id={document._id}
-                    _subtype={document._subtype}
+                    sub_type={document.sub_type}
                   />
                 </th>
 
