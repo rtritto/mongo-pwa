@@ -32,6 +32,8 @@ type DataCollection = DataDB & {
 type DataDocument = DataCollection & {
   documentName: string
   docString: string
+  _id: any
+  subtype: number | undefined
 
   selectedDocument: string
   readOnly: boolean

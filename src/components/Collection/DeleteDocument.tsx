@@ -9,6 +9,7 @@ const DeleteDocument: Component<{
   collection: string
   _id: string
   sub_type: number | undefined
+  showLabel?: boolean
   // setError: (error: string) => void
 }> = (props) => {
   return (
@@ -16,6 +17,7 @@ const DeleteDocument: Component<{
       title="Delete Document"
       value={props._id}
       message={`Are you sure you want to delete the document?`}
+      showLabel={props.showLabel}
       enableInput={false}
       handleDelete={(_input) => {
         fetch('/api/documentDelete', {

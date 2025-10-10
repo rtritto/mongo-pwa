@@ -19,8 +19,9 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
   // const collection = mongo.connections[dbName].db.collection(collectionName)
   const collection = mongo.mongoClient.db(dbName).collection(collectionName)
 
+  const subtype = 'subtype' in pageContext.urlParsed.search ? Number(pageContext.urlParsed.search.subtype) : undefined
   // (?) TODO add decodeURIComponent(document)
-  const _id = buildId(document, pageContext.urlParsed.search._subtype)
+  const _id = buildId(document, subtype)
 
   const doc = await collection.findOne({ _id })
 
@@ -30,6 +31,8 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
   const _data = {
     title: `${readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
     docString: toString(doc!),
+    _id,
+    subtype,
     readOnly,
     selectedDatabase: dbName,
     selectedCollection: collectionName,
