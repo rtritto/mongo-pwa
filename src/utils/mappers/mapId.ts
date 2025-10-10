@@ -29,11 +29,7 @@ export const stringDocIDs = (input: ObjectId | Binary | Long): string => {
         }
         return input.toJSON()
       }
-      default: {
-        return input
-      }
     }
   }
-
   return input
 }
