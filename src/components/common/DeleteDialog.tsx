@@ -1,4 +1,4 @@
-import { type Component, createSignal, Show } from 'solid-js'
+import { type Component, createSignal, Show, untrack } from 'solid-js'
 
 import IconDelete from '@/components/Icons/IconDelete'
 
@@ -16,33 +16,33 @@ const DeleteDialog: Component<{
 
   return (
     <div>
-      <button class={`btn btn-sm${props.fullWidth ? ' w-full' : ''} bg-red-700 py-0.5`} onClick={() => {
+      <button class={`btn btn-sm${untrack(() => props.fullWidth) ? ' w-full' : ''} bg-red-700 py-0.5`} onClick={() => {
         dialogRef.showModal()
         // Reset
         setInput('')
       }}>
         <IconDelete />
 
-        {props.showLabel && 'Delete'}
+        {untrack(() => props.showLabel) && 'Delete'}
       </button>
 
       <dialog class="modal" id="modal_drawer" ref={dialogRef}>
         <div class="modal-box">
-          <h3 class="text-lg font-bold">{props.title} <b>"{props.value}"</b></h3>
+          <h3 class="text-lg font-bold">{untrack(() => props.title)} <b>"{untrack(() => props.value)}"</b></h3>
 
           <form onSubmit={async (event) => event.preventDefault()  /* Disable page reload after submit */}>
             <div class="m-2">
-              <p class="text-sm">{props.message}</p>
+              <p class="text-sm">{untrack(() => props.message)}</p>
             </div>
 
             <Show when={props.enableInput}>
               <div class="m-2">
-                <input class="input w-full" type="text" placeholder={`Type "${props.value}"`} value={input()} onKeyUp={(event) => setInput(event.currentTarget.value.trim())} />
+                <input class="input w-full" type="text" placeholder={`Type "${untrack(() => props.value)}"`} value={input()} onKeyUp={(event) => setInput(event.currentTarget.value.trim())} />
               </div>
             </Show>
 
             <div class="m-2">
-              <button class="btn bg-red-700 py-0.5" type="submit" onClick={() => props.handleDelete()} disabled={props.enableInput ? input() !== props.value : false}>
+              <button class="btn bg-red-700 py-0.5" type="submit" onClick={() => props.handleDelete()} disabled={props.enableInput ? input() !== untrack(() => props.value) : false}>
                 Delete
               </button>
             </div>
