@@ -1,6 +1,6 @@
 import { createSignal, For, Match, Show, Switch, untrack, type Component } from 'solid-js'
 
-const MAX_LEN = 50
+const MAX_LEN = 20
 
 const EXPANDABLE_TYPES = new Set(['Object', 'DBRef', 'Timestamp', 'MinKey', 'MaxKey'])
 
@@ -12,10 +12,9 @@ const RenderLongText: Component<{ text: string }> = (props) => {
     ? props.text
     : props.text.slice(0, MAX_LEN) + '…'
 
-  // break-all split text; remove it to make it one line
   return (
     <span
-      class="cursor-pointer break-all whitespace-nowrap"
+      class={`cursor-pointer${expanded() ? ' break-all' : ''} whitespace-nowrap`}
       title={props.text}
       onClick={() => setExpanded(!expanded())}
     >
@@ -81,11 +80,8 @@ const JsonNode: Component<{
   return (
     <div class="ml-2">
       <Show when={isExpandableNode}>
-        {/* TODO
-          - remove flex and " "
-          - implement display all divs on same line and add " "
-        */}
-        <span class="flex cursor-pointer" onClick={() => setOpen(!open())}>
+        {/* TODO remove " " */}
+        <span class="cursor-pointer" onClick={() => setOpen(!open())}>
           <span class="text-purple-300 select-none">{open() ? '▼ ' : '▶ '}</span>
 
           <Show when={props.isObjectItem}>
@@ -139,7 +135,7 @@ const JsonNode: Component<{
       </Show>
 
       <Show when={!isExpandableNode}>
-        <span class="flex">
+        <span>
           <Show when={props.isObjectItem}>
             <span class="text-blue-300">{props.keyName}</span>
 
