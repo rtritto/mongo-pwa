@@ -11,6 +11,7 @@ const DeleteDocument: Component<{
   sub_type: number | undefined
   doReload: boolean
   showLabel?: boolean
+  fullWidth?: boolean
   // setError: (error: string) => void
 }> = (props) => {
   return (
@@ -19,8 +20,7 @@ const DeleteDocument: Component<{
       value={props._id}
       message={`Are you sure you want to delete the document?`}
       showLabel={props.showLabel}
-      fullWidth={false}
-      enableInput={false}
+      fullWidth={props.fullWidth}
       handleDelete={() => (
         fetch('/api/documentDelete', {
           method: 'POST',

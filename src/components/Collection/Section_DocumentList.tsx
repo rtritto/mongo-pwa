@@ -40,6 +40,7 @@ const Section_DocumentList: Component<{ data: DataCollection }> = (props) => {
                       _id={document._id}
                       sub_type={document.sub_type}
                       doReload={true}
+                      fullWidth={true}
                     />
                   </div>
                 </th>

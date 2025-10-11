@@ -11,11 +11,13 @@ const Page: Component<DataCollection> = () => {
 
   return (
     <div>
-      <h1 class="text-2xl pb-2">Viewing Collection: {data.selectedCollection}</h1>
+      <h1 class="text-2xl pb-2">Viewing Collection: <b>{data.selectedCollection}</b></h1>
 
       <Show when={idDocumentCreated()}>
-        <div role="alert" class="alert alert-success alert-outline">
-          <span>Document "<b>{idDocumentCreated()}</b>" added!</span>
+        <div class="mb-2">
+          <div role="alert" class="alert alert-success alert-outline">
+            <span>Document "<b>{idDocumentCreated()}</b>" added!</span>
+          </div>
         </div>
       </Show>
 

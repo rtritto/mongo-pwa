@@ -14,8 +14,10 @@ const Section_Editor: Component<{ data: DataDocument }> = (props) => {
   return (
     <div>
       <Show when={showBanner()}>
-        <div role="alert" class="alert alert-warning alert-outline">
-          <span>Document has changed! Do you want to go back?</span>
+        <div class="mb-2">
+          <div role="alert" class="alert alert-warning alert-outline">
+            <span>Document has changed! Do you want to go back?</span>
+          </div>
         </div>
       </Show>
 
