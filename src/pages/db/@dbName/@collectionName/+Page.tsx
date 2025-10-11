@@ -14,10 +14,8 @@ const Page: Component<DataCollection> = () => {
       <h1 class="text-2xl pb-2">Viewing Collection: <b>{data.selectedCollection}</b></h1>
 
       <Show when={idDocumentCreated()}>
-        <div class="mb-2">
-          <div role="alert" class="alert alert-success alert-outline">
-            <span>Document "<b>{idDocumentCreated()}</b>" added!</span>
-          </div>
+        <div role="alert" class="alert alert-success alert-outline mb-2">
+          <span>Document "<b>{idDocumentCreated()}</b>" added!</span>
         </div>
       </Show>
 
