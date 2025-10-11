@@ -1,6 +1,6 @@
 import { createSignal, For, Match, Show, Switch, untrack, type Component } from 'solid-js'
 
-const MAX_LEN = 20
+const MAX_LEN = 25
 
 const EXPANDABLE_TYPES = new Set(['Object', 'DBRef', 'Timestamp', 'MinKey', 'MaxKey'])
 
