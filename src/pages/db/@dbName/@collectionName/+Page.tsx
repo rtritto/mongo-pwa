@@ -1,35 +1,25 @@
-import { type Component, Show } from 'solid-js'
+import { type Component, createSignal, Show } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
 import Section_DocumentList from '@/components/Collection/Section_DocumentList'
 import StatsTable from '@/components/common/StatsTable'
-// TODO remove
-// import JsonViewer from '@/components/Collection/JsonViewer'
-
-// const _data = {
-//   id: 42,
-//   name: "Elysia",
-//   skills: ["SolidJS", "Rust", "Hono"],
-//   projects: {
-//     ui: {
-//       framework: "Solid",
-//       style: "Tailwind"
-//     },
-//     backend: {
-//       language: "Rust",
-//       rpc: "Tonic"
-//     }
-//   }
-// }
+import CreateDocumentDialog from '@/components/Collection/CreateDocumentDialog'
 
 const Page: Component<DataCollection> = () => {
   const [data] = useData<DataCollection>()
+  const [idDocumentCreated, setIdDocumentCreated] = createSignal('')
 
   return (
     <div>
       <h1 class="text-2xl pb-2">Viewing Collection: {data.selectedCollection}</h1>
 
-      {/* <JsonViewer data={_data} /> */}
+      <Show when={idDocumentCreated()}>
+        <div role="alert" class="alert alert-success alert-outline">
+          <span>Document "<b>{idDocumentCreated()}</b>" added!</span>
+        </div>
+      </Show>
+
+      <CreateDocumentDialog database={data.selectedDatabase} collection={data.selectedCollection} setIdDocumentCreated={setIdDocumentCreated} />
 
       <Section_DocumentList data={data} />
 

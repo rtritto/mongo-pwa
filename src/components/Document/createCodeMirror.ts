@@ -8,7 +8,10 @@ import { EditorView, keymap, lineNumbers } from '@codemirror/view'
 import { tags as t } from '@lezer/highlight'
 import { createEffect, createSignal, on, onCleanup, onMount } from 'solid-js'
 
-type CustomEditorView = EditorView & { isClean: () => boolean }
+type CustomEditorView = EditorView & {
+  isClean: () => boolean
+  updateDoc: (doc: string) => void
+}
 
 // Add color to key values
 const customHighlightStyle = HighlightStyle.define([
@@ -33,24 +36,34 @@ const createCodeMirror = (doc: string, options: { readOnly: boolean }) => {
 
   createEffect(
     on(ref, (ref) => {
+      const extensions = [
+        basicSetup,
+        history(),
+        lineNumbers(),
+        keymap.of([...defaultKeymap, ...historyKeymap]),
+        javascript(),
+        indentUnit.of(' '),
+        EditorState.readOnly.of(options.readOnly),
+        customOneDark
+      ]
       const state = EditorState.create({
         doc,
-        extensions: [
-          basicSetup,
-          history(),
-          lineNumbers(),
-          keymap.of([...defaultKeymap, ...historyKeymap]),
-          javascript(),
-          indentUnit.of(' '),
-          EditorState.readOnly.of(options.readOnly),
-          customOneDark
-        ]
+        extensions
       })
 
       const view = new EditorView({
         state,
         parent: ref
       }) as CustomEditorView
+
+      // Allow updating the document content
+      // Used to reset the editor when opening the "Add Document" dialog
+      view.updateDoc = (doc: string) => {
+        view.setState(EditorState.create({
+          doc,
+          extensions
+        }))
+      }
 
       // Method "isClean" was removed in CodeMirror 6
       // See https://discuss.codemirror.net/t/is-dirty-flag-available-in-codemirror/2716
