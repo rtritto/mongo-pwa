@@ -3,8 +3,12 @@ import { type Component, createSignal, Show, untrack } from 'solid-js'
 import DeleteDocument from '@/components/Collection/DeleteDocument'
 import createCodeMirror from './createCodeMirror'
 import BackButton from './BackButton'
+import SaveButton from './SaveButton'
 
-const Editor: Component<{ data: DataDocument }> = (props) => {
+const Editor: Component<{
+  data: DataDocument
+  setIdDocumentUpdated: (id: string) => void
+}> = (props) => {
   const [showBanner, setShowBanner] = createSignal(false)
   const { editorView, ref: editorRef } = createCodeMirror(
     untrack(() => props.data.docString),
@@ -22,6 +26,8 @@ const Editor: Component<{ data: DataDocument }> = (props) => {
       <div ref={editorRef} />
 
       <BackButton view={editorView()!} data={props.data} setShowBanner={setShowBanner} />
+
+      <SaveButton view={editorView()!} data={props.data} setIdDocumentUpdated={props.setIdDocumentUpdated} />
 
       <div class="m-2">
         <DeleteDocument
