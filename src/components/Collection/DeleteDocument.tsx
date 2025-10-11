@@ -21,7 +21,7 @@ const DeleteDocument: Component<{
       showLabel={props.showLabel}
       fullWidth={false}
       enableInput={false}
-      handleDelete={() => {
+      handleDelete={() => (
         fetch('/api/documentDelete', {
           method: 'POST',
           headers: HEADERS_JSON,
@@ -42,7 +42,7 @@ const DeleteDocument: Component<{
           }
         })
         // .catch((error) => { setError(error.message) })
-      }}
+      )}
     />
   )
 }
