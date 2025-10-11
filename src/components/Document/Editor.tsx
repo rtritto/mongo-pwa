@@ -4,7 +4,7 @@ import DeleteDocument from '@/components/Collection/DeleteDocument'
 import createCodeMirror from './createCodeMirror'
 import BackButton from './BackButton'
 
-const Section_Editor: Component<{ data: DataDocument }> = (props) => {
+const Editor: Component<{ data: DataDocument }> = (props) => {
   const [showBanner, setShowBanner] = createSignal(false)
   const { editorView, ref: editorRef } = createCodeMirror(
     untrack(() => props.data.docString),
@@ -39,4 +39,4 @@ const Section_Editor: Component<{ data: DataDocument }> = (props) => {
   )
 }
 
-export default Section_Editor
+export default Editor

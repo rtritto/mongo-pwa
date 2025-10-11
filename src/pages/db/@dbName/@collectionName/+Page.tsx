@@ -1,7 +1,7 @@
 import { type Component, createSignal, Show } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
-import Section_DocumentList from '@/components/Collection/Section_DocumentList'
+import DocumentList from '@/components/Collection/DocumentList'
 import StatsTable from '@/components/common/StatsTable'
 import CreateDocumentDialog from '@/components/Collection/CreateDocumentDialog'
 
@@ -23,7 +23,7 @@ const Page: Component<DataCollection> = () => {
 
       <CreateDocumentDialog database={data.selectedDatabase} collection={data.selectedCollection} setIdDocumentCreated={setIdDocumentCreated} />
 
-      <Section_DocumentList data={data} />
+      <DocumentList data={data} />
 
       <div class="mb-2">
         <Show
