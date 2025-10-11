@@ -22,7 +22,7 @@
     "@lezer/highlight": "^1.2.1",
     "bson": "^6.10.4",
     "codemirror": "^6.0.2",
-    "hono": "^4.9.10",
+    "hono": "^4.9.11",
     "mongodb": "^6.20.0",
     "mongodb-query-parser": "^4.4.3",
     "solid-js": "^1.9.9"
@@ -30,9 +30,9 @@
   "devDependencies": {
     "@hono/node-server": "^1.19.5",
     "@tailwindcss/vite": "^4.1.14",
-    "@types/node": "^24.7.0",
+    "@types/node": "^24.7.2",
     "@yarnpkg/sdks": "^3.2.3",
-    "daisyui": "^5.1.29",
+    "daisyui": "^5.2.2",
     "eslint": "^9.37.0",
     "eslint-plugin-solid": "^0.14.5",
     "eslint-plugin-unicorn": "^61.0.2",
