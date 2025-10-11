@@ -12,7 +12,7 @@ const docStringTemplate = `{
 const AddDocumentDialog: Component<{
   database: string
   collection: string
-  setIdDocumentCreated: (value: string) => void
+  setIdDocumentCreated: (id: string) => void
 }> = (props) => {
   const { editorView, ref: editorRef } = createCodeMirror(
     docStringTemplate,
