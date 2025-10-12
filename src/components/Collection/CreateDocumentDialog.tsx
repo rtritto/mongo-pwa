@@ -54,6 +54,7 @@ const AddDocumentDialog: Component<{
                     const { insertedId } = await res.json() as { insertedId: string }
                     reload()
                     untrack(() => props.setIdDocumentCreated(insertedId))
+                    dialogRef.close()
                   } else {
                     // const { error } = await res.json()
                     // setError(error)
