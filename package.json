@@ -33,7 +33,7 @@
     "@tailwindcss/vite": "^4.1.14",
     "@types/node": "^24.7.2",
     "@yarnpkg/sdks": "^3.2.3",
-    "daisyui": "^5.2.2",
+    "daisyui": "^5.2.3",
     "eslint": "^9.37.0",
     "eslint-plugin-solid": "^0.14.5",
     "eslint-plugin-unicorn": "^61.0.2",
