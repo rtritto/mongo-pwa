@@ -29,7 +29,7 @@ type DataCollection = DataDB & {
   documentsPerPage: number
 }
 
-type DataDocument = DataCollection & {
+type DataDocument = Omit<DataCollection, 'selectedDocument'> & {
   documentName: string
   docString: string
   _id: any
