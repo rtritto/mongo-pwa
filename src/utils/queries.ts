@@ -231,14 +231,5 @@ export const getItemsAndCount = async (
 }
 
 export const getLastPage = (pageSize: number, totalCount: number): number => {
-  // Float to Integer
-  // result is 5 for:
-  // - x=5
-  // - 5<x<5.5
-  // - 5.5<=x<6
-  const result = Math.floor(totalCount / pageSize)
-
-  return totalCount % pageSize
-    ? result + 1
-    : result
+  return Math.ceil(totalCount / pageSize)
 }

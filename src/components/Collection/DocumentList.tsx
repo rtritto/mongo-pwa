@@ -4,7 +4,10 @@ import IconSearch from '@/components/Icons/IconSearch'
 import DeleteDocument from './DeleteDocument'
 import JsonViewer from './JsonViewer'
 
-const DocumentList: Component<{ data: DataCollection }> = (props) => {
+const DocumentList: Component<{
+  data: DataCollection
+  docs: Record<string, any>[]
+}> = (props) => {
   return (
     <div class="overflow-x-auto">
       <table class="table table-zebra">
@@ -20,7 +23,7 @@ const DocumentList: Component<{ data: DataCollection }> = (props) => {
         </thead>
 
         <tbody>
-          <For each={props.data.docs}>
+          <For each={props.docs}>
             {(document) => (
               <tr>
                 <th>

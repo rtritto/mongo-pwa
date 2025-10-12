@@ -17,13 +17,12 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     throw new Error(validationCollRes.error)
   }
   await connectClient()
-  const { config, mongo } = globalThis
   const { search } = pageContext.urlParsed
   const queryOptions = getQueryOptions(search)
   // TODO check if use this
   // const collection = mongo.connections[dbName].db.collection(collectionName)
-  const collection = mongo.mongoClient.db(dbName).collection(collectionName)
-  const { count, items } = await getItemsAndCount(search, queryOptions, collection, config)
+  const collection = globalThis.mongo.mongoClient.db(dbName).collection(collectionName)
+  const { count, items } = await getItemsAndCount(search, queryOptions, collection, globalThis.config)
 
   const docs = [] as typeof items
   const columns = [] as string[][]
@@ -76,25 +75,24 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
 
   const _data = {
     title: `Collection: ${collectionName} - Mongo PWA`,
-    databases: mongo.databases,
-    collections: mongo.collections[dbName],
-    options: config.options,
+    databases: globalThis.mongo.databases,
+    collections: globalThis.mongo.collections[dbName],
+    options: globalThis.config.options,
     selectedDatabase: dbName,
     selectedCollection: collectionName,
     selectedDocument: undefined,
-    count,
     // items,
     docs,
     // Generate an array of columns used by all documents visible on this page
     columns: columns.flat()
       .filter((value, index, arr) => arr.indexOf(value) === index),  // Remove duplicates
+    search,
     // Pagination
-    pagination: count > queryOptions.limit,
-    skip: queryOptions.skip,
-    sort: queryOptions.sort
+    count,
+    documentsPerPage: globalThis.config.options.documentsPerPage
   } as DataCollection
 
-  if (mongo.adminDb && !config.mongodb.awsDocumentDb) {
+  if (globalThis.mongo.adminDb && !globalThis.config.mongodb.awsDocumentDb) {
     const [stats, indexes] = await Promise.all([
       collection.aggregate<CollStats>([{ $collStats: { storageStats: {} } }]).next().then((s) => s.storageStats),
       collection.indexes()

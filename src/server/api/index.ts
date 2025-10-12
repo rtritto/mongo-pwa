@@ -8,8 +8,8 @@ import databaseCreate from './databaseCreate'
 import databaseDelete from './databaseDelete'
 import documentCreate from './documentCreate'
 import documentDelete from './documentDelete'
-import documentList from './documentList'
 import documentUpdate from './documentUpdate'
+import pageDocument from './pageDocument'
 
 export default {
   collectionCreate,
@@ -22,6 +22,6 @@ export default {
   databaseDelete,
   documentCreate,
   documentDelete,
-  documentList,
-  documentUpdate
+  documentUpdate,
+  pageDocument
 }

@@ -20,13 +20,11 @@ type DataCollection = DataDB & {
 
   selectedCollection: string
 
-  count: number
   docs: Record<string, any>[]
-  items: Document[]
   columns: string[]
-  pagination: number
-  skip: number
-  sort: number
+  search: QueryParameter
+  count: number
+  documentsPerPage: number
 }
 
 type DataDocument = DataCollection & {

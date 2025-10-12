@@ -1,13 +1,79 @@
-import { type Component, createSignal, Show } from 'solid-js'
+import { createPagination } from '@solid-primitives/pagination'
+import { type Component, createEffect, createSignal, For, Show } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
 import DocumentList from '@/components/Collection/DocumentList'
 import StatsTable from '@/components/common/StatsTable'
 import CreateDocumentDialog from '@/components/Collection/CreateDocumentDialog'
+import { HEADERS_JSON } from '@/utils/constants'
+import fetchWithRetries from '@/utils/fetchWithRetries'
+import { getLastPage } from '@/utils/queries'
 
 const Page: Component<DataCollection> = () => {
   const [data] = useData<DataCollection>()
+  const [docs, setDocs] = createSignal<Record<string, any>[]>(data.docs)
   const [idDocumentCreated, setIdDocumentCreated] = createSignal('')
+
+  //#region Pagination
+  const initialPages = getLastPage(data.documentsPerPage, data.count)
+  const [pages, setPages] = createSignal<number>(initialPages)
+  const [count, setCount] = createSignal<number>(data.count)
+  const [paginationProps, page, setPage] = createPagination(() => ({
+    pages: pages(),
+    initialPage: 'page' in data.search ? Number(data.search.page) : 1
+  }))
+
+  createEffect(() => {
+    setPages(getLastPage(data.documentsPerPage, count()))
+  })
+
+  const doQuery = async (data: DataCollection, page: number) => {
+    // TODO add Component with id back-to-top-anchor
+    // goToTopPage
+    // document.querySelector('#back-to-top-anchor')!.scrollIntoView({ behavior: 'smooth', block: 'center' })
+
+    // Update route path (no reload)
+    globalThis.history.replaceState(null, '', `/db/${data.selectedDatabase}/${data.selectedCollection}?page=${page}`)
+
+    const res = await fetchWithRetries('/api/pageDocument', {
+      method: 'POST',
+      body: JSON.stringify({
+        database: data.selectedDatabase,
+        collection: data.selectedCollection,
+        ...data.search,
+        page
+      }),
+      headers: HEADERS_JSON
+    })
+    const { items, count } = await res!.json()
+    setDocs(items)
+    setCount(count)
+  }
+
+  const PaginationBoxComponent: Component = () => (
+    <Show when={pages() !== 1}>
+      <div class="flex justify-center p-1.5">
+        <div class="flex">
+          <For each={paginationProps()}>
+            {(paginationProps) => (
+              <button
+                // TODO improve vertical align of button contents or change button contents to icons
+                class="btn btn-sm"
+                disabled={page() === paginationProps.page}
+                onClick={async () => {
+                  setPage(paginationProps.page!)
+                  await doQuery(data, page())
+                }}
+              >
+                {paginationProps.children}
+              </button>
+            )}
+          </For>
+        </div>
+      </div>
+    </Show>
+  )
+  //#endregion
 
   return (
     <div>
@@ -21,7 +87,11 @@ const Page: Component<DataCollection> = () => {
 
       <CreateDocumentDialog database={data.selectedDatabase} collection={data.selectedCollection} setIdDocumentCreated={setIdDocumentCreated} />
 
-      <DocumentList data={data} />
+      <PaginationBoxComponent />
+
+      <DocumentList data={data} docs={docs()} />
+
+      <PaginationBoxComponent />
 
       <div class="mb-2">
         <Show
