@@ -79,7 +79,24 @@ const JsonNode: Component<{
 
   return (
     <div class="ml-2">
-      <Show when={isExpandableNode}>
+      <Show
+        when={isExpandableNode}
+        fallback={
+          <span>
+            <Show when={props.isObjectItem}>
+              <span class="text-blue-300">{props.keyName}</span>
+
+              <span class="text-gray-400">{': '}</span>
+            </Show>
+
+            {displayValue()}
+
+            <Show when={!props.isLast}>
+              <span class="text-gray-500">,</span>
+            </Show>
+          </span>
+        }
+      >
         {/* (?) TODO remove " " */}
         <span class="cursor-pointer" onClick={() => setOpen(!open())}>
           <span class="text-purple-300 select-none">{open() ? '▼ ' : '▶ '}</span>
@@ -132,22 +149,6 @@ const JsonNode: Component<{
             {props.isLast ? '' : ','}
           </span>
         </Show>
-      </Show>
-
-      <Show when={!isExpandableNode}>
-        <span>
-          <Show when={props.isObjectItem}>
-            <span class="text-blue-300">{props.keyName}</span>
-
-            <span class="text-gray-400">{': '}</span>
-          </Show>
-
-          {displayValue()}
-
-          <Show when={!props.isLast}>
-            <span class="text-gray-500">,</span>
-          </Show>
-        </span>
       </Show>
     </div>
   )
