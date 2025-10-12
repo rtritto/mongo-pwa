@@ -1,12 +1,9 @@
-import type { WithId } from 'mongodb'
-
 import { connectClient } from '@/server/db'
 // import { toString } from '@/utils/bson'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
 import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
 // import { bytesToSize, roughSizeOfObject } from '@/utils/mappers/mapUtils'
 import { isValidCollectionName, isValidDatabaseName } from '@/utils/validationsClient'
-import { stringDocIDs } from '@/utils/mappers/mapId'
 
 export const data: DataAsync<DataCollection> = async (pageContext) => {
   const { dbName, collectionName } = pageContext.routeParams
@@ -26,7 +23,6 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
   const collection = globalThis.mongo.mongoClient.db(dbName).collection(collectionName)
   const { count, items } = await getItemsAndCount(search, queryOptions, collection, globalThis.config)
 
-  const docs = [] as (MongoDocument | WithId<string> & { sub_type: number | undefined })[]
   const columns = [] as string[][]
 
   for (const i in items) {
@@ -65,13 +61,8 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     const currentColumns = Object.keys(items[i])
     columns.push(currentColumns)
     // docs[i] = items[i]
-    docs[i] = {
-      // Used by DELETE document
-      sub_type: items[i]._id.sub_type as number | undefined
-    }
-    for (const column of currentColumns) {
-      docs[i][column] = stringDocIDs(items[i][column])
-    }
+    // Used by DELETE document
+    items[i].sub_type = items[i]._id.sub_type as number | undefined
     // items[i] = toString(items[i])
   }
 
@@ -83,8 +74,8 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     selectedDatabase: dbName,
     selectedCollection: collectionName,
     selectedDocument: undefined,
-    // items,
-    docs,
+    // Force "toString" method on each value to transform values like pageDocument API
+    docs: JSON.parse(JSON.stringify(items)),
     // Generate an array of columns used by all documents visible on this page
     columns: columns.flat()
       .filter((value, index, arr) => arr.indexOf(value) === index),  // Remove duplicates
