@@ -1,4 +1,5 @@
 import { connectClient } from '@/server/db'
+import getColumnsAndSetDocs from '@/utils/mappers/getColumnsAndSetDocs'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
 import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
 import { isValidCollectionName, isValidDatabaseName } from '@/utils/validationsClient'
@@ -21,14 +22,7 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
   const collection = globalThis.mongo.mongoClient.db(dbName).collection(collectionName)
   const { count, items } = await getItemsAndCount(search, queryOptions, collection, globalThis.config)
 
-  const columns = [] as string[][]
-
-  for (const i in items) {
-    const currentColumns = Object.keys(items[i])
-    columns.push(currentColumns)
-    // Used by DELETE document
-    items[i].sub_type = items[i]._id.sub_type as number | undefined
-  }
+  const { columns, docs } = getColumnsAndSetDocs(items)
 
   const _data = {
     title: `Collection: ${collectionName} - Mongo PWA`,
@@ -39,10 +33,9 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     selectedCollection: collectionName,
     selectedDocument: undefined,
     // Force "toString" method on each value to transform values like pageDocument API
-    docs: JSON.parse(JSON.stringify(items)),
+    docs: JSON.parse(JSON.stringify(docs)),
     // Generate an array of columns used by all documents visible on this page
-    columns: columns.flat()
-      .filter((value, index, arr) => arr.indexOf(value) === index),  // Remove duplicates
+    columns,
     search,
     // Pagination
     count,

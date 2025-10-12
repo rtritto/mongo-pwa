@@ -42,9 +42,10 @@ const Page: Component<DataCollection> = () => {
       }),
       headers: HEADERS_JSON
     })
-    const { items, count } = await res!.json()
-    setData('docs', items)
+    const { count, columns, docs } = await res!.json()
     setData('count', count)
+    setData('columns', columns)
+    setData('docs', docs)
   }
 
   const PaginationBoxComponent: Component = () => (
