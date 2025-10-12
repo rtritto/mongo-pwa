@@ -1,4 +1,5 @@
-import { type ObjectId, Binary, Long } from 'mongodb'
+import { Binary } from 'bson'
+import type { DBRef, Long, MaxKey, MinKey, ObjectId, Timestamp } from 'bson'
 
 const addHyphensToUUID = (hex: string) => {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20, 32)}`
@@ -10,13 +11,16 @@ const uuid4ToString = (input: Binary) => {
 }
 
 
+type TypeToString = ObjectId | Long | Binary
+type TypeNotToString = DBRef | MinKey | MaxKey | Timestamp | number | string | null
+
 /**
  * Convert BSON into a plain string:
  * - { _bsontype: 'ObjectId', id: <Buffer> } => <ObjectId>
  * - { _bsontype: 'Binary', __id: undefined, sub_type: 4, position: 16, buffer: <Buffer> } => <UUID>
  * - { _bsontype: 'Binary', __id: undefined, sub_type: <number_not_4>, position: 16, buffer: <Buffer> } => <Binary>
  */
-export const stringDocIDs = (input: ObjectId | Binary | Long): string => {
+export const stringDocIDs = (input: TypeToString | TypeNotToString): string | TypeNotToString => {
   if (input && typeof input === 'object') {
     switch (input._bsontype) {
       case 'ObjectId':
