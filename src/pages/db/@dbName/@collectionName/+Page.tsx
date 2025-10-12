@@ -15,8 +15,7 @@ const Page: Component<DataCollection> = () => {
   const [idDocumentCreated, setIdDocumentCreated] = createSignal('')
 
   //#region Pagination
-  const initialPages = getLastPage(data.documentsPerPage, data.count)
-  const [pages, setPages] = createSignal<number>(initialPages)
+  const [pages, setPages] = createSignal<number>(getLastPage(data.documentsPerPage, data.count))
   const [count, setCount] = createSignal<number>(data.count)
   const [paginationProps, page, setPage] = createPagination(() => ({
     pages: pages(),
