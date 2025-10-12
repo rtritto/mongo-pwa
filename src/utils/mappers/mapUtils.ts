@@ -1,61 +1,37 @@
 import { Binary, ObjectId } from 'bson'
 
-const K = 1000
-const LOG = Math.log(K)
-const BYTES_MAP = {
-  Bytes: 1024,
-  KB: 1024 * 1024,
-  MB: 1024 * 1024 * 1024,
-  GB: 1024 * 1024 * 1024 * 1024,
-  TB: 1024 * 1024 * 1024 * 1024 * 1024,
-  PB: 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
-  EB: 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
-  ZB: 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024,
-  YB: 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024
-} as const
-const SIZES = Object.keys(BYTES_MAP)
+const SIZE_UNITS = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] as const
+const BASE = 1024
 
-// Given some size in bytes, returns it in a converted, friendly size
-// credits: http://stackoverflow.com/users/1596799/aliceljm
-export const bytesToSize = (bytes: number) => {
-  if (bytes === 0) return '0 Byte'
-  const i = Math.floor(Math.log(bytes) / LOG)
-  return `${(bytes / (K ** i)).toPrecision(3)} ${SIZES[i]}`
+/**
+ * Converts a byte count into a human-readable size string.
+ * e.g. 1536 → "1.50 KB"
+ */
+export const bytesToSize = (bytes?: number): string => {
+  if (!bytes || bytes < 0) return '0 Bytes'
+  const i = Math.floor(Math.log(bytes) / Math.log(BASE))
+  const value = bytes / BASE ** i
+  const rounded = i === 0 ? value : value.toFixed(2)
+  return `${rounded} ${SIZE_UNITS[i] ?? 'Bytes'}`
 }
 
-export const convertBytes = (input: number | undefined) => {
-  if (input === undefined) {
-    return '0 Byte'
+/**
+ * Converts a byte count into the next most appropriate size unit,
+ * using explicit thresholds and rounding to 2 decimals.
+ */
+export const convertBytes = (bytes?: number): string => {
+  if (bytes === undefined || bytes < 0) return '0 Bytes'
+
+  let unitIndex = 0
+  let value = bytes
+
+  while (value >= BASE && unitIndex < SIZE_UNITS.length - 1) {
+    value /= BASE
+    unitIndex++
   }
-  if (input < BYTES_MAP.Bytes) {
-    return `${input} Bytes`
-  }
-  if (input < BYTES_MAP.KB) {
-    // Convert to KB and keep 2 decimal values
-    return `${Math.round((input / BYTES_MAP.Bytes) * 100) / 100} KB`
-  }
-  if (input < BYTES_MAP.MB) {
-    return `${Math.round((input / BYTES_MAP.KB) * 100) / 100} MB`
-  }
-  if (input < BYTES_MAP.GB) {
-    return `${Math.round((input / BYTES_MAP.MB) * 100) / 100} GB`
-  }
-  if (input < BYTES_MAP.TB) {
-    return `${Math.round((input / BYTES_MAP.GB) * 100) / 100} TB`
-  }
-  if (input < BYTES_MAP.PB) {
-    return `${Math.round((input / BYTES_MAP.TB) * 100) / 100} PB`
-  }
-  if (input < BYTES_MAP.EB) {
-    return `${Math.round((input / BYTES_MAP.PB) * 100) / 100} EB`
-  }
-  if (input < BYTES_MAP.ZB) {
-    return `${Math.round((input / BYTES_MAP.EB) * 100) / 100} ZB`
-  }
-  if (input < BYTES_MAP.YB) {
-    return `${Math.round((input / BYTES_MAP.ZB) * 100) / 100} YB`
-  }
-  return `${input} Bytes`
+
+  const formatted = unitIndex === 0 ? value.toString() : value.toFixed(2)
+  return `${formatted} ${SIZE_UNITS[unitIndex]}`
 }
 
 const deepmergeArray = (target: object[], src: object[]) => {
