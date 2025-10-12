@@ -22,7 +22,7 @@ const AddDocumentDialog: Component<{
 
   return (
     <div>
-      <button class={`btn btn-sm w-full bg-green-500 py-0.5`} onClick={() => {
+      <button class={`btn btn-sm bg-green-500 py-0.5`} onClick={() => {
         dialogRef.showModal()
         // Reset
         editorView()?.updateDoc(docStringTemplate)
