@@ -24,6 +24,8 @@ type Options = import('../../config.default.ts').Config['options']
 
 type PrimitiveTypes = boolean | string | number
 
+type Writeable<T> = { -readonly [P in keyof T]: T[P] }
+
 type CustomApiError = (unknown | Error) & {
   message: string
   status: number

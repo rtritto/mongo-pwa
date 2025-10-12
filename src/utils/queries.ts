@@ -29,7 +29,7 @@ type Pipeline = (MongoDocument | Stage)[]
 /** @param sort example: sort=field1:1,field2:0 */
 export const getSort = (sort: string): Sort => {
   if (sort) {
-    const outSort: Sort = {}
+    const outSort: Writeable<Sort> = {}
     const sorts = sort.split(',')
     for (const qp in sorts) {
       const [sortField, sortType] = qp.split(':')
