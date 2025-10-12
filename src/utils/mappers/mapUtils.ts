@@ -103,37 +103,6 @@ export const deepmerge = (target: object[] | object, src: object[] | object) => 
   return deepmergeObject(target as object, src as object)
 }
 
-type ObjectInputSize = {
-  [key: string]: PrimitiveTypes
-}
-
-const recurse = (value: PrimitiveTypes | ObjectInputSize, objectList: object[]): number => {
-  let bytes = 0
-
-  if (typeof value === 'boolean') {
-    bytes = 4
-  } else if (typeof value === 'string') {
-    bytes = value.length * 2
-  } else if (typeof value === 'number') {
-    bytes = 8
-  } else if (typeof value === 'object' && !objectList.includes(value)) {
-    objectList[objectList.length] = value
-
-    for (const i in value) {
-      bytes += 8 // an assumed existence overhead
-      bytes += recurse(value[i], objectList)
-    }
-  }
-
-  return bytes
-}
-
-export const roughSizeOfObject = (value: PrimitiveTypes | ObjectInputSize) => {
-  const objectList: object[] = []
-
-  return recurse(value, objectList)
-}
-
 export const addHyphensToUUID = (hex: string) => {
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20, 32)}`
 }
