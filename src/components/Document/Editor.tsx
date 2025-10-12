@@ -36,7 +36,7 @@ const Editor: Component<{
           _id={props.data._id}
           sub_type={props.data.subtype}
           doReload={false}
-          showLabel={true}
+          label="Delete"
         />
       </div>
     </div>

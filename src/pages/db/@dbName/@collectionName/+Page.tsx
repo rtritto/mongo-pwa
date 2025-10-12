@@ -1,7 +1,9 @@
 import { createPagination } from '@solid-primitives/pagination'
 import { type Component, createEffect, createSignal, For, Show } from 'solid-js'
 import { useData } from 'vike-solid/useData'
+import { reload } from 'vike/client/router'
 
+import DeleteDialog from '@/components/common/DeleteDialog'
 import DocumentList from '@/components/Collection/DocumentList'
 import StatsTable from '@/components/common/StatsTable'
 import CreateDocumentDialog from '@/components/Collection/CreateDocumentDialog'
@@ -84,6 +86,28 @@ const Page: Component<DataCollection> = () => {
       </Show>
 
       <CreateDocumentDialog database={data.selectedDatabase} collection={data.selectedCollection} setIdDocumentCreated={setIdDocumentCreated} />
+
+      <DeleteDialog
+        title="Delete All Documents"
+        message={`Are you sure you want to delete all ${data.count} documents?`}
+        label={`Delete all ${data.count} documents retrieved`}
+        handleDelete={() => fetch('/api/collectionDelete', {
+          method: 'POST',
+          headers: HEADERS_JSON,
+          body: JSON.stringify({
+            database: data.selectedDatabase,
+            collection: data.selectedCollection,
+            query: {
+              key: data.search.key,
+              value: data.search.value,
+              type: data.search.type,
+              query: data.search.query
+            }
+          })
+        }).then(async () => {
+          await reload()
+        })}
+      />
 
       <PaginationBoxComponent />
 

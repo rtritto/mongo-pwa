@@ -120,9 +120,9 @@ const ShowCollections: Component<{
                         title="Delete Collection"
                         value={collection}
                         message="Be careful! You are about to delete the collection (all documents will be deleted)"
+                        label="Delete"
                         fullWidth={true}
                         enableInput={true}
-                        showLabel={true}
                         handleDelete={() => fetch('/api/collectionDelete', {
                           method: 'POST',
                           headers: HEADERS_JSON,
