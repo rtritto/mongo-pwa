@@ -103,10 +103,6 @@ export const deepmerge = (target: object[] | object, src: object[] | object) => 
   return deepmergeObject(target as object, src as object)
 }
 
-export const addHyphensToUUID = (hex: string) => {
-  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20, 32)}`
-}
-
 export const buildId = (_id: string | number, sub_type: number | undefined) => {
   // Case 1 : ObjectId
   try {
