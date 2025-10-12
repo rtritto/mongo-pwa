@@ -85,29 +85,33 @@ const Page: Component<DataCollection> = () => {
         </div>
       </Show>
 
-      <CreateDocumentDialog database={data.selectedDatabase} collection={data.selectedCollection} setIdDocumentCreated={setIdDocumentCreated} />
+      <div class="my-2">
+        <CreateDocumentDialog database={data.selectedDatabase} collection={data.selectedCollection} setIdDocumentCreated={setIdDocumentCreated} />
+      </div>
 
-      <DeleteDialog
-        title="Delete All Documents"
-        message={`Are you sure you want to delete all ${data.count} documents?`}
-        label={`Delete all ${data.count} documents retrieved`}
-        handleDelete={() => fetch('/api/collectionDelete', {
-          method: 'POST',
-          headers: HEADERS_JSON,
-          body: JSON.stringify({
-            database: data.selectedDatabase,
-            collection: data.selectedCollection,
-            query: {
-              key: data.search.key,
-              value: data.search.value,
-              type: data.search.type,
-              query: data.search.query
-            }
-          })
-        }).then(async () => {
-          await reload()
-        })}
-      />
+      <div class="my-2">
+        <DeleteDialog
+          title="Delete All Documents"
+          message={`Are you sure you want to delete all ${data.count} documents?`}
+          label={`Delete all ${data.count} documents retrieved`}
+          handleDelete={() => fetch('/api/collectionDelete', {
+            method: 'POST',
+            headers: HEADERS_JSON,
+            body: JSON.stringify({
+              database: data.selectedDatabase,
+              collection: data.selectedCollection,
+              query: {
+                key: data.search.key,
+                value: data.search.value,
+                type: data.search.type,
+                query: data.search.query
+              }
+            })
+          }).then(async () => {
+            await reload()
+          })}
+        />
+      </div>
 
       <PaginationBoxComponent />
 
@@ -115,7 +119,7 @@ const Page: Component<DataCollection> = () => {
 
       <PaginationBoxComponent />
 
-      <div class="mb-2">
+      <div class="my-2">
         <Show
           when={data.stats}
           fallback={(
@@ -128,7 +132,7 @@ const Page: Component<DataCollection> = () => {
           <StatsTable label="Collection Stats" fields={data.stats! as DBStats} />
         </Show>
       </div>
-    </div>
+    </div >
   )
 }
 
