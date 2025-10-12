@@ -154,10 +154,10 @@ const JsonNode: Component<{
   )
 }
 
-const JsonViewer: Component<{ data: any }> = (props) => {
+const JsonViewer: Component<{ value: any }> = (props) => {
   return (
     <div class="font-mono text-sm bg-gray-900 text-white p-2.5 rounded-xl shadow overflow-auto">
-      <JsonNode keyName={null} value={props.data} level={0} isLast={true} />
+      <JsonNode keyName={null} value={props.value} level={0} isLast={true} />
     </div>
   )
 }

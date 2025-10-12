@@ -48,7 +48,7 @@ const DocumentList: Component<{
                 </th>
 
                 <For each={props.data.columns}>
-                  {(column) => <td><JsonViewer data={document[column]} /></td>}
+                  {(column) => <td><JsonViewer value={document[column]} /></td>}
                 </For>
               </tr>
             )}
