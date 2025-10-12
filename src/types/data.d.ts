@@ -19,6 +19,8 @@ type DataCollection = DataDB & {
   collectionName: string
 
   selectedCollection: string
+  // set undefined when navigating from document page to collection page
+  selectedDocument: undefined
 
   docs: Record<string, any>[]
   columns: string[]
