@@ -170,4 +170,5 @@ interface QueryParameter extends ParsedUrlQuery {
   type?: string
   query?: string
   subtype?: string
+  runAggregate?: 'on' | 'off'
 }
