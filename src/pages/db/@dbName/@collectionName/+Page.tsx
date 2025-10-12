@@ -10,20 +10,18 @@ import fetchWithRetries from '@/utils/fetchWithRetries'
 import { getLastPage } from '@/utils/queries'
 
 const Page: Component<DataCollection> = () => {
-  const [data] = useData<DataCollection>()
-  const [docs, setDocs] = createSignal<Record<string, any>[]>(data.docs)
+  const [data, setData] = useData<DataCollection>()
   const [idDocumentCreated, setIdDocumentCreated] = createSignal('')
 
   //#region Pagination
   const [pages, setPages] = createSignal<number>(getLastPage(data.documentsPerPage, data.count))
-  const [count, setCount] = createSignal<number>(data.count)
   const [paginationProps, page, setPage] = createPagination(() => ({
     pages: pages(),
     initialPage: 'page' in data.search ? Number(data.search.page) : 1
   }))
 
   createEffect(() => {
-    setPages(getLastPage(data.documentsPerPage, count()))
+    setPages(getLastPage(data.documentsPerPage, data.count))
   })
 
   const doQuery = async (data: DataCollection, page: number) => {
@@ -45,8 +43,8 @@ const Page: Component<DataCollection> = () => {
       headers: HEADERS_JSON
     })
     const { items, count } = await res!.json()
-    setDocs(items)
-    setCount(count)
+    setData('docs', items)
+    setData('count', count)
   }
 
   const PaginationBoxComponent: Component = () => (
@@ -88,7 +86,7 @@ const Page: Component<DataCollection> = () => {
 
       <PaginationBoxComponent />
 
-      <DocumentList data={data} docs={docs()} />
+      <DocumentList data={data} />
 
       <PaginationBoxComponent />
 

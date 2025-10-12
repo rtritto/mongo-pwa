@@ -6,7 +6,6 @@ import JsonViewer from './JsonViewer'
 
 const DocumentList: Component<{
   data: DataCollection
-  docs: Record<string, any>[]
 }> = (props) => {
   return (
     <div class="overflow-x-auto">
@@ -23,7 +22,7 @@ const DocumentList: Component<{
         </thead>
 
         <tbody>
-          <For each={props.docs}>
+          <For each={props.data.docs}>
             {(document) => (
               <tr>
                 <th>
