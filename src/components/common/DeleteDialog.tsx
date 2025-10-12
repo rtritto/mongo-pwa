@@ -4,8 +4,8 @@ import IconDelete from '@/components/Icons/IconDelete'
 
 const DeleteDialog: Component<{
   title: string
-  value: string
   message: string
+  value?: string
   label?: string
   fullWidth?: boolean
   enableInput?: boolean
@@ -28,7 +28,7 @@ const DeleteDialog: Component<{
 
       <dialog class="modal" id="modal_drawer" ref={dialogRef}>
         <div class="modal-box">
-          <h3 class="text-lg font-bold">{props.title} <b>"{props.value}"</b></h3>
+          <h3 class="text-lg font-bold">{props.title} {props.value && <b>"{props.value}"</b>}</h3>
 
           <form onSubmit={(event) => event.preventDefault()  /* Disable page reload after submit */}>
             <div class="m-2">

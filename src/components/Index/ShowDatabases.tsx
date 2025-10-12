@@ -80,8 +80,8 @@ const ShowDatabases: Component<{
                   <td class="p-0.5">
                     <DeleteDialog
                       title="Delete Database"
-                      value={database}
                       message="Be careful! You are about to delete the database (all collections and documents will be deleted)"
+                      value={database}
                       label="Delete"
                       fullWidth
                       enableInput

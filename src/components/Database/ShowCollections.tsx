@@ -118,8 +118,8 @@ const ShowCollections: Component<{
                     <td class="p-0.5">
                       <DeleteDialog
                         title="Delete Collection"
-                        value={collection}
                         message="Be careful! You are about to delete the collection (all documents will be deleted)"
+                        value={collection}
                         label="Delete"
                         fullWidth
                         enableInput

@@ -17,8 +17,8 @@ const DeleteDocument: Component<{
   return (
     <DeleteDialog
       title="Delete Document"
-      value={props._id}
       message={`Are you sure you want to delete the document?`}
+      value={props._id}
       label={props.label}
       fullWidth={props.fullWidth}
       handleDelete={() => (
