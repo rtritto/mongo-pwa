@@ -3,8 +3,6 @@ import { createSignal, For, Match, Show, Switch, untrack, type Component } from 
 // 36 is the max length of a UUID string
 const MAX_LEN = 36
 
-const EXPANDABLE_TYPES = new Set(['Object', 'DBRef', 'Timestamp', 'MinKey', 'MaxKey'])
-
 const RenderLongText: Component<{ text: string }> = (props) => {
   // On click expand/collapse long text
   const [expanded, setExpanded] = createSignal(false)
@@ -61,7 +59,7 @@ const JsonNode: Component<{
   const [open, setOpen] = createSignal(untrack(() => props.level < 1))
 
   const isArray = Array.isArray(untrack(() => props.value))
-  const isObject = untrack(() => props.value && EXPANDABLE_TYPES.has(props.value?.constructor.name))
+  const isObject = untrack(() => props.value?.constructor.name === 'Object')
   const isExpandableNode = isArray || isObject
 
   const displayValue = () => {
