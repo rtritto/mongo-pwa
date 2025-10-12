@@ -121,8 +121,8 @@ const ShowCollections: Component<{
                         value={collection}
                         message="Be careful! You are about to delete the collection (all documents will be deleted)"
                         label="Delete"
-                        fullWidth={true}
-                        enableInput={true}
+                        fullWidth
+                        enableInput
                         handleDelete={() => fetch('/api/collectionDelete', {
                           method: 'POST',
                           headers: HEADERS_JSON,

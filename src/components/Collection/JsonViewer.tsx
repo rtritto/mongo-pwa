@@ -132,8 +132,8 @@ const JsonNode: Component<{
                     keyName={k}
                     value={v}
                     level={props.level + 1}
-                    isObjectItem={true}
                     isLast={i() === Object.entries(props.value).length - 1}
+                    isObjectItem
                   />
                 )}
               </For>

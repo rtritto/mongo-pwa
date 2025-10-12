@@ -83,8 +83,8 @@ const ShowDatabases: Component<{
                       value={database}
                       message="Be careful! You are about to delete the database (all collections and documents will be deleted)"
                       label="Delete"
-                      fullWidth={true}
-                      enableInput={true}
+                      fullWidth
+                      enableInput
                       handleDelete={() => fetch('/api/databaseDelete', {
                         method: 'POST',
                         headers: HEADERS_JSON,
