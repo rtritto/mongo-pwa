@@ -1,6 +1,7 @@
 import { createSignal, For, Match, Show, Switch, untrack, type Component } from 'solid-js'
 
-const MAX_LEN = 25
+// 36 is the max length of a UUID string
+const MAX_LEN = 36
 
 const EXPANDABLE_TYPES = new Set(['Object', 'DBRef', 'Timestamp', 'MinKey', 'MaxKey'])
 
