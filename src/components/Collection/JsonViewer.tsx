@@ -72,8 +72,8 @@ const JsonNode: Component<{
       return <span class="text-yellow-300">{props.value.toString()}</span>
     if (props.value?.constructor.name === 'Date')
       return <span class="text-green-300">{props.value.toISOString()}</span>
-    if (props.value === null || props.value === undefined)
-      return <span class="text-gray-400">{props.value}</span>
+    if (props.value === null)
+      return <span class="text-gray-400">null</span>
     return props.value
   }
 
