@@ -30,7 +30,7 @@ const DeleteDialog: Component<{
         <div class="modal-box">
           <h3 class="text-lg font-bold">{untrack(() => props.title)} <b>"{untrack(() => props.value)}"</b></h3>
 
-          <form onSubmit={async (event) => event.preventDefault()  /* Disable page reload after submit */}>
+          <form onSubmit={(event) => event.preventDefault()  /* Disable page reload after submit */}>
             <div class="m-2">
               <p class="text-sm">{untrack(() => props.message)}</p>
             </div>

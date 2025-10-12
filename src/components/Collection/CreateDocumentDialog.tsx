@@ -36,7 +36,7 @@ const AddDocumentDialog: Component<{
         <div class="modal-box">
           <h3 class="text-lg font-bold">Add Document</h3>
 
-          <form onSubmit={async (event) => event.preventDefault()  /* Disable page reload after submit */}>
+          <form onSubmit={(event) => event.preventDefault()  /* Disable page reload after submit */}>
             <div ref={editorRef} />
 
             <div class="m-2">
