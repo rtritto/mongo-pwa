@@ -1,3 +1,5 @@
+import type { WithId } from 'mongodb'
+
 import { connectClient } from '@/server/db'
 // import { toString } from '@/utils/bson'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
@@ -24,7 +26,7 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
   const collection = globalThis.mongo.mongoClient.db(dbName).collection(collectionName)
   const { count, items } = await getItemsAndCount(search, queryOptions, collection, globalThis.config)
 
-  const docs = [] as typeof items
+  const docs = [] as (MongoDocument | WithId<string> & { sub_type: number | undefined })[]
   const columns = [] as string[][]
 
   for (const i in items) {
@@ -65,7 +67,7 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     // docs[i] = items[i]
     docs[i] = {
       // Used by DELETE document
-      sub_type: items[i]._id.sub_type
+      sub_type: items[i]._id.sub_type as number | undefined
     }
     for (const column of currentColumns) {
       docs[i][column] = stringDocIDs(items[i][column])

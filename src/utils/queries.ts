@@ -202,7 +202,7 @@ export const getItemsAndCount = async (
     if (_query.length > 0) {
       const queryAggregate = getAggregatePipeline(_query as Pipeline, queryOptions)
       const [{ items, count }] = await collection.aggregate<{
-        items: Document[]
+        items: MongoDocument[]
         count: { count: number }[]
       }>(queryAggregate, { allowDiskUse: config.mongodb.allowDiskUse }).toArray()
       return {
@@ -219,7 +219,7 @@ export const getItemsAndCount = async (
 
   const [items, count] = await Promise.all([
     // eslint-disable-next-line unicorn/no-array-callback-reference, unicorn/no-array-method-this-argument
-    collection.find(_query as MongoDocument, queryOptions).toArray(),
+    collection.find<MongoDocument>(_query as MongoDocument, queryOptions).toArray(),
     // TODO maybe replace count with countDocuments
     // Read related discussion on https://github.com/mongo-express/mongo-express/issues/1518
     collection.count(_query as MongoDocument)
