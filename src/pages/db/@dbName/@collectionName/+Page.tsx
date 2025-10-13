@@ -92,65 +92,67 @@ const Page: Component<DataCollection> = () => {
         </div>
       </Show>
 
-      <div class="my-2">
-        <SaveDialog
-          title="Add Document"
-          label="New Document"
-          template={docStringTemplate_Document}
-          handleSave={(doc: string, dialogRef: HTMLDialogElement) => (
-            fetch('/api/documentCreate', {
-              method: 'POST',
-              headers: HEADERS_JSON,
-              body: JSON.stringify({
-                database: data.selectedDatabase,
-                collection: data.selectedCollection,
-                doc
+      <div class="flex my-1">
+        <div class="mr-2">
+          <SaveDialog
+            title="Add Document"
+            label="New Document"
+            template={docStringTemplate_Document}
+            handleSave={(doc: string, dialogRef: HTMLDialogElement) => (
+              fetch('/api/documentCreate', {
+                method: 'POST',
+                headers: HEADERS_JSON,
+                body: JSON.stringify({
+                  database: data.selectedDatabase,
+                  collection: data.selectedCollection,
+                  doc
+                })
+              }).then(async (res) => {
+                if (res.ok) {
+                  const { insertedId } = await res.json() as { insertedId: string }
+                  reload()
+                  setAlertSuccessMessage(<span>Document "<b>{insertedId}</b>" added!</span>)
+                  dialogRef.close()
+                } else {
+                  // const { error } = await res.json()
+                  // setError(error)
+                }
               })
-            }).then(async (res) => {
-              if (res.ok) {
-                const { insertedId } = await res.json() as { insertedId: string }
-                reload()
-                setAlertSuccessMessage(<span>Document "<b>{insertedId}</b>" added!</span>)
-                dialogRef.close()
-              } else {
-                // const { error } = await res.json()
-                // setError(error)
-              }
-            })
-            // .catch((error) => { setError(error.message) })
-          )}
-        />
-      </div>
+              // .catch((error) => { setError(error.message) })
+            )}
+          />
+        </div>
 
-      <div class="my-2">
-        <SaveDialog
-          title="Add Index"
-          message="A document that contains the field and value pairs where the field is the index key. 1 for an ascending and -1 for a descending index."
-          label="New Index"
-          template={docStringTemplate_Index}
-          handleSave={(doc: string, dialogRef: HTMLDialogElement) => (
-            fetch('/api/collectionCreateIndex', {
-              method: 'POST',
-              headers: HEADERS_JSON,
-              body: JSON.stringify({
-                database: data.selectedDatabase,
-                collection: data.selectedCollection,
-                doc
+        <div class="mr-2">
+          <SaveDialog
+            title="Add Index"
+            message="A document that contains the field and value pairs where the field is the index key. 1 for an ascending and -1 for a descending index."
+            label="New Index"
+            template={docStringTemplate_Index}
+            handleSave={(doc: string, dialogRef: HTMLDialogElement) => (
+              fetch('/api/collectionCreateIndex', {
+                method: 'POST',
+                headers: HEADERS_JSON,
+                body: JSON.stringify({
+                  database: data.selectedDatabase,
+                  collection: data.selectedCollection,
+                  doc
+                })
+              }).then(async (res) => {
+                if (res.ok) {
+                  const { indexName } = await res.json() as { indexName: string }
+                  reload()
+                  setAlertSuccessMessage(<span>Index "<b>{indexName}</b>" created!</span>)
+                  dialogRef.close()
+                } else {
+                  // const { error } = await res.json()
+                  // setError(error)
+                }
               })
-            }).then(async (res) => {
-              if (res.ok) {
-                const { indexName } = await res.json() as { indexName: string }
-                reload()
-                setAlertSuccessMessage(<span>Index "<b>{indexName}</b>" created!</span>)
-                dialogRef.close()
-              } else {
-                // const { error } = await res.json()
-                // setError(error)
-              }
-            })
-            // .catch((error) => { setError(error.message) })
-          )}
-        />
+              // .catch((error) => { setError(error.message) })
+            )}
+          />
+        </div>
       </div>
 
       <div class="my-2">
