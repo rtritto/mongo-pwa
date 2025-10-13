@@ -52,13 +52,14 @@ async function updateDatabases() {
         for (const database of allDbs.databases) {
           const dbName = database.name
           if (dbName) {
-            if (clientInfo.info.whitelist.length > 0 && !clientInfo.info.whitelist.includes(dbName)) {
-              continue
-            }
+            // TODO
+            // if (clientInfo.info.whitelist.length > 0 && !clientInfo.info.whitelist.includes(dbName)) {
+            //   continue
+            // }
 
-            if (clientInfo.info.blacklist.length > 0 && clientInfo.info.blacklist.includes(dbName)) {
-              continue
-            }
+            // if (clientInfo.info.blacklist.length > 0 && clientInfo.info.blacklist.includes(dbName)) {
+            //   continue
+            // }
             const connection = addConnection(clientInfo, clientInfo.client.db(dbName), dbName)
 
             await updateCollections(connection)
