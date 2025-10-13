@@ -1,7 +1,7 @@
 import { type Component, untrack } from 'solid-js'
 
 import IconAdd from '@/components/Icons/IconAdd'
-import createCodeMirror from '@/components/Document/createCodeMirror'
+import createCodeMirror from '@/components/common/createCodeMirror'
 
 const SaveDialog: Component<{
   title: string

@@ -2,7 +2,7 @@ import { type Component, untrack } from 'solid-js'
 import { navigate } from 'vike/client/router'
 
 import IconSave from '@/components/Icons/IconSave'
-import type { CustomEditorView } from './createCodeMirror'
+import type { CustomEditorView } from '@/components/common/createCodeMirror'
 import { HEADERS_JSON } from '@/utils/constants'
 
 const SaveButton: Component<{
