@@ -53,6 +53,7 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
       indexes[n].size = indexSizes[indexes[n].name]
     }
     _data.stats = mapCollectionStats(stats)
+    _data.indexes = indexes
   }
 
   return _data

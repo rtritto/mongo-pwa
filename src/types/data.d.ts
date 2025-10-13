@@ -30,6 +30,7 @@ type DataCollection = Omit<DataDB, 'stats'> & {
   count: number
   documentsPerPage: number
   stats?: CollectionStats
+  indexes?: Index[]
 }
 
 type DataDocument = Omit<DataCollection, 'selectedDocument'> & {
