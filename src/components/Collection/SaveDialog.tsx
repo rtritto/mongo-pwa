@@ -1,4 +1,4 @@
-import { type Component, untrack } from 'solid-js'
+import { type Component, Show, untrack } from 'solid-js'
 
 import IconAdd from '@/components/Icons/IconAdd'
 import createCodeMirror from '@/components/common/createCodeMirror'
@@ -7,6 +7,7 @@ const SaveDialog: Component<{
   title: string
   label: string
   template: string
+  message?: string
   handleSave: (doc: string, dialogRef: HTMLDialogElement) => Promise<void>
 }> = (props) => {
   const { editorView, ref: editorRef } = createCodeMirror(
@@ -32,6 +33,12 @@ const SaveDialog: Component<{
           <h3 class="text-lg font-bold">{props.title}</h3>
 
           <form onSubmit={(event) => event.preventDefault()  /* Disable page reload after submit */}>
+            <Show when={props.message}>
+              <div class="m-2">
+                <p class="text-sm">{props.message}</p>
+              </div>
+            </Show>
+
             <div ref={editorRef} />
 
             <div class="m-2">

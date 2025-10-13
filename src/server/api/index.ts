@@ -1,4 +1,5 @@
 import collectionCreate from './collectionCreate'
+import collectionCreateIndex from './collectionCreateIndex'
 import collectionDelete from './collectionDelete'
 import collectionExport from './collectionExport'
 import collectionExportArray from './collectionExportArray'
@@ -13,6 +14,7 @@ import pageDocument from './pageDocument'
 
 export default {
   collectionCreate,
+  collectionCreateIndex,
   collectionDelete,
   collectionExport,
   collectionExportArray,
