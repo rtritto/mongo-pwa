@@ -16,6 +16,7 @@ const Page: Component<DataDB> = () => {
       <ShowCollections
         collections={data.collections}
         dbName={data.selectedDatabase}
+        options={data.options}
         show={{
           create: !data.options.readOnly,
           export: !data.options.noExport,

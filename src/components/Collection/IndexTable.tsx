@@ -10,6 +10,7 @@ const IndexTable: Component<{
   fields: Index[]
   database: string
   collection: string
+  options: Config['options']
   show: {
     create: boolean
     delete: boolean
@@ -67,7 +68,7 @@ const IndexTable: Component<{
                     <button class="btn btn-sm bg-red-700 py-0.5" onClick={() => (
                       fetch('/api/collectionDeleteIndex', {
                         method: 'POST',
-                        headers: HEADERS_JSON,
+                        headers: HEADERS_JSON(props.options),
                         body: JSON.stringify({
                           database: props.database,
                           collection: props.collection,

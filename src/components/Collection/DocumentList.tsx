@@ -41,6 +41,7 @@ const DocumentList: Component<{
                       collection={props.data.selectedCollection}
                       _id={document._id}
                       sub_type={document.sub_type}
+                      options={props.data.options}
                       doReload
                       fullWidth
                     />

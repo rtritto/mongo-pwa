@@ -9,6 +9,7 @@ import { isValidDatabaseName } from '@/utils/validationsClient'
 
 const ShowDatabases: Component<{
   databases: Mongo['databases']
+  options: Config['options']
   show: {
     create: boolean
     delete: boolean
@@ -33,7 +34,7 @@ const ShowDatabases: Component<{
                       fetch('/api/databaseCreate', {
                         method: 'POST',
                         body: JSON.stringify({ database }),
-                        headers: HEADERS_JSON
+                        headers: HEADERS_JSON(props.options)
                       }).then(async (res) => {
                         if (res.ok) {
                           // Add database to global databases to update viewing databases
@@ -87,7 +88,7 @@ const ShowDatabases: Component<{
                       enableInput
                       handleDelete={() => fetch('/api/databaseDelete', {
                         method: 'POST',
-                        headers: HEADERS_JSON,
+                        headers: HEADERS_JSON(props.options),
                         body: JSON.stringify({ database })
                       }).then(async (res) => {
                         if (res.ok) {

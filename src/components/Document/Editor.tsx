@@ -37,6 +37,7 @@ const Editor: Component<{
           sub_type={props.data.subtype}
           doReload={false}
           label="Delete"
+          options={props.data.options}
         />
       </div>
     </div>

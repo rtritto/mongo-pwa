@@ -12,6 +12,7 @@ const DeleteDocument: Component<{
   doReload: boolean
   label?: string
   fullWidth?: boolean
+  options: Config['options']
   // setError: (error: string) => void
 }> = (props) => {
   return (
@@ -24,7 +25,7 @@ const DeleteDocument: Component<{
       handleDelete={() => (
         fetch('/api/documentDelete', {
           method: 'POST',
-          headers: HEADERS_JSON,
+          headers: HEADERS_JSON(props.options),
           body: JSON.stringify({
             database: props.database,
             collection: props.collection,

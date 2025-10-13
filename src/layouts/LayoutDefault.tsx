@@ -13,7 +13,7 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
 
   onMount(() => {
     if (data.options.localStorageAuth.enabled) {
-      setPassword(localStorage.getItem(data.options.localStorageAuth.localStorageAuthKey!) || '')
+      setPassword(localStorage.getItem(data.options.localStorageAuth.localStorageAuthKey) || '')
     }
   })
 
@@ -43,7 +43,7 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
               placeholder="Insert Password"
               onInput={(event) => {
                 setPassword(event.currentTarget.value)
-                localStorage.setItem(data.options.localStorageAuth.localStorageAuthKey!, event.currentTarget.value)
+                localStorage.setItem(data.options.localStorageAuth.localStorageAuthKey, event.currentTarget.value)
               }}
             />
           </label>

@@ -13,6 +13,7 @@ import { isValidCollectionName } from '@/utils/validationsClient'
 const ShowCollections: Component<{
   collections: string[]
   dbName: string
+  options: Config['options']
   show: {
     create: boolean
     delete: boolean
@@ -39,7 +40,7 @@ const ShowCollections: Component<{
                       fetch('/api/collectionCreate', {
                         method: 'POST',
                         body: JSON.stringify({ collection, database: props.dbName }),
-                        headers: HEADERS_JSON
+                        headers: HEADERS_JSON(props.options)
                       }).then(async (res) => {
                         if (res.ok) {
                           // Add database to global collections to update viewing collections
@@ -125,7 +126,7 @@ const ShowCollections: Component<{
                         enableInput
                         handleDelete={() => fetch('/api/collectionDelete', {
                           method: 'POST',
-                          headers: HEADERS_JSON,
+                          headers: HEADERS_JSON(props.options),
                           body: JSON.stringify({ database: props.dbName, collection })
                         }).then(async (res) => {
                           if (res.ok) {

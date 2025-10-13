@@ -15,6 +15,7 @@ const Page: Component<DataIndex> = () => {
 
       <ShowDatabases
         databases={data.databases}
+        options={data.options}
         show={{
           create: !data.options.readOnly,
           delete: !data.options.noDelete && !data.options.readOnly

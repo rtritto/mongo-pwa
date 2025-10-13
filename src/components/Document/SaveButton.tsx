@@ -14,7 +14,7 @@ const SaveButton: Component<{
     <button class="btn btn-sm bg-green-500 py-0.5 text-right" onClick={() => (
       fetch('/api/documentUpdate', {
         method: 'POST',
-        headers: HEADERS_JSON,
+        headers: HEADERS_JSON(props.data.options),
         body: JSON.stringify({
           database: props.data.selectedDatabase,
           collection: props.data.selectedCollection,

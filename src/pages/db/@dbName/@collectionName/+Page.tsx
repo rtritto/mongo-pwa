@@ -50,7 +50,7 @@ const Page: Component<DataCollection> = () => {
         ...data.search,
         page
       }),
-      headers: HEADERS_JSON
+      headers: HEADERS_JSON(data.options)
     })
     const { count, columns, docs } = await res!.json()
     setData('count', count)
@@ -102,7 +102,7 @@ const Page: Component<DataCollection> = () => {
             handleSave={(doc: string, dialogRef: HTMLDialogElement) => (
               fetch('/api/documentCreate', {
                 method: 'POST',
-                headers: HEADERS_JSON,
+                headers: HEADERS_JSON(data.options),
                 body: JSON.stringify({
                   database: data.selectedDatabase,
                   collection: data.selectedCollection,
@@ -133,7 +133,7 @@ const Page: Component<DataCollection> = () => {
             handleSave={(doc: string, dialogRef: HTMLDialogElement) => (
               fetch('/api/collectionCreateIndex', {
                 method: 'POST',
-                headers: HEADERS_JSON,
+                headers: HEADERS_JSON(data.options),
                 body: JSON.stringify({
                   database: data.selectedDatabase,
                   collection: data.selectedCollection,
@@ -163,7 +163,7 @@ const Page: Component<DataCollection> = () => {
           label={`Delete all ${data.count} documents retrieved`}
           handleDelete={() => fetch('/api/collectionDelete', {
             method: 'POST',
-            headers: HEADERS_JSON,
+            headers: HEADERS_JSON(data.options),
             body: JSON.stringify({
               database: data.selectedDatabase,
               collection: data.selectedCollection,
@@ -203,6 +203,7 @@ const Page: Component<DataCollection> = () => {
             collection={data.selectedCollection}
             label="Indexes"
             fields={data.indexes!}
+            options={data.options}
             show={{
               create: !data.options.readOnly,
               delete: !data.options.noDelete && !data.options.readOnly
