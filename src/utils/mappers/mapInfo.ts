@@ -1,4 +1,4 @@
-import { bytesToSize, convertBytes } from './mapUtils'
+import { bytesToSize } from './mapUtils'
 
 const EMPTY_COLLECTION_SIZE = 4096
 
@@ -200,15 +200,15 @@ export const mapCollectionStats = (collStats: CollStats) => ({
   },
   size: {
     label: 'Total doc size',
-    value: convertBytes(collStats.size)
+    value: bytesToSize(collStats.size)
   },
   avgObjSize: {
     label: 'Average doc size',
-    value: convertBytes(collStats.avgObjSize)
+    value: bytesToSize(collStats.avgObjSize)
   },
   storageSize: {
     label: 'Pre-allocated size',
-    value: convertBytes(collStats.storageSize)
+    value: bytesToSize(collStats.storageSize)
   },
   nindexes: {
     label: 'Indexes',
@@ -216,7 +216,7 @@ export const mapCollectionStats = (collStats: CollStats) => ({
   },
   totalIndexSize: {
     label: 'Total index size',
-    value: convertBytes(collStats.totalIndexSize)
+    value: bytesToSize(collStats.totalIndexSize)
   },
   /* (?) deprecated */ ...'paddingFactor' in collStats && {
     paddingFactor: {

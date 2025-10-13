@@ -11,27 +11,8 @@ export const bytesToSize = (bytes?: number): string => {
   if (!bytes || bytes < 0) return '0 Bytes'
   const i = Math.floor(Math.log(bytes) / Math.log(BASE))
   const value = bytes / BASE ** i
-  const rounded = i === 0 ? value : value.toFixed(2)
-  return `${rounded} ${SIZE_UNITS[i] ?? 'Bytes'}`
-}
-
-/**
- * Converts a byte count into the next most appropriate size unit,
- * using explicit thresholds and rounding to 2 decimals.
- */
-export const convertBytes = (bytes?: number): string => {
-  if (bytes === undefined || bytes < 0) return '0 Bytes'
-
-  let unitIndex = 0
-  let value = bytes
-
-  while (value >= BASE && unitIndex < SIZE_UNITS.length - 1) {
-    value /= BASE
-    unitIndex++
-  }
-
-  const formatted = unitIndex === 0 ? value.toString() : value.toFixed(2)
-  return `${formatted} ${SIZE_UNITS[unitIndex]}`
+  const formatted = i === 0 ? value.toString() : value.toFixed(2)
+  return `${formatted.replace(/\.00$/, '')} ${SIZE_UNITS[i]}`
 }
 
 const deepmergeArray = (target: object[], src: object[]) => {
