@@ -3,7 +3,7 @@ import { type Component, untrack } from 'solid-js'
 import IconAdd from '@/components/Icons/IconAdd'
 import createCodeMirror from '@/components/Document/createCodeMirror'
 
-const CreateDocumentDialog: Component<{
+const SaveDialog: Component<{
   title: string
   label: string
   template: string
@@ -56,4 +56,4 @@ const CreateDocumentDialog: Component<{
   )
 }
 
-export default CreateDocumentDialog
+export default SaveDialog

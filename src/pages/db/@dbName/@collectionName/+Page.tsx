@@ -6,7 +6,7 @@ import { reload } from 'vike/client/router'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import DocumentList from '@/components/Collection/DocumentList'
 import StatsTable from '@/components/common/StatsTable'
-import CreateDocumentDialog from '@/components/Collection/CreateDocumentDialog'
+import SaveDialog from '@/components/Collection/SaveDialog'
 import { HEADERS_JSON } from '@/utils/constants'
 import fetchWithRetries from '@/utils/fetchWithRetries'
 import { getLastPage } from '@/utils/queries'
@@ -90,7 +90,7 @@ const Page: Component<DataCollection> = () => {
       </Show>
 
       <div class="my-2">
-        <CreateDocumentDialog
+        <SaveDialog
           title="Add Document"
           label="New Document"
           template={docStringTemplate}
