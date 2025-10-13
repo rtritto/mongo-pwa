@@ -1,11 +1,12 @@
 import { createPagination } from '@solid-primitives/pagination'
 import { type Component, type JSX, createEffect, createSignal, For, Show } from 'solid-js'
-import { useData } from 'vike-solid/useData'
 import { reload } from 'vike/client/router'
+import { useData } from 'vike-solid/useData'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
-import DocumentList from '@/components/Collection/DocumentList'
 import StatsTable from '@/components/common/StatsTable'
+import DocumentList from '@/components/Collection/DocumentList'
+import IndexTable from '@/components/Collection/IndexTable'
 import SaveDialog from '@/components/Collection/SaveDialog'
 import { HEADERS_JSON } from '@/utils/constants'
 import fetchWithRetries from '@/utils/fetchWithRetries'
@@ -195,7 +196,19 @@ const Page: Component<DataCollection> = () => {
             </>
           )}
         >
-          <StatsTable label="Collection Stats" fields={data.stats! as DBStats} />
+          <StatsTable label="Collection Stats" fields={data.stats} />
+
+          <IndexTable
+            database={data.selectedDatabase}
+            collection={data.selectedCollection}
+            label="Indexes"
+            fields={data.indexes!}
+            show={{
+              create: !data.options.readOnly,
+              delete: !data.options.noDelete && !data.options.readOnly
+            }}
+            setAlertSuccessMessage={setAlertSuccessMessage}
+          />
         </Show>
       </div>
     </div >

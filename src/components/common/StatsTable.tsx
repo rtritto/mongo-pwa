@@ -1,11 +1,11 @@
 import type { Component } from 'solid-js'
 
-const getRowsComponent = (fields: ServerStats | DBStats) => {
+const getRowsComponent = (fields: ServerStats | DBStats | CollectionStats) => {
   const outRaw = []
   for (const cell in fields) {
     outRaw.push([
-      <td><strong>{fields[cell as keyof ServerStats & keyof DBStats]!.label}</strong></td>,
-      <td>{fields[cell as keyof ServerStats & keyof DBStats]!.value}</td>
+      <td><strong>{fields[cell as keyof ServerStats & keyof DBStats & keyof CollectionStats]!.label}</strong></td>,
+      <td>{fields[cell as keyof ServerStats & keyof DBStats & keyof CollectionStats]!.value}</td>
     ])
   }
   const out = []
@@ -21,7 +21,7 @@ const getRowsComponent = (fields: ServerStats | DBStats) => {
   return out
 }
 
-const StatsTable: Component<{ label: string, fields: ServerStats | DBStats }> = (props) => {
+const StatsTable: Component<{ label: string, fields: ServerStats | DBStats | CollectionStats }> = (props) => {
   return (
     <div class="overflow-x-auto">
       <table class="table table-zebra">

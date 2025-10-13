@@ -1,6 +1,7 @@
 import collectionCreate from './collectionCreate'
 import collectionCreateIndex from './collectionCreateIndex'
 import collectionDelete from './collectionDelete'
+import collectionDeleteIndex from './collectionDeleteIndex'
 import collectionExport from './collectionExport'
 import collectionExportArray from './collectionExportArray'
 import collectionImport from './collectionImport'
@@ -16,6 +17,7 @@ export default {
   collectionCreate,
   collectionCreateIndex,
   collectionDelete,
+  collectionDeleteIndex,
   collectionExport,
   collectionExportArray,
   collectionImport,
