@@ -138,6 +138,22 @@ const getConfigDefault = () => ({
     // Display startup text on console
     console: true,
 
+    // TODO add to README
+    localStorageAuth: (() => {
+      // set to true if you want to authenticate mongo-express logins
+      // against credentials stored in browser local storage (in addition to basic auth)
+      const enabled = getBoolean(getFileEnv('ME_CONFIG_LOCAL_STORAGE_AUTH_ENABLED'))
+      return enabled ? {
+        enabled,
+        // key to lookup in browser local storage for username
+        localStorageAuthKey: getFileEnv('ME_CONFIG_LOCAL_STORAGE_AUTH_KEY') || 'mongo-express-key',
+        // key to lookup in browser local storage for password
+        localStorageAuthPassword: getFileEnv('ME_CONFIG_LOCAL_STORAGE_AUTH_PASSWORD') || 'mongo-express-password'
+      } : {
+        enabled
+      }
+    })(),
+
     // documentsPerPage: how many documents you want to see at once in collection view
     documentsPerPage: 10,
 

@@ -1,3 +1,7 @@
+type DataLayout = {
+  options: Options
+}
+
 type DataIndex = {
   title: string
   databases: Mongo['databases']
