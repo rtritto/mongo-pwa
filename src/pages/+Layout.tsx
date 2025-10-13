@@ -1,1 +1,1 @@
-export { LayoutDefault as Layout } from '../layouts/LayoutDefault'
+export { LayoutDefault as Layout } from '@/layouts/LayoutDefault'
