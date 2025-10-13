@@ -1,5 +1,5 @@
 import { createPagination } from '@solid-primitives/pagination'
-import { type Component, createEffect, createSignal, For, Show } from 'solid-js'
+import { type Component, type JSX, createEffect, createSignal, For, Show } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 import { reload } from 'vike/client/router'
 
@@ -11,9 +11,13 @@ import { HEADERS_JSON } from '@/utils/constants'
 import fetchWithRetries from '@/utils/fetchWithRetries'
 import { getLastPage } from '@/utils/queries'
 
+const docStringTemplate = `{
+  _id: ObjectId()
+}`
+
 const Page: Component<DataCollection> = () => {
   const [data, setData] = useData<DataCollection>()
-  const [idDocumentCreated, setIdDocumentCreated] = createSignal('')
+  const [alertSuccessMessage, setAlertSuccessMessage] = createSignal<JSX.Element>()
 
   //#region Pagination
   const [pages, setPages] = createSignal<number>(getLastPage(data.documentsPerPage, data.count))
@@ -79,14 +83,40 @@ const Page: Component<DataCollection> = () => {
     <div>
       <h1 class="text-2xl pb-2">Viewing Collection: <b>{data.selectedCollection}</b></h1>
 
-      <Show when={idDocumentCreated()}>
+      <Show when={alertSuccessMessage()}>
         <div role="alert" class="alert alert-success alert-outline mb-2">
-          <span>Document "<b>{idDocumentCreated()}</b>" added!</span>
+          {alertSuccessMessage()}
         </div>
       </Show>
 
       <div class="my-2">
-        <CreateDocumentDialog database={data.selectedDatabase} collection={data.selectedCollection} setIdDocumentCreated={setIdDocumentCreated} />
+        <CreateDocumentDialog
+          title="Add Document"
+          label="New Document"
+          template={docStringTemplate}
+          handleSave={(doc: string, dialogRef: HTMLDialogElement) => (
+            fetch('/api/documentCreate', {
+              method: 'POST',
+              headers: HEADERS_JSON,
+              body: JSON.stringify({
+                database: data.selectedDatabase,
+                collection: data.selectedCollection,
+                doc
+              })
+            }).then(async (res) => {
+              if (res.ok) {
+                const { insertedId } = await res.json() as { insertedId: string }
+                reload()
+                setAlertSuccessMessage(<span>Document "<b>{insertedId}</b>" added!</span>)
+                dialogRef.close()
+              } else {
+                // const { error } = await res.json()
+                // setError(error)
+              }
+            })
+            // .catch((error) => { setError(error.message) })
+          )}
+        />
       </div>
 
       <div class="my-2">
