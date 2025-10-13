@@ -15,8 +15,8 @@ type NextApiResponse = import('next').NextApiResponse
 type NextApiHandler = import('next').NextApiHandler
 type Redirect = import('next').Redirect
 
-type Config = import('./../config.default.mts').Config
-type MongoDb = import('./../config.default.mts').MongoDb
+type Config = import('../../config.default.ts').Config
+type MongoDb = import('../../config.default.ts').MongoDb
 type ServerStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapServerStats']>
 type DBStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapDatabaseStats']>
 type CollectionStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapCollectionStats']>
@@ -139,7 +139,7 @@ type Connections = {
   [key: string]: Connection
 }
 
-// type Mongo = import('middlewares/db.mts').Mongo
+// type Mongo = import('middlewares/db.ts').Mongo
 type Mongo = {
   mongoClient: MongoClient
   clients: ClientInfo[]
