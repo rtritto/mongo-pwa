@@ -1,4 +1,4 @@
-import { type Component, untrack } from 'solid-js'
+import { type Component, type JSX, untrack } from 'solid-js'
 import { navigate } from 'vike/client/router'
 
 import IconSave from '@/components/Icons/IconSave'
@@ -8,7 +8,7 @@ import { HEADERS_JSON } from '@/utils/constants'
 const SaveButton: Component<{
   view: CustomEditorView
   data: DataDocument
-  setIdDocumentUpdated: (id: string) => void
+  setAlertSuccessMessage: (message: JSX.Element) => void
 }> = (props) => {
   return (
     <button class="btn btn-sm bg-green-500 py-0.5 text-right" onClick={() => (
@@ -26,7 +26,7 @@ const SaveButton: Component<{
         if (res.ok) {
           const { insertedId } = await res.json() as { insertedId: string }
           navigate(`/db/${untrack(() => props.data.selectedDatabase)}/${untrack(() => props.data.selectedCollection)}`)
-          untrack(() => props.setIdDocumentUpdated(insertedId))
+          untrack(() => props.setAlertSuccessMessage(<span>Document "<b>{insertedId}</b>" updated!</span>))
         } else {
           // const { error } = await res.json()
           // setError(error)
