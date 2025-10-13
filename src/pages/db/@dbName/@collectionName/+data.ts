@@ -47,7 +47,7 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     const [stats, indexes] = await Promise.all([
       collection.aggregate<CollStats>([{ $collStats: { storageStats: {} } }]).next().then((s) => s.storageStats),
       collection.indexes()
-    ]) as [CollStats, Index]
+    ]) as [CollStats, Index[]]
     const { indexSizes } = stats
     for (let n = 0, len = indexes.length; n < len; n++) {
       indexes[n].size = indexSizes[indexes[n].name]

@@ -2,20 +2,22 @@ type DataIndex = {
   title: string
   databases: Mongo['databases']
   options: Options
-  stats?: ServerStats | DBStats | CollectionStats
+
+  stats?: ServerStats
 
   success?: string
   error?: string
 }
 
-type DataDB = DataIndex & {
+type DataDB = Omit<DataIndex, 'stats'> & {
   dbName: string
   collections: Mongo['collections'][string]
 
   selectedDatabase: string
+  stats?: DBStats
 }
 
-type DataCollection = DataDB & {
+type DataCollection = Omit<DataDB, 'stats'> & {
   collectionName: string
 
   selectedCollection: string
@@ -27,6 +29,7 @@ type DataCollection = DataDB & {
   search: QueryParameter
   count: number
   documentsPerPage: number
+  stats?: CollectionStats
 }
 
 type DataDocument = Omit<DataCollection, 'selectedDocument'> & {
