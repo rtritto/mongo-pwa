@@ -12,7 +12,7 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
   const [password, setPassword] = createSignal<string | null>(null)
 
   onMount(() => {
-    if (data?.options.localStorageAuth.enabled) {
+    if (data?.options?.localStorageAuth.enabled) {
       setPassword(localStorage.getItem(data.options.localStorageAuth.localStorageAuthKey) || '')
     }
   })
@@ -31,7 +31,7 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
 
   return (
     <Show
-      when={!data?.options.localStorageAuth.enabled || password() === data?.options.localStorageAuth.localStorageAuthPassword}
+      when={!data?.options?.localStorageAuth.enabled || password() === data?.options?.localStorageAuth.localStorageAuthPassword}
       fallback={
         password() === null ? null : (
           <label>
