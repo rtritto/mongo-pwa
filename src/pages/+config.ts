@@ -8,6 +8,7 @@ import vikeSolid from 'vike-solid/config'
 // Default config (can be overridden by pages)
 export default {
   description: 'Mongo PWA GUI', // <meta name='description'>
+  // prerender should be false because of localStorageAuth usage
   prerender: false,
   extends: [
     vikeSolid,
