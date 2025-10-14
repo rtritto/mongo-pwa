@@ -40,7 +40,7 @@ function getBoolean(str: string | undefined, defaultValue = false) {
   return str ? str.toLowerCase() === 'true' : defaultValue
 }
 
-const getConfigDefault = () => ({
+const ConfigDefault = {
   mongodb: {
     // As recommended, a connection String is used instead of the individual params
     // More info here: https://docs.mongodb.com/manual/reference/connection-string
@@ -210,14 +210,13 @@ const getConfigDefault = () => ({
     // noDelete: if noDelete is set to true, we won't show delete buttons
     noDelete: getBoolean(process.env.ME_CONFIG_OPTIONS_NO_DELETE)
   }
-})
+}
 
-export type Config = ReturnType<typeof getConfigDefault>
+// Static load at runtime doesn't work with Vite because env var aren't loaded by default;
+// Workaround: import this file in /pages/+config.ts
+globalThis.config = ConfigDefault
+
+export type Config = typeof ConfigDefault
 export type MongoDb = Config['mongodb'] & {
   connectionName?: string
 }
-
-// global.config = configDefault
-// static load at runtime doesn't work with Vite because env var aren't loaded by default;
-// call a function instead after env var are loaded
-export default getConfigDefault

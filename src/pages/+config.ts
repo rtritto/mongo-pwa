@@ -1,3 +1,5 @@
+import '../../config.default'
+
 import type { Config } from 'vike/types'
 import vikeServer from 'vike-server/config'
 import vikeSolid from 'vike-solid/config'
