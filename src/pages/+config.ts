@@ -14,5 +14,7 @@ export default {
     vikeSolid,
     vikeServer
   ],
+  // To run serve script, enable next line
+  // server: 'server/entry.node.ts'
   server: process.env.NODE_ENV === 'production' ? 'server/index.ts' : 'server/entry.node.ts'
 } satisfies Config
