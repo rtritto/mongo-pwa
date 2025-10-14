@@ -18,13 +18,13 @@ const MenuList: Component = () => {
       <li>
         {/* TODO Fix width with large names */}
         <details ref={detailsDBRef}>
-          <Show when={data.selectedDatabase} fallback={<summary class="btn btn-ghost">Databases</summary>}>
+          <Show when={data?.selectedDatabase} fallback={<summary class="btn btn-ghost">Databases</summary>}>
             <summary class="btn btn-ghost">Database: <b>{data.selectedDatabase}</b></summary>
           </Show>
 
           {/* TODO Fix z-index of list that doesn't work */}
           <ul class="bg-base-100 rounded-t-none z-2 shadow-sm">
-            <For each={data.databases}>
+            <For each={data?.databases}>
               {(database) => (
                 <li class="block w-full">
                   <a href={`/db/${encodeURIComponent(database)}`} onClick={() => closeDropdown(detailsDBRef)}>{database}</a>
@@ -35,7 +35,7 @@ const MenuList: Component = () => {
         </details>
       </li>
 
-      <Show when={data.selectedDatabase}>
+      <Show when={data?.selectedDatabase}>
         <li>
           {/* TODO Fix width with large names */}
           <details ref={detailsCollectionRef}>
@@ -57,7 +57,7 @@ const MenuList: Component = () => {
         </li>
       </Show>
 
-      <Show when={data.selectedDocument}>
+      <Show when={data?.selectedDocument}>
         <li class="disabled">
           {/* TODO disable text decorator underline */}
           <label>Document: <b>{data.selectedDocument}</b></label>
