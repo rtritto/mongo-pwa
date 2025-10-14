@@ -30,6 +30,7 @@
     ".github",
     ".vite",
     ".vscode",
-    ".yarn"
+    ".yarn",
+    "dist"
   ]
 }
