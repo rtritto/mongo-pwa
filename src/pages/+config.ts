@@ -1,3 +1,4 @@
+// import used to load the default config in globalThis
 import '../../config.default'
 
 import type { Config } from 'vike/types'
