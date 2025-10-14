@@ -2,18 +2,18 @@ import './styles.css'
 import './tailwind.css'
 
 import { type Component, type JSX, Show, createSignal, onMount } from 'solid-js'
-import { usePageContext } from 'vike-solid/usePageContext'
+import { useData } from 'vike-solid/useData'
 
 import NavBar from './NavBar'
 
 export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
-  const pageContext = usePageContext() as PageContext
+  const [data] = useData<DataLayout>()
 
   const [password, setPassword] = createSignal<string | null>(null)
 
   onMount(() => {
-    if (pageContext.options?.localStorageAuth.enabled) {
-      setPassword(localStorage.getItem(pageContext.options.localStorageAuth.localStorageAuthKey) || '')
+    if (data.options.localStorageAuth.enabled) {
+      setPassword(localStorage.getItem(data.options.localStorageAuth.localStorageAuthKey) || '')
     }
   })
 
@@ -31,7 +31,7 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
 
   return (
     <Show
-      when={!pageContext.options?.localStorageAuth.enabled || password() === pageContext.options?.localStorageAuth.localStorageAuthPassword}
+      when={!data.options.localStorageAuth.enabled || password() === data.options.localStorageAuth.localStorageAuthPassword}
       fallback={
         password() === null ? null : (
           <label>
@@ -43,7 +43,7 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
               placeholder="Insert Password"
               onInput={(event) => {
                 setPassword(event.currentTarget.value)
-                localStorage.setItem(pageContext.options.localStorageAuth.localStorageAuthKey!, event.currentTarget.value)
+                localStorage.setItem(data.options.localStorageAuth.localStorageAuthKey!, event.currentTarget.value)
               }}
             />
           </label>

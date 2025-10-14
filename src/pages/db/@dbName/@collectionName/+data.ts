@@ -17,18 +17,20 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
   await connectClient()
   const { search } = pageContext.urlParsed
   const queryOptions = getQueryOptions(search)
+  const { mongo, config } = globalThis
   // TODO check if use this
   // const collection = mongo.connections[dbName].db.collection(collectionName)
-  const collection = globalThis.mongo.mongoClient.db(dbName).collection(collectionName)
-  const { count, items } = await getItemsAndCount(search, queryOptions, collection, globalThis.config)
+  const collection = mongo.mongoClient.db(dbName).collection(collectionName)
+  const { count, items } = await getItemsAndCount(search, queryOptions, collection, config)
 
   const { columns, docs } = getColumnsAndSetDocs(items)
 
   const _data = {
     title: `Collection: ${collectionName} - Mongo PWA`,
-    databases: globalThis.mongo.databases,
-    collections: globalThis.mongo.collections[dbName],
-    options: globalThis.config.options,
+    databases: mongo.databases,
+    collections: mongo.collections[dbName],
+    // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
+    options: config.options,
     selectedDatabase: dbName,
     selectedCollection: collectionName,
     selectedDocument: undefined,
@@ -40,10 +42,10 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     search,
     // Pagination
     count,
-    documentsPerPage: globalThis.config.options.documentsPerPage
+    documentsPerPage: config.options.documentsPerPage
   } as DataCollection
 
-  if (globalThis.mongo.adminDb && !globalThis.config.mongodb.awsDocumentDb) {
+  if (mongo.adminDb && !config.mongodb.awsDocumentDb) {
     const [stats, indexes] = await Promise.all([
       collection.aggregate<CollStats>([{ $collStats: { storageStats: {} } }]).next().then((s) => s.storageStats),
       collection.indexes()

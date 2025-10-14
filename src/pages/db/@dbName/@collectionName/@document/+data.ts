@@ -3,7 +3,7 @@ import { toString } from '@/utils/bson'
 import { buildId } from '@/utils/mappers/mapUtils'
 import { isValidCollectionName, isValidDatabaseName } from '@/utils/validationsClient'
 
-export const data: DataAsync<DataCollection> = async (pageContext) => {
+export const data: DataAsync<DataDocument> = async (pageContext) => {
   const { dbName, collectionName, document } = pageContext.routeParams
   const validationDbRes = isValidDatabaseName(dbName)
   if (validationDbRes.error) {
@@ -14,7 +14,7 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     throw new Error(validationCollRes.error)
   }
   await connectClient()
-  const { config, mongo } = globalThis
+  const { config: { options }, mongo } = globalThis
   // TODO check if use this
   // const collection = mongo.connections[dbName].db.collection(collectionName)
   const collection = mongo.mongoClient.db(dbName).collection(collectionName)
@@ -27,13 +27,13 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
 
   // TODO handle 404 not found
 
-  const { readOnly } = config.options
   const _data = {
-    title: `${readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
+    title: `${options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
     docString: toString(doc!),
     _id: document,
     subtype,
-    readOnly,
+    // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
+    options,
     selectedDatabase: dbName,
     selectedCollection: collectionName,
     selectedDocument: document

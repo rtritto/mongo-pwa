@@ -15,6 +15,7 @@ export const data: DataAsync<DataDB> = async (pageContext) => {
     title: `DB: ${dbName} - Mongo PWA`,
     databases: mongo.databases,
     collections: mongo.collections[dbName],
+    // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
     options: config.options,
     selectedDatabase: dbName,
     selectedCollection: undefined,

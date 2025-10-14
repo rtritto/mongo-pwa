@@ -7,6 +7,7 @@ export const data: DataAsync<DataIndex> = async () => {
 
   const _data = {
     databases: mongo.databases,
+    // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
     options: config.options,
     selectedDatabase: undefined,
     selectedCollection: undefined,

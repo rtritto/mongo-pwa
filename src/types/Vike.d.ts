@@ -1,10 +1,6 @@
-type PageContextAdditional = {
-  options: Config['options']
-}
+type PageContextServer = import('vike/types').PageContextServer
 
-type PageContextServer = import('vike/types').PageContextServer & PageContextAdditional
-
-type PageContext = (PageContextServer | import('vike/types').PageContextClient) & PageContextAdditional
+type PageContext = PageContextServer | import('vike/types').PageContextClient
 
 type DataAsync<Data = unknown> = (pageContext: PageContextServer) => Promise<Data>
 
