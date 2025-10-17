@@ -1,5 +1,4 @@
 import { For, Show, type Component } from 'solid-js'
-
 import { useData } from 'vike-solid/useData'
 
 const handleBlur = () => {
