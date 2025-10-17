@@ -6,7 +6,7 @@ import NavBarMobile from './NavBarMobile'
 const NavBar: Component = () => {
   return (
     <nav class="bg-gray-800 text-neutral-content shadow-lg">
-      <div class="md:container mx-auto flex">
+      <div class="flex md:container mx-auto">
         {/* Section #1 → Use z-index to go on top of other div sections */}
         <div class="z-1">
           <div class="md:hidden">

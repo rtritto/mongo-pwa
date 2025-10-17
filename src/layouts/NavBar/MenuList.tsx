@@ -1,61 +1,75 @@
 import { For, Show, type Component } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
-const handleBlur = () => {
-  (document.activeElement as HTMLElement).blur()
-}
-
 const MenuList: Component = () => {
   // Use DataDocument that contains all properties
   const [data] = useData<DataDocument>()
 
+  let refDatabasesDetails: HTMLDetailsElement | undefined
+  let refCollectionsDetails: HTMLDetailsElement | undefined
+
+  const handleCloseDetails = () => {
+    refDatabasesDetails?.removeAttribute('open')
+    refCollectionsDetails?.removeAttribute('open')
+  }
+
+  const handleClickToCloseDatabaseDetails = () => {
+    refDatabasesDetails?.removeAttribute('open')
+  }
+  const handleClickToCloseCollectionsDetails = () => {
+    refCollectionsDetails?.removeAttribute('open')
+  }
+
   return (
-    <ul>
-      <li>
-        {/* TODO Fix width with large names */}
-        <div class="dropdown p-0">
-          <Show when={data.selectedDatabase} fallback={<div tabindex="0" role="button" class="btn btn-ghost">Databases</div>}>
-            <div class="btn btn-ghost" tabindex="0" role="button">Database: <b>{data.selectedDatabase}</b></div>
+    <ul class="menu menu-horizontal px-1 py-0">
+      <li class="px-1">
+        <Show when={data.selectedDatabase}>
+          <a class="btn btn-sm btn-ghost px-1 py-0 mx-0" href={`/db/${encodeURIComponent(data.selectedDatabase)}`}>Database:</a>
+        </Show>
+
+        <details id="databases-details" ref={refDatabasesDetails}>
+          <Show when={data.selectedDatabase} fallback={<summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}>Databases</summary>}>
+            <summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}><b>{data.selectedDatabase}</b></summary>
           </Show>
 
-          {/* TODO Fix z-index of list that doesn't work */}
-          <ul class="dropdown-content menu bg-base-100 rounded-t-none shadow-sm" tabindex="-1">
+          <ul class="p-0 m-0">
             <For each={data.databases}>
               {(database) => (
-                <li class="w-full">
-                  <a href={`/db/${encodeURIComponent(database)}`} onClick={handleBlur}>{database}</a>
+                <li>
+                  <a class="w-full" href={`/db/${encodeURIComponent(database)}`} onClick={handleCloseDetails}>{database}</a>
                 </li>
               )}
             </For>
           </ul>
-        </div>
+        </details>
       </li>
 
       <Show when={data.selectedDatabase}>
-        <li>
-          {/* TODO Fix width with large names */}
-          <div class="dropdown p-0">
-            <Show when={data.selectedCollection} fallback={<div tabindex="0" role="button" class="btn btn-ghost">Collections</div>}>
-              <div class="btn btn-ghost" tabindex="0" role="button">Collection: <b>{data.selectedCollection}</b></div>
+        <li class="px-1">
+          <Show when={data.selectedCollection}>
+            <a class="btn btn-sm btn-ghost px-1 py-0 mx-0" href={`/db/${data.selectedDatabase}/${encodeURIComponent(data.selectedCollection)}`}>Collection:</a>
+          </Show>
+
+          <details id="collections-details" ref={refCollectionsDetails}>
+            <Show when={data.selectedCollection} fallback={<summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseDatabaseDetails}>Collections</summary>}>
+              <summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseDatabaseDetails}><b>{data.selectedCollection}</b></summary>
             </Show>
 
-            {/* TODO z-index of list doesn't work */}
-            <ul class="dropdown-content menu bg-base-100 rounded-t-none shadow-sm" tabindex="-1">
+            <ul class="p-0 m-0">
               <For each={data.collections}>
                 {(collection) => (
-                  <li class="w-full">
-                    <a href={`/db/${data.selectedDatabase}/${encodeURIComponent(collection)}`} onClick={handleBlur}>{collection}</a>
+                  <li>
+                    <a class="w-full" href={`/db/${data.selectedDatabase}/${encodeURIComponent(collection)}`} onClick={handleCloseDetails}>{collection}</a>
                   </li>
                 )}
               </For>
             </ul>
-          </div>
+          </details>
         </li>
       </Show>
 
       <Show when={data.selectedDocument}>
         <li class="disabled">
-          {/* TODO disable text decorator underline */}
           <label>Document: <b>{data.selectedDocument}</b></label>
         </li>
       </Show>
