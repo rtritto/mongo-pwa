@@ -19,11 +19,17 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
 
   const App = () => (
     <div>
-      <NavBar />
+      <main>
+        <header class="sticky top-0 z-40">
+          <div class="px-8">
+            <NavBar />
+          </div>
+        </header>
 
-      <main class="flex justify-center">
-        <div class="max-w-7xl">
-          {props.children}
+        <div class="flex px-24">
+          <div class="max-w-7xl">
+            {props.children}
+          </div>
         </div>
       </main>
     </div>
