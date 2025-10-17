@@ -110,7 +110,7 @@ const ShowCollections: Component<{
                   </td>
 
                   <td class="p-0.5">
-                    <a class="btn" href={`/db/${encodeURIComponent(props.dbName)}/${encodeURIComponent(collection)}`}>
+                    <a class="btn w-full" href={`/db/${encodeURIComponent(props.dbName)}/${encodeURIComponent(collection)}`}>
                       <h6>{collection}</h6>
                     </a>
                   </td>
