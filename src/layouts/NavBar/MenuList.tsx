@@ -2,14 +2,11 @@ import { For, Show, type Component } from 'solid-js'
 
 import { useData } from 'vike-solid/useData'
 
-const closeDropdown = (detailsRef: HTMLDetailsElement) => {
-  detailsRef.removeAttribute('open') // Manually close the dropdown
+const handleBlur = () => {
+  (document.activeElement as HTMLElement).blur()
 }
 
 const MenuList: Component = () => {
-  let detailsDBRef!: HTMLDetailsElement
-  let detailsCollectionRef!: HTMLDetailsElement
-
   // Use DataDocument that contains all properties
   const [data] = useData<DataDocument>()
 
@@ -17,43 +14,43 @@ const MenuList: Component = () => {
     <ul>
       <li>
         {/* TODO Fix width with large names */}
-        <details ref={detailsDBRef}>
-          <Show when={data.selectedDatabase} fallback={<summary class="btn btn-ghost">Databases</summary>}>
-            <summary class="btn btn-ghost">Database: <b>{data.selectedDatabase}</b></summary>
+        <div class="dropdown p-0">
+          <Show when={data.selectedDatabase} fallback={<div tabindex="0" role="button" class="btn btn-ghost">Databases</div>}>
+            <div class="btn btn-ghost" tabindex="0" role="button">Database: <b>{data.selectedDatabase}</b></div>
           </Show>
 
           {/* TODO Fix z-index of list that doesn't work */}
-          <ul class="bg-base-100 rounded-t-none z-2 shadow-sm">
+          <ul class="dropdown-content menu bg-base-100 rounded-t-none shadow-sm" tabindex="-1">
             <For each={data.databases}>
               {(database) => (
-                <li class="block w-full">
-                  <a href={`/db/${encodeURIComponent(database)}`} onClick={() => closeDropdown(detailsDBRef)}>{database}</a>
+                <li class="w-full">
+                  <a href={`/db/${encodeURIComponent(database)}`} onClick={handleBlur}>{database}</a>
                 </li>
               )}
             </For>
           </ul>
-        </details>
+        </div>
       </li>
 
       <Show when={data.selectedDatabase}>
         <li>
           {/* TODO Fix width with large names */}
-          <details ref={detailsCollectionRef}>
-            <Show when={data.selectedCollection} fallback={<summary class="btn btn-ghost">Collections</summary>}>
-              <summary class="btn btn-ghost">Collection: <b>{data.selectedCollection}</b></summary>
+          <div class="dropdown p-0">
+            <Show when={data.selectedCollection} fallback={<div tabindex="0" role="button" class="btn btn-ghost">Collections</div>}>
+              <div class="btn btn-ghost" tabindex="0" role="button">Collection: <b>{data.selectedCollection}</b></div>
             </Show>
 
             {/* TODO z-index of list doesn't work */}
-            <ul class="bg-base-100 rounded-t-none z-2 shadow-sm">
+            <ul class="dropdown-content menu bg-base-100 rounded-t-none shadow-sm" tabindex="-1">
               <For each={data.collections}>
                 {(collection) => (
-                  <li class="block w-full">
-                    <a href={`/db/${data.selectedDatabase}/${encodeURIComponent(collection)}`} onClick={() => closeDropdown(detailsCollectionRef)}>{collection}</a>
+                  <li class="w-full">
+                    <a href={`/db/${data.selectedDatabase}/${encodeURIComponent(collection)}`} onClick={handleBlur}>{collection}</a>
                   </li>
                 )}
               </For>
             </ul>
-          </details>
+          </div>
         </li>
       </Show>
 
