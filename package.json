@@ -23,7 +23,7 @@
     "@solid-primitives/pagination": "^0.5.0",
     "bson": "^6.10.4",
     "codemirror": "^6.0.2",
-    "hono": "^4.10.0",
+    "hono": "^4.10.1",
     "mongodb": "^6.20.0",
     "mongodb-query-parser": "^4.4.3",
     "solid-js": "^1.9.9"
