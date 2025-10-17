@@ -1732,19 +1732,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lezer/common@npm:^1.0.0, @lezer/common@npm:^1.1.0, @lezer/common@npm:^1.2.0":
-  version: 1.2.3
-  resolution: "@lezer/common@npm:1.2.3"
-  checksum: 10c0/fe9f8e111080ef94037a34ca2af1221c8d01c1763ba5ecf708a286185c76119509a5d19d924c8842172716716ddce22d7834394670c4a9432f0ba9f3b7c0f50d
+"@lezer/common@npm:^1.0.0, @lezer/common@npm:^1.1.0, @lezer/common@npm:^1.2.0, @lezer/common@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@lezer/common@npm:1.3.0"
+  checksum: 10c0/e164094920761c2f56c8634d0ae9261ea7c5e6b8202aa08773febc59b8d8284dde5bc7a810c9438e27b978e5ad67d0db03af1ed72924df61b8fa2704acb55deb
   languageName: node
   linkType: hard
 
-"@lezer/highlight@npm:^1.0.0, @lezer/highlight@npm:^1.1.3, @lezer/highlight@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "@lezer/highlight@npm:1.2.1"
+"@lezer/highlight@npm:^1.0.0, @lezer/highlight@npm:^1.1.3, @lezer/highlight@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "@lezer/highlight@npm:1.2.2"
   dependencies:
-    "@lezer/common": "npm:^1.0.0"
-  checksum: 10c0/51b4c08596a0dfeec6a7b7ed90a7f2743ab42e7e8ff8b89707fd042860e4e133dbd8243639fcaf077305ae6c303aa74e69794015eb16cb34741f5ac6721f283c
+    "@lezer/common": "npm:^1.3.0"
+  checksum: 10c0/8eebbf88b13178529b6ab10e5a4ec8b5255ec29d5c9c95a48eb1e98f9c49c045f948f9a4f61ee4d4599089c4b12e44a072db1dd0880278bc76de40c8792494f0
   languageName: node
   linkType: hard
 
@@ -2122,14 +2122,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solid-primitives/pagination@npm:^0.4.3":
-  version: 0.4.3
-  resolution: "@solid-primitives/pagination@npm:0.4.3"
+"@solid-primitives/pagination@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@solid-primitives/pagination@npm:0.5.0"
   dependencies:
     "@solid-primitives/utils": "npm:^6.3.2"
   peerDependencies:
     solid-js: ^1.6.12
-  checksum: 10c0/7bead2f0fabfeeffa574134b10e7dadecc1596bd13165ba7613d3695f3b4ae39f60163240efd4fa1f19655f5c1e6aecfcdc20c09d547c7348d6afd82e4371777
+  checksum: 10c0/90cd02cc7a01f2f0a1f5a208c4b84c04a3ebc8d02fc8f30dd5260263dda07fdc80f26c069de548b699b5314e7ce503282b1063f057b09302345337139508bd5c
   languageName: node
   linkType: hard
 
@@ -2435,12 +2435,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^24.7.2":
-  version: 24.7.2
-  resolution: "@types/node@npm:24.7.2"
+"@types/node@npm:*, @types/node@npm:^24.8.1":
+  version: 24.8.1
+  resolution: "@types/node@npm:24.8.1"
   dependencies:
     undici-types: "npm:~7.14.0"
-  checksum: 10c0/03f662f10e4b89bc97016e067101cbabe55025b54c24afb581fb50992d5eeaaf417bdae34bbc668ae8759d3cdbbbadf35fc8b9b29d26f52ede2525d48e919e49
+  checksum: 10c0/d185f2f14aa26cc2b482aa730bfc452943f9636df37aad6ceed80aa397f1278f894043336bd72f74c47b3dbef23e772ac9b1a256168984aa8aee26836132d290
   languageName: node
   linkType: hard
 
@@ -3451,10 +3451,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^5.3.1":
-  version: 5.3.1
-  resolution: "daisyui@npm:5.3.1"
-  checksum: 10c0/239589fc79beda5784e89c4e66dc6bee63bec73c700eb3ca8be890f8ea8dd33470d08311ee0c40ffd8bef56173cbf093853dd5d82b3b54c00a72efb04c94d773
+"daisyui@npm:^5.3.7":
+  version: 5.3.7
+  resolution: "daisyui@npm:5.3.7"
+  checksum: 10c0/24dede8fc40cdba7ccc5804514e726f34228fb4694edaafc9e6592c55cf358a81a35ea0064bf28193519620a65d76151328eb711a1283480caa0630b0f44af85
   languageName: node
   linkType: hard
 
@@ -4611,10 +4611,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^4.9.12":
-  version: 4.9.12
-  resolution: "hono@npm:4.9.12"
-  checksum: 10c0/e63b1b82a2a8804501e3ecd7ec27a2e34b35455b4ea1bb35535bc2dfea48b4be20ecb09990510162477280dd23ce98013958d0c50306b510ae2ecea776ed06e5
+"hono@npm:^4.10.0":
+  version: 4.10.0
+  resolution: "hono@npm:4.10.0"
+  checksum: 10c0/373248be6e5005ae9a9ca4abed710657ef06284d606f50ea9d491bf1e3c94c81265f91dd2d82976546f5c3a50629e5d4767ce94e8f6677ef712677adb802ef3f
   languageName: node
   linkType: hard
 
@@ -5710,18 +5710,18 @@ __metadata:
     "@codemirror/theme-one-dark": "npm:^6.1.3"
     "@codemirror/view": "npm:^6.38.6"
     "@hono/node-server": "npm:^1.19.5"
-    "@lezer/highlight": "npm:^1.2.1"
-    "@solid-primitives/pagination": "npm:^0.4.3"
+    "@lezer/highlight": "npm:^1.2.2"
+    "@solid-primitives/pagination": "npm:^0.5.0"
     "@tailwindcss/vite": "npm:^4.1.14"
-    "@types/node": "npm:^24.7.2"
+    "@types/node": "npm:^24.8.1"
     "@yarnpkg/sdks": "npm:^3.2.3"
     bson: "npm:^6.10.4"
     codemirror: "npm:^6.0.2"
-    daisyui: "npm:^5.3.1"
+    daisyui: "npm:^5.3.7"
     eslint: "npm:^9.37.0"
     eslint-plugin-solid: "npm:^0.14.5"
     eslint-plugin-unicorn: "npm:^61.0.2"
-    hono: "npm:^4.9.12"
+    hono: "npm:^4.10.0"
     mongodb: "npm:^6.20.0"
     mongodb-query-parser: "npm:^4.4.3"
     solid-js: "npm:^1.9.9"
