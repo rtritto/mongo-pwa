@@ -29,6 +29,8 @@ export const data: DataAsync<DataDocument> = async (pageContext) => {
 
   const _data = {
     title: `${options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
+    databases: mongo.databases,
+    collections: mongo.collections[dbName],
     docString: toString(doc!),
     _id: document,
     subtype,
