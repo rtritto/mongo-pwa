@@ -1,4 +1,4 @@
-import { serve } from 'vike-server/hono/serve'
+import { serve } from '@photonjs/hono'
 
 import app from './index'
 
