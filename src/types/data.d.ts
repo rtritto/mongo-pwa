@@ -19,14 +19,18 @@ type DataDB = Omit<DataIndex, 'stats'> & {
   collections: Mongo['collections'][string]
 
   selectedDatabase: string
+  // set undefined when navigating from another page to db page
+  selectedCollection: undefined
+  // set undefined when navigating from another page to db page
+  selectedDocument: undefined
   stats?: DBStats
 }
 
-type DataCollection = Omit<DataDB, 'stats'> & {
+type DataCollection = Omit<DataDB, 'stats' | 'selectedCollection'> & {
   collectionName: string
 
   selectedCollection: string
-  // set undefined when navigating from document page to collection page
+  // set undefined when navigating from another page to collection page
   selectedDocument: undefined
 
   docs: Record<string, any>[]
