@@ -8,9 +8,9 @@ export default async function fetchWithRetries(
 
   for (let i = 0; i < retries; i++) {
     try {
-      const res = await fetch(url, options)
-      if (res.ok) return res
-      throw new Error(`HTTP ${res.status}`)
+      const response = await fetch(url, options)
+      if (response.ok) return response
+      throw new Error(`HTTP ${response.status}`)
     } catch (error_: unknown) {
       error = error_
       if (i < retries - 1) {
