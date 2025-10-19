@@ -17,6 +17,6 @@ export async function handlerApi(c: Context) {
     return await api[functionName](c)
   } catch (error) {
     console.error(error)
-    return c.json({ error: 'Internal server error' }, 500)
+    return c.json({ error: (error as Error).message }, 500)
   }
 }

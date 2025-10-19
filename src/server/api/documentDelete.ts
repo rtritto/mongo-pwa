@@ -21,9 +21,8 @@ export default async function documentDelete(c: Context) {
     .db(database)
     .collection(collection)
     .deleteOne({ _id: buildId(_id, sub_type) })
-  if (!deletedCount) {
-    // TODO use StatusCode 404
-    throw new Error('Document not deleted!')
+  if (deletedCount) {
+    return c.json({})
   }
-  return c.json({})
+  return c.json({ error: `Document "${_id}" not deleted!` }, 500)
 }
