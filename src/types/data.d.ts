@@ -1,8 +1,3 @@
-// (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
-type DataLayout = {
-  options: Options
-}
-
 type DataIndex = {
   title: string
   databases: Mongo['databases']
@@ -51,3 +46,6 @@ type DataDocument = Omit<DataCollection, 'selectedDocument'> & {
   selectedDocument: string
   readOnly: boolean
 }
+
+// (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
+type DataLayout = DataIndex | DataDB | DataCollection | DataDocument
