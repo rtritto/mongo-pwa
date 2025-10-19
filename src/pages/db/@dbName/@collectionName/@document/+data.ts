@@ -27,7 +27,7 @@ export const data: DataAsync<DataDocument> = async (pageContext) => {
 
   // TODO handle 404 not found
 
-  const _data = {
+  return {
     title: `${options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
     databases: mongo.databases,
     collections: mongo.collections[dbName],
@@ -41,6 +41,4 @@ export const data: DataAsync<DataDocument> = async (pageContext) => {
     selectedDocument: document,
     error: undefined
   } as DataDocument
-
-  return _data
 }
