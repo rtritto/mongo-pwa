@@ -18,27 +18,25 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
   })
 
   const App = () => (
-    <div>
-      <main>
-        <header class="sticky top-0 z-40">
-          <div class="px-8">
-            <NavBar />
-          </div>
-        </header>
-
-        <div class="flex px-24">
-          <div class="max-w-7xl">
-            <Show when={data.error}>
-              <div role="alert" class="alert alert-error alert-outline mb-2">
-                {data.error}
-              </div>
-            </Show>
-
-            {props.children}
-          </div>
+    <main>
+      <header class="sticky top-0 z-40">
+        <div class="px-8">
+          <NavBar />
         </div>
-      </main>
-    </div>
+      </header>
+
+      <div class="flex px-24">
+        <div class="max-w-7xl">
+          <Show when={data.error}>
+            <div role="alert" class="alert alert-error alert-outline mb-2">
+              {data.error}
+            </div>
+          </Show>
+
+          {props.children}
+        </div>
+      </div>
+    </main>
   )
 
   return (
