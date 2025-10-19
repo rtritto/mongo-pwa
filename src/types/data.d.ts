@@ -1,3 +1,4 @@
+// (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
 type DataLayout = {
   options: Options
 }
