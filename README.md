@@ -162,7 +162,6 @@ You can use the following [environment variables](https://docs.docker.com/refere
 | `ME_CONFIG_HEALTH_CHECK_PATH` | `/status` | Set the mongo express healthcheck path. Remember to add the forward slash at the start. |
 | `ME_CONFIG_SITE_COOKIESECRET` | `cookiesecret` | String used by [cookie-parser middleware](https://www.npmjs.com/package/cookie-parser) to sign cookies. |
 | `ME_CONFIG_SITE_SESSIONSECRET` | `sessionsecret` | String used to sign the session ID cookie by [express-session middleware](https://www.npmjs.com/package/express-session). |
-| `ME_CONFIG_BASICAUTH` | `false` | Deprecated, use `ME_CONFIG_BASICAUTH_ENABLED` instead. |
 | `ME_CONFIG_BASICAUTH_ENABLED` | `false` | Enable Basic Authentication. Send strings: `"true"` or `"false"`. |
 | `ME_CONFIG_BASICAUTH_USERNAME` | | mongo-express web login name. If not defined, `admin` is the username. |
 | `ME_CONFIG_BASICAUTH_USERNAME_FILE` | | File version of `ME_CONFIG_BASICAUTH_USERNAME` |
