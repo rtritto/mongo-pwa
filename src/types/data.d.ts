@@ -3,13 +3,19 @@ type DataIndex = {
   databases: Mongo['databases']
   options: Options
 
+  // set undefined when navigating from another page to db page
+  selectedDatabase: undefined
+  // set undefined when navigating from another page to db page
+  selectedCollection: undefined
+  // set undefined when navigating from another page to db page
+  selectedDocument: undefined
   stats?: ServerStats
 
   success?: string
   error?: string
 }
 
-type DataDB = Omit<DataIndex, 'stats'> & {
+type DataDB = Omit<DataIndex, 'stats' | 'selectedDatabase'> & {
   dbName: string
   collections: Mongo['collections'][string]
 
