@@ -19,7 +19,8 @@ export const data: DataAsync<DataDB> = async (pageContext) => {
     options: config.options,
     selectedDatabase: dbName,
     selectedCollection: undefined,
-    selectedDocument: undefined
+    selectedDocument: undefined,
+    error: undefined
   } as DataDB
 
   if (mongo.adminDb) {

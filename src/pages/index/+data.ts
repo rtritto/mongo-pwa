@@ -11,7 +11,8 @@ export const data: DataAsync<DataIndex> = async () => {
     options: config.options,
     selectedDatabase: undefined,
     selectedCollection: undefined,
-    selectedDocument: undefined
+    selectedDocument: undefined,
+    error: undefined
   } as DataIndex
 
   if (mongo.adminDb) {
