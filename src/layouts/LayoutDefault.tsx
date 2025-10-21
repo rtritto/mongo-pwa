@@ -21,7 +21,7 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
     <main>
       <header class="sticky top-0 z-40">
         <div class="px-8">
-          <NavBar />
+          <NavBar data={data} />
         </div>
       </header>
 

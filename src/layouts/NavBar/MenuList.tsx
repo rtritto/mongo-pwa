@@ -1,10 +1,7 @@
 import { For, Show, type Component } from 'solid-js'
-import { useData } from 'vike-solid/useData'
 
-const MenuList: Component = () => {
+const MenuList: Component<{ data: DataLayout }> = (props) => {
   // Use DataDocument that contains all properties
-  const [data] = useData<DataDocument>()
-
   let refDatabasesDetails: HTMLDetailsElement | undefined
   let refCollectionsDetails: HTMLDetailsElement | undefined
 
@@ -23,17 +20,17 @@ const MenuList: Component = () => {
   return (
     <ul class="menu menu-horizontal px-1 py-0">
       <li class="px-1">
-        <Show when={data.selectedDatabase}>
-          <a class="btn btn-sm btn-ghost px-1 py-0 mx-0" href={`/db/${encodeURIComponent(data.selectedDatabase)}`}>Database:</a>
+        <Show when={props.data.selectedDatabase}>
+          <a class="btn btn-sm btn-ghost px-1 py-0 mx-0" href={`/db/${encodeURIComponent(props.data.selectedDatabase!)}`}>Database:</a>
         </Show>
 
         <details id="databases-details" ref={refDatabasesDetails}>
-          <Show when={data.selectedDatabase} fallback={<summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}>Databases</summary>}>
-            <summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}><b>{data.selectedDatabase}</b></summary>
+          <Show when={props.data.selectedDatabase} fallback={<summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}>Databases</summary>}>
+            <summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}><b>{props.data.selectedDatabase}</b></summary>
           </Show>
 
           <ul class="p-0 m-0">
-            <For each={data.databases}>
+            <For each={props.data.databases}>
               {(database) => (
                 <li>
                   <a class="w-full" href={`/db/${encodeURIComponent(database)}`} onClick={handleCloseDetails}>{database}</a>
@@ -44,22 +41,22 @@ const MenuList: Component = () => {
         </details>
       </li>
 
-      <Show when={data.selectedDatabase}>
+      <Show when={props.data.selectedDatabase}>
         <li class="px-1">
-          <Show when={data.selectedCollection}>
-            <a class="btn btn-sm btn-ghost px-1 py-0 mx-0" href={`/db/${data.selectedDatabase}/${encodeURIComponent(data.selectedCollection)}`}>Collection:</a>
+          <Show when={props.data.selectedCollection}>
+            <a class="btn btn-sm btn-ghost px-1 py-0 mx-0" href={`/db/${props.data.selectedDatabase}/${encodeURIComponent(props.data.selectedCollection!)}`}>Collection:</a>
           </Show>
 
           <details id="collections-details" ref={refCollectionsDetails}>
-            <Show when={data.selectedCollection} fallback={<summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseDatabaseDetails}>Collections</summary>}>
-              <summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseDatabaseDetails}><b>{data.selectedCollection}</b></summary>
+            <Show when={props.data.selectedCollection} fallback={<summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseDatabaseDetails}>Collections</summary>}>
+              <summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseDatabaseDetails}><b>{props.data.selectedCollection}</b></summary>
             </Show>
 
             <ul class="p-0 m-0">
-              <For each={data.collections}>
+              <For each={props.data.collections}>
                 {(collection) => (
                   <li>
-                    <a class="w-full" href={`/db/${data.selectedDatabase}/${encodeURIComponent(collection)}`} onClick={handleCloseDetails}>{collection}</a>
+                    <a class="w-full" href={`/db/${props.data.selectedDatabase}/${encodeURIComponent(collection)}`} onClick={handleCloseDetails}>{collection}</a>
                   </li>
                 )}
               </For>
@@ -68,9 +65,9 @@ const MenuList: Component = () => {
         </li>
       </Show>
 
-      <Show when={data.selectedDocument}>
+      <Show when={props.data.selectedDocument}>
         <li class="disabled">
-          <label>Document: <b>{data.selectedDocument}</b></label>
+          <label>Document: <b>{props.data.selectedDocument}</b></label>
         </li>
       </Show>
     </ul>

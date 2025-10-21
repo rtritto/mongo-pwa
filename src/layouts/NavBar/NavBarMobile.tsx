@@ -3,7 +3,7 @@ import type { Component } from 'solid-js'
 import IconHamburger from '@/components/Icons/IconHamburger'
 import MenuList from './MenuList'
 
-const NavBarMobile: Component = () => {
+const NavBarMobile: Component<{ data: DataLayout }> = (props) => {
   return (
     <div class="drawer">
       <input id="my-drawer" type="checkbox" class="drawer-toggle" />
@@ -22,7 +22,7 @@ const NavBarMobile: Component = () => {
             <label for="my-drawer" class="btn btn-circle btn-ghost">✕</label>
           </li>
 
-          <MenuList />
+          <MenuList data={props.data} />
         </ul>
       </div>
     </div>
