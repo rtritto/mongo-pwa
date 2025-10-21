@@ -17,15 +17,7 @@ const Page: Component<DataIndex> = () => {
 
       <div class="divider m-1.5" />
 
-      <ShowDatabases
-        databases={data.databases}
-        options={data.options}
-        show={{
-          create: !data.options.readOnly,
-          delete: !data.options.noDelete && !data.options.readOnly
-        }}
-        setData={setData}
-      />
+      <ShowDatabases data={data} setData={setData} />
 
       <div class="mb-2">
         <Show

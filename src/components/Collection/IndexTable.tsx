@@ -8,15 +8,7 @@ import { HEADERS_JSON } from '@/utils/constants'
 import { bytesToSize } from '@/utils/mappers/mapUtils'
 
 const IndexTable: Component<{
-  label: string
-  fields: Index[]
-  database: string
-  collection: string
-  options: Config['options']
-  show: {
-    create: boolean
-    delete: boolean
-  }
+  data: DataCollection
   setData: SetStoreFunction<any>
 }> = (props) => {
   return (
@@ -25,7 +17,7 @@ const IndexTable: Component<{
         <thead>
           <tr>
             <td>
-              <h6><b>{props.label}</b></h6>
+              <h6><b>Indexes</b></h6>
             </td>
           </tr>
         </thead>
@@ -53,47 +45,51 @@ const IndexTable: Component<{
             </th>
           </tr>
 
-          <For each={props.fields}>
-            {(index) => (
-              <tr>
-                <td>{index.name}</td>
+          <Show when={props.data.indexes}>
+            <For each={props.data.indexes}>
+              {(index) => (
+                <tr>
+                  <td>{index.name}</td>
 
-                <td>{`${Object.keys(index.key)[0]} ${Object.values(index.key)[0] === 1 ? 'ASC' : 'DESC'}`}</td>
+                  <td>{`${Object.keys(index.key)[0]} ${Object.values(index.key)[0] === 1 ? 'ASC' : 'DESC'}`}</td>
 
-                <td>{bytesToSize(index.size)}</td>
+                  <td>{bytesToSize(index.size)}</td>
 
-                {/* TODO implement logic of value */}
-                <td>{index.v}</td>
+                  {/* TODO implement logic of value */}
+                  <td>{index.v}</td>
 
-                <Show when={props.show.delete}>
-                  <td>
-                    <button class="btn btn-sm bg-red-700 py-0.5" onClick={async () => {
-                      const response = await handleFetchError(
-                        fetch('/api/collectionDeleteIndex', {
-                          method: 'POST',
-                          headers: HEADERS_JSON(props.options),
-                          body: JSON.stringify({
-                            database: props.database,
-                            collection: props.collection,
-                            indexName: index.name
-                          })
-                        }),
-                        props.setData
-                      )
-                      if (response) {
-                        await reload()
-                        props.setData('success', `Index "${index.name}" deleted!`)
-                      }
-                    }}>
-                      <IconDelete />
+                  <Show when={!props.data.options.noDelete && !props.data.options.readOnly}>
+                    <td>
+                      <button
+                        class="btn btn-sm bg-red-700 py-0.5"
+                        onClick={() => handleFetchError(
+                          fetch('/api/collectionDeleteIndex', {
+                            method: 'POST',
+                            headers: HEADERS_JSON(props.data.options),
+                            body: JSON.stringify({
+                              database: props.data.selectedDatabase,
+                              collection: props.data.selectedCollection,
+                              indexName: index.name
+                            })
+                          }),
+                          props.setData,
+                          { success: `Index "${index.name}" deleted!` }
+                        ).then(async (response) => {
+                          if (response) {
+                            await reload()
+                          }
+                        })}
+                      >
+                        <IconDelete />
 
-                      Delete
-                    </button>
-                  </td>
-                </Show>
-              </tr>
-            )}
-          </For>
+                        Delete
+                      </button>
+                    </td>
+                  </Show>
+                </tr>
+              )}
+            </For>
+          </Show>
         </tbody>
       </table>
     </div>

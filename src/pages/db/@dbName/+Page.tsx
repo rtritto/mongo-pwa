@@ -6,7 +6,7 @@ import StatsTable from '@/components/common/StatsTable'
 import ShowCollections from '@/components/Database/ShowCollections'
 
 const Page: Component<DataDB> = () => {
-  const [data] = useData<DataDB>()
+  const [data, setData] = useData<DataDB>()
 
   return (
     <div class="p-1">
@@ -17,16 +17,7 @@ const Page: Component<DataDB> = () => {
 
       <div class="divider m-1.5" />
 
-      <ShowCollections
-        collections={data.collections}
-        dbName={data.selectedDatabase}
-        options={data.options}
-        show={{
-          create: !data.options.readOnly,
-          export: !data.options.noExport,
-          delete: !data.options.noDelete
-        }}
-      />
+      <ShowCollections data={data} setData={setData} />
 
       {/* TODO GridFS Buckets grids.length && settings.gridFSEnabled */}
 

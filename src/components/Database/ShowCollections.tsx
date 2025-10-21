@@ -1,5 +1,5 @@
 import { For, Show, type Component } from 'solid-js'
-import { useData } from 'vike-solid/useData'
+import type { SetStoreFunction } from 'solid-js/store'
 import { usePageContext } from 'vike-solid/usePageContext'
 
 import CreateForm from '@/components/common/CreateForm'
@@ -12,17 +12,10 @@ import { HEADERS_JSON } from '@/utils/constants'
 import { isValidCollectionName } from '@/utils/validationsClient'
 
 const ShowCollections: Component<{
-  collections: string[]
-  dbName: string
-  options: Config['options']
-  show: {
-    create: boolean
-    delete: boolean
-    export: boolean
-  }
+  data: DataDB
+  setData: SetStoreFunction<DataDB>
 }> = (props) => {
   const pageContext = usePageContext()
-  const [data, setData] = useData<DataDB>()
 
   return (
     <div>
@@ -33,26 +26,23 @@ const ShowCollections: Component<{
 
             <th class="p-0">
               <span class="text-right">
-                <Show when={props.show.create}>
+                <Show when={!props.data.options.readOnly}>
                   <CreateForm
                     entity="Collection"
                     isValidInput={(input) => isValidCollectionName(input)}
                     onButtonClick={(collection: string) => handleFetchError(
                       fetch('/api/collectionCreate', {
                         method: 'POST',
-                        body: JSON.stringify({ collection, database: props.dbName }),
-                        headers: HEADERS_JSON(props.options)
+                        body: JSON.stringify({ collection, database: props.data.selectedDatabase }),
+                        headers: HEADERS_JSON(props.data.options)
                       }),
-                      setData
-                    ).then((response) => {
-                      if (response) {
-                        // Add database to global collections to update viewing collections
-                        setData({
-                          collections: [...data.collections, collection].toSorted(),
-                          success: `Collection "${collection}" created!`
-                        })
+                      props.setData,
+                      // Add database to global collections to update viewing collections
+                      {
+                        collections: [...props.data.collections, collection].toSorted(),
+                        success: `Collection "${collection}" created!`
                       }
-                    })}
+                    ) as Promise<void>}
                   />
                 </Show>
               </span>
@@ -63,25 +53,25 @@ const ShowCollections: Component<{
 
       <table class="table">
         <tbody>
-          <For each={props.collections}>
+          <For each={props.data.collections}>
             {(collection) => {
               return (
                 <tr>
                   <td class="p-0.5">
-                    <a class="btn btn-sm bg-green-600" href={`/db/${encodeURIComponent(props.dbName)}/${encodeURIComponent(collection)}`}>
+                    <a class="btn btn-sm bg-green-600" href={`/db/${encodeURIComponent(props.data.selectedDatabase)}/${encodeURIComponent(collection)}`}>
                       <IconVisibility />
 
                       View
                     </a>
                   </td>
 
-                  <Show when={props.show.export}>
+                  <Show when={!props.data.options.noExport}>
                     {/* (?) Deprecated */}
                     {/* <td class="p-0.5">
                       <ExportButton
                         url="/api/collectionExport"
                         label="Export"
-                        database={props.dbName}
+                        database={props.data.selectedDatabase}
                         collection={collection}
                         query={pageContext.urlParsed.search}
                         setData={setData}
@@ -94,25 +84,25 @@ const ShowCollections: Component<{
                         // If "Export" is deprecated, use "ExportArray" as default "Export"
                         label="Export"
                         // label="[JSON]"
-                        database={props.dbName}
+                        database={props.data.selectedDatabase}
                         collection={collection}
                         query={pageContext.urlParsed.search}
-                        setData={setData}
+                        setData={props.setData}
                       />
                     </td>
                   </Show>
 
                   <td class="p-0.5">
-                    <ImportButton database={props.dbName} collection={collection} setData={setData} />
+                    <ImportButton database={props.data.selectedDatabase} collection={collection} setData={props.setData} />
                   </td>
 
                   <td class="p-0.5">
-                    <a class="btn w-full" href={`/db/${encodeURIComponent(props.dbName)}/${encodeURIComponent(collection)}`}>
+                    <a class="btn w-full" href={`/db/${encodeURIComponent(props.data.selectedDatabase)}/${encodeURIComponent(collection)}`}>
                       <h6>{collection}</h6>
                     </a>
                   </td>
 
-                  <Show when={props.show.delete}>
+                  <Show when={!props.data.options.noDelete}>
                     <td class="p-0.5">
                       <DeleteDialog
                         title="Delete Collection"
@@ -124,21 +114,22 @@ const ShowCollections: Component<{
                         handleDelete={() => handleFetchError(
                           fetch('/api/collectionDelete', {
                             method: 'POST',
-                            headers: HEADERS_JSON(props.options),
-                            body: JSON.stringify({ database: props.dbName, collection })
+                            headers: HEADERS_JSON(props.data.options),
+                            body: JSON.stringify({ database: props.data.selectedDatabase, collection })
                           }),
-                          setData
-                        ).then(async (response) => {
-                          if (response) {
+                          props.setData,
+                          (() => {
                             // Remove database from global database to update viewing databases
-                            const indexToRemove = data.collections.indexOf(collection)
-                            setData('collections', [
-                              ...data.collections.slice(0, indexToRemove),
-                              ...data.collections.slice(indexToRemove + 1)
-                            ])
-                            setData('success', `Collection "${collection}" deleted!`)
-                          }
-                        })}
+                            const indexToRemove = props.data.collections.indexOf(collection)
+                            return {
+                              collections: [
+                                ...props.data.collections.slice(0, indexToRemove),
+                                ...props.data.collections.slice(indexToRemove + 1)
+                              ],
+                              success: `Collection "${collection}" deleted!`
+                            }
+                          })()
+                        ) as Promise<void>}
                       />
                     </td>
                   </Show>

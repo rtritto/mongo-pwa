@@ -193,18 +193,7 @@ const Page: Component<DataCollection> = () => {
         >
           <StatsTable label="Collection Stats" fields={data.stats} />
 
-          <IndexTable
-            database={data.selectedDatabase}
-            collection={data.selectedCollection}
-            label="Indexes"
-            fields={data.indexes!}
-            options={data.options}
-            show={{
-              create: !data.options.readOnly,
-              delete: !data.options.noDelete && !data.options.readOnly
-            }}
-            setData={setData}
-          />
+          <IndexTable data={data} setData={setData} />
         </Show>
       </div>
     </div>

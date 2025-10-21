@@ -1,6 +1,5 @@
 import { type Component, For, Show } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
-import { useData } from 'vike-solid/useData'
 
 import CreateForm from '@/components/common/CreateForm'
 import DeleteDialog from '@/components/common/DeleteDialog'
@@ -10,16 +9,9 @@ import { HEADERS_JSON } from '@/utils/constants'
 import { isValidDatabaseName } from '@/utils/validationsClient'
 
 const ShowDatabases: Component<{
-  databases: Mongo['databases']
-  options: Config['options']
-  show: {
-    create: boolean
-    delete: boolean
-  }
+  data: DataIndex
   setData: SetStoreFunction<any>
 }> = (props) => {
-  const [data, setData] = useData<DataIndex>()
-
   return (
     <div>
       <table class="table">
@@ -29,7 +21,7 @@ const ShowDatabases: Component<{
 
             <th class="p-0">
               <span class="text-right">
-                <Show when={props.show.create}>
+                <Show when={!props.data.options.readOnly}>
                   <CreateForm
                     entity="Database"
                     isValidInput={(input) => isValidDatabaseName(input)}
@@ -37,16 +29,15 @@ const ShowDatabases: Component<{
                       fetch('/api/databaseCreate', {
                         method: 'POST',
                         body: JSON.stringify({ database }),
-                        headers: HEADERS_JSON(props.options)
+                        headers: HEADERS_JSON(props.data.options)
                       }),
-                      props.setData
-                    ).then((response) => {
-                      if (response) {
-                        // Add database to global databases to update viewing databases
-                        setData('databases', [...data.databases, database].toSorted())
-                        setData('success', `Database "${database}" created!`)
+                      props.setData,
+                      // Add database to global databases to update viewing databases
+                      {
+                        databases: [...props.data.databases, database].toSorted(),
+                        success: `Database "${database}" created!`
                       }
-                    })}
+                    ) as Promise<void>}
                   />
                 </Show>
               </span>
@@ -57,7 +48,7 @@ const ShowDatabases: Component<{
 
       <table class="table">
         <tbody>
-          <For each={props.databases}>
+          <For each={props.data.databases}>
             {(database) => (
               <tr>
                 <td class="p-0.5">
@@ -74,7 +65,7 @@ const ShowDatabases: Component<{
                   </a>
                 </td>
 
-                <Show when={props.show.delete}>
+                <Show when={!props.data.options.noDelete && !props.data.options.readOnly}>
                   <td class="p-0.5">
                     <DeleteDialog
                       title="Delete Database"
@@ -86,21 +77,22 @@ const ShowDatabases: Component<{
                       handleDelete={() => handleFetchError(
                         fetch('/api/databaseDelete', {
                           method: 'POST',
-                          headers: HEADERS_JSON(props.options),
+                          headers: HEADERS_JSON(props.data.options),
                           body: JSON.stringify({ database })
                         }),
-                        props.setData
-                      ).then((response) => {
-                        if (response) {
+                        props.setData,
+                        (() => {
                           // Remove database from global database to update viewing databases
-                          const indexToRemove = data.databases.indexOf(database)
-                          setData('databases', [
-                            ...data.databases.slice(0, indexToRemove),
-                            ...data.databases.slice(indexToRemove + 1)
-                          ])
-                          setData('success', `Database "${database}" deleted!`)
-                        }
-                      })}
+                          const indexToRemove = props.data.databases.indexOf(database)
+                          return {
+                            databases: [
+                              ...props.data.databases.slice(0, indexToRemove),
+                              ...props.data.databases.slice(indexToRemove + 1)
+                            ],
+                            success: `Database "${database}" deleted!`
+                          }
+                        })()
+                      ) as Promise<void>}
                     />
                   </td>
                 </Show>

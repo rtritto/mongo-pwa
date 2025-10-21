@@ -39,14 +39,12 @@ const DocumentList: Component<{
 
                   <div class="my-2">
                     <DeleteDocument
-                      database={props.data.selectedDatabase}
-                      collection={props.data.selectedCollection}
+                      data={props.data}
+                      setData={props.setData}
                       _id={document._id}
                       sub_type={document.sub_type}
-                      options={props.data.options}
                       doReload
                       fullWidth
-                      setData={props.setData}
                     />
                   </div>
                 </th>

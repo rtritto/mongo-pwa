@@ -1,4 +1,4 @@
-import { type Component, type JSX, untrack } from 'solid-js'
+import { type Component, untrack } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import DeleteDocument from '@/components/Collection/DeleteDocument'
@@ -25,14 +25,12 @@ const Editor: Component<{
 
       <div class="m-2">
         <DeleteDocument
-          database={props.data.selectedDatabase}
-          collection={props.data.selectedCollection}
+          data={props.data}
           _id={props.data._id}
           sub_type={props.data.subtype}
           doReload={false}
-          label="Delete"
-          options={props.data.options}
           setData={props.setData}
+          label="Delete"
         />
       </div>
     </div>
