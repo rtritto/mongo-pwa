@@ -1,4 +1,5 @@
 import { type Component, createSignal } from 'solid-js'
+import type { SetStoreFunction } from 'solid-js/store'
 import { navigate } from 'vike/client/router'
 
 import IconBack from '@/components/Icons/IconBack'
@@ -7,7 +8,7 @@ import type { CustomEditorView } from '@/components/common/createCodeMirror'
 const BackButton: Component<{
   view: CustomEditorView
   data: DataDocument
-  setShowBanner: (value: boolean) => void
+  setData: SetStoreFunction<any>
 }> = (props) => {
   const [buttonText, setButtonText] = createSignal('Back')
   const [discardChanges, setDiscardChanges] = createSignal(false)
@@ -19,7 +20,7 @@ const BackButton: Component<{
       } else {
         setButtonText('Discard & Back')
         setDiscardChanges(true)
-        props.setShowBanner(true)
+        props.setData('warning', 'Document has changed! Do you want to go back?')
       }
     }}>
       <IconBack />

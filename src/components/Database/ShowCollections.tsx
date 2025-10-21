@@ -6,6 +6,7 @@ import CreateForm from '@/components/common/CreateForm'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportButton from '@/components/common/ExportButton'
 import ImportButton from '@/components/common/ImportButton'
+import handleFetchError from '@/components/common/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import { HEADERS_JSON } from '@/utils/constants'
 import { isValidCollectionName } from '@/utils/validationsClient'
@@ -36,26 +37,22 @@ const ShowCollections: Component<{
                   <CreateForm
                     entity="Collection"
                     isValidInput={(input) => isValidCollectionName(input)}
-                    onButtonClick={(collection: string) => (
+                    onButtonClick={(collection: string) => handleFetchError(
                       fetch('/api/collectionCreate', {
                         method: 'POST',
                         body: JSON.stringify({ collection, database: props.dbName }),
                         headers: HEADERS_JSON(props.options)
-                      }).then(async (res) => {
-                        if (res.ok) {
-                          // Add database to global collections to update viewing collections
-                          setData({
-                            collections: [...data.collections, collection].toSorted(),
-                            success: `Collection "${collection}" created!`
-                          })
-                        } else {
-                          const { error } = await res.json()
-                          setData({ error })
-                        }
-                      }).catch((error) => {
-                        setData({ error })
-                      })
-                    )}
+                      }),
+                      setData
+                    ).then((response) => {
+                      if (response) {
+                        // Add database to global collections to update viewing collections
+                        setData({
+                          collections: [...data.collections, collection].toSorted(),
+                          success: `Collection "${collection}" created!`
+                        })
+                      }
+                    })}
                   />
                 </Show>
               </span>
@@ -106,7 +103,7 @@ const ShowCollections: Component<{
                   </Show>
 
                   <td class="p-0.5">
-                    <ImportButton database={props.dbName} collection={collection} />
+                    <ImportButton database={props.dbName} collection={collection} setData={setData} />
                   </td>
 
                   <td class="p-0.5">
@@ -124,26 +121,24 @@ const ShowCollections: Component<{
                         label="Delete"
                         fullWidth
                         enableInput
-                        handleDelete={() => fetch('/api/collectionDelete', {
-                          method: 'POST',
-                          headers: HEADERS_JSON(props.options),
-                          body: JSON.stringify({ database: props.dbName, collection })
-                        }).then(async (res) => {
-                          if (res.ok) {
+                        handleDelete={() => handleFetchError(
+                          fetch('/api/collectionDelete', {
+                            method: 'POST',
+                            headers: HEADERS_JSON(props.options),
+                            body: JSON.stringify({ database: props.dbName, collection })
+                          }),
+                          setData
+                        ).then(async (response) => {
+                          if (response) {
                             // Remove database from global database to update viewing databases
                             const indexToRemove = data.collections.indexOf(collection)
                             setData('collections', [
                               ...data.collections.slice(0, indexToRemove),
                               ...data.collections.slice(indexToRemove + 1)
                             ])
-                            // setSuccess(`Collection "${collection}" deleted!`)
-                          } else {
-                            // const { error } = await res.json()
-                            // setError(error)
+                            setData('success', `Collection "${collection}" deleted!`)
                           }
-                        })
-                          // .catch((error) => { setError(error.message) })
-                        }
+                        })}
                       />
                     </td>
                   </Show>

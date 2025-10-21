@@ -1,8 +1,10 @@
 import { type Component, For, Show } from 'solid-js'
+import type { SetStoreFunction } from 'solid-js/store'
 import { useData } from 'vike-solid/useData'
 
 import CreateForm from '@/components/common/CreateForm'
 import DeleteDialog from '@/components/common/DeleteDialog'
+import handleFetchError from '@/components/common/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import { HEADERS_JSON } from '@/utils/constants'
 import { isValidDatabaseName } from '@/utils/validationsClient'
@@ -14,6 +16,7 @@ const ShowDatabases: Component<{
     create: boolean
     delete: boolean
   }
+  setData: SetStoreFunction<any>
 }> = (props) => {
   const [data, setData] = useData<DataIndex>()
 
@@ -30,26 +33,20 @@ const ShowDatabases: Component<{
                   <CreateForm
                     entity="Database"
                     isValidInput={(input) => isValidDatabaseName(input)}
-                    onButtonClick={(database: string) => (
+                    onButtonClick={(database: string) => handleFetchError(
                       fetch('/api/databaseCreate', {
                         method: 'POST',
                         body: JSON.stringify({ database }),
                         headers: HEADERS_JSON(props.options)
-                      }).then(async (res) => {
-                        if (res.ok) {
-                          // Add database to global databases to update viewing databases
-                          setData({
-                            databases: [...data.databases, database].toSorted(),
-                            success: `Database "${database}" created!`
-                          })
-                        } else {
-                          const { error } = await res.json()
-                          setData({ error })
-                        }
-                      }).catch((error) => {
-                        setData({ error })
-                      })
-                    )}
+                      }),
+                      props.setData
+                    ).then((response) => {
+                      if (response) {
+                        // Add database to global databases to update viewing databases
+                        setData('databases', [...data.databases, database].toSorted())
+                        setData('success', `Database "${database}" created!`)
+                      }
+                    })}
                   />
                 </Show>
               </span>
@@ -86,26 +83,24 @@ const ShowDatabases: Component<{
                       label="Delete"
                       fullWidth
                       enableInput
-                      handleDelete={() => fetch('/api/databaseDelete', {
-                        method: 'POST',
-                        headers: HEADERS_JSON(props.options),
-                        body: JSON.stringify({ database })
-                      }).then(async (res) => {
-                        if (res.ok) {
+                      handleDelete={() => handleFetchError(
+                        fetch('/api/databaseDelete', {
+                          method: 'POST',
+                          headers: HEADERS_JSON(props.options),
+                          body: JSON.stringify({ database })
+                        }),
+                        props.setData
+                      ).then((response) => {
+                        if (response) {
                           // Remove database from global database to update viewing databases
                           const indexToRemove = data.databases.indexOf(database)
                           setData('databases', [
                             ...data.databases.slice(0, indexToRemove),
                             ...data.databases.slice(indexToRemove + 1)
                           ])
-                          // setSuccess(`Database "${database}" deleted!`)
-                        } else {
-                          // const { error } = await res.json()
-                          // setError(error)
+                          setData('success', `Database "${database}" deleted!`)
                         }
-                      })
-                        // .catch((error) => { setError(error.message) })
-                      }
+                      })}
                     />
                   </td>
                 </Show>

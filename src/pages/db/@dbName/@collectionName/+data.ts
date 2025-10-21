@@ -34,6 +34,8 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     selectedDatabase: dbName,
     selectedCollection: collectionName,
     selectedDocument: undefined,
+    success: undefined,
+    warning: undefined,
     error: undefined,
     // Force "toString" method on each value to transform values like pageDocument API
     // eslint-disable-next-line unicorn/prefer-structured-clone

@@ -1,7 +1,9 @@
-import { untrack, type Component } from 'solid-js'
+import { type Component, untrack } from 'solid-js'
+import type { SetStoreFunction } from 'solid-js/store'
 import { navigate, reload } from 'vike/client/router'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
+import handleFetchError from '@/components/common/handleFetchError'
 import { HEADERS_JSON } from '@/utils/constants'
 
 const DeleteDocument: Component<{
@@ -13,7 +15,7 @@ const DeleteDocument: Component<{
   label?: string
   fullWidth?: boolean
   options: Config['options']
-  // setError: (error: string) => void
+  setData: SetStoreFunction<any>
 }> = (props) => {
   return (
     <DeleteDialog
@@ -22,7 +24,7 @@ const DeleteDocument: Component<{
       value={props._id}
       label={props.label}
       fullWidth={props.fullWidth}
-      handleDelete={() => (
+      handleDelete={() => handleFetchError(
         fetch('/api/documentDelete', {
           method: 'POST',
           headers: HEADERS_JSON(props.options),
@@ -32,18 +34,15 @@ const DeleteDocument: Component<{
             _id: props._id,
             sub_type: props.sub_type
           })
-        }).then(async (res) => {
-          if (res.ok) {
-            await (untrack(() => props.doReload)
-              ? reload()
-              : navigate(`/db/${untrack(() => props.database)}/${untrack(() => props.collection)}`))
-          } else {
-            // const { error } = await res.json()
-            // setError(error)
-          }
-        })
-        // .catch((error) => { setError(error.message) })
-      )}
+        }),
+        props.setData
+      ).then(async (response) => {
+        if (response) {
+          await (untrack(() => props.doReload)
+            ? reload()
+            : navigate(`/db/${untrack(() => props.database)}/${untrack(() => props.collection)}`))
+        }
+      })}
     />
   )
 }

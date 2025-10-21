@@ -13,6 +13,7 @@ type DataIndex = {
   stats?: ServerStats
 
   success?: string
+  warning?: string
   error?: string
 }
 

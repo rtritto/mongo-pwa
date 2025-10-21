@@ -20,6 +20,8 @@ export const data: DataAsync<DataDB> = async (pageContext) => {
     selectedDatabase: dbName,
     selectedCollection: undefined,
     selectedDocument: undefined,
+    success: undefined,
+    warning: undefined,
     error: undefined
   } as DataDB
 

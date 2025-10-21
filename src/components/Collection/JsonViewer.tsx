@@ -1,4 +1,4 @@
-import { createSignal, For, Match, Show, Switch, untrack, type Component } from 'solid-js'
+import { type Component, createSignal, For, Match, Show, Switch, untrack } from 'solid-js'
 
 // 36 is the max length of a UUID string
 const MAX_LEN = 36

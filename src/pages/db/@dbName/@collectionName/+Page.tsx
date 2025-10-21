@@ -1,10 +1,12 @@
 import { createPagination } from '@solid-primitives/pagination'
-import { type Component, type JSX, createEffect, createSignal, For, Show } from 'solid-js'
+import { type Component, createEffect, createSignal, For, Show } from 'solid-js'
 import { reload } from 'vike/client/router'
 import { useData } from 'vike-solid/useData'
 
+import Alerts from '@/components/common/Alerts'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import StatsTable from '@/components/common/StatsTable'
+import handleFetchError from '@/components/common/handleFetchError'
 import DocumentList from '@/components/Collection/DocumentList'
 import IndexTable from '@/components/Collection/IndexTable'
 import SaveDialog from '@/components/Collection/SaveDialog'
@@ -21,7 +23,6 @@ const docStringTemplate_Index = `{
 
 const Page: Component<DataCollection> = () => {
   const [data, setData] = useData<DataCollection>()
-  const [alertSuccessMessage, setAlertSuccessMessage] = createSignal<JSX.Element>()
 
   //#region Pagination
   const [pages, setPages] = createSignal<number>(getLastPage(data.documentsPerPage, data.count))
@@ -85,13 +86,10 @@ const Page: Component<DataCollection> = () => {
 
   return (
     <div>
-      <h1 class="text-2xl pb-2">Viewing Collection: <b>{data.selectedCollection}</b></h1>
+      {/* (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833 */}
+      <Alerts data={data} />
 
-      <Show when={alertSuccessMessage()}>
-        <div role="alert" class="alert alert-success alert-outline mb-2">
-          {alertSuccessMessage()}
-        </div>
-      </Show>
+      <h1 class="text-2xl pb-2">Viewing Collection: <b>{data.selectedCollection}</b></h1>
 
       <div class="flex my-1">
         <div class="mr-2">
@@ -99,7 +97,7 @@ const Page: Component<DataCollection> = () => {
             title="Add Document"
             label="New Document"
             template={docStringTemplate_Document}
-            handleSave={(doc: string, dialogRef: HTMLDialogElement) => (
+            handleSave={(doc: string, dialogRef: HTMLDialogElement) => handleFetchError(
               fetch('/api/documentCreate', {
                 method: 'POST',
                 headers: HEADERS_JSON(data.options),
@@ -108,19 +106,16 @@ const Page: Component<DataCollection> = () => {
                   collection: data.selectedCollection,
                   doc
                 })
-              }).then(async (res) => {
-                if (res.ok) {
-                  const { insertedId } = await res.json() as { insertedId: string }
-                  reload()
-                  setAlertSuccessMessage(<span>Document "<b>{insertedId}</b>" added!</span>)
-                  dialogRef.close()
-                } else {
-                  // const { error } = await res.json()
-                  // setError(error)
-                }
-              })
-              // .catch((error) => { setError(error.message) })
-            )}
+              }),
+              setData
+            ).then(async (response) => {
+              if (response) {
+                const { insertedId } = await response.json() as { insertedId: string }
+                dialogRef.close()
+                await reload()
+                setData('success', `Document "${insertedId}" added!`)
+              }
+            })}
           />
         </div>
 
@@ -130,7 +125,7 @@ const Page: Component<DataCollection> = () => {
             message="A document that contains the field and value pairs where the field is the index key. 1 for an ascending and -1 for a descending index."
             label="New Index"
             template={docStringTemplate_Index}
-            handleSave={(doc: string, dialogRef: HTMLDialogElement) => (
+            handleSave={(doc: string, dialogRef: HTMLDialogElement) => handleFetchError(
               fetch('/api/collectionCreateIndex', {
                 method: 'POST',
                 headers: HEADERS_JSON(data.options),
@@ -139,19 +134,16 @@ const Page: Component<DataCollection> = () => {
                   collection: data.selectedCollection,
                   doc
                 })
-              }).then(async (res) => {
-                if (res.ok) {
-                  const { indexName } = await res.json() as { indexName: string }
-                  reload()
-                  setAlertSuccessMessage(<span>Index "<b>{indexName}</b>" created!</span>)
-                  dialogRef.close()
-                } else {
-                  // const { error } = await res.json()
-                  // setError(error)
-                }
-              })
-              // .catch((error) => { setError(error.message) })
-            )}
+              }),
+              setData
+            ).then(async (response) => {
+              if (response) {
+                dialogRef.close()
+                const { indexName } = await response.json() as { indexName: string }
+                await reload()
+                setData('success', `Index "${indexName}" created!`)
+              }
+            })}
           />
         </div>
       </div>
@@ -161,20 +153,23 @@ const Page: Component<DataCollection> = () => {
           title="Delete All Documents"
           message={`Are you sure you want to delete all ${data.count} documents?`}
           label={`Delete all ${data.count} documents retrieved`}
-          handleDelete={() => fetch('/api/collectionDelete', {
-            method: 'POST',
-            headers: HEADERS_JSON(data.options),
-            body: JSON.stringify({
-              database: data.selectedDatabase,
-              collection: data.selectedCollection,
-              query: {
-                key: data.search.key,
-                value: data.search.value,
-                type: data.search.type,
-                query: data.search.query
-              }
-            })
-          }).then(async () => {
+          handleDelete={() => handleFetchError(
+            fetch('/api/collectionDelete', {
+              method: 'POST',
+              headers: HEADERS_JSON(data.options),
+              body: JSON.stringify({
+                database: data.selectedDatabase,
+                collection: data.selectedCollection,
+                query: {
+                  key: data.search.key,
+                  value: data.search.value,
+                  type: data.search.type,
+                  query: data.search.query
+                }
+              })
+            }),
+            setData
+          ).then(async () => {
             await reload()
           })}
         />
@@ -182,7 +177,7 @@ const Page: Component<DataCollection> = () => {
 
       <PaginationBoxComponent />
 
-      <DocumentList data={data} />
+      <DocumentList data={data} setData={setData} />
 
       <PaginationBoxComponent />
 
@@ -208,11 +203,11 @@ const Page: Component<DataCollection> = () => {
               create: !data.options.readOnly,
               delete: !data.options.noDelete && !data.options.readOnly
             }}
-            setAlertSuccessMessage={setAlertSuccessMessage}
+            setData={setData}
           />
         </Show>
       </div>
-    </div >
+    </div>
   )
 }
 

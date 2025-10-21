@@ -1,7 +1,9 @@
-import { type Component, type JSX, For, Show, untrack } from 'solid-js'
+import { type Component, For, Show } from 'solid-js'
+import type { SetStoreFunction } from 'solid-js/store'
 import { reload } from 'vike/client/router'
 
 import IconDelete from '@/components/Icons/IconDelete'
+import handleFetchError from '@/components/common/handleFetchError'
 import { HEADERS_JSON } from '@/utils/constants'
 import { bytesToSize } from '@/utils/mappers/mapUtils'
 
@@ -15,7 +17,7 @@ const IndexTable: Component<{
     create: boolean
     delete: boolean
   }
-  setAlertSuccessMessage: (message: JSX.Element) => void
+  setData: SetStoreFunction<any>
 }> = (props) => {
   return (
     <div class="overflow-x-auto">
@@ -65,20 +67,24 @@ const IndexTable: Component<{
 
                 <Show when={props.show.delete}>
                   <td>
-                    <button class="btn btn-sm bg-red-700 py-0.5" onClick={() => (
-                      fetch('/api/collectionDeleteIndex', {
-                        method: 'POST',
-                        headers: HEADERS_JSON(props.options),
-                        body: JSON.stringify({
-                          database: props.database,
-                          collection: props.collection,
-                          indexName: index.name
-                        })
-                      }).then(async () => {
+                    <button class="btn btn-sm bg-red-700 py-0.5" onClick={async () => {
+                      const response = await handleFetchError(
+                        fetch('/api/collectionDeleteIndex', {
+                          method: 'POST',
+                          headers: HEADERS_JSON(props.options),
+                          body: JSON.stringify({
+                            database: props.database,
+                            collection: props.collection,
+                            indexName: index.name
+                          })
+                        }),
+                        props.setData
+                      )
+                      if (response) {
                         await reload()
-                        untrack(() => props.setAlertSuccessMessage(<span>Index "<b>{index.name}</b>" deleted!</span>))
-                      })
-                    )}>
+                        props.setData('success', `Index "${index.name}" deleted!`)
+                      }
+                    }}>
                       <IconDelete />
 
                       Delete

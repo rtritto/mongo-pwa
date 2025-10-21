@@ -12,6 +12,8 @@ export const data: DataAsync<DataIndex> = async () => {
     selectedDatabase: undefined,
     selectedCollection: undefined,
     selectedDocument: undefined,
+    success: undefined,
+    warning: undefined,
     error: undefined
   } as DataIndex
 

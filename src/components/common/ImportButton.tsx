@@ -1,10 +1,13 @@
 import type { Component, JSX } from 'solid-js'
+import type { SetStoreFunction } from 'solid-js/store'
 
 import IconImport from '@/components/Icons/IconImport'
+import handleFetchError from './handleFetchError'
 
 const ImportButton: Component<{
   database: string
   collection: string
+  setData: SetStoreFunction<any>
 }> = (props) => {
   const onChange: JSX.ChangeEventHandlerUnion<HTMLInputElement, Event> = async (event) => {
     event.preventDefault()
@@ -24,17 +27,17 @@ const ImportButton: Component<{
     formData.append('database', props.database)
     formData.append('collection', props.collection)
 
-    const response = await fetch('/api/collectionImport', {
-      method: 'POST',
-      body: formData
-    })
-    if (!response.ok) {
-      console.error('Failed to upload file')
-      console.log(await response.text())
-      return
+    const response = await handleFetchError(
+      fetch('/api/collectionImport', {
+        method: 'POST',
+        body: formData
+      }),
+      props.setData
+    )
+    if (response) {
+      const { insertedCount } = await response.json()
+      props.setData('success', `${insertedCount} document(s) inserted`)
     }
-    const { insertedCount } = await response.json()
-    console.log(`${insertedCount} document(s) inserted`)
   }
 
   return (

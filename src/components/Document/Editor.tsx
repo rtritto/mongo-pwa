@@ -1,4 +1,5 @@
-import { type Component, type JSX, createSignal, Show, untrack } from 'solid-js'
+import { type Component, type JSX, untrack } from 'solid-js'
+import type { SetStoreFunction } from 'solid-js/store'
 
 import DeleteDocument from '@/components/Collection/DeleteDocument'
 import createCodeMirror from '@/components/common/createCodeMirror'
@@ -7,9 +8,8 @@ import SaveButton from './SaveButton'
 
 const Editor: Component<{
   data: DataDocument
-  setAlertSuccessMessage: (message: JSX.Element) => void
+  setData: SetStoreFunction<any>
 }> = (props) => {
-  const [showBanner, setShowBanner] = createSignal(false)
   const { editorView, ref: editorRef } = createCodeMirror(
     untrack(() => props.data.docString),
     { readOnly: untrack(() => props.data.readOnly) }
@@ -17,17 +17,11 @@ const Editor: Component<{
 
   return (
     <div>
-      <Show when={showBanner()}>
-        <div role="alert" class="alert alert-warning alert-outline mb-2">
-          <span>Document has changed! Do you want to go back?</span>
-        </div>
-      </Show>
-
       <div ref={editorRef} />
 
-      <BackButton view={editorView()!} data={props.data} setShowBanner={setShowBanner} />
+      <BackButton view={editorView()!} data={props.data} setData={props.setData} />
 
-      <SaveButton view={editorView()!} data={props.data} setAlertSuccessMessage={props.setAlertSuccessMessage} />
+      <SaveButton view={editorView()!} data={props.data} setData={props.setData} />
 
       <div class="m-2">
         <DeleteDocument
@@ -38,6 +32,7 @@ const Editor: Component<{
           doReload={false}
           label="Delete"
           options={props.data.options}
+          setData={props.setData}
         />
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { For, type Component } from 'solid-js'
+import type { SetStoreFunction } from 'solid-js/store'
 
 import IconSearch from '@/components/Icons/IconSearch'
 import DeleteDocument from './DeleteDocument'
@@ -6,6 +7,7 @@ import JsonViewer from './JsonViewer'
 
 const DocumentList: Component<{
   data: DataCollection
+  setData: SetStoreFunction<any>
 }> = (props) => {
   return (
     <div class="overflow-x-auto">
@@ -44,6 +46,7 @@ const DocumentList: Component<{
                       options={props.data.options}
                       doReload
                       fullWidth
+                      setData={props.setData}
                     />
                   </div>
                 </th>

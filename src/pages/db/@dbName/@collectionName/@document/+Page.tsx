@@ -1,23 +1,29 @@
-import { type Component, type JSX, createSignal, Show } from 'solid-js'
+import type { Component } from 'solid-js'
 import { useData } from 'vike-solid/useData'
 
+import Alerts from '@/components/common/Alerts'
 import Editor from '@/components/Document/Editor'
 
 const Page: Component<DataDocument> = () => {
-  const [data] = useData<DataDocument>()
-  const [alertSuccessMessage, setAlertSuccessMessage] = createSignal<JSX.Element>()
+  const [data, setData] = useData<DataDocument>()
   return (
-    <>
+    <div>
+      {/*
+        (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
+        Should be moved to LayoutDefault.tsx:
+          to test:
+          - navigate to /db/<DB>/<COL>
+          - click view doc to navigate to /db/<DB>/<COL>/<DOC>
+          - change the doc
+          - click BackButton
+          - the alert should appear if it works
+      */}
+      <Alerts data={data} />
+
       <h1>{data.title}</h1>
 
-      <Show when={alertSuccessMessage()}>
-        <div role="alert" class="alert alert-success alert-outline mb-2">
-          {alertSuccessMessage()}
-        </div>
-      </Show>
-
-      <Editor data={data} setAlertSuccessMessage={setAlertSuccessMessage} />
-    </>
+      <Editor data={data} setData={setData} />
+    </div>
   )
 }
 

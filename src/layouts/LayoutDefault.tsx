@@ -27,12 +27,6 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
 
       <div class="flex px-24">
         <div class="max-w-7xl">
-          <Show when={data.error}>
-            <div role="alert" class="alert alert-error alert-outline mb-2">
-              {data.error}
-            </div>
-          </Show>
-
           {props.children}
         </div>
       </div>
