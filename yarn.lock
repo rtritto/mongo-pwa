@@ -5735,8 +5735,8 @@ __metadata:
     tailwindcss: "npm:^4.1.15"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.46.2"
-    vike: "patch:vike@npm%3A0.4.242#~/.yarn/patches/vike-npm-0.4.242-a18d401c20.patch"
-    vike-server: "npm:^1.0.24"
+    vike: "patch:vike@npm%3A0.4.243#~/.yarn/patches/vike-npm-0.4.243-6c4d1bdcac.patch"
+    vike-server: "npm:^1.0.25"
     vike-solid: "patch:vike-solid@npm%3A0.7.13#~/.yarn/patches/vike-solid-npm-0.7.13-40ff8cb857.patch"
     vite: "npm:^7.1.11"
     vite-plugin-pwa: "npm:^1.1.0"
@@ -7427,9 +7427,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike-server@npm:^1.0.24":
-  version: 1.0.24
-  resolution: "vike-server@npm:1.0.24"
+"vike-server@npm:^1.0.25":
+  version: 1.0.25
+  resolution: "vike-server@npm:1.0.25"
   dependencies:
     "@brillout/picocolors": "npm:^1.0.26"
     "@brillout/vite-plugin-server-entry": "npm:^0.7.5"
@@ -7449,7 +7449,7 @@ __metadata:
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 10c0/61be773fe39128753eb6dbc8f8c01602fc116e616e8cbfd0ebad9ad50e8f21a0665a6e973c5c575b4dc0958f69576580e20064d1fcee50f0613245ffbf210de6
+  checksum: 10c0/1cb3985505a93839eeb35c25d5cb6b666bf101f128bc702ecf22529a7833790cc18196289422da863241aa7e63a0cdcc0f4887f58b7810ce96248b8db8371fdd
   languageName: node
   linkType: hard
 
@@ -7481,9 +7481,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike@npm:0.4.242":
-  version: 0.4.242
-  resolution: "vike@npm:0.4.242"
+"vike@npm:0.4.243":
+  version: 0.4.243
+  resolution: "vike@npm:0.4.243"
   dependencies:
     "@brillout/import": "npm:^0.2.6"
     "@brillout/json-serializer": "npm:^0.5.21"
@@ -7512,13 +7512,13 @@ __metadata:
       optional: true
   bin:
     vike: node/cli/bin.js
-  checksum: 10c0/7098ca4ac487712b741153b48995179747edf05f5a0ed0426fd39fb092b14a4311a5071c09839aebb1e1896bd11749a3f12d57bee6dfd64726007b2a1f6f7a07
+  checksum: 10c0/f2963e7d4374cbf49b8cfe79f549c830418eb89e81daa37936868bc692195d98baea2da4cb17eca158e9e2e08ef358a7efced279edee81089404b972b3dde27b
   languageName: node
   linkType: hard
 
-"vike@patch:vike@npm%3A0.4.242#~/.yarn/patches/vike-npm-0.4.242-a18d401c20.patch":
-  version: 0.4.242
-  resolution: "vike@patch:vike@npm%3A0.4.242#~/.yarn/patches/vike-npm-0.4.242-a18d401c20.patch::version=0.4.242&hash=50647a"
+"vike@patch:vike@npm%3A0.4.243#~/.yarn/patches/vike-npm-0.4.243-6c4d1bdcac.patch":
+  version: 0.4.243
+  resolution: "vike@patch:vike@npm%3A0.4.243#~/.yarn/patches/vike-npm-0.4.243-6c4d1bdcac.patch::version=0.4.243&hash=50647a"
   dependencies:
     "@brillout/import": "npm:^0.2.6"
     "@brillout/json-serializer": "npm:^0.5.21"
@@ -7547,7 +7547,7 @@ __metadata:
       optional: true
   bin:
     vike: node/cli/bin.js
-  checksum: 10c0/de2c34efb51196b52495b5a007ec6ed7a9d8e957c769dd9fb8df2bc72c09f425955f2021089ace1b496f1f0b9ba0b6392e284de1b267e0274a37febceea11ec4
+  checksum: 10c0/3bdde8f3bfdcba2c58d2533ea04197ba7cead7bf55ce52e6e5435c42e7f6ac8632d872edf422f27785738c66658d5ba78302dc5be992dadfe8db94802ce4feb5
   languageName: node
   linkType: hard
 
