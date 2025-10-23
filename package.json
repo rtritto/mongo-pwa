@@ -40,7 +40,7 @@
     "tailwindcss": "^4.1.16",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2",
-    "vike": "patch:vike@npm%3A0.4.243#~/.yarn/patches/vike-npm-0.4.243-6c4d1bdcac.patch",
+    "vike": "patch:vike@npm%3A0.4.244#~/.yarn/patches/vike-npm-0.4.244-2163096a86.patch",
     "vike-server": "^1.0.25",
     "vike-solid": "patch:vike-solid@npm%3A0.7.13#~/.yarn/patches/vike-solid-npm-0.7.13-40ff8cb857.patch",
     "vite": "^7.1.12",
