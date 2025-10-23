@@ -7,6 +7,7 @@ import Alerts from '@/components/common/Alerts'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import StatsTable from '@/components/common/StatsTable'
 import handleFetchError from '@/components/common/handleFetchError'
+import SearchDocuments from '@/components/Collection/SearchDocuments'
 import DocumentList from '@/components/Collection/DocumentList'
 import IndexTable from '@/components/Collection/IndexTable'
 import SaveDialog from '@/components/Collection/SaveDialog'
@@ -90,6 +91,8 @@ const Page: Component<DataCollection> = () => {
       <Alerts data={data} />
 
       <h1 class="text-2xl pb-2">Viewing Collection: <b>{data.selectedCollection}</b></h1>
+
+      <SearchDocuments data={data} />
 
       <div class="flex my-1">
         <div class="mr-2">

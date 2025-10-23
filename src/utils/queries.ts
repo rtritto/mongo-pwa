@@ -61,30 +61,13 @@ export const getQueryOptions = (query: QueryParameter): QueryOptions => {
 }
 
 const converters = {
-  // If type == J, convert value as json document
-  J(value: string) {
-    return JSON.parse(value)
-  },
-  // If type == N, convert value to number
-  // eslint-disable-next-line unicorn/prefer-native-coercion-functions
-  N(value: string) {
-    return Number(value)
-  },
-  // If type == O, convert value to ObjectId
-  O(value: string) {
-    return parseObjectId(value)
-  },
-  // If type == R, convert to RegExp
-  R(value: string) {
-    return new RegExp(value, 'i')
-  },
-  U(value: string) {
-    return new Binary(Buffer.from(value.replaceAll('-', ''), 'hex'), Binary.SUBTYPE_UUID)
-  },
-  // if type == S, no conversion done
-  S(value: string) {
-    return value
-  }
+  O: parseObjectId,
+  U: (value: string) => new Binary(Buffer.from(value.replaceAll('-', ''), 'hex'), Binary.SUBTYPE_UUID),
+  N: Number,
+  S: (value: string) => value,
+  B: Boolean,
+  R: (value: string) => new RegExp(value, 'i'),
+  J: JSON.parse
 }
 
 /*
@@ -97,16 +80,13 @@ export const getQuery = (query: QueryParameter): MongoDocument | Pipeline => {
   if (key && value) {
     // if it is a simple query
 
-    // 1. fist convert value to its actual type
     const { type } = query
-    if (type) {
-      const realType = type.toUpperCase()
-      if (realType in converters) {
-        const realValue = converters[realType as keyof typeof converters](value)
+    if (type as keyof typeof converters in converters) {
+      // 1. fist convert value to its actual type
+      const realValue = converters[type as keyof typeof converters](value)
 
-        // 2. then set query to it
-        return { [key]: realValue }
-      }
+      // 2. then set query to it
+      return { [key]: realValue }
     }
     throw new Error(`Invalid query type: ${type}`)
   }

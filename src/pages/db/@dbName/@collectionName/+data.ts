@@ -14,8 +14,8 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
   if (validationCollRes.error) {
     throw new Error(validationCollRes.error)
   }
-  await connectClient()
   const { search } = pageContext.urlParsed
+  await connectClient()
   const queryOptions = getQueryOptions(search)
   const { mongo, config } = globalThis
   // TODO check if use this
