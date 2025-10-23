@@ -18,7 +18,6 @@ type DataIndex = {
 }
 
 type DataDB = Omit<DataIndex, 'stats' | 'selectedDatabase'> & {
-  dbName: string
   collections: Mongo['collections'][string]
 
   selectedDatabase: string
@@ -27,8 +26,6 @@ type DataDB = Omit<DataIndex, 'stats' | 'selectedDatabase'> & {
 }
 
 type DataCollection = Omit<DataDB, 'stats' | 'selectedCollection'> & {
-  collectionName: string
-
   selectedCollection: string
 
   docs: Record<string, any>[]
@@ -41,7 +38,6 @@ type DataCollection = Omit<DataDB, 'stats' | 'selectedCollection'> & {
 }
 
 type DataDocument = Omit<DataCollection, 'selectedDocument'> & {
-  documentName: string
   docString: string
   _id: any
   subtype: number | undefined
