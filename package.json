@@ -13,7 +13,7 @@
     "od": "yarn outdated"
   },
   "dependencies": {
-    "@codemirror/commands": "^6.9.0",
+    "@codemirror/commands": "^6.10.0",
     "@codemirror/lang-javascript": "^6.2.4",
     "@codemirror/language": "^6.11.3",
     "@codemirror/state": "^6.5.2",
@@ -23,27 +23,27 @@
     "@solid-primitives/pagination": "^0.5.0",
     "bson": "^6.10.4",
     "codemirror": "^6.0.2",
-    "hono": "^4.10.1",
+    "hono": "^4.10.2",
     "mongodb": "^6.20.0",
     "mongodb-query-parser": "^4.4.4",
     "solid-js": "^1.9.9"
   },
   "devDependencies": {
     "@hono/node-server": "^1.19.5",
-    "@tailwindcss/vite": "^4.1.15",
+    "@tailwindcss/vite": "^4.1.16",
     "@types/node": "^24.9.1",
     "@yarnpkg/sdks": "^3.2.3",
-    "daisyui": "^5.3.7",
+    "daisyui": "^5.3.8",
     "eslint": "^9.38.0",
     "eslint-plugin-solid": "^0.14.5",
     "eslint-plugin-unicorn": "^61.0.2",
-    "tailwindcss": "^4.1.15",
+    "tailwindcss": "^4.1.16",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.2",
     "vike": "patch:vike@npm%3A0.4.243#~/.yarn/patches/vike-npm-0.4.243-6c4d1bdcac.patch",
     "vike-server": "^1.0.25",
     "vike-solid": "patch:vike-solid@npm%3A0.7.13#~/.yarn/patches/vike-solid-npm-0.7.13-40ff8cb857.patch",
-    "vite": "^7.1.11",
+    "vite": "^7.1.12",
     "vite-plugin-pwa": "^1.1.0"
   },
   "engines": {
