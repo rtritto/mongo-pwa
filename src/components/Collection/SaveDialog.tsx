@@ -10,11 +10,8 @@ const SaveDialog: Component<{
   message?: string
   handleSave: (doc: string, dialogRef: HTMLDialogElement) => Promise<void>
 }> = (props) => {
-  const { editorView, ref: editorRef } = createCodeMirror(
-    untrack(() => props.template),
-    { readOnly: false }
-  )
   let dialogRef!: HTMLDialogElement
+  const { editorView, ref: editorRef } = createCodeMirror(untrack(() => props.template))
 
   return (
     <div>
@@ -45,6 +42,8 @@ const SaveDialog: Component<{
               <button
                 class="btn bg-green-500 py-0.5"
                 type="submit"
+                // TODO disable if invalid
+                // disabled={!isValid(editorView()?.state.doc.toString())}
                 onClick={async () => (
                   await props.handleSave(editorView()!.state.doc.toString(), dialogRef)
                 )}

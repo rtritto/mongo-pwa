@@ -30,7 +30,7 @@ const customOneDark = [
  * @description Create a CodeMirror editor instance
  * @link https://github.com/riccardoperra/solid-codemirror/blob/main/src/core/createCodeMirror.ts
  */
-const createCodeMirror = (doc: string, options: { readOnly: boolean }) => {
+const createCodeMirror = (doc: string, options?: { readOnly: boolean }) => {
   const [ref, setRef] = createSignal<HTMLElement>()
   const [editorView, setEditorView] = createSignal<CustomEditorView>()
 
@@ -43,7 +43,7 @@ const createCodeMirror = (doc: string, options: { readOnly: boolean }) => {
         keymap.of([...defaultKeymap, ...historyKeymap]),
         javascript(),
         indentUnit.of(' '),
-        EditorState.readOnly.of(options.readOnly),
+        ...options?.readOnly ? [EditorState.readOnly.of(true)] : [],
         customOneDark
       ]
       const state = EditorState.create({

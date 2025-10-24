@@ -178,7 +178,7 @@ export const getItemsAndCount = async (
   config: Config
 ) => {
   let _query = getQuery(query)
-  if (query.runAggregate === 'on' && _query.constructor.name === 'Array') {
+  if (query.aggregate === 'true' && _query.constructor.name === 'Array') {
     if (_query.length > 0) {
       const queryAggregate = getAggregatePipeline(_query as Pipeline, queryOptions)
       const [{ items, count }] = await collection.aggregate<{

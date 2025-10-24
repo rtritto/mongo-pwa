@@ -1,17 +1,17 @@
 import { For, createSignal, type Component } from 'solid-js'
 
 import IconSearch from '@/components/Icons/IconSearch'
+import SearchAdvanced from './SearchAdvanced'
 import SearchSimple from './SearchSimple'
 
 const SearchDocuments: Component<{
   data: DataCollection
-  // setData: SetData
 }> = (props) => {
   const [activeTab, setActiveTab] = createSignal(0)
 
   const SEARCH_LABELS = {
     Simple: <SearchSimple data={props.data} />,
-    Advanced: <button>b</button>
+    Advanced: <SearchAdvanced data={props.data} />
   }
 
   return (

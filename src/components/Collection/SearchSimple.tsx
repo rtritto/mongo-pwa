@@ -80,7 +80,7 @@ const SearchSimple: Component<{
       >
         <IconSearch />
 
-        Search
+        Find
       </button>
     </div>
   )
