@@ -31,7 +31,7 @@ export const data: DataAsync<DataDocument> = async (pageContext) => {
     title: `${options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
     databases: mongo.databases,
     collections: mongo.collections[dbName],
-    docString: toString(doc!),
+    docString: toString(doc!)!,
     _id: document,
     subtype,
     // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
