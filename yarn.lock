@@ -3449,10 +3449,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^5.3.8":
-  version: 5.3.8
-  resolution: "daisyui@npm:5.3.8"
-  checksum: 10c0/35a4febd778d7def097d31a6da9136742f803444102e304c992cb52a01802038b4515b949a1d6233a595759be9030256de6a02ca5fb912d91c0ae6c7a6858139
+"daisyui@npm:^5.3.9":
+  version: 5.3.9
+  resolution: "daisyui@npm:5.3.9"
+  checksum: 10c0/2c91b0d4c7252cbb4c744410b44c14870cb9108728e725cc354d29213b30685fe144c7eaa01848790268ddac61e58524ae9cf01579842fe3b91260c174a8cfcf
   languageName: node
   linkType: hard
 
@@ -4608,10 +4608,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^4.10.2":
-  version: 4.10.2
-  resolution: "hono@npm:4.10.2"
-  checksum: 10c0/783ec7f879c8a0a389b65a92e43e15a3d60e9e67da749b88a84e763d4625c22493461d4c2c6c40068c554e27abfcf94db06a861ce94f871dd7ada2c751ad7a3b
+"hono@npm:^4.10.3":
+  version: 4.10.3
+  resolution: "hono@npm:4.10.3"
+  checksum: 10c0/bdcc4c7066c74ba7cfa63ed6550768a0f43a420286c8f8f74b7012ea4901b8b06778fa8e98264b46f1a86920f056b7ede1f07814da4934912f9945def4977c29
   languageName: node
   linkType: hard
 
@@ -5724,11 +5724,11 @@ __metadata:
     "@yarnpkg/sdks": "npm:^3.2.3"
     bson: "npm:^6.10.4"
     codemirror: "npm:^6.0.2"
-    daisyui: "npm:^5.3.8"
+    daisyui: "npm:^5.3.9"
     eslint: "npm:^9.38.0"
     eslint-plugin-solid: "npm:^0.14.5"
     eslint-plugin-unicorn: "npm:^61.0.2"
-    hono: "npm:^4.10.2"
+    hono: "npm:^4.10.3"
     mongodb: "npm:^6.20.0"
     mongodb-query-parser: "npm:^4.4.4"
     solid-js: "npm:^1.9.9"

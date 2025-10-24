@@ -23,7 +23,7 @@
     "@solid-primitives/pagination": "^0.5.0",
     "bson": "^6.10.4",
     "codemirror": "^6.0.2",
-    "hono": "^4.10.2",
+    "hono": "^4.10.3",
     "mongodb": "^6.20.0",
     "mongodb-query-parser": "^4.4.4",
     "solid-js": "^1.9.9"
@@ -33,7 +33,7 @@
     "@tailwindcss/vite": "^4.1.16",
     "@types/node": "^24.9.1",
     "@yarnpkg/sdks": "^3.2.3",
-    "daisyui": "^5.3.8",
+    "daisyui": "^5.3.9",
     "eslint": "^9.38.0",
     "eslint-plugin-solid": "^0.14.5",
     "eslint-plugin-unicorn": "^61.0.2",
