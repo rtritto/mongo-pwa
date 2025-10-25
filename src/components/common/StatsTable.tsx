@@ -23,20 +23,18 @@ const getRowsComponent = (fields: ServerStats | DBStats | CollectionStats) => {
 
 const StatsTable: Component<{ label: string, fields: ServerStats | DBStats | CollectionStats }> = (props) => {
   return (
-    <div class="overflow-x-auto">
-      <table class="table table-zebra">
-        <thead>
-          <tr>
-            <td colSpan={4}>
-              {/* <h6 component='h6' variant='h6' sx={{ fontWeight: 'bold', pt: 0.5 }}> */}
-              <h6><b>{props.label}</b></h6>
-            </td>
-          </tr>
-        </thead>
+    <table class="table table-zebra">
+      <thead>
+        <tr>
+          <td colSpan={4}>
+            {/* <h6 component='h6' variant='h6' sx={{ fontWeight: 'bold', pt: 0.5 }}> */}
+            <h6><b>{props.label}</b></h6>
+          </td>
+        </tr>
+      </thead>
 
-        <tbody>{getRowsComponent(props.fields)}</tbody>
-      </table>
-    </div>
+      <tbody>{getRowsComponent(props.fields)}</tbody>
+    </table>
   )
 }
 

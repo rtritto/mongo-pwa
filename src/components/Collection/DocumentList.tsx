@@ -10,54 +10,52 @@ const DocumentList: Component<{
   setData: SetStoreFunction<any>
 }> = (props) => {
   return (
-    <div class="overflow-x-auto">
-      <table class="table table-zebra">
-        <thead>
-          <tr>
-            <th />
-            <For each={props.data.columns}>
-              {(column) => (
-                <th>{column}</th>
-              )}
-            </For>
-          </tr>
-        </thead>
-
-        <tbody>
-          <For each={props.data.docs}>
-            {(document) => (
-              <tr>
-                <th>
-                  <div class="my-2">
-                    <a
-                      class="btn btn-sm w-full bg-blue-500"
-                      href={`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`}
-                    >
-                      <IconSearch />
-                    </a>
-                  </div>
-
-                  <div class="my-2">
-                    <DeleteDocument
-                      data={props.data}
-                      setData={props.setData}
-                      _id={document._id}
-                      sub_type={document.sub_type}
-                      doReload
-                      fullWidth
-                    />
-                  </div>
-                </th>
-
-                <For each={props.data.columns}>
-                  {(column) => <td><JsonViewer value={document[column]} /></td>}
-                </For>
-              </tr>
+    <table class="table table-zebra">
+      <thead>
+        <tr>
+          <th />
+          <For each={props.data.columns}>
+            {(column) => (
+              <th>{column}</th>
             )}
           </For>
-        </tbody>
-      </table>
-    </div>
+        </tr>
+      </thead>
+
+      <tbody>
+        <For each={props.data.docs}>
+          {(document) => (
+            <tr>
+              <th>
+                <div class="my-2">
+                  <a
+                    class="btn btn-sm w-full bg-blue-500"
+                    href={`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`}
+                  >
+                    <IconSearch />
+                  </a>
+                </div>
+
+                <div class="my-2">
+                  <DeleteDocument
+                    data={props.data}
+                    setData={props.setData}
+                    _id={document._id}
+                    sub_type={document.sub_type}
+                    doReload
+                    fullWidth
+                  />
+                </div>
+              </th>
+
+              <For each={props.data.columns}>
+                {(column) => <td><JsonViewer value={document[column]} /></td>}
+              </For>
+            </tr>
+          )}
+        </For>
+      </tbody>
+    </table>
   )
 }
 

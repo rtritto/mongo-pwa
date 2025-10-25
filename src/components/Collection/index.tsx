@@ -180,11 +180,13 @@ const CollectionPage: Component<DataCollection> = () => {
 
       <PaginationBoxComponent />
 
-      <DocumentList data={data} setData={setData} />
+      <div class="border border-base-300 rounded-box my-2 overflow-x-auto">
+        <DocumentList data={data} setData={setData} />
+      </div>
 
       <PaginationBoxComponent />
 
-      <div class="my-2">
+      <div class="mb-2">
         <Show
           when={data.stats}
           fallback={(
@@ -194,9 +196,13 @@ const CollectionPage: Component<DataCollection> = () => {
             </>
           )}
         >
-          <StatsTable label="Collection Stats" fields={data.stats} />
+          <div class="border border-base-300 rounded-box my-2 overflow-x-auto">
+            <StatsTable label="Collection Stats" fields={data.stats} />
+          </div>
 
-          <IndexTable data={data} setData={setData} />
+          <div class="border border-base-300 rounded-box my-2 overflow-x-auto">
+            <IndexTable data={data} setData={setData} />
+          </div>
         </Show>
       </div>
     </div>

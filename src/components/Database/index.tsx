@@ -33,7 +33,9 @@ const DatabasePage: Component<DataDB> = () => {
             </>
           )}
         >
-          <StatsTable label="Database Stats" fields={data.stats! as DBStats} />
+          <div class="border border-base-300 rounded-box my-2 overflow-x-auto">
+            <StatsTable label="Database Stats" fields={data.stats! as DBStats} />
+          </div>
         </Show>
       </div>
     </div>
