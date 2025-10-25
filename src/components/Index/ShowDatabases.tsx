@@ -13,7 +13,7 @@ const ShowDatabases: Component<{
   setData: SetStoreFunction<any>
 }> = (props) => {
   return (
-    <div>
+    <div class="border border-base-300 rounded-box my-2">
       <table class="table">
         <thead>
           <tr>
