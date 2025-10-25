@@ -11,6 +11,7 @@ import SearchDocuments from './SearchDocuments'
 import DocumentList from './DocumentList'
 import IndexTable from './IndexTable'
 import SaveDialog from './SaveDialog'
+import RenameCollection from './RenameCollection'
 import { HEADERS_JSON } from '@/utils/constants'
 import fetchWithRetries from '@/utils/fetchWithRetries'
 import { getLastPage } from '@/utils/queries'
@@ -185,6 +186,10 @@ const CollectionPage: Component<DataCollection> = () => {
       </div>
 
       <PaginationBoxComponent />
+
+      <Show when={!data.options.readOnly}>
+        <RenameCollection data={data} setData={setData} />
+      </Show>
 
       <div class="mb-2">
         <Show
