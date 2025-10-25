@@ -1,5 +1,5 @@
 const IconMongo = () => (
-  <svg class="w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
+  <svg class="w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <circle fill="#41a948" cx="12" cy="12" r="12" />
 
     <g transform="translate(12,12) scale(0.024) translate(-500,-500)">
