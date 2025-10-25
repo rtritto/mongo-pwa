@@ -26,7 +26,14 @@ const DocumentList: Component<{
         <For each={props.data.docs}>
           {(document) => (
             <tr>
-              <th class="flex justify-center">
+              <th
+                class="cursor-pointer"
+                onClick={async (e) => {
+                  if (e.target === e.currentTarget) {
+                    await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`)
+                  }
+                }}
+              >
                 <div class="my-1">
                   <DeleteDocument
                     data={props.data}
