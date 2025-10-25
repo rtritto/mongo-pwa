@@ -1,7 +1,8 @@
-import { type Component, Show, untrack } from 'solid-js'
+import { type Component, createSignal, Show, untrack } from 'solid-js'
 
 import IconAdd from '@/components/Icons/IconAdd'
 import createCodeMirror from '@/components/common/createCodeMirror'
+import { toSafeBSON } from '@/utils/bson'
 
 const SaveDialog: Component<{
   title: string
@@ -12,6 +13,7 @@ const SaveDialog: Component<{
 }> = (props) => {
   let dialogRef!: HTMLDialogElement
   const { editorView, ref: editorRef } = createCodeMirror(untrack(() => props.template))
+  const [isTextValid, setIsTextValid] = createSignal(true)
 
   return (
     <div>
@@ -36,14 +38,18 @@ const SaveDialog: Component<{
               </div>
             </Show>
 
-            <div ref={editorRef} />
+            <div
+              ref={editorRef}
+              onKeyUp={() => {
+                setIsTextValid(!!toSafeBSON(editorView()!.state.doc.toString()))
+              }}
+            />
 
             <div class="m-2">
               <button
                 class="btn bg-green-500 py-0.5"
                 type="submit"
-                // TODO disable if invalid
-                // disabled={!isValid(editorView()?.state.doc.toString())}
+                disabled={!isTextValid()}
                 onClick={async () => (
                   await props.handleSave(editorView()!.state.doc.toString(), dialogRef)
                 )}
