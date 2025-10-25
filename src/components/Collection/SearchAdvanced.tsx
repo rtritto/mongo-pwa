@@ -3,6 +3,7 @@ import { navigate } from 'vike/client/router'
 
 import createCodeMirror from '@/components/common/createCodeMirror'
 import IconSearch from '../Icons/IconSearch'
+import { toSafeBSON } from '@/utils/bson'
 
 const template = `{
   
@@ -11,6 +12,8 @@ const template = `{
 const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
   const { editorView: editorViewQuery, ref: editorRefQuery } = createCodeMirror(template)
   const { editorView: editorViewProjection, ref: editorRefProjection } = createCodeMirror(template)
+  const [isQueryValid, setIsQueryValid] = createSignal(true)
+  const [isProjectionValid, setIsProjectionValid] = createSignal(true)
   const [checkboxAggregate, setCheckboxAggregate] = createSignal(false)
 
   return (
@@ -21,7 +24,12 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             <span class="label-text"><b>Query</b></span>
           </label>
 
-          <div ref={editorRefQuery} />
+          <div
+            ref={editorRefQuery}
+            onKeyUp={() => {
+              setIsQueryValid(!!toSafeBSON(editorViewQuery()!.state.doc.toString()))
+            }}
+          />
         </div>
 
         <div>
@@ -29,7 +37,12 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             <span class="label-text"><b>Projection</b></span>
           </label>
 
-          <div ref={editorRefProjection} />
+          <div
+            ref={editorRefProjection}
+            onKeyUp={() => {
+              setIsProjectionValid(!!toSafeBSON(editorViewProjection()!.state.doc.toString()))
+            }}
+          />
         </div>
       </div>
 
@@ -44,9 +57,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
         <button
           class="btn bg-blue-500"
-          // TODO validation
-          // disabled if both are invalid
-          // disabled={!isValid(editorViewQuery()?.state.doc.toString()) || !isValid(editorViewProjection()?.state.doc.toString())}
+          disabled={!isQueryValid() || !isProjectionValid()}
           onClick={async () => {
             const queryStr = [
               ...editorViewQuery()!.state.doc.toString() ? [`query=${encodeURIComponent(editorViewQuery()!.state.doc.toString())}`] : [],
@@ -62,8 +73,6 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
         </button>
       </div>
     </div>
-
-
   )
 }
 

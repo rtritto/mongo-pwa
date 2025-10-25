@@ -7,8 +7,8 @@ import toBSON, { toJSString } from 'mongodb-query-parser'
 export const toSafeBSON = (string: string) => {
   try {
     return toBSON(string)
-  } catch (error) {
-    console.error(error)
+  } catch /* (error) */ {
+    // console.error(error)
     return
   }
 }
