@@ -25,7 +25,7 @@ export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
         </div>
       </header>
 
-      <div class="flex px-24">
+      <div class="px-24">
         <div class="max-w-7xl">
           {props.children}
         </div>
