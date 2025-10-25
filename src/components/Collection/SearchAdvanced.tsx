@@ -2,7 +2,7 @@ import { createSignal, type Component } from 'solid-js'
 import { navigate } from 'vike/client/router'
 
 import createCodeMirror from '@/components/common/createCodeMirror'
-import IconSearch from '../Icons/IconSearch'
+import IconSearch from '@/components/Icons/IconSearch'
 import { toSafeBSON } from '@/utils/bson'
 
 const template = `{
