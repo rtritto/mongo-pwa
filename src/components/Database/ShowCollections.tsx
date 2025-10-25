@@ -2,14 +2,13 @@ import { For, Show, type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 import { usePageContext } from 'vike-solid/usePageContext'
 
-import CreateForm from '@/components/common/CreateForm'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportButton from '@/components/common/ExportButton'
 import ImportButton from '@/components/common/ImportButton'
 import handleFetchError from '@/components/common/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
+import CreateCollection from './CreateCollection'
 import { HEADERS_JSON } from '@/utils/constants'
-import { isValidCollectionName } from '@/utils/validationsClient'
 
 const ShowCollections: Component<{
   data: DataDB
@@ -19,37 +18,7 @@ const ShowCollections: Component<{
 
   return (
     <div class="border border-base-300 rounded-box my-2">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="p-0"><h6><b>Collections</b></h6></th>
-
-            <th class="p-0">
-              <span class="text-right">
-                <Show when={!props.data.options.readOnly}>
-                  <CreateForm
-                    entity="Collection"
-                    isValidInput={(input) => isValidCollectionName(input)}
-                    onButtonClick={(collection: string) => handleFetchError(
-                      fetch('/api/collectionCreate', {
-                        method: 'POST',
-                        body: JSON.stringify({ collection, database: props.data.selectedDatabase }),
-                        headers: HEADERS_JSON(props.data.options)
-                      }),
-                      props.setData,
-                      // Add database to global collections to update viewing collections
-                      {
-                        collections: [...props.data.collections, collection].toSorted(),
-                        success: `Collection "${collection}" created!`
-                      }
-                    ) as Promise<void>}
-                  />
-                </Show>
-              </span>
-            </th>
-          </tr>
-        </thead>
-      </table>
+      <CreateCollection data={props.data} setData={props.setData} />
 
       <table class="table">
         <tbody>
