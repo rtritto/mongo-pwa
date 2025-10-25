@@ -1,7 +1,7 @@
 import { For, type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
+import { navigate } from 'vike/client/router'
 
-import IconSearch from '@/components/Icons/IconSearch'
 import DeleteDocument from './DeleteDocument'
 import JsonViewer from './JsonViewer'
 
@@ -28,15 +28,6 @@ const DocumentList: Component<{
             <tr>
               <th>
                 <div class="my-2">
-                  <a
-                    class="btn btn-sm w-full bg-blue-500"
-                    href={`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`}
-                  >
-                    <IconSearch />
-                  </a>
-                </div>
-
-                <div class="my-2">
                   <DeleteDocument
                     data={props.data}
                     setData={props.setData}
@@ -49,7 +40,18 @@ const DocumentList: Component<{
               </th>
 
               <For each={props.data.columns}>
-                {(column) => <td><JsonViewer value={document[column]} /></td>}
+                {(column) => (
+                  <td
+                    class="cursor-pointer"
+                    onClick={async (e) => {
+                      if (e.target === e.currentTarget) {
+                        await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`)
+                      }
+                    }}
+                  >
+                    <JsonViewer value={document[column]} />
+                  </td>
+                )}
               </For>
             </tr>
           )}
