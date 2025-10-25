@@ -2,9 +2,9 @@ import { type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 import { navigate } from 'vike/client/router'
 
-import IconSave from '@/components/Icons/IconSave'
 import type { CustomEditorView } from '@/components/common/createCodeMirror'
 import handleFetchError from '@/components/common/handleFetchError'
+import IconSave from '@/components/Icons/IconSave'
 import { HEADERS_JSON } from '@/utils/constants'
 
 const SaveButton: Component<{
