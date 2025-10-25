@@ -1,12 +1,11 @@
 import { type Component, For, Show } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
-import CreateForm from '@/components/common/CreateForm'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import handleFetchError from '@/components/common/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
+import CreateDatabase from './CreateDatabase'
 import { HEADERS_JSON } from '@/utils/constants'
-import { isValidDatabaseName } from '@/utils/validationsClient'
 
 const ShowDatabases: Component<{
   data: DataIndex
@@ -14,37 +13,7 @@ const ShowDatabases: Component<{
 }> = (props) => {
   return (
     <div class="border border-base-300 rounded-box my-2">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="p-0"><h6><b>Databases</b></h6></th>
-
-            <th class="p-0">
-              <span class="text-right">
-                <Show when={!props.data.options.readOnly}>
-                  <CreateForm
-                    entity="Database"
-                    isValidInput={(input) => isValidDatabaseName(input)}
-                    onButtonClick={(database: string) => handleFetchError(
-                      fetch('/api/databaseCreate', {
-                        method: 'POST',
-                        body: JSON.stringify({ database }),
-                        headers: HEADERS_JSON(props.data.options)
-                      }),
-                      props.setData,
-                      // Add database to global databases to update viewing databases
-                      {
-                        databases: [...props.data.databases, database].toSorted(),
-                        success: `Database "${database}" created!`
-                      }
-                    ) as Promise<void>}
-                  />
-                </Show>
-              </span>
-            </th>
-          </tr>
-        </thead>
-      </table>
+      <CreateDatabase data={props.data} setData={props.setData} />
 
       <table class="table">
         <tbody>
