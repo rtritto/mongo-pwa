@@ -26,8 +26,8 @@ const DocumentList: Component<{
         <For each={props.data.docs}>
           {(document) => (
             <tr>
-              <th>
-                <div class="my-2">
+              <th class="flex justify-center">
+                <div class="my-1">
                   <DeleteDocument
                     data={props.data}
                     setData={props.setData}
