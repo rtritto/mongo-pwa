@@ -57,7 +57,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
         <button
           class="btn bg-blue-500"
-          disabled={!isQueryValid() || !isProjectionValid()}
+          // disabled={!isQueryValid() || !isProjectionValid()}
           onClick={async () => {
             const queryStr = [
               ...editorViewQuery()!.state.doc.toString() ? [`query=${encodeURIComponent(editorViewQuery()!.state.doc.toString())}`] : [],

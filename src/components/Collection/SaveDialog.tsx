@@ -49,7 +49,8 @@ const SaveDialog: Component<{
               <button
                 class="btn bg-green-500 py-0.5"
                 type="submit"
-                disabled={!isTextValid()}
+                // TODO always disabled on PROD
+                // disabled={!isTextValid()}
                 onClick={async () => (
                   await props.handleSave(editorView()!.state.doc.toString(), dialogRef)
                 )}

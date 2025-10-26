@@ -16,7 +16,8 @@ const SaveButton: Component<{
   return (
     <button
       class="btn btn-sm bg-green-500 py-0.5 text-right"
-      disabled={props.disabled}
+      // TODO always disabled on PROD
+      // disabled={props.disabled}
       onClick={async () => {
         const response = await handleFetchError(
           fetch('/api/documentUpdate', {
