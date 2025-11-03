@@ -2,7 +2,7 @@
 import '../../config.default'
 
 import type { Config } from 'vike/types'
-import vikeServer from 'vike-server/config'
+import vikePhoton from 'vike-photon/config'
 import vikeSolid from 'vike-solid/config'
 
 // Default config (can be overridden by pages)
@@ -12,9 +12,11 @@ export default {
   prerender: false,
   extends: [
     vikeSolid,
-    vikeServer
+    vikePhoton
   ],
   // To run serve script, enable next line
   // server: 'server/entry.node.ts'
-  server: process.env.NODE_ENV === 'production' ? 'server/index.ts' : 'server/entry.node.ts'
+  photon: {
+    server: process.env.NODE_ENV === 'production' ? 'server/index.ts' : 'server/entry.node.ts'
+  }
 } satisfies Config
