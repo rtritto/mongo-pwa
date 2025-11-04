@@ -5716,7 +5716,7 @@ __metadata:
     tailwindcss: "npm:^4.1.16"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.46.3"
-    vike: "patch:vike@npm%3A0.4.244#~/.yarn/patches/vike-npm-0.4.244-2163096a86.patch"
+    vike: "patch:vike@npm%3A0.4.245#~/.yarn/patches/vike-npm-0.4.245-135b0506ef.patch"
     vike-photon: "npm:^0.1.14"
     vike-solid: "patch:vike-solid@npm%3A0.7.13#~/.yarn/patches/vike-solid-npm-0.7.13-40ff8cb857.patch"
     vite: "npm:^7.1.12"
@@ -7427,9 +7427,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike@npm:0.4.244":
-  version: 0.4.244
-  resolution: "vike@npm:0.4.244"
+"vike@npm:0.4.245":
+  version: 0.4.245
+  resolution: "vike@npm:0.4.245"
   dependencies:
     "@brillout/import": "npm:^0.2.6"
     "@brillout/json-serializer": "npm:^0.5.21"
@@ -7458,13 +7458,13 @@ __metadata:
       optional: true
   bin:
     vike: node/cli/bin.js
-  checksum: 10c0/f28f6428704704f01f678b82f06a8d0b6eb900d32310a9aaa14651d5708ab9a5e03e83f4d8638341dfef2887a551e3b0d08191813fa5326e3bf8daefb1da0029
+  checksum: 10c0/a1001da1d81360946efc014494b15ac898970adde407187d00e5232c897a0bdbed3c8c22f6c243f4647c53269764e6e7fdea5b721097507bda060fa463080e3b
   languageName: node
   linkType: hard
 
-"vike@patch:vike@npm%3A0.4.244#~/.yarn/patches/vike-npm-0.4.244-2163096a86.patch":
-  version: 0.4.244
-  resolution: "vike@patch:vike@npm%3A0.4.244#~/.yarn/patches/vike-npm-0.4.244-2163096a86.patch::version=0.4.244&hash=50647a"
+"vike@patch:vike@npm%3A0.4.245#~/.yarn/patches/vike-npm-0.4.245-135b0506ef.patch":
+  version: 0.4.245
+  resolution: "vike@patch:vike@npm%3A0.4.245#~/.yarn/patches/vike-npm-0.4.245-135b0506ef.patch::version=0.4.245&hash=50647a"
   dependencies:
     "@brillout/import": "npm:^0.2.6"
     "@brillout/json-serializer": "npm:^0.5.21"
@@ -7493,7 +7493,7 @@ __metadata:
       optional: true
   bin:
     vike: node/cli/bin.js
-  checksum: 10c0/cce9ac863fd1229aa7b903e1e35164857fbf869741867826f8f856b848d0043ce543a12a21da89720b1bdd8c5d0e6a05d78491f5c2718530901f6753d7e06428
+  checksum: 10c0/b2b7cfb8c33e1c605c4bc55f41ced7e6e6c07f759481a0e4c60825ce39f0443b7015f71378129b296708027ab82e3f4db0dd501a441dff8ac304d020de42e893
   languageName: node
   linkType: hard
 
