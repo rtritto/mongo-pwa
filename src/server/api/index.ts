@@ -3,7 +3,6 @@ import collectionCreateIndex from './collectionCreateIndex'
 import collectionDelete from './collectionDelete'
 import collectionDeleteIndex from './collectionDeleteIndex'
 import collectionExport from './collectionExport'
-import collectionExportArray from './collectionExportArray'
 import collectionImport from './collectionImport'
 import collectionRename from './collectionRename'
 import databaseCreate from './databaseCreate'
@@ -19,7 +18,6 @@ export default {
   collectionDelete,
   collectionDeleteIndex,
   collectionExport,
-  collectionExportArray,
   collectionImport,
   collectionRename,
   databaseCreate,

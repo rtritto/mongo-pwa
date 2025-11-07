@@ -35,24 +35,9 @@ const ShowCollections: Component<{
                   </td>
 
                   <Show when={!props.data.options.noExport}>
-                    {/* (?) Deprecated */}
-                    {/* <td class="p-0.5">
-                      <ExportButton
-                        url="/api/collectionExport"
-                        label="Export"
-                        database={props.data.selectedDatabase}
-                        collection={collection}
-                        query={pageContext.urlParsed.search}
-                        setData={setData}
-                      />
-                    </td> */}
-
                     <td class="p-0.5">
                       <ExportButton
-                        url="/api/collectionExportArray"
-                        // If "Export" is deprecated, use "ExportArray" as default "Export"
                         label="Export"
-                        // label="[JSON]"
                         collection={collection}
                         query={pageContext.urlParsed.search}
                         data={props.data}
