@@ -53,9 +53,9 @@ const ShowCollections: Component<{
                         // If "Export" is deprecated, use "ExportArray" as default "Export"
                         label="Export"
                         // label="[JSON]"
-                        database={props.data.selectedDatabase}
                         collection={collection}
                         query={pageContext.urlParsed.search}
+                        data={props.data}
                         setData={props.setData}
                       />
                     </td>

@@ -3,13 +3,14 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import handleFetchError from '@/components/common/handleFetchError'
 import IconExport from '@/components/Icons/IconExport'
+import { HEADERS_JSON } from '@/utils/constants'
 
 const ExportButton: Component<{
   url: string
   label: string
-  database: string
   collection: string
   query: QueryParameter
+  data: DataDB
   setData: SetStoreFunction<any>
 }> = (props) => {
   return (
@@ -18,9 +19,10 @@ const ExportButton: Component<{
         method: 'POST',
         body: JSON.stringify({
           query: props.query,
-          database: props.database,
+          database: props.data.selectedDatabase,
           collection: props.collection
-        })
+        }),
+        headers: HEADERS_JSON(props.data.options)
       }),
       props.setData
     ).then(async (response) => {
