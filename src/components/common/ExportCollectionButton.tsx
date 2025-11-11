@@ -5,7 +5,7 @@ import handleFetchError from '@/components/common/handleFetchError'
 import IconExport from '@/components/Icons/IconExport'
 import { HEADERS_JSON } from '@/utils/constants'
 
-const ExportButton: Component<{
+const ExportCollectionButton: Component<{
   collection: string
   query: QueryParameter
   data: DataDB | DataCollection
@@ -47,4 +47,4 @@ const ExportButton: Component<{
   )
 }
 
-export default ExportButton
+export default ExportCollectionButton

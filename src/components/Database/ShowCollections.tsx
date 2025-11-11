@@ -2,7 +2,7 @@ import { For, Show, type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
-import ExportButton from '@/components/common/ExportButton'
+import ExportCollectionButton from '@/components/common/ExportCollectionButton'
 import ImportButton from '@/components/common/ImportButton'
 import handleFetchError from '@/components/common/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
@@ -35,7 +35,7 @@ const ShowCollections: Component<{
 
                   <Show when={!props.data.options.noExport}>
                     <td class="p-0.5">
-                      <ExportButton
+                      <ExportCollectionButton
                         collection={collection}
                         query={props.query!}
                         data={props.data}

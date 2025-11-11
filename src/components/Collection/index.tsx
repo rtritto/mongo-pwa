@@ -6,7 +6,7 @@ import { usePageContext } from 'vike-solid/usePageContext'
 
 import Alerts from '@/components/common/Alerts'
 import DeleteDialog from '@/components/common/DeleteDialog'
-import ExportButton from '@/components/common/ExportButton'
+import ExportCollectionButton from '@/components/common/ExportCollectionButton'
 import StatsTable from '@/components/common/StatsTable'
 import handleFetchError from '@/components/common/handleFetchError'
 import SearchDocuments from './SearchDocuments'
@@ -200,7 +200,7 @@ const CollectionPage: Component<DataCollection> = () => {
 
       <Show when={!data.options.noExport}>
         <td class="p-0.5">
-          <ExportButton
+          <ExportCollectionButton
             collection={data.selectedCollection}
             query={pageContext!.urlParsed.search as QueryParameter}
             data={data}
