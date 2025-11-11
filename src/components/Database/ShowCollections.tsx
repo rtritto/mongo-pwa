@@ -36,6 +36,8 @@ const ShowCollections: Component<{
                   <Show when={!props.data.options.noExport}>
                     <td class="p-0.5">
                       <ExportCollectionButton
+                        label="Export JSON"
+                        url="/api/collectionExport"
                         collection={collection}
                         query={props.query!}
                         data={props.data}

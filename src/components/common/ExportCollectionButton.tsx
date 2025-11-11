@@ -6,6 +6,8 @@ import IconExport from '@/components/Icons/IconExport'
 import { HEADERS_JSON } from '@/utils/constants'
 
 const ExportCollectionButton: Component<{
+  label: string
+  url: string
   collection: string
   query: QueryParameter
   data: DataDB | DataCollection
@@ -13,7 +15,7 @@ const ExportCollectionButton: Component<{
 }> = (props) => {
   return (
     <button class="btn btn-sm bg-yellow-600" onClick={() => handleFetchError(
-      fetch('/api/collectionExport', {
+      fetch(props.url, {
         method: 'POST',
         body: JSON.stringify({
           query: props.query,
@@ -42,7 +44,7 @@ const ExportCollectionButton: Component<{
     })}>
       <IconExport />
 
-      Export
+      {props.label}
     </button>
   )
 }

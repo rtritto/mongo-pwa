@@ -1886,6 +1886,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@json2csv/formatters@npm:^7.0.6":
+  version: 7.0.6
+  resolution: "@json2csv/formatters@npm:7.0.6"
+  checksum: 10c0/725d64c2ce874e330be8344df59b32a68854c61c79e5a9656a9a3863b0e0ec278cfff90acac99d8970cb0ea2f50be81e27bf9e6a1e4021b25ba62b540452a4aa
+  languageName: node
+  linkType: hard
+
+"@json2csv/plainjs@npm:^7.0.6":
+  version: 7.0.6
+  resolution: "@json2csv/plainjs@npm:7.0.6"
+  dependencies:
+    "@json2csv/formatters": "npm:^7.0.6"
+    "@streamparser/json": "npm:^0.0.20"
+  checksum: 10c0/46b8c581f24f6a738884bdf42552797413e3faf27460b6725879cc12d0bcc922be152fd36d2272b1d3cdb9055bdb41680bec90088b9babd4b0ef58fcfc907425
+  languageName: node
+  linkType: hard
+
 "@lezer/common@npm:^1.0.0, @lezer/common@npm:^1.1.0, @lezer/common@npm:^1.2.0, @lezer/common@npm:^1.3.0":
   version: 1.3.0
   resolution: "@lezer/common@npm:1.3.0"
@@ -2360,6 +2377,13 @@ __metadata:
   peerDependencies:
     solid-js: ^1.6.12
   checksum: 10c0/7472644f2543abf38f24e1773ff90599f3a719a20f59a0fb4178a90a483cb92803e0376e08329fffe3f21154e875504f525f9722140260ee070e3fa1187f74ac
+  languageName: node
+  linkType: hard
+
+"@streamparser/json@npm:^0.0.20":
+  version: 0.0.20
+  resolution: "@streamparser/json@npm:0.0.20"
+  checksum: 10c0/c6a630a30aec50431e598d3e6652dcfe3df8c6ec8bda5e6563f7df9b7308f269824e236fde48747324b3b0060393ba6e98fbb6a9ad4614a757ef9da170c84b44
   languageName: node
   linkType: hard
 
@@ -4526,6 +4550,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"flat@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "flat@npm:6.0.1"
+  bin:
+    flat: cli.js
+  checksum: 10c0/9dc0dbe6e2acc012512a53130d9ba1c82c1a596cdca91b23d11716348361c4a68928409bb4433c4493a17595c3efd0cab9f09e23dd3f9962a58af225c3efc23a
+  languageName: node
+  linkType: hard
+
 "flatted@npm:^3.2.9":
   version: 3.3.3
   resolution: "flatted@npm:3.3.3"
@@ -5968,6 +6001,7 @@ __metadata:
     "@codemirror/state": "npm:^6.5.2"
     "@codemirror/theme-one-dark": "npm:^6.1.3"
     "@codemirror/view": "npm:^6.38.6"
+    "@json2csv/plainjs": "npm:^7.0.6"
     "@lezer/highlight": "npm:^1.2.3"
     "@photonjs/hono": "npm:^0.1.6"
     "@solid-primitives/pagination": "npm:^0.5.0"
@@ -5980,6 +6014,7 @@ __metadata:
     eslint: "npm:^9.39.1"
     eslint-plugin-solid: "npm:^0.14.5"
     eslint-plugin-unicorn: "npm:^62.0.0"
+    flat: "npm:^6.0.1"
     hono: "npm:^4.10.5"
     mongodb: "npm:^6.20.0"
     mongodb-query-parser: "npm:^4.4.4"

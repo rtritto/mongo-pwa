@@ -201,6 +201,19 @@ const CollectionPage: Component<DataCollection> = () => {
       <Show when={!data.options.noExport}>
         <td class="p-0.5">
           <ExportCollectionButton
+            label="Export JSON"
+            url="/api/collectionExport"
+            collection={data.selectedCollection}
+            query={pageContext!.urlParsed.search as QueryParameter}
+            data={data}
+            setData={setData}
+          />
+        </td>
+
+        <td class="p-0.5">
+          <ExportCollectionButton
+            label="Export CSV"
+            url="/api/collectionExportCsv"
             collection={data.selectedCollection}
             query={pageContext!.urlParsed.search as QueryParameter}
             data={data}
