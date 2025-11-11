@@ -5,7 +5,10 @@ import { isValidCollectionName } from '@/utils/validationsClient'
 import { checkDatabase } from '@/utils/validationsServer'
 
 export default async function collectionCreate(c: Context) {
-  const { database, collection } = await c.req.json()
+  const { database, collection } = await c.req.json<{
+    database: string
+    collection: string
+  }>()
   isValidCollectionName(collection)
   await connectClient()
   checkDatabase(database)

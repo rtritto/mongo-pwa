@@ -4,7 +4,11 @@ import { connectClient } from '@/server/db'
 import { checkCollection, checkDatabase } from '@/utils/validationsServer'
 
 export default async function collectionRename(c: Context) {
-  const { database, collection, newCollection } = await c.req.json()
+  const { database, collection, newCollection } = await c.req.json<{
+    database: string
+    collection: string
+    newCollection: string
+  }>()
   checkDatabase(database)
   checkCollection(database, collection)
   await connectClient()

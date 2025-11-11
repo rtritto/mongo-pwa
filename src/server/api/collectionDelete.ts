@@ -8,7 +8,11 @@ export default async function collectionDelete(c: Context) {
   // TODO (?) remove checkOption
   checkOption('readOnly', true)
   checkOption('noDelete', true)
-  const { database, collection, query } = await c.req.json()
+  const { database, collection, query } = await c.req.json<{
+    database: string
+    collection: string
+    query: QueryParameter
+  }>()
   await connectClient()
   checkDatabase(database)
   checkCollection(database, collection)
