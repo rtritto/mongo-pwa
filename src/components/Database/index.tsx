@@ -1,5 +1,6 @@
 import { type Component, Show } from 'solid-js'
 import { useData } from 'vike-solid/useData'
+import { usePageContext } from 'vike-solid/usePageContext'
 
 import Alerts from '@/components/common/Alerts'
 import StatsTable from '@/components/common/StatsTable'
@@ -7,6 +8,11 @@ import ShowCollections from './ShowCollections'
 
 const DatabasePage: Component<DataDB> = () => {
   const [data, setData] = useData<DataDB>()
+
+  let pageContext
+  if (!data.options.noExport) {
+    pageContext = usePageContext()
+  }
 
   return (
     <div class="p-1">
@@ -17,7 +23,7 @@ const DatabasePage: Component<DataDB> = () => {
 
       <div class="divider m-1.5" />
 
-      <ShowCollections data={data} setData={setData} />
+      <ShowCollections query={pageContext?.urlParsed.search as QueryParameter} data={data} setData={setData} />
 
       {/* TODO GridFS Buckets grids.length && settings.gridFSEnabled */}
 

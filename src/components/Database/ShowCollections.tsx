@@ -1,6 +1,5 @@
 import { For, Show, type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
-import { usePageContext } from 'vike-solid/usePageContext'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportButton from '@/components/common/ExportButton'
@@ -11,10 +10,10 @@ import CreateCollection from './CreateCollection'
 import { HEADERS_JSON } from '@/utils/constants'
 
 const ShowCollections: Component<{
+  query?: QueryParameter
   data: DataDB
   setData: SetStoreFunction<DataDB>
 }> = (props) => {
-  const pageContext = usePageContext()
 
   return (
     <div class="border border-base-300 rounded-box my-2">
@@ -37,9 +36,8 @@ const ShowCollections: Component<{
                   <Show when={!props.data.options.noExport}>
                     <td class="p-0.5">
                       <ExportButton
-                        label="Export"
                         collection={collection}
-                        query={pageContext.urlParsed.search}
+                        query={props.query!}
                         data={props.data}
                         setData={props.setData}
                       />

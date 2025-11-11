@@ -6,10 +6,9 @@ import IconExport from '@/components/Icons/IconExport'
 import { HEADERS_JSON } from '@/utils/constants'
 
 const ExportButton: Component<{
-  label: string
   collection: string
   query: QueryParameter
-  data: DataDB
+  data: DataDB | DataCollection
   setData: SetStoreFunction<any>
 }> = (props) => {
   return (
@@ -43,7 +42,7 @@ const ExportButton: Component<{
     })}>
       <IconExport />
 
-      {props.label}
+      Export
     </button>
   )
 }
