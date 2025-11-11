@@ -5,7 +5,7 @@ import csv from '@/utils/csv'
 import { getQuery, getQueryOptions } from '@/utils/queries'
 import { checkCollection, checkDatabase } from '@/utils/validationsServer'
 
-export default async function collectionExportArray(c: Context) {
+export default async function collectionExportCsv(c: Context) {
   const { database, collection, query } = await c.req.json<{
     database: string
     collection: string
