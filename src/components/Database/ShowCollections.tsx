@@ -45,7 +45,7 @@ const ShowCollections: Component<{
                   </Show>
 
                   <td class="p-0.5">
-                    <ImportCollectionButton database={props.data.selectedDatabase} collection={collection} setData={props.setData} />
+                    <ImportCollectionButton collection={collection} data={props.data} setData={props.setData} />
                   </td>
 
                   <td class="p-0.5">

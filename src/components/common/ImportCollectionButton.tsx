@@ -7,6 +7,7 @@ import handleFetchError from './handleFetchError'
 const ImportCollectionButton: Component<{
   database: string
   collection: string
+  data: DataDB
   setData: SetStoreFunction<any>
 }> = (props) => {
   const onChange: JSX.ChangeEventHandlerUnion<HTMLInputElement, Event> = async (event) => {
@@ -24,7 +25,7 @@ const ImportCollectionButton: Component<{
 
     const formData = new FormData()
     formData.append('file', files[0])
-    formData.append('database', props.database)
+    formData.append('database', props.data.selectedDatabase)
     formData.append('collection', props.collection)
 
     const response = await handleFetchError(
