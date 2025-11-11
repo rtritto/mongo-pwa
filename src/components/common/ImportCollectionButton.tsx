@@ -47,7 +47,7 @@ const ImportCollectionButton: Component<{
       <label for={`file-input-${props.collection}`} class="btn btn-sm bg-yellow-600">
         <IconImport />
 
-        Import
+        Import JSON/CSV
       </label>
 
       <input
