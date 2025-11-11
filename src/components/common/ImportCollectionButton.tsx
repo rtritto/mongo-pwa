@@ -3,9 +3,9 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import IconImport from '@/components/Icons/IconImport'
 import handleFetchError from './handleFetchError'
+import { HEADERS_JSON } from '@/utils/constants'
 
 const ImportCollectionButton: Component<{
-  database: string
   collection: string
   data: DataDB
   setData: SetStoreFunction<any>
@@ -31,7 +31,8 @@ const ImportCollectionButton: Component<{
     const response = await handleFetchError(
       fetch('/api/collectionImport', {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: HEADERS_JSON(props.data.options)
       }),
       props.setData
     )
