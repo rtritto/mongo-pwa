@@ -4,7 +4,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 import IconImport from '@/components/Icons/IconImport'
 import handleFetchError from './handleFetchError'
 
-const ImportButton: Component<{
+const ImportCollectionButton: Component<{
   database: string
   collection: string
   setData: SetStoreFunction<any>
@@ -59,4 +59,4 @@ const ImportButton: Component<{
   )
 }
 
-export default ImportButton
+export default ImportCollectionButton

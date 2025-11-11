@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportCollectionButton from '@/components/common/ExportCollectionButton'
-import ImportButton from '@/components/common/ImportButton'
+import ImportCollectionButton from '@/components/common/ImportCollectionButton'
 import handleFetchError from '@/components/common/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import CreateCollection from './CreateCollection'
@@ -45,7 +45,7 @@ const ShowCollections: Component<{
                   </Show>
 
                   <td class="p-0.5">
-                    <ImportButton database={props.data.selectedDatabase} collection={collection} setData={props.setData} />
+                    <ImportCollectionButton database={props.data.selectedDatabase} collection={collection} setData={props.setData} />
                   </td>
 
                   <td class="p-0.5">
