@@ -7,7 +7,7 @@ import { HEADERS_JSON } from '@/utils/constants'
 
 const ImportCollectionButton: Component<{
   collection: string
-  data: DataDB
+  data: DataDB | DataCollection
   setData: SetStoreFunction<any>
 }> = (props) => {
   const onChange: JSX.ChangeEventHandlerUnion<HTMLInputElement, Event> = async (event) => {

@@ -7,6 +7,7 @@ import { usePageContext } from 'vike-solid/usePageContext'
 import Alerts from '@/components/common/Alerts'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportCollectionButton from '@/components/common/ExportCollectionButton'
+import ImportCollectionButton from '@/components/common/ImportCollectionButton'
 import StatsTable from '@/components/common/StatsTable'
 import handleFetchError from '@/components/common/handleFetchError'
 import SearchDocuments from './SearchDocuments'
@@ -221,6 +222,8 @@ const CollectionPage: Component<DataCollection> = () => {
           />
         </td>
       </Show>
+
+      <ImportCollectionButton collection={data.selectedCollection} data={data} setData={setData} />
 
       <div class="mb-2">
         <Show
