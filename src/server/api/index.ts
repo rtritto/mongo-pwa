@@ -1,3 +1,4 @@
+import collectionCompact from './collectionCompact'
 import collectionCreate from './collectionCreate'
 import collectionCreateIndex from './collectionCreateIndex'
 import collectionDelete from './collectionDelete'
@@ -14,6 +15,7 @@ import documentUpdate from './documentUpdate'
 import pageDocument from './pageDocument'
 
 export default {
+  collectionCompact,
   collectionCreate,
   collectionCreateIndex,
   collectionDelete,

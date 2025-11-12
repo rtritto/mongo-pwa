@@ -8,6 +8,7 @@ import Alerts from '@/components/common/Alerts'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportCollectionButton from '@/components/common/ExportCollectionButton'
 import ImportCollectionButton from '@/components/common/ImportCollectionButton'
+import CompactCollectionButton from './CompactCollectionButton'
 import StatsTable from '@/components/common/StatsTable'
 import handleFetchError from '@/components/common/handleFetchError'
 import SearchDocuments from './SearchDocuments'
@@ -224,6 +225,10 @@ const CollectionPage: Component<DataCollection> = () => {
       </Show>
 
       <ImportCollectionButton collection={data.selectedCollection} data={data} setData={setData} />
+
+      <Show when={!data.options.readOnly}>
+        <CompactCollectionButton collection={data.selectedCollection} data={data} setData={setData} />
+      </Show>
 
       <div class="mb-2">
         <Show
