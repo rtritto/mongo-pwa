@@ -54,8 +54,9 @@ const IndexTable: Component<{
 
                 <td>{bytesToSize(index.size)}</td>
 
-                {/* TODO implement logic of value */}
-                <td>{index.v}</td>
+                {'partialFilterExpression' in index
+                  ? <td><span>partialFilterExpression<pre>{JSON.stringify(index.partialFilterExpression, null, 2)}</pre></span></td>
+                  : <td />}
 
                 <Show when={!props.data.options.noDelete && !props.data.options.readOnly}>
                   <td>
