@@ -1,4 +1,4 @@
-import { For, type Component } from 'solid-js'
+import { For, Show, type Component } from 'solid-js'
 import { createStore, type SetStoreFunction } from 'solid-js/store'
 import { navigate } from 'vike/client/router'
 
@@ -28,7 +28,7 @@ const getInitialColumnsHeader = (columns: string[], query: QueryParameter) => {
 }
 
 /* Sort order: ascending (true) > descending (false) > none (null) > ascending (true) */
-const handleSortClick = (columnHeader: boolean | null) => {
+const getNextSort = (columnHeader: boolean | null) => {
   switch (columnHeader) {
     case null: {
       return true
@@ -55,6 +55,22 @@ const DocumentList: Component<{
 }> = (props) => {
   const [columnsHeader, setColumnsHeader] = createStore(getInitialColumnsHeader(props.data.columns, props.query))
 
+  const handleSortClick = async (column: string) => {
+    const newSort = getNextSort(columnsHeader[column])
+    const { sort } = props.query
+    const newSortQp = newSort === true ? column : (newSort === false ? `-${column}` : '')
+    // Remove existing sort for current column
+    let finalSortQp: string
+    if (sort) {
+      const cleanSortQp = removeColumnFromSortQp(sort, column)
+      finalSortQp = cleanSortQp ? `${cleanSortQp},${newSortQp}` : newSortQp
+    } else {
+      finalSortQp = newSortQp
+    }
+    setColumnsHeader(column, newSort)
+    await props.doQuery(props.data, null, finalSortQp)
+  }
+
   return (
     <table class="table table-zebra">
       <thead>
@@ -66,28 +82,26 @@ const DocumentList: Component<{
               <th title={`Sort by ${column}`}>
                 <ul class={`${columnsHeader[column] === null ? '' : 'menu '}px-1 py-0`}>
                   <li class="px-1">
-                    <details open={columnsHeader[column] === null}>
-                      <summary
-                        class="btn btn-sm btn-ghost px-1 py-0 mx-0"
-                        onClick={async () => {
-                          const newSort = handleSortClick(columnsHeader[column])
-                          const { sort } = props.query
-                          const newSortQp = newSort === true ? column : (newSort === false ? `-${column}` : '')
-                          // Remove existing sort for current column
-                          let finalSortQp: string
-                          if (sort) {
-                            const cleanSortQp = removeColumnFromSortQp(sort, column)
-                            finalSortQp = cleanSortQp ? `${cleanSortQp},${newSortQp}` : newSortQp
-                          } else {
-                            finalSortQp = newSortQp
-                          }
-                          setColumnsHeader(column, newSort)
-                          await props.doQuery(props.data, null, finalSortQp)
-                        }}
+                    <Show
+                      when={columnsHeader[column] === null}
+                      fallback={(
+                        <details open={columnsHeader[column]!}>
+                          <summary
+                            class="btn btn-sm btn-ghost w-full px-1 py-0 mx-0"
+                            onClick={async () => await handleSortClick(column)}
+                          >
+                            <b>{column}</b>
+                          </summary>
+                        </details>
+                      )}
+                    >
+                      <button
+                        class="btn btn-sm btn-ghost w-full px-1 py-0 mx-0"
+                        onClick={async () => await handleSortClick(column)}
                       >
                         <b>{column}</b>
-                      </summary>
-                    </details>
+                      </button>
+                    </Show>
                   </li>
                 </ul>
               </th>
