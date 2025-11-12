@@ -1,6 +1,6 @@
 import { createPagination } from '@solid-primitives/pagination'
 import { type Component, createEffect, createSignal, For, Show } from 'solid-js'
-import { reload } from 'vike/client/router'
+import { navigate, reload } from 'vike/client/router'
 import { useData } from 'vike-solid/useData'
 import { usePageContext } from 'vike-solid/usePageContext'
 
@@ -228,6 +228,40 @@ const CollectionPage: Component<DataCollection> = () => {
 
       <Show when={!data.options.readOnly}>
         <CompactCollectionButton collection={data.selectedCollection} data={data} setData={setData} />
+      </Show>
+
+      <Show when={!data.options.noDelete}>
+        <td class="p-0.5">
+          <DeleteDialog
+            title="Delete Collection"
+            message="Be careful! You are about to delete the collection (all documents will be deleted)"
+            value={data.selectedCollection}
+            label="Delete"
+            fullWidth
+            enableInput
+            handleDelete={() => handleFetchError(
+              fetch('/api/collectionDelete', {
+                method: 'POST',
+                headers: HEADERS_JSON(data.options),
+                body: JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection })
+              }),
+              setData,
+              (() => {
+                // Remove database from global database to update viewing databases
+                const indexToRemove = data.collections.indexOf(data.selectedCollection)
+                return {
+                  collections: [
+                    ...data.collections.slice(0, indexToRemove),
+                    ...data.collections.slice(indexToRemove + 1)
+                  ],
+                  success: `Collection "${data.selectedCollection}" deleted!`
+                }
+              })()
+            ).then(async () => {
+              await navigate(`/db/${data.selectedDatabase}`)
+            })}
+          />
+        </td>
       </Show>
 
       <div class="mb-2">
