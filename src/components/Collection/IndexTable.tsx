@@ -61,7 +61,7 @@ const IndexTable: Component<{
                 <Show when={!props.data.options.noDelete && !props.data.options.readOnly}>
                   <td>
                     <button
-                      class="btn btn-sm bg-red-700 py-0.5"
+                      class="btn btn-sm w-full bg-red-700 py-0.5"
                       onClick={() => handleFetchError(
                         fetch('/api/collectionDeleteIndex', {
                           method: 'POST',
