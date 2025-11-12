@@ -25,7 +25,10 @@ const MenuList: Component<{ data: DataLayout }> = (props) => {
         </Show>
 
         <details id="databases-details" ref={refDatabasesDetails}>
-          <Show when={props.data.selectedDatabase} fallback={<summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}>Databases</summary>}>
+          <Show
+            when={props.data.selectedDatabase}
+            fallback={<summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}>Databases</summary>}
+          >
             <summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}><b>{props.data.selectedDatabase}</b></summary>
           </Show>
 
