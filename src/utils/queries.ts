@@ -26,14 +26,17 @@ interface StageProject {
 type Stage = StageMatch | StageSort | StageLimit | StageSkip | StageFacet | StageProject
 type Pipeline = (MongoDocument | Stage)[]
 
-/** @param sort example: sort=field1:1,field2:0 */
+/** @param sort example: sort=field1,-field2 */
 export const getSort = (sort: string): Sort => {
   if (sort) {
     const outSort: Writeable<Sort> = {}
     const sorts = sort.split(',')
-    for (const qp in sorts) {
-      const [sortField, sortType] = qp.split(':')
-      outSort[sortField] = +sortType as SortDirection
+    for (const sortParam of sorts) {
+      if (sortParam[0] === '-') {
+        outSort[sortParam.slice(1)] = -1 as SortDirection
+      } else {
+        outSort[sortParam] = 1 as SortDirection
+      }
     }
     return outSort
   }

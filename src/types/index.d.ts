@@ -163,7 +163,7 @@ interface Params extends ParsedUrlQuery {
 
 interface QueryParameter extends ParsedUrlQuery {
   // mongodb
-  sort?: string
+  sort?: string  // sort by fields, e.g. name,-age
   projection?: string
   // custom
   page?: string

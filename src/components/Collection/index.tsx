@@ -5,6 +5,7 @@ import { useData } from 'vike-solid/useData'
 import { usePageContext } from 'vike-solid/usePageContext'
 
 import Alerts from '@/components/common/Alerts'
+import buildQuery from '@/components/common/buildQuery'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportCollectionButton from '@/components/common/ExportCollectionButton'
 import ImportCollectionButton from '@/components/common/ImportCollectionButton'
@@ -30,10 +31,7 @@ const docStringTemplate_Index = `{
 const CollectionPage: Component<DataCollection> = () => {
   const [data, setData] = useData<DataCollection>()
 
-  let pageContext
-  if (!data.options.noExport) {
-    pageContext = usePageContext()
-  }
+  const pageContext = usePageContext()
 
   //#region Pagination
   const [pages, setPages] = createSignal<number>(getLastPage(data.documentsPerPage, data.count))
@@ -46,25 +44,38 @@ const CollectionPage: Component<DataCollection> = () => {
     setPages(getLastPage(data.documentsPerPage, data.count))
   })
 
-  const doQuery = async (data: DataCollection, page: number) => {
+  const doQuery = async (data: DataCollection, page: number | null, sort = '') => {
     // TODO add Component with id back-to-top-anchor
     // goToTopPage
     // document.querySelector('#back-to-top-anchor')!.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
+    const query = {
+      ...data.search,
+      ...page && { page }
+    }
+    if (sort) {
+      query.sort = sort
+    } else {
+      delete query.sort
+    }
+    const newQuery = buildQuery(query)
+
     // Update route path (no reload)
-    globalThis.history.replaceState(null, '', `/db/${data.selectedDatabase}/${data.selectedCollection}?page=${page}`)
+    globalThis.history.replaceState(null, '', `/db/${data.selectedDatabase}/${data.selectedCollection}${newQuery ? `?${newQuery}` : ''}`)
 
     const res = await fetchWithRetries('/api/pageDocument', {
       method: 'POST',
       body: JSON.stringify({
         database: data.selectedDatabase,
         collection: data.selectedCollection,
-        ...data.search,
-        page
+        ...query
       }),
       headers: HEADERS_JSON(data.options)
     })
     const { count, columns, docs } = await res!.json()
+    if (page) {
+      setPage(page)
+    }
     setData('count', count)
     setData('columns', columns)
     setData('docs', docs)
@@ -81,8 +92,7 @@ const CollectionPage: Component<DataCollection> = () => {
                 class="btn btn-sm"
                 disabled={page() === paginationProps.page}
                 onClick={async () => {
-                  setPage(paginationProps.page!)
-                  await doQuery(data, page())
+                  await doQuery(data, paginationProps.page!, pageContext.urlParsed.search.sort)
                 }}
               >
                 {paginationProps.children}
@@ -191,7 +201,12 @@ const CollectionPage: Component<DataCollection> = () => {
       <PaginationBoxComponent />
 
       <div class="border border-base-300 rounded-box my-2 overflow-x-auto">
-        <DocumentList data={data} setData={setData} />
+        <DocumentList
+          query={pageContext.urlParsed.search as QueryParameter}
+          doQuery={doQuery}
+          data={data}
+          setData={setData}
+        />
       </div>
 
       <PaginationBoxComponent />
@@ -217,7 +232,7 @@ const CollectionPage: Component<DataCollection> = () => {
                   label="Export JSON"
                   url="/api/collectionExport"
                   collection={data.selectedCollection}
-                  query={pageContext!.urlParsed.search as QueryParameter}
+                  query={pageContext.urlParsed.search as QueryParameter}
                   data={data}
                   setData={setData}
                 />
@@ -228,7 +243,7 @@ const CollectionPage: Component<DataCollection> = () => {
                   label="Export CSV"
                   url="/api/collectionExportCsv"
                   collection={data.selectedCollection}
-                  query={pageContext!.urlParsed.search as QueryParameter}
+                  query={pageContext.urlParsed.search as QueryParameter}
                   data={data}
                   setData={setData}
                 />
