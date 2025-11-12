@@ -14,7 +14,7 @@ const ExportCollectionButton: Component<{
   setData: SetStoreFunction<any>
 }> = (props) => {
   return (
-    <button class="btn btn-sm bg-yellow-600" onClick={() => handleFetchError(
+    <button class="btn btn-sm w-full bg-yellow-600" onClick={() => handleFetchError(
       fetch(props.url, {
         method: 'POST',
         body: JSON.stringify({

@@ -44,7 +44,7 @@ const ImportCollectionButton: Component<{
 
   return (
     <form id="fileinfo" name="fileinfo" enctype="multipart/form-data" method="post">
-      <label for={`file-input-${props.collection}`} class="btn btn-sm bg-yellow-600">
+      <label for={`file-input-${props.collection}`} class="btn btn-sm w-full bg-yellow-600">
         <IconImport />
 
         Import JSON/CSV

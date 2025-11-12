@@ -200,69 +200,87 @@ const CollectionPage: Component<DataCollection> = () => {
         <RenameCollection data={data} setData={setData} />
       </Show>
 
-      <Show when={!data.options.noExport}>
-        <td class="p-0.5">
-          <ExportCollectionButton
-            label="Export JSON"
-            url="/api/collectionExport"
-            collection={data.selectedCollection}
-            query={pageContext!.urlParsed.search as QueryParameter}
-            data={data}
-            setData={setData}
-          />
-        </td>
+      <table class="table">
+        <thead>
+          <tr>
+            <td>
+              <h6><b>Operations</b></h6>
+            </td>
+          </tr>
+        </thead>
 
-        <td class="p-0.5">
-          <ExportCollectionButton
-            label="Export CSV"
-            url="/api/collectionExportCsv"
-            collection={data.selectedCollection}
-            query={pageContext!.urlParsed.search as QueryParameter}
-            data={data}
-            setData={setData}
-          />
-        </td>
-      </Show>
+        <tbody>
+          <tr>
+            <Show when={!data.options.noExport}>
+              <td class="p-0.5">
+                <ExportCollectionButton
+                  label="Export JSON"
+                  url="/api/collectionExport"
+                  collection={data.selectedCollection}
+                  query={pageContext!.urlParsed.search as QueryParameter}
+                  data={data}
+                  setData={setData}
+                />
+              </td>
 
-      <ImportCollectionButton collection={data.selectedCollection} data={data} setData={setData} />
+              <td class="p-0.5">
+                <ExportCollectionButton
+                  label="Export CSV"
+                  url="/api/collectionExportCsv"
+                  collection={data.selectedCollection}
+                  query={pageContext!.urlParsed.search as QueryParameter}
+                  data={data}
+                  setData={setData}
+                />
+              </td>
+            </Show>
 
-      <Show when={!data.options.readOnly}>
-        <CompactCollectionButton collection={data.selectedCollection} data={data} setData={setData} />
-      </Show>
+            <td class="p-0.5">
+              <ImportCollectionButton collection={data.selectedCollection} data={data} setData={setData} />
+            </td>
 
-      <Show when={!data.options.noDelete}>
-        <td class="p-0.5">
-          <DeleteDialog
-            title="Delete Collection"
-            message="Be careful! You are about to delete the collection (all documents will be deleted)"
-            value={data.selectedCollection}
-            label="Delete"
-            fullWidth
-            enableInput
-            handleDelete={() => handleFetchError(
-              fetch('/api/collectionDelete', {
-                method: 'POST',
-                headers: HEADERS_JSON(data.options),
-                body: JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection })
-              }),
-              setData,
-              (() => {
-                // Remove database from global database to update viewing databases
-                const indexToRemove = data.collections.indexOf(data.selectedCollection)
-                return {
-                  collections: [
-                    ...data.collections.slice(0, indexToRemove),
-                    ...data.collections.slice(indexToRemove + 1)
-                  ],
-                  success: `Collection "${data.selectedCollection}" deleted!`
-                }
-              })()
-            ).then(async () => {
-              await navigate(`/db/${data.selectedDatabase}`)
-            })}
-          />
-        </td>
-      </Show>
+            <Show when={!data.options.readOnly}>
+              <td class="p-0.5">
+                <CompactCollectionButton collection={data.selectedCollection} data={data} setData={setData} />
+              </td>
+            </Show>
+
+            <Show when={!data.options.noDelete}>
+              <td class="p-0.5">
+                <DeleteDialog
+                  title="Delete Collection"
+                  message="Be careful! You are about to delete the collection (all documents will be deleted)"
+                  value={data.selectedCollection}
+                  label="Delete"
+                  fullWidth
+                  enableInput
+                  handleDelete={() => handleFetchError(
+                    fetch('/api/collectionDelete', {
+                      method: 'POST',
+                      headers: HEADERS_JSON(data.options),
+                      body: JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection })
+                    }),
+                    setData,
+                    (() => {
+                      // Remove database from global database to update viewing databases
+                      const indexToRemove = data.collections.indexOf(data.selectedCollection)
+                      return {
+                        collections: [
+                          ...data.collections.slice(0, indexToRemove),
+                          ...data.collections.slice(indexToRemove + 1)
+                        ],
+                        success: `Collection "${data.selectedCollection}" deleted!`
+                      }
+                    })()
+                  ).then(async () => {
+                    await navigate(`/db/${data.selectedDatabase}`)
+                  })}
+                />
+              </td>
+            </Show>
+          </tr>
+        </tbody>
+      </table>
 
       <div class="mb-2">
         <Show
