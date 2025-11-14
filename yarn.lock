@@ -1286,15 +1286,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:^6.0.0, @codemirror/view@npm:^6.17.0, @codemirror/view@npm:^6.23.0, @codemirror/view@npm:^6.27.0, @codemirror/view@npm:^6.35.0, @codemirror/view@npm:^6.38.6":
-  version: 6.38.6
-  resolution: "@codemirror/view@npm:6.38.6"
+"@codemirror/view@npm:^6.0.0, @codemirror/view@npm:^6.17.0, @codemirror/view@npm:^6.23.0, @codemirror/view@npm:^6.27.0, @codemirror/view@npm:^6.35.0, @codemirror/view@npm:^6.38.7":
+  version: 6.38.7
+  resolution: "@codemirror/view@npm:6.38.7"
   dependencies:
     "@codemirror/state": "npm:^6.5.0"
     crelt: "npm:^1.0.6"
     style-mod: "npm:^4.1.0"
     w3c-keyname: "npm:^2.2.4"
-  checksum: 10c0/7faa6558a991faf8acb6a74dbe5e21b6e1a83f8ace7ec7b37e8250c4e1e9f152c40978588cf2d2609c8ad7126e05ce9cae052bf345232630c300d27ccfb87493
+  checksum: 10c0/48e237f790d4f9e173e2428f73809c4f147dff401e616e8155397ce17ab296a8c69b0267ce7a565b93a3e1c531f9573e3666069b8f113ac0b98da4997c7e7f9b
   languageName: node
   linkType: hard
 
@@ -2678,12 +2678,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^24.10.0":
-  version: 24.10.0
-  resolution: "@types/node@npm:24.10.0"
+"@types/node@npm:*, @types/node@npm:^24.10.1":
+  version: 24.10.1
+  resolution: "@types/node@npm:24.10.1"
   dependencies:
     undici-types: "npm:~7.16.0"
-  checksum: 10c0/f82ed7194e16f5590ef7afdc20c6d09068c76d50278b485ede8f0c5749683536e3064ffa8def8db76915196afb3724b854aa5723c64d6571b890b14492943b46
+  checksum: 10c0/d6bca7a78f550fbb376f236f92b405d676003a8a09a1b411f55920ef34286ee3ee51f566203920e835478784df52662b5b2af89159d9d319352e9ea21801c002
   languageName: node
   linkType: hard
 
@@ -3676,10 +3676,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^5.5.0":
-  version: 5.5.0
-  resolution: "daisyui@npm:5.5.0"
-  checksum: 10c0/b2ecfa946f5c4362b100cb4068b305086bbbe0ec33cfcfb53e77244965e4484d501b2bc3ab4c57829d2d70ea10a3cf778490bde1580c7e929a1fbcf0dd97830a
+"daisyui@npm:^5.5.4":
+  version: 5.5.4
+  resolution: "daisyui@npm:5.5.4"
+  checksum: 10c0/ce38f2ae550850abec7fd16468ca5d4e71b3ae9bba6576b54fddc61b89de954967d2d69c8d40f4ba1aed8a3cce361cca35bebe6eaff52040a80144fb5206c0eb
   languageName: node
   linkType: hard
 
@@ -4924,10 +4924,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^4.10.5":
-  version: 4.10.5
-  resolution: "hono@npm:4.10.5"
-  checksum: 10c0/c7a4b5f9c9ce50e15bca589f968f991181518a6f117579fd9558799540317743bb8f2a6a017b177f492bfaa68b0efae520a7693839ae7ad7a2bff952dbedecc0
+"hono@npm:^4.10.6":
+  version: 4.10.6
+  resolution: "hono@npm:4.10.6"
+  checksum: 10c0/a4df5a44378df640464a468cfa6364cc90fbf0a0d89c1bc8fa704c8450855b17baf7a5837655b1c00d6cf8dcecffc2ee702bf3f2c66dda243fe845b75b4b7f4b
   languageName: node
   linkType: hard
 
@@ -6000,22 +6000,22 @@ __metadata:
     "@codemirror/language": "npm:^6.11.3"
     "@codemirror/state": "npm:^6.5.2"
     "@codemirror/theme-one-dark": "npm:^6.1.3"
-    "@codemirror/view": "npm:^6.38.6"
+    "@codemirror/view": "npm:^6.38.7"
     "@json2csv/plainjs": "npm:^7.0.6"
     "@lezer/highlight": "npm:^1.2.3"
     "@photonjs/hono": "npm:^0.1.6"
     "@solid-primitives/pagination": "npm:^0.5.0"
     "@tailwindcss/vite": "npm:^4.1.17"
-    "@types/node": "npm:^24.10.0"
+    "@types/node": "npm:^24.10.1"
     "@yarnpkg/sdks": "npm:^3.2.3"
     bson: "npm:^6.10.4"
     codemirror: "npm:^6.0.2"
-    daisyui: "npm:^5.5.0"
+    daisyui: "npm:^5.5.4"
     eslint: "npm:^9.39.1"
     eslint-plugin-solid: "npm:^0.14.5"
     eslint-plugin-unicorn: "npm:^62.0.0"
     flat: "npm:^6.0.1"
-    hono: "npm:^4.10.5"
+    hono: "npm:^4.10.6"
     mongodb: "npm:^6.20.0"
     mongodb-query-parser: "npm:^4.4.4"
     solid-js: "npm:^1.9.10"
