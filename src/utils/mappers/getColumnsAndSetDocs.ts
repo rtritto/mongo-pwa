@@ -8,9 +8,19 @@ const getColumnsAndSetDocs = (docs: MongoDocument[]) => {
     docs[i].sub_type = docs[i]._id.sub_type as number | undefined
   }
 
+  const noDuplicateColumns = columns.flat().filter((value, index, arr) => arr.indexOf(value) === index)  // Remove duplicates
+  const underscoreFields = []
+  const regularFields = []
+  for (const col of noDuplicateColumns) {
+    if (col.startsWith('_')) {
+      underscoreFields.push(col)
+    } else {
+      regularFields.push(col)
+    }
+  }
+
   return {
-    columns: columns.flat()
-      .filter((value, index, arr) => arr.indexOf(value) === index),  // Remove duplicates
+    columns: [...underscoreFields.toSorted(), ...regularFields.toSorted()],
     docs
   }
 }
