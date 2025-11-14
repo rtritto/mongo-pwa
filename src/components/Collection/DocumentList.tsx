@@ -60,15 +60,19 @@ const DocumentList: Component<{
     const { sort } = props.query
     const newSortQp = newSort === true ? column : (newSort === false ? `-${column}` : '')
     // Remove existing sort for current column
-    let finalSortQp: string
+    const finalSortQp = []
     if (sort) {
       const cleanSortQp = removeColumnFromSortQp(sort, column)
-      finalSortQp = cleanSortQp ? `${cleanSortQp},${newSortQp}` : newSortQp
-    } else {
-      finalSortQp = newSortQp
+      if (cleanSortQp) {
+        finalSortQp.push(cleanSortQp)
+      }
     }
+    if (newSortQp) {
+      finalSortQp.push(newSortQp)
+    }
+
     setColumnsHeader(column, newSort)
-    await props.doQuery(props.data, null, finalSortQp)
+    await props.doQuery(props.data, null, finalSortQp.join(','))
   }
 
   return (

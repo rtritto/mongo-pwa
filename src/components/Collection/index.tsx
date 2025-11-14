@@ -1,5 +1,6 @@
 import { createPagination } from '@solid-primitives/pagination'
 import { type Component, createEffect, createSignal, For, Show } from 'solid-js'
+import { createStore } from 'solid-js/store'
 import { navigate, reload } from 'vike/client/router'
 import { useData } from 'vike-solid/useData'
 import { usePageContext } from 'vike-solid/usePageContext'
@@ -32,12 +33,13 @@ const CollectionPage: Component<DataCollection> = () => {
   const [data, setData] = useData<DataCollection>()
 
   const pageContext = usePageContext()
+  const [search, setSearch] = createStore<QueryParameter>(pageContext.urlParsed.search as QueryParameter)
 
   //#region Pagination
   const [pages, setPages] = createSignal<number>(getLastPage(data.documentsPerPage, data.count))
   const [paginationProps, page, setPage] = createPagination(() => ({
     pages: pages(),
-    initialPage: 'page' in data.search ? Number(data.search.page) : 1
+    initialPage: 'page' in search ? Number(search.page) : 1
   }))
 
   createEffect(() => {
@@ -50,18 +52,19 @@ const CollectionPage: Component<DataCollection> = () => {
     // document.querySelector('#back-to-top-anchor')!.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
     const query = {
-      ...data.search,
+      ...search,
       ...page && { page }
-    }
+    } as QueryParameter
     if (sort) {
       query.sort = sort
     } else {
       delete query.sort
     }
-    const newQuery = buildQuery(query)
+    setSearch(query)
 
     // Update route path (no reload)
-    globalThis.history.replaceState(null, '', `/db/${data.selectedDatabase}/${data.selectedCollection}${newQuery ? `?${newQuery}` : ''}`)
+    const newQuery = buildQuery(query)
+    globalThis.history.pushState(null, '', `/db/${data.selectedDatabase}/${data.selectedCollection}${newQuery ? `?${newQuery}` : ''}`)
 
     const res = await fetchWithRetries('/api/pageDocument', {
       method: 'POST',
@@ -92,7 +95,7 @@ const CollectionPage: Component<DataCollection> = () => {
                 class="btn btn-sm"
                 disabled={page() === paginationProps.page}
                 onClick={async () => {
-                  await doQuery(data, paginationProps.page!, pageContext.urlParsed.search.sort)
+                  await doQuery(data, paginationProps.page!, search.sort)
                 }}
               >
                 {paginationProps.children}
@@ -184,10 +187,10 @@ const CollectionPage: Component<DataCollection> = () => {
                 database: data.selectedDatabase,
                 collection: data.selectedCollection,
                 query: {
-                  key: data.search.key,
-                  value: data.search.value,
-                  type: data.search.type,
-                  query: data.search.query
+                  key: search.key,
+                  value: search.value,
+                  type: search.type,
+                  query: search.query
                 }
               })
             }),
@@ -202,7 +205,7 @@ const CollectionPage: Component<DataCollection> = () => {
 
       <div class="border border-base-300 rounded-box my-2 overflow-x-auto">
         <DocumentList
-          query={pageContext.urlParsed.search as QueryParameter}
+          query={search}
           doQuery={doQuery}
           data={data}
           setData={setData}
@@ -232,7 +235,7 @@ const CollectionPage: Component<DataCollection> = () => {
                   label="Export JSON"
                   url="/api/collectionExport"
                   collection={data.selectedCollection}
-                  query={pageContext.urlParsed.search as QueryParameter}
+                  query={search}
                   data={data}
                   setData={setData}
                 />
@@ -243,7 +246,7 @@ const CollectionPage: Component<DataCollection> = () => {
                   label="Export CSV"
                   url="/api/collectionExportCsv"
                   collection={data.selectedCollection}
-                  query={pageContext.urlParsed.search as QueryParameter}
+                  query={search}
                   data={data}
                   setData={setData}
                 />

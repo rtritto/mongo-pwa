@@ -30,7 +30,6 @@ type DataCollection = Omit<DataDB, 'stats' | 'selectedCollection'> & {
 
   docs: Record<string, any>[]
   columns: string[]
-  search: QueryParameter
   count: number
   documentsPerPage: number
   stats?: CollectionStats
