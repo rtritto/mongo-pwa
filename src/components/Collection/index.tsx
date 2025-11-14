@@ -48,10 +48,10 @@ const CollectionPage: Component<DataCollection> = () => {
     setPages(getLastPage(data.documentsPerPage, data.count))
   })
 
-  const handleSortClick = (column: string): string => {
-    const newSort = getNextSort(columnsHeader[column])
+  const handleSortClick = (column: string): { newSort: string; nextSort: boolean | null } => {
+    const nextSort = getNextSort(columnsHeader[column])
     const { sort } = pageContext.urlParsed.search
-    const newSortQp = newSort === true ? column : (newSort === false ? `-${column}` : '')
+    const newSortQp = nextSort === true ? column : (nextSort === false ? `-${column}` : '')
     // Remove existing sort for current column
     const finalSortQp = []
     if (sort) {
@@ -64,23 +64,32 @@ const CollectionPage: Component<DataCollection> = () => {
       finalSortQp.push(newSortQp)
     }
 
-    setColumnsHeader(column, newSort)
-    return finalSortQp.join(',')
+    return {
+      newSort: finalSortQp.join(','),
+      nextSort
+    }
   }
 
   const doQuery = async ({ page, sort, column, isBackForwardNavigation = false }: DoQueryParams) => {
     // TODO add Component with id back-to-top-anchor
     // goToTopPage
     // document.querySelector('#back-to-top-anchor')!.scrollIntoView({ behavior: 'smooth', block: 'center' })
-
+    let nextSort: boolean | null
     const query = {
       ...pageContext.urlParsed.search,
       ...page && { page }
     } as QueryParameter
     if (sort || column) {
-      query.sort = sort || handleSortClick(column!)
+      if (sort) {
+        query.sort = sort
+      } else {
+        const newNextSorts = handleSortClick(column!)
+        query.sort = newNextSorts.newSort
+        nextSort = newNextSorts.nextSort
+      }
       if (!query.sort) {
-        // handleSortClick results is empty
+        // newNextSorts.nextSort results is empty,
+        // delete here to be more solid
         delete query.sort
       }
     } else {
@@ -103,6 +112,12 @@ const CollectionPage: Component<DataCollection> = () => {
     setData('count', count)
     setData('columns', columns)
     setData('docs', docs)
+    if (page && column) {
+      setColumnsHeader(column, nextSort!)
+    } else {
+      // When navigating to a new page, columns could be different, so reset columns in Header
+      setColumnsHeader(getInitialColumnsHeader(columns, query))
+    }
 
     if (!isBackForwardNavigation) {
       // Update route path (no reload)
