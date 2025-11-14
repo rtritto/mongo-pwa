@@ -42,7 +42,7 @@ const getNextSort = (columnHeader: boolean | null) => {
 
 const removeColumnFromSortQp = (sortQp: string, column: string) => {
   return sortQp.split(',').filter((col) => {
-    const cleanCol = col.replace(/^-/, '')
+    const cleanCol = col.replace(/^\-/, '')
     return cleanCol !== column
   }).join(',')
 }
