@@ -92,9 +92,9 @@ const JsonNode: Component<{
   // (?) TODO remove " "
   const collapsedDisplay = () => {
     if (isArray) {
-      return open() ? '[' : `[ ${props.value.length} ]`
+      return open() ? '[' : `[ ${props.value.length} ]${props.isLast ? '' : ','}`
     }
-    return open() ? '{' : '{ … }'
+    return open() ? '{' : `{ … }${props.isLast ? '' : ','}`
   }
 
   return (
@@ -142,7 +142,7 @@ const JsonNode: Component<{
                     value={item}
                     level={props.level + 1}
                     isObjectItem={false}
-                    isLast={i() === displayedArrayElements().length - 1 && !hasMoreElements}
+                    isLast={i() === displayedArrayElements().length - 1}
                   />
                 )}
               </For>
