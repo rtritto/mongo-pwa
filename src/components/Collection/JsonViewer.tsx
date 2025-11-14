@@ -157,9 +157,7 @@ const JsonNode: Component<{
                       setShowAllArrayElements(!showAllArrayElements())
                     }}
                   >
-                    <div>
-                      {`${showAllArrayElements() ? '-' : '+'}${props.value.length - MAX_ARRAY_ELEMENTS}`}
-                    </div>
+                    {showAllArrayElements() ? '-' : '+'}{props.value.length - MAX_ARRAY_ELEMENTS}
                   </button>
                 </div>
               </Show>
