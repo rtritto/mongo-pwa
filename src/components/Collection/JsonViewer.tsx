@@ -1,7 +1,9 @@
 import { type Component, createSignal, For, Match, Show, Switch, untrack } from 'solid-js'
 
+// TODO convert as env variables
 // 36 is the max length of a UUID string
 const MAX_LEN = 36
+const MAX_ARRAY_ELEMENTS = 5
 
 const RenderLongText: Component<{ text: string }> = (props) => {
   // On click expand/collapse long text
@@ -57,10 +59,22 @@ const JsonNode: Component<{
   isLast: boolean
 }> = (props) => {
   const [open, setOpen] = createSignal(untrack(() => props.level < 1))
+  const [showAllArrayElements, setShowAllArrayElements] = createSignal(false)
 
   const isArray = Array.isArray(untrack(() => props.value))
   const isObject = untrack(() => props.value?.constructor.name === 'Object')
   const isExpandableNode = isArray || isObject
+
+  // Check if array has too many elements
+  const hasMoreElements = isArray && props.value.length > MAX_ARRAY_ELEMENTS
+
+  const displayedArrayElements = () => {
+    if (!isArray) return []
+    if (showAllArrayElements() || props.value.length <= MAX_ARRAY_ELEMENTS) {
+      return props.value
+    }
+    return props.value.slice(0, MAX_ARRAY_ELEMENTS)
+  }
 
   const displayValue = () => {
     if (typeof props.value === 'number')
@@ -72,6 +86,15 @@ const JsonNode: Component<{
     if (props.value === null)
       return <span class="text-gray-400">null</span>
     return props.value
+  }
+
+  // Show array length in collapsed state
+  // (?) TODO remove " "
+  const collapsedDisplay = () => {
+    if (isArray) {
+      return open() ? '[' : `[ ${props.value.length} ]`
+    }
+    return open() ? '{' : '{ … }'
   }
 
   return (
@@ -104,25 +127,42 @@ const JsonNode: Component<{
             <span class="text-gray-400">{': '}</span>
           </Show>
 
-          <span class="text-gray-500">
-            {isArray ? (open() ? '[' : '[ … ]') : (open() ? '{' : '{ … }')}
+          <span class="text-gray-500 hover:text-gray-400">
+            {collapsedDisplay()}
           </span>
         </span>
 
         <Show when={open()}>
           <div class="ml-1 border-l border-gray-600 pl-2 mt-1">
             <Show when={isArray}>
-              <For each={props.value}>
+              <For each={displayedArrayElements()}>
                 {(item, i) => (
                   <JsonNode
                     keyName={null}
                     value={item}
                     level={props.level + 1}
                     isObjectItem={false}
-                    isLast={i() === props.value.length - 1}
+                    isLast={i() === displayedArrayElements().length - 1 && !hasMoreElements}
                   />
                 )}
               </For>
+
+              {/* Show more/less button for large arrays */}
+              <Show when={hasMoreElements}>
+                <div class="ml-2">
+                  <button
+                    class="text-blue-400 hover:text-blue-300 text-xs"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setShowAllArrayElements(!showAllArrayElements())
+                    }}
+                  >
+                    <div>
+                      {`${showAllArrayElements() ? '-' : '+'}${props.value.length - MAX_ARRAY_ELEMENTS}`}
+                    </div>
+                  </button>
+                </div>
+              </Show>
             </Show>
 
             <Show when={isObject}>
