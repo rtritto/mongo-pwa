@@ -80,14 +80,14 @@ const DocumentList: Component<{
           <For each={props.data.columns}>
             {(column) => (
               <th title={`Sort by ${column}`}>
-                <ul class={`${columnsHeader[column] === null ? '' : 'menu '}px-1 py-0`}>
-                  <li class="px-1">
+                <ul class={columnsHeader[column] === null ? '' : 'menu'}>
+                  <li>
                     <Show
                       when={columnsHeader[column] === null}
                       fallback={(
                         <details open={columnsHeader[column]!}>
                           <summary
-                            class="btn btn-sm btn-ghost w-full px-1 py-0 mx-0"
+                            class="btn btn-sm btn-ghost w-full"
                             onClick={async () => await handleSortClick(column)}
                           >
                             <b>{column}</b>
@@ -96,7 +96,7 @@ const DocumentList: Component<{
                       )}
                     >
                       <button
-                        class="btn btn-sm btn-ghost w-full px-1 py-0 mx-0"
+                        class="btn btn-sm btn-ghost w-full"
                         onClick={async () => await handleSortClick(column)}
                       >
                         <b>{column}</b>
