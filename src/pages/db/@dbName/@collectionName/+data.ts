@@ -42,7 +42,6 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     docs: JSON.parse(JSON.stringify(docs)),
     // Generate an array of columns used by all documents visible on this page
     columns,
-    search,
     // Pagination
     count,
     documentsPerPage: config.options.documentsPerPage

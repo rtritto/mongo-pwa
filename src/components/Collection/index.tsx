@@ -1,10 +1,12 @@
 import { createPagination } from '@solid-primitives/pagination'
-import { type Component, createEffect, createSignal, For, Show } from 'solid-js'
+import { type Component, createEffect, createSignal, For, onMount, Show } from 'solid-js'
+import { createStore } from 'solid-js/store'
 import { navigate, reload } from 'vike/client/router'
 import { useData } from 'vike-solid/useData'
 import { usePageContext } from 'vike-solid/usePageContext'
 
 import Alerts from '@/components/common/Alerts'
+import buildQuery from '@/components/common/buildQuery'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportCollectionButton from '@/components/common/ExportCollectionButton'
 import ImportCollectionButton from '@/components/common/ImportCollectionButton'
@@ -16,6 +18,7 @@ import DocumentList from './DocumentList'
 import IndexTable from './IndexTable'
 import SaveDialog from './SaveDialog'
 import RenameCollection from './RenameCollection'
+import { getInitialColumnsHeader, getNextSort, removeColumnFromSortQp } from './functions/functionsSort'
 import { HEADERS_JSON } from '@/utils/constants'
 import fetchWithRetries from '@/utils/fetchWithRetries'
 import { getLastPage } from '@/utils/queries'
@@ -28,47 +31,119 @@ const docStringTemplate_Index = `{
 }`
 
 const CollectionPage: Component<DataCollection> = () => {
-  const [data, setData] = useData<DataCollection>()
-
-  let pageContext
-  if (!data.options.noExport) {
-    pageContext = usePageContext()
+  const pageContext = usePageContext() as ReturnType<typeof usePageContext> & {
+    urlParsed: { search: QueryParameter }
   }
+  const [data, setData] = useData<DataCollection>()
+  const [columnsHeader, setColumnsHeader] = createStore<ColumnsHeader>(getInitialColumnsHeader(data.columns, pageContext.urlParsed.search))
 
   //#region Pagination
   const [pages, setPages] = createSignal<number>(getLastPage(data.documentsPerPage, data.count))
   const [paginationProps, page, setPage] = createPagination(() => ({
     pages: pages(),
-    initialPage: 'page' in data.search ? Number(data.search.page) : 1
+    initialPage: 'page' in pageContext.urlParsed.search ? Number(pageContext.urlParsed.search.page) : 1
   }))
 
   createEffect(() => {
     setPages(getLastPage(data.documentsPerPage, data.count))
   })
 
-  const doQuery = async (data: DataCollection, page: number) => {
+  const handleSortClick = (column: string): { newSort: string; nextSort: boolean | null } => {
+    const nextSort = getNextSort(columnsHeader[column])
+    const { sort } = pageContext.urlParsed.search
+    const newSortQp = nextSort === true ? column : (nextSort === false ? `-${column}` : '')
+    // Remove existing sort for current column
+    const finalSortQp = []
+    if (sort) {
+      const cleanSortQp = removeColumnFromSortQp(sort, column)
+      if (cleanSortQp) {
+        finalSortQp.push(cleanSortQp)
+      }
+    }
+    if (newSortQp) {
+      finalSortQp.push(newSortQp)
+    }
+
+    return {
+      newSort: finalSortQp.join(','),
+      nextSort
+    }
+  }
+
+  const doQuery = async ({ page, sort, column, isBackForwardNavigation = false }: DoQueryParams) => {
     // TODO add Component with id back-to-top-anchor
     // goToTopPage
     // document.querySelector('#back-to-top-anchor')!.scrollIntoView({ behavior: 'smooth', block: 'center' })
-
-    // Update route path (no reload)
-    globalThis.history.replaceState(null, '', `/db/${data.selectedDatabase}/${data.selectedCollection}?page=${page}`)
+    let nextSort: boolean | null
+    const query = {
+      ...pageContext.urlParsed.search,
+      ...page && { page }
+    } as QueryParameter
+    if (sort || column) {
+      if (sort) {
+        query.sort = sort
+      } else {
+        const newNextSorts = handleSortClick(column!)
+        query.sort = newNextSorts.newSort
+        nextSort = newNextSorts.nextSort
+      }
+      if (!query.sort) {
+        // newNextSorts.nextSort results is empty,
+        // delete here to be more solid
+        delete query.sort
+      }
+    } else {
+      delete query.sort
+    }
 
     const res = await fetchWithRetries('/api/pageDocument', {
       method: 'POST',
       body: JSON.stringify({
         database: data.selectedDatabase,
         collection: data.selectedCollection,
-        ...data.search,
-        page
+        ...query
       }),
       headers: HEADERS_JSON(data.options)
     })
     const { count, columns, docs } = await res!.json()
+    if (page) {
+      setPage(page)
+    }
     setData('count', count)
     setData('columns', columns)
     setData('docs', docs)
+    if (page && column) {
+      setColumnsHeader(column, nextSort!)
+    } else {
+      // When navigating to a new page, columns could be different, so reset columns in Header
+      setColumnsHeader(getInitialColumnsHeader(columns, query))
+    }
+
+    if (!isBackForwardNavigation) {
+      // Update route path (no reload)
+      const newQuery = buildQuery(query)
+      const newUrl = `/db/${data.selectedDatabase}/${data.selectedCollection}${newQuery ? `?${newQuery}` : ''}`
+      await navigate(newUrl, { pageContext: { search: query } })
+    }
   }
+
+  onMount(() => {
+    // Navigation triggered by our history.pushState() call
+    globalThis.addEventListener('popstate', async () => {
+      // Only handle navigation triggered (added by navigate function
+      // to history like pushState that uses
+      // globalThis.history.state.triggeredBy by user) by vike
+      if (globalThis.history.state.triggeredBy === 'vike') {
+        const urlParams = new URLSearchParams(globalThis.location.search)
+        // Implement back- and forward navigation
+        await doQuery({
+          ...urlParams.has('page') && { page: Number(urlParams.get('page')) },
+          sort: urlParams.get('sort'),
+          isBackForwardNavigation: true
+        })
+      }
+    })
+  })
 
   const PaginationBoxComponent: Component = () => (
     <Show when={pages() !== 1}>
@@ -81,8 +156,10 @@ const CollectionPage: Component<DataCollection> = () => {
                 class="btn btn-sm"
                 disabled={page() === paginationProps.page}
                 onClick={async () => {
-                  setPage(paginationProps.page!)
-                  await doQuery(data, page())
+                  await doQuery({
+                    page: paginationProps.page!,
+                    sort: pageContext.urlParsed.search.sort
+                  })
                 }}
               >
                 {paginationProps.children}
@@ -174,10 +251,10 @@ const CollectionPage: Component<DataCollection> = () => {
                 database: data.selectedDatabase,
                 collection: data.selectedCollection,
                 query: {
-                  key: data.search.key,
-                  value: data.search.value,
-                  type: data.search.type,
-                  query: data.search.query
+                  key: pageContext.urlParsed.search.key,
+                  value: pageContext.urlParsed.search.value,
+                  type: pageContext.urlParsed.search.type,
+                  query: pageContext.urlParsed.search.query
                 }
               })
             }),
@@ -191,7 +268,12 @@ const CollectionPage: Component<DataCollection> = () => {
       <PaginationBoxComponent />
 
       <div class="border border-base-300 rounded-box my-2 overflow-x-auto">
-        <DocumentList data={data} setData={setData} />
+        <DocumentList
+          columnsHeader={columnsHeader}
+          doQuery={doQuery}
+          data={data}
+          setData={setData}
+        />
       </div>
 
       <PaginationBoxComponent />
@@ -217,7 +299,7 @@ const CollectionPage: Component<DataCollection> = () => {
                   label="Export JSON"
                   url="/api/collectionExport"
                   collection={data.selectedCollection}
-                  query={pageContext!.urlParsed.search as QueryParameter}
+                  query={pageContext.urlParsed.search}
                   data={data}
                   setData={setData}
                 />
@@ -228,7 +310,7 @@ const CollectionPage: Component<DataCollection> = () => {
                   label="Export CSV"
                   url="/api/collectionExportCsv"
                   collection={data.selectedCollection}
-                  query={pageContext!.urlParsed.search as QueryParameter}
+                  query={pageContext.urlParsed.search}
                   data={data}
                   setData={setData}
                 />

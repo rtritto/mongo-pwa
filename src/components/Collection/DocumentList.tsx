@@ -1,4 +1,4 @@
-import { For, type Component } from 'solid-js'
+import { For, Show, type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 import { navigate } from 'vike/client/router'
 
@@ -6,6 +6,8 @@ import DeleteDocument from './DeleteDocument'
 import JsonViewer from './JsonViewer'
 
 const DocumentList: Component<{
+  columnsHeader: ColumnsHeader
+  doQuery: (doQueryParams: DoQueryParams) => Promise<void>
   data: DataCollection
   setData: SetStoreFunction<any>
 }> = (props) => {
@@ -14,9 +16,38 @@ const DocumentList: Component<{
       <thead>
         <tr>
           <th />
+
           <For each={props.data.columns}>
             {(column) => (
-              <th>{column}</th>
+              <th title={`Sort by ${column}`}>
+                <Show
+                  when={props.columnsHeader[column] === null}
+                  fallback={(
+                    <ul class="menu p-0 w-full">
+                      <li>
+                        <details open={props.columnsHeader[column]!} class="w-full">
+                          <summary
+                            class="btn btn-sm btn-ghost w-full"
+                            onClick={async (element) => {
+                              await props.doQuery({ column })
+                              element.target.parentElement!.removeAttribute('open')
+                            }}
+                          >
+                            <b>{column}</b>
+                          </summary>
+                        </details>
+                      </li>
+                    </ul>
+                  )}
+                >
+                  <button
+                    class="btn btn-sm btn-ghost w-full"
+                    onClick={async () => await props.doQuery({ column })}
+                  >
+                    <b>{column}</b>
+                  </button>
+                </Show>
+              </th>
             )}
           </For>
         </tr>
