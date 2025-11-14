@@ -66,7 +66,7 @@ const JsonNode: Component<{
   const isExpandableNode = isArray || isObject
 
   // Check if array has too many elements
-  const hasMoreElements = isArray && props.value.length > MAX_ARRAY_ELEMENTS
+  const hasMoreElements = untrack(() => isArray && props.value.length > MAX_ARRAY_ELEMENTS)
 
   const displayedArrayElements = () => {
     if (!isArray) return []
