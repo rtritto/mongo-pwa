@@ -1,80 +1,16 @@
 import { For, Show, type Component } from 'solid-js'
-import { createStore, type SetStoreFunction } from 'solid-js/store'
+import type { SetStoreFunction } from 'solid-js/store'
 import { navigate } from 'vike/client/router'
 
 import DeleteDocument from './DeleteDocument'
 import JsonViewer from './JsonViewer'
 
-/* Sort initial order: ascending (true) | descending (false) | none (null) */
-const getInitialColumnsHeader = (columns: string[], query: QueryParameter) => {
-  const header: { [key: string]: boolean | null } = {}
-
-  for (const column of columns) {
-    header[column] = null
-  }
-
-  if (query.sort) {
-    const splittedSort = query.sort.split(',')
-    for (const sortParam of splittedSort) {
-      if (sortParam[0] === '-') {
-        header[sortParam.slice(1)] = false
-      } else {
-        header[sortParam] = true
-      }
-    }
-  }
-
-  return header
-}
-
-/* Sort order: ascending (true) > descending (false) > none (null) > ascending (true) */
-const getNextSort = (columnHeader: boolean | null) => {
-  switch (columnHeader) {
-    case null: {
-      return true
-    }
-    case true: {
-      return false
-    }
-  }
-  return null
-}
-
-const removeColumnFromSortQp = (sortQp: string, column: string) => {
-  return sortQp.split(',').filter((col) => {
-    const cleanCol = col.replace(/^\-/, '')
-    return cleanCol !== column
-  }).join(',')
-}
-
 const DocumentList: Component<{
-  query: QueryParameter
-  doQuery: (data: DataCollection, page: number | null, sort: string) => Promise<void>
+  columnsHeader: ColumnsHeader
+  doQuery: (doQueryParams: DoQueryParams) => Promise<void>
   data: DataCollection
   setData: SetStoreFunction<any>
 }> = (props) => {
-  const [columnsHeader, setColumnsHeader] = createStore(getInitialColumnsHeader(props.data.columns, props.query))
-
-  const handleSortClick = async (column: string) => {
-    const newSort = getNextSort(columnsHeader[column])
-    const { sort } = props.query
-    const newSortQp = newSort === true ? column : (newSort === false ? `-${column}` : '')
-    // Remove existing sort for current column
-    const finalSortQp = []
-    if (sort) {
-      const cleanSortQp = removeColumnFromSortQp(sort, column)
-      if (cleanSortQp) {
-        finalSortQp.push(cleanSortQp)
-      }
-    }
-    if (newSortQp) {
-      finalSortQp.push(newSortQp)
-    }
-
-    setColumnsHeader(column, newSort)
-    await props.doQuery(props.data, null, finalSortQp.join(','))
-  }
-
   return (
     <table class="table table-zebra">
       <thead>
@@ -85,15 +21,15 @@ const DocumentList: Component<{
             {(column) => (
               <th title={`Sort by ${column}`}>
                 <Show
-                  when={columnsHeader[column] === null}
+                  when={props.columnsHeader[column] === null}
                   fallback={(
                     <ul class="menu p-0 w-full">
                       <li>
-                        <details open={columnsHeader[column]!} class="w-full">
+                        <details open={props.columnsHeader[column]!} class="w-full">
                           <summary
                             class="btn btn-sm btn-ghost w-full"
                             onClick={async (element) => {
-                              await handleSortClick(column)
+                              await props.doQuery({ column })
                               element.target.parentElement!.removeAttribute('open')
                             }}
                           >
@@ -106,7 +42,7 @@ const DocumentList: Component<{
                 >
                   <button
                     class="btn btn-sm btn-ghost w-full"
-                    onClick={async () => await handleSortClick(column)}
+                    onClick={async () => await props.doQuery({ column })}
                   >
                     <b>{column}</b>
                   </button>
