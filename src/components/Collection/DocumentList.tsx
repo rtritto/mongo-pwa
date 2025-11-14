@@ -83,9 +83,9 @@ const DocumentList: Component<{
                 <Show
                   when={columnsHeader[column] === null}
                   fallback={(
-                    <ul class="menu p-0">
+                    <ul class="menu p-0 w-full">
                       <li>
-                        <details open={columnsHeader[column]!}>
+                        <details open={columnsHeader[column]!} class="w-full">
                           <summary
                             class="btn btn-sm btn-ghost w-full"
                             onClick={async (element) => {
