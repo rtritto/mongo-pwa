@@ -80,30 +80,33 @@ const DocumentList: Component<{
           <For each={props.data.columns}>
             {(column) => (
               <th title={`Sort by ${column}`}>
-                <ul class={columnsHeader[column] === null ? '' : 'menu'}>
-                  <li>
-                    <Show
-                      when={columnsHeader[column] === null}
-                      fallback={(
+                <Show
+                  when={columnsHeader[column] === null}
+                  fallback={(
+                    <ul class="menu p-0">
+                      <li>
                         <details open={columnsHeader[column]!}>
                           <summary
                             class="btn btn-sm btn-ghost w-full"
-                            onClick={async () => await handleSortClick(column)}
+                            onClick={async (element) => {
+                              await handleSortClick(column)
+                              element.target.parentElement!.removeAttribute('open')
+                            }}
                           >
                             <b>{column}</b>
                           </summary>
                         </details>
-                      )}
-                    >
-                      <button
-                        class="btn btn-sm btn-ghost w-full"
-                        onClick={async () => await handleSortClick(column)}
-                      >
-                        <b>{column}</b>
-                      </button>
-                    </Show>
-                  </li>
-                </ul>
+                      </li>
+                    </ul>
+                  )}
+                >
+                  <button
+                    class="btn btn-sm btn-ghost w-full"
+                    onClick={async () => await handleSortClick(column)}
+                  >
+                    <b>{column}</b>
+                  </button>
+                </Show>
               </th>
             )}
           </For>
