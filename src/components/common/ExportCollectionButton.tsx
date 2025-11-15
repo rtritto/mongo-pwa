@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
-import handleFetchError from '@/components/common/handleFetchError'
+import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconExport from '@/components/Icons/IconExport'
 import { HEADERS_JSON } from '@/utils/constants'
 

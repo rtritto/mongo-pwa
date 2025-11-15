@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 import { navigate, reload } from 'vike/client/router'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
-import handleFetchError from '@/components/common/handleFetchError'
+import handleFetchError from '@/components/common/functions/handleFetchError'
 import { HEADERS_JSON } from '@/utils/constants'
 
 const DeleteDocument: Component<{

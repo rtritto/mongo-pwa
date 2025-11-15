@@ -2,7 +2,7 @@ import type { Component, JSX } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import IconImport from '@/components/Icons/IconImport'
-import handleFetchError from './handleFetchError'
+import handleFetchError from './functions/handleFetchError'
 import { HEADERS_JSON } from '@/utils/constants'
 
 const ImportCollectionButton: Component<{

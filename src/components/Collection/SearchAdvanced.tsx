@@ -1,7 +1,7 @@
 import { createSignal, type Component } from 'solid-js'
 import { navigate } from 'vike/client/router'
 
-import createCodeMirror from '@/components/common/createCodeMirror'
+import createCodeMirror from '@/components/common/functions/createCodeMirror'
 import IconSearch from '@/components/Icons/IconSearch'
 import { toSafeBSON } from '@/utils/bson'
 

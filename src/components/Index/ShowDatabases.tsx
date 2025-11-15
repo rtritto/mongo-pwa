@@ -2,7 +2,7 @@ import { type Component, For, Show } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
-import handleFetchError from '@/components/common/handleFetchError'
+import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import CreateDatabase from './CreateDatabase'
 import { HEADERS_JSON } from '@/utils/constants'

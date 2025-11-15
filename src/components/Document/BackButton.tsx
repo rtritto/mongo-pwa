@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 import { navigate } from 'vike/client/router'
 
 import IconBack from '@/components/Icons/IconBack'
-import type { CustomEditorView } from '@/components/common/createCodeMirror'
+import type { CustomEditorView } from '@/components/common/functions/createCodeMirror'
 
 const BackButton: Component<{
   view: CustomEditorView

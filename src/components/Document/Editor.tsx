@@ -2,7 +2,7 @@ import { type Component, createSignal, untrack } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import DeleteDocument from '@/components/Collection/DeleteDocument'
-import createCodeMirror from '@/components/common/createCodeMirror'
+import createCodeMirror from '@/components/common/functions/createCodeMirror'
 import BackButton from './BackButton'
 import SaveButton from './SaveButton'
 import { toSafeBSON } from '@/utils/bson'

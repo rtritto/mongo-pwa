@@ -1,7 +1,7 @@
 import { type Component, createSignal, Show, untrack } from 'solid-js'
 
 import IconAdd from '@/components/Icons/IconAdd'
-import createCodeMirror from '@/components/common/createCodeMirror'
+import createCodeMirror from '@/components/common/functions/createCodeMirror'
 import { toSafeBSON } from '@/utils/bson'
 
 const SaveDialog: Component<{
