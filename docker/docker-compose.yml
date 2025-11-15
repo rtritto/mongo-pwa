@@ -1,0 +1,32 @@
+services:
+  mongodb:
+    container_name: mongodb
+    image: bitnami/mongodb:latest
+    ports:
+      - 27017:27017
+    restart: always
+    networks:
+      - backbone
+    volumes:
+      - mongodb_data:/bitnami/mongodb
+
+  mongo-pwa:
+    container_name: mongo-pwa
+    image: mongo-pwa
+    ports:
+      - 3000:3000
+    restart: always
+    networks:
+      - backbone
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  backbone:
+    driver: bridge

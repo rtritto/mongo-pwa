@@ -1,0 +1,55 @@
+# ================================
+# Stage 1: Build
+# ================================
+# https://nodejs.org/en/about/releases/
+# https://github.com/nodejs/Release#readme
+FROM node:25-alpine3.22 AS builder
+
+WORKDIR /app
+
+# Copy the Yarn files (used by Docker cache layer)
+COPY .yarnrc.yml package.json yarn.lock .
+COPY .yarn ./.yarn
+
+# Install dependencies
+RUN yarn install --immutable
+
+# Copy the source code
+COPY config.default.ts vite.config.ts .
+COPY src ./src
+
+# Build the application
+RUN yarn build
+
+# ================================
+# Stage 2: Production
+# ================================
+FROM node:25-alpine3.22
+
+# Install tini for proper signal handling
+RUN apk add --no-cache bash \
+    # grab tini for signal processing and zombie killing
+    tini
+
+WORKDIR /app
+
+# Copy the necessary files from the builder
+COPY --from=builder /app/package.json /app/yarn.lock /app/.yarnrc.yml .
+COPY --from=builder /app/.yarn ./.yarn
+COPY --from=builder /app/dist ./dist
+
+COPY /docker/docker-entrypoint.sh .
+RUN chmod +x docker-entrypoint.sh
+
+# Override some config defaults with values that will work better for docker
+ENV NODE_ENV="production" \
+    ME_CONFIG_MONGODB_URL="mongodb://mongo:27017" \
+    ME_CONFIG_MONGODB_ENABLE_ADMIN="true" \
+    ME_CONFIG_SITE_SESSIONSECRET="secret" \
+    ME_CONFIG_BASICAUTH="true" \
+    VCAP_APP_HOST="0.0.0.0"
+
+EXPOSE 3000
+
+ENTRYPOINT ["/sbin/tini", "--", "bash", "/app/docker-entrypoint.sh"]
+CMD ["mongo-pwa"]
