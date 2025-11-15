@@ -3676,10 +3676,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^5.5.4":
-  version: 5.5.4
-  resolution: "daisyui@npm:5.5.4"
-  checksum: 10c0/ce38f2ae550850abec7fd16468ca5d4e71b3ae9bba6576b54fddc61b89de954967d2d69c8d40f4ba1aed8a3cce361cca35bebe6eaff52040a80144fb5206c0eb
+"daisyui@npm:^5.5.5":
+  version: 5.5.5
+  resolution: "daisyui@npm:5.5.5"
+  checksum: 10c0/d199f9ca3699142d91e0716acf2d0c3c6cd4c840a21b431df8cd3b8b79b0b986c2888deffa89d83cc038fe39364467bd966a48b071754df08186ecb3e3905e41
   languageName: node
   linkType: hard
 
@@ -6010,7 +6010,7 @@ __metadata:
     "@yarnpkg/sdks": "npm:^3.2.3"
     bson: "npm:^6.10.4"
     codemirror: "npm:^6.0.2"
-    daisyui: "npm:^5.5.4"
+    daisyui: "npm:^5.5.5"
     eslint: "npm:^9.39.1"
     eslint-plugin-solid: "npm:^0.14.5"
     eslint-plugin-unicorn: "npm:^62.0.0"
