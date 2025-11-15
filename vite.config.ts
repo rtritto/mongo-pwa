@@ -1,3 +1,6 @@
+// import used to load the default config in globalThis
+import './config.default'
+
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import vike from 'vike/plugin'
