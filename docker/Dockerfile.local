@@ -65,4 +65,5 @@ VCAP_APP_HOST=0.0.0.0
 
 EXPOSE ${PORT}
 
-CMD ["/sbin/tini", "--", "node", "dist/server/index.mjs"]
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["node", "dist/server/index.mjs"]
