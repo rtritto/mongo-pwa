@@ -10,7 +10,7 @@ WORKDIR /app
 # Copy the Yarn files
 COPY .yarnrc.yml package.json yarn.lock \
 # Copy the config files
-config.default.ts vite.config.ts .
+config.default.ts vite.config.ts ./
 # Copy the Yarn files
 COPY .yarn ./.yarn
 # Copy the source code
@@ -35,7 +35,7 @@ WORKDIR /app
 COPY --from=builder /app/dist ./dist
 
 # Copy the Yarn files
-COPY .yarnrc.yml package.json yarn.lock .
+COPY .yarnrc.yml package.json yarn.lock ./
 COPY .yarn/patches ./.yarn/patches
 COPY .yarn/plugins ./.yarn/plugins
 COPY .yarn/releases ./.yarn/releases
