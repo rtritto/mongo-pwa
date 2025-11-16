@@ -19,7 +19,7 @@ COPY src ./src
 # Install dependencies
 RUN yarn install; \
 # Build the application
-yarn build:docker
+yarn build:entry-node
 
 # ================================
 # Stage 2: Production

@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vike dev",
     "build": "vike build",
-    "build:docker": "ENTRY_NODE=true vike build",
+    "build:entry-node": "ENTRY_NODE=true vike build",
     "prod": "NODE_ENV=production node dist/server/index.mjs",
     "serve": "yarn build && yarn prod",
     "lint": "eslint src/**/*.{ts,tsx} *.ts",
