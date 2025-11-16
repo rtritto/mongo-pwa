@@ -44,6 +44,8 @@ COPY .yarn/releases ./.yarn/releases
 RUN yarn config set nodeLinker node-modules; \
 # Install only production dependencies
 yarn workspaces focus --production; \
+# Clean up the yarn cache
+yarn cache clean; \
 # Clean up unnecessary files to reduce image size
 rm -rf .yarn .yarnrc.yml package.json yarn.lock
 
