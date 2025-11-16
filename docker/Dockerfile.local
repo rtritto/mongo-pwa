@@ -7,19 +7,19 @@ FROM node:25-alpine3.22 AS builder
 
 WORKDIR /app
 
-# Copy the Yarn files (used by Docker cache layer)
-COPY .yarnrc.yml package.json yarn.lock .
+# Copy the Yarn files
+COPY .yarnrc.yml package.json yarn.lock \
+# Copy the config files
+config.default.ts vite.config.ts .
+# Copy the Yarn files
 COPY .yarn ./.yarn
-
-# Install dependencies
-RUN yarn install
-
 # Copy the source code
-COPY config.default.ts vite.config.ts .
 COPY src ./src
 
+# Install dependencies
+RUN yarn install; \
 # Build the application
-RUN yarn build:docker
+yarn build:docker
 
 # ================================
 # Stage 2: Production
@@ -34,21 +34,27 @@ WORKDIR /app
 # Copy the necessary files from the builder
 COPY --from=builder /app/dist ./dist
 
+# Copy the Yarn files
 COPY .yarnrc.yml package.json yarn.lock .
-COPY .yarn ./.yarn
+COPY .yarn/patches ./.yarn/patches
+COPY .yarn/plugins ./.yarn/plugins
+COPY .yarn/releases ./.yarn/releases
 
-# Install only production dependencies
+# Use node-modules linker instead of PnP
 RUN yarn config set nodeLinker node-modules; \
-    yarn workspaces focus --production
+# Install only production dependencies
+yarn workspaces focus --production; \
+# Clean up unnecessary files to reduce image size
+rm -rf .yarn .yarnrc.yml package.json yarn.lock
 
 # Override some config defaults with values that will work better for docker
 ENV NODE_ENV="production" \
-    ENTRY_NODE="true" \
-    ME_CONFIG_MONGODB_URL="mongodb://mongo:27017" \
-    ME_CONFIG_MONGODB_ENABLE_ADMIN="true" \
-    ME_CONFIG_SITE_SESSIONSECRET="secret" \
-    ME_CONFIG_BASICAUTH="true" \
-    VCAP_APP_HOST="0.0.0.0"
+ENTRY_NODE="true" \
+ME_CONFIG_MONGODB_URL="mongodb://mongo:27017" \
+ME_CONFIG_MONGODB_ENABLE_ADMIN="true" \
+ME_CONFIG_SITE_SESSIONSECRET="secret" \
+ME_CONFIG_BASICAUTH="true" \
+VCAP_APP_HOST="0.0.0.0"
 
 EXPOSE 3000
 
