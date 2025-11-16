@@ -1,3 +1,5 @@
+ARG PORT=3000
+
 # ================================
 # Stage 1: Build
 # ================================
@@ -26,6 +28,8 @@ yarn build:entry-node
 # ================================
 FROM node:25-alpine3.22
 
+ARG PORT
+
 # Install tini for proper signal handling/processing and zombie killing
 RUN apk add --no-cache tini
 
@@ -51,6 +55,7 @@ rm -rf .yarn .yarnrc.yml package.json yarn.lock
 
 # Override some config defaults with values that will work better for docker
 ENV NODE_ENV=production \
+PORT=${PORT} \
 ENTRY_NODE=true \
 ME_CONFIG_MONGODB_URL=mongodb://mongo:27017 \
 ME_CONFIG_MONGODB_ENABLE_ADMIN=true \
@@ -58,6 +63,6 @@ ME_CONFIG_SITE_SESSIONSECRET=secret \
 ME_CONFIG_BASICAUTH=true \
 VCAP_APP_HOST=0.0.0.0
 
-EXPOSE 3000
+EXPOSE ${PORT}
 
 CMD ["/sbin/tini", "--", "node", "dist/server/index.mjs"]
