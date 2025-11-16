@@ -6,4 +6,5 @@ services:
       - 3000:3000
     restart: always
     environment:
-      - ME_CONFIG_MONGODB_URL=mongodb://mongo:27017
+      # Replace ME_CONFIG_MONGODB_URL and add env vars as needed
+      - ME_CONFIG_MONGODB_URL=mongodb://mongo-db:27017

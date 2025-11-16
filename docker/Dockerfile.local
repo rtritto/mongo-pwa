@@ -57,7 +57,7 @@ rm -rf .yarn .yarnrc.yml package.json yarn.lock
 ENV NODE_ENV=production \
 PORT=${PORT} \
 ENTRY_NODE=true \
-ME_CONFIG_MONGODB_URL=mongodb://mongo:27017 \
+ME_CONFIG_MONGODB_URL=mongodb://mongo-db:27017 \
 ME_CONFIG_MONGODB_ENABLE_ADMIN=true \
 ME_CONFIG_SITE_SESSIONSECRET=secret \
 ME_CONFIG_BASICAUTH=true \

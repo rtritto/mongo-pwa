@@ -1,6 +1,6 @@
 services:
-  mongodb:
-    container_name: mongodb
+  mongo-db:
+    container_name: mongo-db
     image: bitnami/mongodb:latest
     ports:
       - 27017:27017
@@ -19,9 +19,9 @@ services:
     networks:
       - backbone
     environment:
-      - ME_CONFIG_MONGODB_URL=mongodb://mongodb:27017
+      - ME_CONFIG_MONGODB_URL=mongodb://mongo-db:27017
     depends_on:
-      - mongodb
+      - mongo-db
 
 volumes:
   mongodb_data:
