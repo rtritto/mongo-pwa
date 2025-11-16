@@ -12,7 +12,7 @@ COPY .yarnrc.yml package.json yarn.lock .
 COPY .yarn ./.yarn
 
 # Install dependencies
-RUN yarn install --immutable
+RUN yarn install
 
 # Copy the source code
 COPY config.default.ts vite.config.ts .
@@ -34,12 +34,14 @@ RUN apk add --no-cache bash \
 WORKDIR /app
 
 # Copy the necessary files from the builder
-COPY --from=builder /app/package.json /app/yarn.lock /app/.yarnrc.yml .
-COPY --from=builder /app/.yarn ./.yarn
 COPY --from=builder /app/dist ./dist
 
-COPY /docker/docker-entrypoint.sh .
-RUN chmod +x docker-entrypoint.sh
+COPY .yarnrc.yml package.json yarn.lock .pnp.cjs .pnp.loader.mjs /docker/docker-entrypoint.sh .
+COPY .yarn ./.yarn
+
+# Install only production dependencies
+RUN yarn config set nodeLinker node-modules; \
+    yarn workspaces focus --production
 
 # Override some config defaults with values that will work better for docker
 ENV NODE_ENV="production" \
