@@ -34,7 +34,7 @@ WORKDIR /app
 # Copy the necessary files from the builder
 COPY --from=builder /app/dist ./dist
 
-COPY .yarnrc.yml package.json yarn.lock .pnp.cjs .pnp.loader.mjs .
+COPY .yarnrc.yml package.json yarn.lock .
 COPY .yarn ./.yarn
 
 # Install only production dependencies
