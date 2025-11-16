@@ -1,7 +1,7 @@
 ARG PORT=3000
 
 # ================================
-# Stage 1: Build
+# Stage 1: Builder
 # ================================
 # https://nodejs.org/en/about/releases/
 # https://github.com/nodejs/Release#readme
@@ -19,9 +19,9 @@ COPY .yarn ./.yarn
 COPY src ./src
 
 # Install dependencies
-RUN yarn install && \
+RUN yarn install \
 # Build the application
-yarn build:entry-node
+&& yarn build:entry-node
 
 # ================================
 # Stage 2: Production
@@ -45,13 +45,13 @@ COPY .yarn/plugins ./.yarn/plugins
 COPY .yarn/releases ./.yarn/releases
 
 # Use node-modules linker instead of PnP
-RUN yarn config set nodeLinker node-modules && \
+RUN yarn config set nodeLinker node-modules \
 # Install only production dependencies
-yarn workspaces focus --production && \
+&& yarn workspaces focus --production \
 # Clean up the yarn cache
-yarn cache clean && \
+&& yarn cache clean \
 # Clean up unnecessary files to reduce image size
-rm -rf .yarn .yarnrc.yml package.json yarn.lock
+&& rm -rf .yarn .yarnrc.yml package.json yarn.lock
 
 # Override some config defaults with values that will work better for docker
 ENV NODE_ENV=production \
