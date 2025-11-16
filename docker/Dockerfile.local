@@ -19,24 +19,22 @@ COPY config.default.ts vite.config.ts .
 COPY src ./src
 
 # Build the application
-RUN yarn build
+RUN yarn build:docker
 
 # ================================
 # Stage 2: Production
 # ================================
 FROM node:25-alpine3.22
 
-# Install tini for proper signal handling
-RUN apk add --no-cache bash \
-    # grab tini for signal processing and zombie killing
-    tini
+# Install tini for proper signal handling/processing and zombie killing
+RUN apk add --no-cache tini
 
 WORKDIR /app
 
 # Copy the necessary files from the builder
 COPY --from=builder /app/dist ./dist
 
-COPY .yarnrc.yml package.json yarn.lock .pnp.cjs .pnp.loader.mjs /docker/docker-entrypoint.sh .
+COPY .yarnrc.yml package.json yarn.lock .pnp.cjs .pnp.loader.mjs .
 COPY .yarn ./.yarn
 
 # Install only production dependencies
@@ -45,6 +43,7 @@ RUN yarn config set nodeLinker node-modules; \
 
 # Override some config defaults with values that will work better for docker
 ENV NODE_ENV="production" \
+    ENTRY_NODE="true" \
     ME_CONFIG_MONGODB_URL="mongodb://mongo:27017" \
     ME_CONFIG_MONGODB_ENABLE_ADMIN="true" \
     ME_CONFIG_SITE_SESSIONSECRET="secret" \
@@ -53,5 +52,4 @@ ENV NODE_ENV="production" \
 
 EXPOSE 3000
 
-ENTRYPOINT ["/sbin/tini", "--", "bash", "/app/docker-entrypoint.sh"]
-CMD ["mongo-pwa"]
+CMD ["/sbin/tini", "--", "node", "dist/server/index.mjs"]
