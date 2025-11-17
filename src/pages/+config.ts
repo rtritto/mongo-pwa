@@ -16,8 +16,10 @@ export default {
   ],
   photon: {
     server: process.env.NODE_ENV === 'production'
+      // (Preview deployment OR Docker) + Vercel
+      // run build:node-entry and then run prod (such as preview) or run node dist/server/index.mjs
       ? (process.env.ENTRY_NODE === 'true'
-        // Docker
+        // Preview deployment OR Docker
         ? 'server/entry.node.ts'
         // Vercel
         : 'server/index.ts')
