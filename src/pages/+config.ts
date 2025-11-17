@@ -14,8 +14,6 @@ export default {
     vikeSolid,
     vikePhoton
   ],
-  // To run serve script, enable next line
-  // server: 'server/entry.node.ts'
   photon: {
     server: process.env.NODE_ENV === 'production'
       ? (process.env.ENTRY_NODE === 'true'
