@@ -22,10 +22,8 @@ COPY .yarn/releases ./.yarn/releases
 # Copy the source code
 COPY src ./src
 
-# Use node-modules linker instead of PnP
-RUN yarn config set nodeLinker node-modules \
 # Install dependencies
-&& yarn install --immutable \
+RUN yarn install --immutable \
 # Build the application
 && yarn build:entry-node
 
