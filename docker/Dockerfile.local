@@ -5,28 +5,34 @@ ARG PORT=3000
 # ================================
 # https://nodejs.org/en/about/releases/
 # https://github.com/nodejs/Release#readme
-FROM node:25-alpine3.22 AS builder
+FROM node:24-alpine AS builder
 
 WORKDIR /app
 
-# Copy the Yarn files
+# Copy Yarn files
 COPY .yarnrc.yml package.json yarn.lock \
 # Copy the config files
 config.default.ts vite.config.ts ./
-# Copy the Yarn files
-COPY .yarn ./.yarn
+
+# Copy Yarn files 
+COPY .yarn/patches ./.yarn/patches
+COPY .yarn/plugins ./.yarn/plugins
+COPY .yarn/releases ./.yarn/releases
+
 # Copy the source code
 COPY src ./src
 
+# Use node-modules linker instead of PnP
+RUN yarn config set nodeLinker node-modules \
 # Install dependencies
-RUN yarn install \
+&& yarn install --immutable \
 # Build the application
 && yarn build:entry-node
 
 # ================================
 # Stage 2: Production
 # ================================
-FROM node:25-alpine3.22
+FROM node:24-alpine
 
 ARG PORT
 
@@ -35,10 +41,10 @@ RUN apk add --no-cache tini
 
 WORKDIR /app
 
-# Copy the necessary files from the builder
+# Copy the build output
 COPY --from=builder /app/dist ./dist
 
-# Copy the Yarn files
+# Copy only necessary Yarn files
 COPY .yarnrc.yml package.json yarn.lock ./
 COPY .yarn/patches ./.yarn/patches
 COPY .yarn/plugins ./.yarn/plugins
@@ -46,11 +52,10 @@ COPY .yarn/releases ./.yarn/releases
 
 # Use node-modules linker instead of PnP
 RUN yarn config set nodeLinker node-modules \
-# Install only production dependencies
+# Install production dependencies
 && yarn workspaces focus --production \
-# Clean up the yarn cache
-&& yarn cache clean \
-# Clean up unnecessary files to reduce image size
+# Clean up unnecessary files
+&& yarn cache clean --all \
 && rm -rf .yarn .yarnrc.yml package.json yarn.lock
 
 # Override some config defaults with values that will work better for docker
