@@ -43,18 +43,13 @@ WORKDIR /app
 COPY --from=builder /app/dist ./dist
 
 # Copy Yarn files
-COPY .yarnrc.yml package.json yarn.lock ./
+COPY .yarnrc.yml package.json yarn.lock .pnp.cjs .pnp.loader.mjs ./
 COPY .yarn/patches ./.yarn/patches
 COPY .yarn/plugins ./.yarn/plugins
 COPY .yarn/releases ./.yarn/releases
 
-# Use node-modules linker instead of PnP
-RUN yarn config set nodeLinker node-modules \
 # Install production dependencies
-&& yarn workspaces focus --production \
-# Clean up unnecessary files
-&& yarn cache clean --all \
-&& rm -rf .yarn .yarnrc.yml package.json yarn.lock
+RUN yarn workspaces focus --all --production
 
 # Override some config defaults with values that will work better for docker
 ENV NODE_ENV=production \
@@ -69,4 +64,4 @@ VCAP_APP_HOST=0.0.0.0
 EXPOSE ${PORT}
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "dist/server/index.mjs"]
+CMD ["yarn", "node", "--loader", "./.pnp.loader.mjs", "dist/server/index.mjs"]
