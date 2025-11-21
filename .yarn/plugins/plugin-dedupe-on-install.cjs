@@ -1,7 +1,7 @@
 module.exports = {
-  name: `plugin-dedupe-on-install`,
+  name: 'plugin-dedupe-on-install',
   factory: (require) => {
-    const {execute} = require('@yarnpkg/shell')
+    const { execute } = require('@yarnpkg/shell')
     return {
       hooks: {
         // yarn / yarn install / yarn add / yarn dedupe -> afterAllInstalled
@@ -15,8 +15,8 @@ module.exports = {
               await execute('yarn dedupe')
             }
           }
-        },
-      },
+        }
+      }
     }
-  },
+  }
 }
