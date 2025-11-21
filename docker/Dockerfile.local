@@ -42,7 +42,7 @@ WORKDIR /app
 # Copy the build output
 COPY --from=builder /app/dist ./dist
 
-# Copy only necessary Yarn files
+# Copy Yarn files
 COPY .yarnrc.yml package.json yarn.lock ./
 COPY .yarn/patches ./.yarn/patches
 COPY .yarn/plugins ./.yarn/plugins
