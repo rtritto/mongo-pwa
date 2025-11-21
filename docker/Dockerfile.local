@@ -49,7 +49,10 @@ COPY .yarn/plugins ./.yarn/plugins
 COPY .yarn/releases ./.yarn/releases
 
 # Install production dependencies
-RUN yarn workspaces focus --all --production
+RUN yarn workspaces focus --all --production \
+# Remove Yarn plugins
+&& yarn plugin remove @yarnpkg/plugin-outdated \
+&& yarn plugin remove plugin-dedupe-on-install
 
 # Override some config defaults with values that will work better for docker
 ENV NODE_ENV=production \
