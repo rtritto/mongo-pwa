@@ -5,6 +5,9 @@ import { type Component, createSignal, For, Match, Show, Switch, untrack } from 
 const MAX_LEN = 36
 const MAX_ARRAY_ELEMENTS = 5
 
+/**
+ * Inspired by https://anyroad.github.io/react-json-view-lite/?path=/docs/json-view--docs
+ */
 const RenderLongText: Component<{ text: string }> = (props) => {
   // On click expand/collapse long text
   const [expanded, setExpanded] = createSignal(false)
