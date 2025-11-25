@@ -34,7 +34,7 @@
     "vike-solid": "patch:vike-solid@npm%3A0.7.13#~/.yarn/patches/vike-solid-npm-0.7.13-40ff8cb857.patch"
   },
   "devDependencies": {
-    "@photonjs/hono": "^0.1.6",
+    "@photonjs/hono": "^0.1.7",
     "@tailwindcss/vite": "^4.1.17",
     "@types/node": "^24.10.1",
     "@yarnpkg/sdks": "^3.2.3",
@@ -44,8 +44,8 @@
     "eslint-plugin-unicorn": "^62.0.0",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.47.0",
-    "vike-photon": "^0.1.16",
+    "typescript-eslint": "^8.48.0",
+    "vike-photon": "^0.1.20",
     "vite": "^7.2.4",
     "vite-plugin-pwa": "^1.1.0"
   },
