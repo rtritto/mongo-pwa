@@ -24,6 +24,7 @@ export default {
         // Vercel
         : 'server/index.ts')
       // development
-      : 'server/entry.node.ts'
+      : 'server/entry.node.ts',
+    standalone: true
   }
 } satisfies Config
