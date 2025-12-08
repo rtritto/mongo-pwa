@@ -32,7 +32,7 @@
     "solid-js": "^1.9.10"
   },
   "devDependencies": {
-    "@photonjs/hono": "^0.1.7",
+    "@photonjs/hono": "^0.1.10",
     "@tailwindcss/vite": "^4.1.17",
     "@types/node": "^24.10.1",
     "@yarnpkg/sdks": "^3.2.3",
@@ -44,7 +44,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.0",
     "vike": "patch:vike@npm%3A0.4.247#~/.yarn/patches/vike-npm-0.4.247-88af2defe3.patch",
-    "vike-photon": "^0.1.20",
+    "vike-photon": "^0.1.22",
     "vike-solid": "patch:vike-solid@npm%3A0.7.13#~/.yarn/patches/vike-solid-npm-0.7.13-40ff8cb857.patch",
     "vite": "^7.2.4",
     "vite-plugin-pwa": "^1.1.0"
@@ -54,5 +54,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "resolutions": {
+    "@photonjs/runtime@npm:^0.1.13": "patch:@photonjs/runtime@npm%3A0.1.13#~/.yarn/patches/@photonjs-runtime-npm-0.1.13-7da146e162.patch"
+  }
 }
