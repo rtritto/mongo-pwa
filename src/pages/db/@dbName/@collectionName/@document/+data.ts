@@ -1,5 +1,6 @@
+import { toJSString } from 'mongodb-query-parser'
+
 import { connectClient } from '@/server/db'
-import { toString } from '@/utils/bson'
 import { buildId } from '@/utils/mappers/mapUtils'
 import { isValidCollectionName, isValidDatabaseName } from '@/utils/validationsClient'
 
@@ -31,7 +32,8 @@ export const data: DataAsync<DataDocument> = async (pageContext) => {
     title: `${options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
     databases: mongo.databases,
     collections: mongo.collections[dbName],
-    docString: toString(doc!)!,
+    // TODO add env variable to set indentation spaces
+    docString: toJSString(doc!, '  ')!,
     _id: document,
     subtype,
     // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833

@@ -1,5 +1,5 @@
-import { ObjectId, type Document } from 'bson'
-import toBSON, { toJSString } from 'mongodb-query-parser'
+import { ObjectId } from 'bson'
+import toBSON from 'mongodb-query-parser'
 
 // This function as the name suggests attempts to parse
 // the free form string in to BSON, since the possibilities of failure
@@ -18,9 +18,4 @@ export const parseObjectId = (string: string) => {
     return new ObjectId(string)
   }
   return toBSON(string)
-}
-
-// Convert BSON documents to string
-export const toString = (doc: Document) => {
-  return toJSString(doc, '  ')
 }
