@@ -27,7 +27,7 @@ export default {
       : 'server/entry.node.ts',
     standalone: {
       bundle: true,
-      minify: true
+      // minify: true
     }
   }
 } satisfies Config
