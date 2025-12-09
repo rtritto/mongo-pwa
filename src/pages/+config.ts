@@ -25,9 +25,9 @@ export default {
         : 'server/index.ts')
       // development
       : 'server/entry.node.ts',
-    standalone: {
-      bundle: true,
-      // minify: true
-    }
+    // standalone: {
+    //   bundle: true,
+    //   minify: true
+    // }
   }
 } satisfies Config
