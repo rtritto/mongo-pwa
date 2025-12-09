@@ -28,6 +28,7 @@ export default {
     standalone: {
       bundle: true,
       // minify: true
-    }
+    },
+    target: process.env.ENTRY_NODE === 'true' ? 'node' : undefined
   }
 } satisfies Config
