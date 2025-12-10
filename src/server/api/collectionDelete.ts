@@ -17,12 +17,17 @@ export default async function collectionDelete(c: Context) {
   checkDatabase(database)
   checkCollection(database, collection)
   const _collection = globalThis.mongo.mongoClient.db(database).collection(collection)
-  await (query
+  if (query) {
     // Delete some documents
-    ? _collection.deleteMany(getQuery(query)).then((opRes) => {
+    await _collection.deleteMany(getQuery(query)).then((opRes) => {
       console.info(`Deleted ${opRes.deletedCount} documents from collection "${collection}"`)
     })
+  } else {
     // Drop the whole collection
-    : _collection.drop())
+    const result = await _collection.drop()
+    if (!result) {
+      throw new Error('Failed to delete collection')
+    }
+  }
   return c.json({})
 }
