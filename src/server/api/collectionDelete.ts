@@ -26,7 +26,7 @@ export default async function collectionDelete(c: Context) {
     // Drop the whole collection
     const result = await _collection.drop()
     if (!result) {
-      throw new Error('Failed to delete collection')
+      throw new Error(`Failed to delete collection "${collection}"`)
     }
   }
   return c.json({})
