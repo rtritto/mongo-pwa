@@ -1,5 +1,6 @@
 {
   "outputDirectory": "dist/client",
+  "installCommand": "yarn install --immutable",
   "rewrites": [
     {
       "source": "/((?!assets/).*)",
