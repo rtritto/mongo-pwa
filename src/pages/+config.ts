@@ -27,8 +27,8 @@ export default {
       : 'server/entry.node.ts',
     standalone: {
       bundle: true,
-      // minify: true
+      minify: true
     },
-    target: process.env.ENTRY_NODE === 'true' ? 'node' : undefined
+    target: process.env.ENTRY_NODE === 'true' ? 'node' : 'vercel'
   }
 } satisfies Config
