@@ -46,7 +46,11 @@ export default defineConfig(async ({ mode }) => {
     build: {
       target: 'esnext',
       outDir: '../dist',
-      minify: true
+      minify: true,
+      rollupOptions: {
+        // https://github.com/nitedani/standaloner/issues/8
+        external: ['mongodb-query-parser']
+      }
     },
     envPrefix: 'ME_CONFIG_',
     esbuild: {
