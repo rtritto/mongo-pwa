@@ -32,7 +32,7 @@
     "solid-js": "^1.9.10"
   },
   "devDependencies": {
-    "@photonjs/hono": "^0.1.11",
+    "@photonjs/hono": "^0.1.12",
     "@tailwindcss/vite": "^4.1.18",
     "@types/node": "^25.0.3",
     "@yarnpkg/sdks": "^3.2.3",
@@ -44,7 +44,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.50.0",
     "vike": "patch:vike@npm%3A0.4.250#~/.yarn/patches/vike-npm-0.4.250-df603be96f.patch",
-    "vike-photon": "^0.1.23",
+    "vike-photon": "^0.1.24",
     "vike-solid": "patch:vike-solid@npm%3A0.7.14#~/.yarn/patches/vike-solid-npm-0.7.14-ec9c05f993.patch",
     "vite": "^7.3.0",
     "vite-plugin-pwa": "^1.2.0"
