@@ -45,7 +45,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.23.3, @babel/core@npm:^7.24.4":
+"@babel/core@npm:^7.23.3, @babel/core@npm:^7.24.4, @babel/core@npm:^7.28.5":
   version: 7.28.5
   resolution: "@babel/core@npm:7.28.5"
   dependencies:
@@ -1166,10 +1166,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@brillout/picocolors@npm:^1.0.26, @brillout/picocolors@npm:^1.0.29":
-  version: 1.0.29
-  resolution: "@brillout/picocolors@npm:1.0.29"
-  checksum: 10c0/8222e1acc050bf2a2aee76a53779bc889dcfb5e710a0bb2ec0c3d1c963ff4fdae459784e2c05685c2a855a85b9cf447bc71a983c364e1d71be5550ae234a2dd9
+"@brillout/picocolors@npm:^1.0.26, @brillout/picocolors@npm:^1.0.29, @brillout/picocolors@npm:^1.0.30":
+  version: 1.0.30
+  resolution: "@brillout/picocolors@npm:1.0.30"
+  checksum: 10c0/8d14534d4c3604886d16fb724ef5e10c0441538ee8301ed229531226be60862b64eb66cbc89911114e6bd2d9c004491598d4ab68430dc780eaae747b8a2a54d4
   languageName: node
   linkType: hard
 
@@ -3095,7 +3095,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.0.0, acorn@npm:^8.14.1, acorn@npm:^8.15.0, acorn@npm:^8.6.0":
+"acorn@npm:^8.14.1, acorn@npm:^8.15.0, acorn@npm:^8.6.0":
   version: 8.15.0
   resolution: "acorn@npm:8.15.0"
   bin:
@@ -5977,7 +5977,7 @@ __metadata:
     tailwindcss: "npm:^4.1.18"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.50.0"
-    vike: "patch:vike@npm%3A0.4.249#~/.yarn/patches/vike-npm-0.4.249-b14f4964af.patch"
+    vike: "patch:vike@npm%3A0.4.250#~/.yarn/patches/vike-npm-0.4.250-df603be96f.patch"
     vike-photon: "npm:^0.1.23"
     vike-solid: "patch:vike-solid@npm%3A0.7.14#~/.yarn/patches/vike-solid-npm-0.7.14-ec9c05f993.patch"
     vite: "npm:^7.3.0"
@@ -7818,16 +7818,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike@npm:0.4.249":
-  version: 0.4.249
-  resolution: "vike@npm:0.4.249"
+"vike@npm:0.4.250":
+  version: 0.4.250
+  resolution: "vike@npm:0.4.250"
   dependencies:
+    "@babel/core": "npm:^7.28.5"
+    "@babel/types": "npm:^7.28.5"
     "@brillout/import": "npm:^0.2.6"
     "@brillout/json-serializer": "npm:^0.5.21"
-    "@brillout/picocolors": "npm:^1.0.29"
+    "@brillout/picocolors": "npm:^1.0.30"
     "@brillout/require-shim": "npm:^0.1.2"
     "@brillout/vite-plugin-server-entry": "npm:^0.7.15"
-    acorn: "npm:^8.0.0"
     cac: "npm:^6.0.0"
     es-module-lexer: "npm:^1.0.0"
     esbuild: "npm:>=0.19.0"
@@ -7848,21 +7849,22 @@ __metadata:
     vite:
       optional: true
   bin:
-    vike: node/cli/bin.js
-  checksum: 10c0/78bbaac67191c86cbf9de6292df40033cb3aa05babfe7036d21523b9622ff2681240ed43e3cc09d232e6953733137ed1b2108166b88b862e7f29c70fc2d6ba53
+    vike: bin.js
+  checksum: 10c0/6bb1fd41b9e1b1a0b44b966cdf3917f1705669bc2ba2b85dc16ab7b32a74c368517b6e51ca6d69401fc7b265101f75dc1183e520c49796da147d0bd3d91ca1d5
   languageName: node
   linkType: hard
 
-"vike@patch:vike@npm%3A0.4.249#~/.yarn/patches/vike-npm-0.4.249-b14f4964af.patch":
-  version: 0.4.249
-  resolution: "vike@patch:vike@npm%3A0.4.249#~/.yarn/patches/vike-npm-0.4.249-b14f4964af.patch::version=0.4.249&hash=922b59"
+"vike@patch:vike@npm%3A0.4.250#~/.yarn/patches/vike-npm-0.4.250-df603be96f.patch":
+  version: 0.4.250
+  resolution: "vike@patch:vike@npm%3A0.4.250#~/.yarn/patches/vike-npm-0.4.250-df603be96f.patch::version=0.4.250&hash=9d89d7"
   dependencies:
+    "@babel/core": "npm:^7.28.5"
+    "@babel/types": "npm:^7.28.5"
     "@brillout/import": "npm:^0.2.6"
     "@brillout/json-serializer": "npm:^0.5.21"
-    "@brillout/picocolors": "npm:^1.0.29"
+    "@brillout/picocolors": "npm:^1.0.30"
     "@brillout/require-shim": "npm:^0.1.2"
     "@brillout/vite-plugin-server-entry": "npm:^0.7.15"
-    acorn: "npm:^8.0.0"
     cac: "npm:^6.0.0"
     es-module-lexer: "npm:^1.0.0"
     esbuild: "npm:>=0.19.0"
@@ -7883,8 +7885,8 @@ __metadata:
     vite:
       optional: true
   bin:
-    vike: node/cli/bin.js
-  checksum: 10c0/994c53ea08b788b17b282050cc0ad7fa155a64532c0f3942eda87231a731f6581a0634f98f9adf26551b565354f231f622a8db85586b1e275fda2c3506d5e1bd
+    vike: bin.js
+  checksum: 10c0/1bd6c481126bd4e1a9355d23213678f6ca88fdec96ed394000bf01aeaa47aa6d14beba12aca1e3b5a26f6b37e53941798d982650dfa3fed1f880a3a1746d9175
   languageName: node
   linkType: hard
 
