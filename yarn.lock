@@ -5979,7 +5979,7 @@ __metadata:
     typescript-eslint: "npm:^8.50.0"
     vike: "patch:vike@npm%3A0.4.250#~/.yarn/patches/vike-npm-0.4.250-df603be96f.patch"
     vike-photon: "npm:^0.1.24"
-    vike-solid: "patch:vike-solid@npm%3A0.7.14#~/.yarn/patches/vike-solid-npm-0.7.14-ec9c05f993.patch"
+    vike-solid: "patch:vike-solid@npm%3A0.7.18#~/.yarn/patches/vike-solid-npm-0.7.18-05a74691d8.patch"
     vite: "npm:^7.3.0"
     vite-plugin-pwa: "npm:^1.2.0"
   languageName: unknown
@@ -7790,31 +7790,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike-solid@npm:0.7.14":
-  version: 0.7.14
-  resolution: "vike-solid@npm:0.7.14"
+"vike-solid@npm:0.7.18":
+  version: 0.7.18
+  resolution: "vike-solid@npm:0.7.18"
   dependencies:
     isbot-fast: "npm:^1.2.0"
     vite-plugin-solid: "npm:^2.11.10"
   peerDependencies:
     solid-js: ^1.8.7
-    vike: ">=0.4.195"
-    vite: ">=5.0.0"
-  checksum: 10c0/3abb796950bc6340694c5c1dee3a4ed2f8107a66135712e4556b7d04ee8349d1fbb8296bfe7b93ddfa7a164a43f2635356bf0d8a86daa2c680510eea2448b935
+    vike: ">=0.4.250"
+  checksum: 10c0/273aa6231507492a4379ee5e2d3b046569f08dde09f80453cc91b6688d3a40c8791b33b205500d28e3a76873eee831321980c4e6e042a603d47668653c792540
   languageName: node
   linkType: hard
 
-"vike-solid@patch:vike-solid@npm%3A0.7.14#~/.yarn/patches/vike-solid-npm-0.7.14-ec9c05f993.patch":
-  version: 0.7.14
-  resolution: "vike-solid@patch:vike-solid@npm%3A0.7.14#~/.yarn/patches/vike-solid-npm-0.7.14-ec9c05f993.patch::version=0.7.14&hash=db8dc0"
+"vike-solid@patch:vike-solid@npm%3A0.7.18#~/.yarn/patches/vike-solid-npm-0.7.18-05a74691d8.patch":
+  version: 0.7.18
+  resolution: "vike-solid@patch:vike-solid@npm%3A0.7.18#~/.yarn/patches/vike-solid-npm-0.7.18-05a74691d8.patch::version=0.7.18&hash=db8dc0"
   dependencies:
     isbot-fast: "npm:^1.2.0"
     vite-plugin-solid: "npm:^2.11.10"
   peerDependencies:
     solid-js: ^1.8.7
-    vike: ">=0.4.195"
-    vite: ">=5.0.0"
-  checksum: 10c0/4f9a82c09e0a00417d798a07e6f6ce58095a8547c1e5a8984acf828d68ad6e958d3145eb6582358f52d9c9122f899ed57688be44ed09f2052e1fcbe468467c9c
+    vike: ">=0.4.250"
+  checksum: 10c0/e8db4aee75820121b5433388768a82d70f7305039401b1c3cd4c20d880c8af283fd4b7b9d941ae1d7d16c6a880180abcce18ef1f6e593435442b8284650b4e81
   languageName: node
   linkType: hard
 

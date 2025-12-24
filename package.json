@@ -45,7 +45,7 @@
     "typescript-eslint": "^8.50.0",
     "vike": "patch:vike@npm%3A0.4.250#~/.yarn/patches/vike-npm-0.4.250-df603be96f.patch",
     "vike-photon": "^0.1.24",
-    "vike-solid": "patch:vike-solid@npm%3A0.7.14#~/.yarn/patches/vike-solid-npm-0.7.14-ec9c05f993.patch",
+    "vike-solid": "patch:vike-solid@npm%3A0.7.18#~/.yarn/patches/vike-solid-npm-0.7.18-05a74691d8.patch",
     "vite": "^7.3.0",
     "vite-plugin-pwa": "^1.2.0"
   },
