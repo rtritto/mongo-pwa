@@ -43,9 +43,9 @@
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.50.0",
-    "vike": "patch:vike@npm%3A0.4.251#~/.yarn/patches/vike-npm-0.4.251-dfce626203.patch",
+    "vike": "patch:vike@npm%3A0.4.252#~/.yarn/patches/vike-npm-0.4.252-a1dc3275f3.patch",
     "vike-photon": "^0.1.24",
-    "vike-solid": "patch:vike-solid@npm%3A0.7.18#~/.yarn/patches/vike-solid-npm-0.7.18-05a74691d8.patch",
+    "vike-solid": "patch:vike-solid@npm%3A0.7.19#~/.yarn/patches/vike-solid-npm-0.7.19-1feaf7867b.patch",
     "vite": "^7.3.0",
     "vite-plugin-pwa": "^1.2.0"
   },

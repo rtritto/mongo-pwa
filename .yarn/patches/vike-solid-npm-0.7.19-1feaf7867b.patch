@@ -1,9 +1,10 @@
 diff --git a/dist/hooks/useData.d.ts b/dist/hooks/useData.d.ts
-index ccf9484ed04ac8b46622160f2496172dc5a9063a..6a4957be0baf49c6f16a5748bfd6bdc5b19f7f66 100644
+index ccf9484ed04ac8b46622160f2496172dc5a9063a..24056240e094719be1a3b347ea68a049c338877b 100644
 --- a/dist/hooks/useData.d.ts
 +++ b/dist/hooks/useData.d.ts
-@@ -1,9 +1,10 @@
+@@ -1,9 +1,11 @@
 +import { SetStoreFunction } from 'solid-js/store';
++
  /** Access `pageContext.data` from any SolidJS component
   *
   * See
