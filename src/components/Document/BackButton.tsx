@@ -14,7 +14,7 @@ const BackButton: Component<{
   const [discardChanges, setDiscardChanges] = createSignal(false)
 
   return (
-    <button class="btn btn-sm bg-yellow-500 py-0.5 text-right" onClick={async () => {
+    <button class="btn btn-sm bg-yellow-500 m-1 py-0.5 text-right" onClick={async () => {
       if (props.view.isClean() || discardChanges()) {
         await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}`)
       } else {
