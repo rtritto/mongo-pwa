@@ -25,10 +25,11 @@ export default {
         : 'server/index.ts')
       // development
       : 'server/entry.node.ts',
-    standalone: {
-      bundle: true,
-      minify: true
-    },
+    // TODO enable on merge of https://github.com/mongodb-js/devtools-shared/pull/611
+    // standalone: {
+    //   bundle: true,
+    //   minify: true
+    // },
     target: process.env.ENTRY_NODE === 'true' ? 'node' : 'vercel'
   }
 } satisfies Config
