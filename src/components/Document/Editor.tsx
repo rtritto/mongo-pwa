@@ -19,6 +19,10 @@ const Editor: Component<{
 
   return (
     <div>
+      <BackButton view={editorView()!} data={props.data} setData={props.setData} />
+
+      <SaveButton view={editorView()!} data={props.data} setData={props.setData} disabled={!isTextValid()} />
+
       <div
         ref={editorRef}
         onKeyUp={() => {
