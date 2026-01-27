@@ -6000,9 +6000,10 @@ __metadata:
     typescript-eslint: "npm:^8.53.1"
     vike: "patch:vike@npm%3A0.4.252#~/.yarn/patches/vike-npm-0.4.252-a1dc3275f3.patch"
     vike-photon: "npm:^0.1.24"
-    vike-solid: "patch:vike-solid@npm%3A0.7.19#~/.yarn/patches/vike-solid-npm-0.7.19-1feaf7867b.patch"
+    vike-solid: "patch:vike-solid@npm%3A0.8.0#~/.yarn/patches/vike-solid-npm-0.8.0-8615aad89e.patch"
     vite: "npm:^7.3.1"
     vite-plugin-pwa: "npm:^1.2.0"
+    vite-plugin-solid: "npm:^2.11.10"
   languageName: unknown
   linkType: soft
 
@@ -7820,29 +7821,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike-solid@npm:0.7.19":
-  version: 0.7.19
-  resolution: "vike-solid@npm:0.7.19"
+"vike-solid@npm:0.8.0":
+  version: 0.8.0
+  resolution: "vike-solid@npm:0.8.0"
   dependencies:
     isbot-fast: "npm:^1.2.0"
-    vite-plugin-solid: "npm:^2.11.10"
   peerDependencies:
     solid-js: ^1.8.7
     vike: ">=0.4.250"
-  checksum: 10c0/352ed12a3db3473d8239f50ffea9449293af9d40222ffd93f0fd0bc2653de7369f3721b01be3775c9d7d4e9c2b7cabc635428c4fa1aa1ef207114270235bf4a9
+    vite-plugin-solid: ^2.11.10
+  checksum: 10c0/55c1a73543af9d9ea39132eff7068c2b617187a1d324dccaa8944fc6291f2ff4753bac599a4f8896403783dec72257148f1207320384d8e8eb6d829a770b0ce5
   languageName: node
   linkType: hard
 
-"vike-solid@patch:vike-solid@npm%3A0.7.19#~/.yarn/patches/vike-solid-npm-0.7.19-1feaf7867b.patch":
-  version: 0.7.19
-  resolution: "vike-solid@patch:vike-solid@npm%3A0.7.19#~/.yarn/patches/vike-solid-npm-0.7.19-1feaf7867b.patch::version=0.7.19&hash=6e8700"
+"vike-solid@patch:vike-solid@npm%3A0.8.0#~/.yarn/patches/vike-solid-npm-0.8.0-8615aad89e.patch":
+  version: 0.8.0
+  resolution: "vike-solid@patch:vike-solid@npm%3A0.8.0#~/.yarn/patches/vike-solid-npm-0.8.0-8615aad89e.patch::version=0.8.0&hash=6e8700"
   dependencies:
     isbot-fast: "npm:^1.2.0"
-    vite-plugin-solid: "npm:^2.11.10"
   peerDependencies:
     solid-js: ^1.8.7
     vike: ">=0.4.250"
-  checksum: 10c0/0a95ccd185321fb3a8b18b97d4d2a3a434a451902f1424cfa74c812f62e4371e3ce77ea9fbee53f4fba4b1ddf4d3f6ee4768a27dd6d25ec02d3149af300693d3
+    vite-plugin-solid: ^2.11.10
+  checksum: 10c0/54c6697e16c2c9e62fbd9ed0be9e147ffe6deddabca58a8ec86b4aa651df03009f425f2574c260461cb6559849492b049a5f2f36a691e1ea1766e3b171ec54eb
   languageName: node
   linkType: hard
 
