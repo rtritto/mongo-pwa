@@ -5998,9 +5998,9 @@ __metadata:
     tailwindcss: "npm:^4.1.18"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.54.0"
-    vike: "patch:vike@npm%3A0.4.252#~/.yarn/patches/vike-npm-0.4.252-a1dc3275f3.patch"
+    vike: "patch:vike@npm%3A0.4.253#~/.yarn/patches/vike-npm-0.4.253-75e66e1417.patch"
     vike-photon: "npm:^0.1.24"
-    vike-solid: "patch:vike-solid@npm%3A0.8.0#~/.yarn/patches/vike-solid-npm-0.8.0-8615aad89e.patch"
+    vike-solid: "patch:vike-solid@npm%3A0.8.1#~/.yarn/patches/vike-solid-npm-0.8.1-7bd34180b2.patch"
     vite: "npm:^7.3.1"
     vite-plugin-pwa: "npm:^1.2.0"
     vite-plugin-solid: "npm:^2.11.10"
@@ -7821,35 +7821,35 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike-solid@npm:0.8.0":
-  version: 0.8.0
-  resolution: "vike-solid@npm:0.8.0"
+"vike-solid@npm:0.8.1":
+  version: 0.8.1
+  resolution: "vike-solid@npm:0.8.1"
   dependencies:
     isbot-fast: "npm:^1.2.0"
   peerDependencies:
     solid-js: ^1.8.7
     vike: ">=0.4.250"
     vite-plugin-solid: ^2.11.10
-  checksum: 10c0/55c1a73543af9d9ea39132eff7068c2b617187a1d324dccaa8944fc6291f2ff4753bac599a4f8896403783dec72257148f1207320384d8e8eb6d829a770b0ce5
+  checksum: 10c0/5711e8f2187b82182ee0752bfc91d87231ef7691695fb2fa9b0a928d17a5f4b6a958981d967ca14e795e369325c48c98c48f828b4217ecf9f6c001772393cba7
   languageName: node
   linkType: hard
 
-"vike-solid@patch:vike-solid@npm%3A0.8.0#~/.yarn/patches/vike-solid-npm-0.8.0-8615aad89e.patch":
-  version: 0.8.0
-  resolution: "vike-solid@patch:vike-solid@npm%3A0.8.0#~/.yarn/patches/vike-solid-npm-0.8.0-8615aad89e.patch::version=0.8.0&hash=6e8700"
+"vike-solid@patch:vike-solid@npm%3A0.8.1#~/.yarn/patches/vike-solid-npm-0.8.1-7bd34180b2.patch":
+  version: 0.8.1
+  resolution: "vike-solid@patch:vike-solid@npm%3A0.8.1#~/.yarn/patches/vike-solid-npm-0.8.1-7bd34180b2.patch::version=0.8.1&hash=def004"
   dependencies:
     isbot-fast: "npm:^1.2.0"
   peerDependencies:
     solid-js: ^1.8.7
     vike: ">=0.4.250"
     vite-plugin-solid: ^2.11.10
-  checksum: 10c0/54c6697e16c2c9e62fbd9ed0be9e147ffe6deddabca58a8ec86b4aa651df03009f425f2574c260461cb6559849492b049a5f2f36a691e1ea1766e3b171ec54eb
+  checksum: 10c0/c8fc6a0a884c65a60b5048af62379bf15ba5b90fe2bfff872aed5d78e5623880a43459ea8dedfc9dc85047cd7080da2d903fad6c1b18cb71791569abce4b9431
   languageName: node
   linkType: hard
 
-"vike@npm:0.4.252":
-  version: 0.4.252
-  resolution: "vike@npm:0.4.252"
+"vike@npm:0.4.253":
+  version: 0.4.253
+  resolution: "vike@npm:0.4.253"
   dependencies:
     "@babel/core": "npm:^7.28.5"
     "@babel/types": "npm:^7.28.5"
@@ -7879,13 +7879,13 @@ __metadata:
       optional: true
   bin:
     vike: bin.js
-  checksum: 10c0/6c864b95b95c5791c1cb20fb6204e7ec6fdd513657dc4a9688997f267d255b6770ff19bf049648ae093e7ef24f2c67acd756a00dd8748d272666b17032531f08
+  checksum: 10c0/07632d7ff38192a820b2123c6a020dacbf785d97a357b1cd0fb8ba78f0015c5e46a541b442707136543d1a0be27876226e907172fa9dc0d9a823e52deb7f34dc
   languageName: node
   linkType: hard
 
-"vike@patch:vike@npm%3A0.4.252#~/.yarn/patches/vike-npm-0.4.252-a1dc3275f3.patch":
-  version: 0.4.252
-  resolution: "vike@patch:vike@npm%3A0.4.252#~/.yarn/patches/vike-npm-0.4.252-a1dc3275f3.patch::version=0.4.252&hash=e26f1d"
+"vike@patch:vike@npm%3A0.4.253#~/.yarn/patches/vike-npm-0.4.253-75e66e1417.patch":
+  version: 0.4.253
+  resolution: "vike@patch:vike@npm%3A0.4.253#~/.yarn/patches/vike-npm-0.4.253-75e66e1417.patch::version=0.4.253&hash=e26f1d"
   dependencies:
     "@babel/core": "npm:^7.28.5"
     "@babel/types": "npm:^7.28.5"
@@ -7915,7 +7915,7 @@ __metadata:
       optional: true
   bin:
     vike: bin.js
-  checksum: 10c0/17bab23b6501d5b89d02b2973e1875cd99104aaa01540d16e66410c218ffbc3da3887adaef9e33939e01ff7a45792cd4e62bdd7b4e2b95e6377b1812bb42c070
+  checksum: 10c0/d92eff564abea47daaf56e662c38168786811eb4d542efbf397651b86bb87d2424401d7f0707b01d08a8030c7268fa2b7e9b6ebafe00f7a8dbf08f279026ac7a
   languageName: node
   linkType: hard
 
