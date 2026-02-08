@@ -28,7 +28,7 @@
     "flat": "^6.0.1",
     "hono": "^4.11.8",
     "mongodb": "^7.1.0",
-    "mongodb-query-parser": "^4.7.5",
+    "mongodb-query-parser": "patch:mongodb-query-parser@npm%3A4.7.5#~/.yarn/patches/mongodb-query-parser-npm-4.7.5-11ff35425e.patch",
     "solid-js": "^1.9.11"
   },
   "devDependencies": {
