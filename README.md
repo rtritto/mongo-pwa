@@ -26,8 +26,8 @@ A web-based MongoDB admin interface written in Node.js with SolidJS, TailwindCSS
 
 ## Screenshots
 
-| Home Page                                                                      | Database View                                                                                    | Collection View                                                                       | Editing A Document                                                     |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Home Page | Database View | Collection View | Editing A Document
+| - | - | - | -
 | <img src="http://i.imgur.com/XiYhblA.png" title="Home Page showing databases"> | <img src="http://i.imgur.com/XWcIgY1.png" title="Viewing collections & buckets in a database" /> | <img src="https://imgur.com/UmGSr3x.png" title="Viewing documents in a collection" /> | <img src="https://imgur.com/lL38abn.png" title="Editing a document" /> |
 
 These screenshots are from version 0.30.40
@@ -38,21 +38,25 @@ View the album for more screenshots: (server status, database views, etc..)
 
 To test or develop with the latest version (_master_ branch) you can install using this git repository:
 
-    npm i mongo-pwa@github:mongo-pwa/mongo-pwa
-    OR
-    yarn add mongo-pwa@github:mongo-pwa/mongo-pwa
-    OR
-    pnpm add mongo-pwa@github:mongo-pwa/mongo-pwa
+```sh
+  npm i mongo-pwa@github:mongo-pwa/mongo-pwa
+  OR
+  yarn add mongo-pwa@github:mongo-pwa/mongo-pwa
+  OR
+  pnpm add mongo-pwa@github:mongo-pwa/mongo-pwa
+```
 
 Copy config.default.js to config.js and edit the default property to fit your local environment
 
 **Run the development build using:**
 
-    npm run start-dev
-    OR
-    yarn start-dev
-    OR
-    pnpm run start-dev
+```sh
+  npm run start-dev
+  OR
+  yarn start-dev
+  OR
+  pnpm run start-dev
+```
 
 ## Usage (npm / yarn / pnpm / CLI)
 
@@ -60,19 +64,23 @@ _mongo-pwa_ requires Node.js v18.18 or higher.
 
 **To install:**
 
-    npm i -g mongo-pwa
-    OR
-    yarn add -g mongo-pwa
-    OR
-    pnpm add -g mongo-pwa
+```sh
+  npm i -g mongo-pwa
+  OR
+  yarn add -g mongo-pwa
+  OR
+  pnpm add -g mongo-pwa
+```
 
 Or if you want to install a non-global copy:
 
-    npm i mongo-pwa
-    OR
-    yarn add mongo-pwa
-    OR
-    pnpm add mongo-pwa
+```sh
+  npm i mongo-pwa
+  OR
+  yarn add mongo-pwa
+  OR
+  pnpm add mongo-pwa
+```
 
 By default `config.default.js` is used where the basic access authentication is `admin`:`pass`. This is obviously not safe, and there are warnings in the console.
 
@@ -86,24 +94,34 @@ Fill in your MongoDB connection details and any other options you want to change
 
 **You will also need to create a .env file with the variables for your cookie and session secrets, these are just default values**
 
-    ME_CONFIG_SITE_COOKIESECRET: 'cookiesecret',
-    ME_CONFIG_SITE_SESSIONSECRET: 'sessionsecret',
+```js
+  ME_CONFIG_SITE_COOKIESECRET: 'cookiesecret',
+  ME_CONFIG_SITE_SESSIONSECRET: 'sessionsecret',
+```
 
 **To run:**
 
-    cd YOUR_PATH/node_modules/mongo-pwa/ && node app.js
+```sh
+cd YOUR_PATH/node_modules/mongo-pwa/ && node app.js
+```
 
 or if you installed it globally, you can immediately start mongo-pwa like this:
 
-    mongo-pwa
+```sh
+mongo-pwa
+```
 
 You can add some configuration options. Example:
 
-    node app.js --url mongodb://127.0.0.1:27017
+```sh
+node app.js --url mongodb://127.0.0.1:27017
+```
 
 or:
 
-    mongo-pwa --URL mongodb://127.0.0.1:27017
+```sh
+mongo-pwa --URL mongodb://127.0.0.1:27017
+```
 
 Configuration options:
 Option | Short | Description
@@ -118,10 +136,12 @@ Option | Short | Description
 
 **To mount as Express 4 middleware (see `node_modules/mongo-express/app.js`):**
 
-    var mongo_express = require('mongo-express/lib/middleware')
-    var mongo_express_config = require('./mongo_express_config')
+```js
+  const mongo_express = require('mongo-express/lib/middleware')
+  const mongo_express_config = require('./mongo_express_config')
 
-    app.use('/mongo_express', mongo_express(mongo_express_config))
+  app.use('/mongo_express', mongo_express(mongo_express_config))
+```
 
 ## Usage (Docker)
 
@@ -129,7 +149,7 @@ Make sure you have a running [MongoDB container](https://hub.docker.com/_/mongo/
 
 **Use [the Docker Hub image](https://hub.docker.com/_/mongo-express/):**
 
-```console
+```sh
 $ docker run -it --rm -p 8081:8081 --network some-network mongo-express
 ```
 
@@ -137,15 +157,15 @@ $ docker run -it --rm -p 8081:8081 --network some-network mongo-express
 
 Build an image from the project directory, then run the image.
 
-```console
+```sh
 $ docker build -t mongo-express .
 $ docker run -it --rm -p 8081:8081 --network some-network mongo-express
 ```
 
 You can use the following [environment variables](https://docs.docker.com/reference/run/#env-environment-variables) to modify the container's configuration:
 
-| Name                                           | Default                                             | Description                                                                                                                                                                     |
-| - | - | - |
+| Name | Default | Description
+| - | - | -
 | `ME_CONFIG_MONGODB_URL` | `mongodb://admin:pass@localhost:27017/db?ssl=false` | |
 | `ME_CONFIG_MONGODB_ENABLE_ADMIN` | `false` | Enable administrator access. Send strings: `"true"` or `"false"`. |
 | `ME_CONFIG_MONGODB_AUTH_USERNAME` | `admin` | Database username (only needed if `ENABLE_ADMIN` is `"false"`). |
@@ -196,13 +216,15 @@ You can use the following [environment variables](https://docs.docker.com/refere
 
 **Example:**
 
-    docker run -it --rm \
-        --name mongo-express \
-        --network web_default \
-        -p 8081:8081 \
-        -e ME_CONFIG_BASICAUTH_ENABLED="false" \
-        -e ME_CONFIG_MONGODB_URL="mongodb://mongo:27017" \
-        mongo-express
+```sh
+docker run -it --rm \
+    --name mongo-express \
+    --network web_default \
+    -p 8081:8081 \
+    -e ME_CONFIG_BASICAUTH_ENABLED="false" \
+    -e ME_CONFIG_MONGODB_URL="mongodb://mongo:27017" \
+    mongo-express
+```
 
 This example links to a container name typical of `docker-compose`, changes the editor's color theme, and disables basic authentication.
 
@@ -249,7 +271,7 @@ Then, take the following action to customize to your environment:
 
 If you install `mongo-express` as a *package*, install the `express-openid-connect` dependency:
 
-```bash
+```sh
 yarn add express-openid-connect
 ```
 
@@ -257,7 +279,7 @@ yarn add express-openid-connect
 
 The current implementation supports OAuth2 Authorization Code Flow Grant, to make it work you need to setup a client on your Identity Provider, and pass the parameters to the application:
 
-```bash
+```sh
 ME_CONFIG_OIDCAUTH_ENABLED=true
 ME_CONFIG_OIDCAUTH_BASEURL=https://<domain>/<base-url>
 ME_CONFIG_OIDCAUTH_ISSUER=<authority>
@@ -288,8 +310,8 @@ Pull Requests are always welcome! 💖
 
 ## E2E Testing
 
-    We are currently trying to use Cypress, to open cypress use the command `cypress open`
-    To instrument the code to allow the E2E coverage to run, please run this command: `yarn nyc instrument --compact=false lib instrumented`
+> We are currently trying to use Cypress, to open cypress use the command `cypress open`
+To instrument the code to allow the E2E coverage to run, please run this command: `yarn nyc instrument --compact=false lib instrumented`
 
 ## Not Tested
 
@@ -417,3 +439,6 @@ Here is an example of a document which can be read/edited in mongo-express (medi
       "func": Code(function() { alert('Hello World!') }),
       "symbol": Symbol("test")
     }
+
+TODO
+- https://github.com/mongo-express/mongo-express/pull/1809
