@@ -38,7 +38,10 @@ export default async function collectionExport(c: Context) {
   for (const line of lines) {
     try {
       const parsedData = EJSON.parse(line)
-      docs.push(...parsedData)
+      // Use for loop instead of spread to avoid stack overflow with large arrays
+      for (const doc of parsedData) {
+        docs.push(doc)
+      }
     } catch (error) {
       console.error(error)
       return c.json({ message: 'Bad file content' }, 400)
