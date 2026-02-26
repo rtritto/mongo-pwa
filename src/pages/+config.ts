@@ -27,7 +27,8 @@ export default {
       : 'server/entry.node.ts',
     standalone: {
       bundle: true,
-      minify: true
+      minify: true,
+      external: ['mongodb-query-parser']
     },
     target: process.env.ENTRY_NODE === 'true' ? 'node' : 'vercel'
   }

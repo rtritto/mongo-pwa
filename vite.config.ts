@@ -46,7 +46,10 @@ export default defineConfig(async ({ mode }) => {
     build: {
       target: 'esnext',
       outDir: '../dist',
-      minify: true
+      minify: true,
+      rollupOptions: {
+        external: ['mongodb-query-parser']
+      }
     },
     envPrefix: 'ME_CONFIG_',
     esbuild: {
