@@ -5,7 +5,7 @@ import { HighlightStyle, indentUnit, syntaxHighlighting } from '@codemirror/lang
 import { EditorState } from '@codemirror/state'
 import { oneDarkHighlightStyle, oneDarkTheme } from '@codemirror/theme-one-dark'
 import { EditorView, keymap, lineNumbers } from '@codemirror/view'
-import { tags as t } from '@lezer/highlight'
+import { tags } from '@lezer/highlight'
 import { createEffect, createSignal, on, onCleanup, onMount } from 'solid-js'
 
 type CustomEditorView = EditorView & {
@@ -16,7 +16,7 @@ type CustomEditorView = EditorView & {
 // Add color to key values
 const customHighlightStyle = HighlightStyle.define([
   {
-    tag: [t.labelName],
+    tag: [tags.labelName],
     color: '#e06c75'
   }
 ])
