@@ -22,6 +22,7 @@
     "@codemirror/view": "^6.40.0",
     "@json2csv/plainjs": "^7.0.6",
     "@lezer/highlight": "^1.2.3",
+    "@photonjs/hono": "^0.1.12",
     "@solid-primitives/pagination": "^0.5.1",
     "bson": "^7.2.0",
     "codemirror": "^6.0.2",
@@ -29,10 +30,12 @@
     "hono": "^4.12.8",
     "mongodb": "^7.1.0",
     "mongodb-query-parser": "^4.7.6",
-    "solid-js": "^1.9.11"
+    "solid-js": "^1.9.11",
+    "vike": "patch:vike@npm%3A0.4.255#~/.yarn/patches/vike-npm-0.4.255-89540302e8.patch",
+    "vike-photon": "^0.1.24",
+    "vike-solid": "patch:vike-solid@npm%3A0.8.1#~/.yarn/patches/vike-solid-npm-0.8.1-7bd34180b2.patch"
   },
   "devDependencies": {
-    "@photonjs/hono": "^0.1.12",
     "@tailwindcss/vite": "^4.2.1",
     "@types/node": "^25.5.0",
     "@yarnpkg/sdks": "^3.2.3",
@@ -43,9 +46,6 @@
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.1",
-    "vike": "patch:vike@npm%3A0.4.255#~/.yarn/patches/vike-npm-0.4.255-89540302e8.patch",
-    "vike-photon": "^0.1.24",
-    "vike-solid": "patch:vike-solid@npm%3A0.8.1#~/.yarn/patches/vike-solid-npm-0.8.1-7bd34180b2.patch",
     "vite": "^7.3.1",
     "vite-plugin-pwa": "^1.2.0",
     "vite-plugin-solid": "^2.11.11"
