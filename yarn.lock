@@ -1393,7 +1393,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint-community/eslint-utils@npm:^4.8.0, @eslint-community/eslint-utils@npm:^4.9.0, @eslint-community/eslint-utils@npm:^4.9.1":
+"@eslint-community/eslint-utils@npm:^4.8.0, @eslint-community/eslint-utils@npm:^4.9.1":
   version: 4.9.1
   resolution: "@eslint-community/eslint-utils@npm:4.9.1"
   dependencies:
@@ -1646,14 +1646,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mongodb-js/shell-bson-parser@npm:^1.5.6":
-  version: 1.5.6
-  resolution: "@mongodb-js/shell-bson-parser@npm:1.5.6"
+"@mongodb-js/shell-bson-parser@npm:^1.5.7":
+  version: 1.5.7
+  resolution: "@mongodb-js/shell-bson-parser@npm:1.5.7"
   dependencies:
     acorn: "npm:^8.14.1"
   peerDependencies:
     bson: ^4.6.3 || ^5 || ^6.10.3 || ^7.0.0
-  checksum: 10c0/c3b2a6fbbf022b3a3e39fdc9eaaa8aa1e5864db142e6956fea21dfe2961532e97b956274105f23751112d0768ab6d827aa8e86901199310cb9c629b64643c354
+  checksum: 10c0/874d795170ede5321edb620b402df441a034798835c5534dc87f1eb690803227702c124b5fd104b9fc438d5a40d77fc603b371525efed731fc0d3bde83723aa2
   languageName: node
   linkType: hard
 
@@ -1738,9 +1738,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@photonjs/core@npm:^0.1.20, @photonjs/core@npm:^0.1.21":
-  version: 0.1.21
-  resolution: "@photonjs/core@npm:0.1.21"
+"@photonjs/core@npm:^0.1.20, @photonjs/core@npm:^0.1.22":
+  version: 0.1.22
+  resolution: "@photonjs/core@npm:0.1.22"
   dependencies:
     "@brillout/vite-plugin-server-entry": "npm:^0.7.15"
     "@universal-middleware/cloudflare": "npm:^0.4.10"
@@ -1756,7 +1756,7 @@ __metadata:
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 10c0/9446d38927db286c5e26ecf02cbbc849b17bfb8fb5e8ba1d40cf5ba2c849f45d73602c28054f8844c8e201e63fcd0284e538ae624b21f6ee5009ad3a4991270c
+  checksum: 10c0/b4772967659bfef76f3b5a6597343f15fd94dae04adc17bbeb7365a962f5c02ad75ff04e6d20d3493cae815979d48ec28165d4d6bc5c70eaa405f440be89fb64
   languageName: node
   linkType: hard
 
@@ -3573,7 +3573,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ci-info@npm:^4.0.0, ci-info@npm:^4.3.1":
+"ci-info@npm:^4.0.0, ci-info@npm:^4.4.0":
   version: 4.4.0
   resolution: "ci-info@npm:4.4.0"
   checksum: 10c0/44156201545b8dde01aa8a09ee2fe9fc7a73b1bef9adbd4606c9f61c8caeeb73fb7a575c88b0443f7b4edb5ee45debaa59ed54ba5f99698339393ca01349eb3a
@@ -3679,7 +3679,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js-compat@npm:^3.46.0, core-js-compat@npm:^3.48.0":
+"core-js-compat@npm:^3.48.0, core-js-compat@npm:^3.49.0":
   version: 3.49.0
   resolution: "core-js-compat@npm:3.49.0"
   dependencies:
@@ -4182,29 +4182,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-unicorn@npm:^63.0.0":
-  version: 63.0.0
-  resolution: "eslint-plugin-unicorn@npm:63.0.0"
+"eslint-plugin-unicorn@npm:^64.0.0":
+  version: 64.0.0
+  resolution: "eslint-plugin-unicorn@npm:64.0.0"
   dependencies:
     "@babel/helper-validator-identifier": "npm:^7.28.5"
-    "@eslint-community/eslint-utils": "npm:^4.9.0"
+    "@eslint-community/eslint-utils": "npm:^4.9.1"
     change-case: "npm:^5.4.4"
-    ci-info: "npm:^4.3.1"
+    ci-info: "npm:^4.4.0"
     clean-regexp: "npm:^1.0.0"
-    core-js-compat: "npm:^3.46.0"
+    core-js-compat: "npm:^3.49.0"
     find-up-simple: "npm:^1.0.1"
-    globals: "npm:^16.4.0"
+    globals: "npm:^17.4.0"
     indent-string: "npm:^5.0.0"
     is-builtin-module: "npm:^5.0.0"
     jsesc: "npm:^3.1.0"
     pluralize: "npm:^8.0.0"
     regexp-tree: "npm:^0.1.27"
     regjsparser: "npm:^0.13.0"
-    semver: "npm:^7.7.3"
+    semver: "npm:^7.7.4"
     strip-indent: "npm:^4.1.1"
   peerDependencies:
     eslint: ">=9.38.0"
-  checksum: 10c0/bc3550322a2b008ea9252e1a94a4f12a6c96c4387be563a5d62b879078cbe6b01c957843d31ec7d09fd8d8cf287ac00f8b93666721ff916b0166d4e82c80926c
+  checksum: 10c0/802b556ecaf93fe36217d8bcd9f79b53cc4156bbb75c06f06128a0bd32b2ec94a808dbc5e4c36228895cf6eb0df705337a47b409272ffdc99a40cb08487cb029
   languageName: node
   linkType: hard
 
@@ -4744,10 +4744,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^16.4.0":
-  version: 16.5.0
-  resolution: "globals@npm:16.5.0"
-  checksum: 10c0/615241dae7851c8012f5aa0223005b1ed6607713d6813de0741768bd4ddc39353117648f1a7086b4b0fa45eae733f1c0a0fe369aa4e543bb63f8de8990178ea9
+"globals@npm:^17.4.0":
+  version: 17.4.0
+  resolution: "globals@npm:17.4.0"
+  checksum: 10c0/2be9e8c2b9035836f13d420b22f0247a328db82967d3bebfc01126d888ed609305f06c05895914e969653af5c6ba35fd7a0920f3e6c869afa60666c810630feb
   languageName: node
   linkType: hard
 
@@ -5930,17 +5930,17 @@ __metadata:
     daisyui: "npm:^5.5.19"
     eslint: "npm:^9.39.2"
     eslint-plugin-solid: "npm:^0.14.5"
-    eslint-plugin-unicorn: "npm:^63.0.0"
+    eslint-plugin-unicorn: "npm:^64.0.0"
     flat: "npm:^6.0.1"
     hono: "npm:^4.12.9"
     mongodb: "npm:^7.1.1"
-    mongodb-query-parser: "npm:^4.7.6"
+    mongodb-query-parser: "npm:^4.7.7"
     solid-js: "npm:^1.9.12"
     tailwindcss: "npm:^4.2.2"
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.57.2"
     vike: "patch:vike@npm%3A0.4.255#~/.yarn/patches/vike-npm-0.4.255-89540302e8.patch"
-    vike-photon: "npm:^0.1.25"
+    vike-photon: "npm:^0.1.26"
     vike-solid: "patch:vike-solid@npm%3A0.8.1#~/.yarn/patches/vike-solid-npm-0.8.1-7bd34180b2.patch"
     vite: "npm:^7.3.1"
     vite-plugin-pwa: "npm:^1.2.0"
@@ -5958,17 +5958,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb-query-parser@npm:^4.7.6":
-  version: 4.7.6
-  resolution: "mongodb-query-parser@npm:4.7.6"
+"mongodb-query-parser@npm:^4.7.7":
+  version: 4.7.7
+  resolution: "mongodb-query-parser@npm:4.7.7"
   dependencies:
-    "@mongodb-js/shell-bson-parser": "npm:^1.5.6"
+    "@mongodb-js/shell-bson-parser": "npm:^1.5.7"
     debug: "npm:^4.4.0"
     javascript-stringify: "npm:^2.1.0"
     lodash: "npm:^4.17.21"
   peerDependencies:
     bson: ^4.6.3 || ^5 || ^6.10.3 || ^7.0.0
-  checksum: 10c0/b11a5da6a76d3e48f5f166fac9d837d4f380fc91942eb24af4beec0652b62379f9ea3bde2757fc3a21f03e0f4cd556a69caa6659b7f816e50c314cdb3db35ff9
+  checksum: 10c0/20a0c46d99ed72d263adc1d9f579b2a92daf5596046a1807760dc1bae438f8b65ff5460dd50f7179f3c8abad6bad02c8ccd53f299d89ee42fdecd091574d79be
   languageName: node
   linkType: hard
 
@@ -6895,7 +6895,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.0.0, semver@npm:^7.1.2, semver@npm:^7.3.5, semver@npm:^7.5.3, semver@npm:^7.7.3":
+"semver@npm:^7.0.0, semver@npm:^7.1.2, semver@npm:^7.3.5, semver@npm:^7.5.3, semver@npm:^7.7.3, semver@npm:^7.7.4":
   version: 7.7.4
   resolution: "semver@npm:7.7.4"
   bin:
@@ -7756,13 +7756,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike-photon@npm:^0.1.25":
-  version: 0.1.25
-  resolution: "vike-photon@npm:0.1.25"
+"vike-photon@npm:^0.1.26":
+  version: 0.1.26
+  resolution: "vike-photon@npm:0.1.26"
   dependencies:
     "@brillout/picocolors": "npm:^1.0.30"
     "@brillout/vite-plugin-server-entry": "npm:^0.7.17"
-    "@photonjs/core": "npm:^0.1.21"
+    "@photonjs/core": "npm:^0.1.22"
     "@photonjs/runtime": "npm:^0.1.16"
     "@universal-middleware/compress": "npm:^0.2.35"
     "@universal-middleware/core": "npm:^0.4.15"
@@ -7783,7 +7783,7 @@ __metadata:
       optional: true
     vite:
       optional: true
-  checksum: 10c0/a4d81f287a525b25250cbcde340579904d3cdb94817a1b046d8e3e9f4180d7e1dd9d8e487455c9e9bbffc555b4b2fae60938f74459ac018cb36fb05e47c1840f
+  checksum: 10c0/439cb3216af008002f1455be0caad2cfa9f8b4bee5ab877b1c992e190621d94e642a30f7b0fb440ca07716af70bd39799049199ae7f0a5be76eb3182121a24cc
   languageName: node
   linkType: hard
 
