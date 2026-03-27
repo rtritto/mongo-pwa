@@ -26,6 +26,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
           <CodeEditor
             value={currentCodeQuery()}
+            readOnly={false}
             onChange={(newCode) => {
               setCurrentCodeQuery(newCode)
               setIsQueryValid(!!toSafeBSON(newCode))
@@ -40,6 +41,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
           <CodeEditor
             value={currentCodeProjection()}
+            readOnly={false}
             onChange={(newCode) => {
               setCurrentCodeProjection(newCode)
               setIsProjectionValid(!!toSafeBSON(newCode))

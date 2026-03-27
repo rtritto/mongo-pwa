@@ -4,15 +4,15 @@ import useCodeEditor from './functions/useCodeEditor'
 
 const CodeEditor: Component<{
   value: string
-  readOnly?: boolean
-  onChange?: (value: string) => void
+  readOnly: boolean
+  onChange: (value: string) => void
 }> = (props) => {
   const isReadOnly = untrack(() => props.readOnly!)
 
   const { html, handleInput, handleKeyDown } = useCodeEditor(
     () => props.value,
     isReadOnly,
-    props.onChange
+    (value) => props.onChange(value)
   )
 
   let textareaRef!: HTMLTextAreaElement

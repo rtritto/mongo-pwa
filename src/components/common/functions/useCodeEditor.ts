@@ -3,7 +3,7 @@ import { createSignal, createEffect } from 'solid-js'
 
 export type UseEditorType = ReturnType<typeof useEditor>
 
-export default function useEditor(initialValue: () => string, readOnly: boolean, onChange?: (value: string) => void) {
+export default function useEditor(initialValue: () => string, readOnly: boolean, onChange: (value: string) => void) {
   const [html, setHtml] = createSignal('')
 
   createEffect(() =>
@@ -21,7 +21,7 @@ export default function useEditor(initialValue: () => string, readOnly: boolean,
   )
 
   const handleInput = (val: string) => {
-    if (onChange) onChange(val)
+    onChange(val)
   }
 
   // Advanced Tab Key Handling (Shift+Tab and Tab)

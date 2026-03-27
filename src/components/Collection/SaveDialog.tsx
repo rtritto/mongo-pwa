@@ -41,6 +41,7 @@ const SaveDialog: Component<{
 
             <CodeEditor
               value={code()}
+              readOnly={false}
               onChange={(newCode) => {
                 setCode(newCode)
                 setIsTextValid(!!toSafeBSON(newCode))
