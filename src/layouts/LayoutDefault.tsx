@@ -1,5 +1,6 @@
 import './styles.css'
 import './tailwind.css'
+import './speed-highlight.css'
 
 import { type Component, type JSX, Show, createSignal, onMount } from 'solid-js'
 import { useData } from 'vike-solid/useData'

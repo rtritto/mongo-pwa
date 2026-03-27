@@ -1,7 +1,7 @@
 import { createSignal, type Component } from 'solid-js'
 import { navigate } from 'vike/client/router'
 
-import createCodeMirror from '@/components/common/functions/createCodeMirror'
+import CodeEditor from '@/components/common/CodeEditor'
 import IconSearch from '@/components/Icons/IconSearch'
 import { toSafeBSON } from '@/utils/bson'
 
@@ -10,8 +10,8 @@ const template = `{
 }`
 
 const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
-  const { editorView: editorViewQuery, ref: editorRefQuery } = createCodeMirror(template)
-  const { editorView: editorViewProjection, ref: editorRefProjection } = createCodeMirror(template)
+  const [currentCodeQuery, setCurrentCodeQuery] = createSignal(template)
+  const [currentCodeProjection, setCurrentCodeProjection] = createSignal(template)
   const [isQueryValid, setIsQueryValid] = createSignal(true)
   const [isProjectionValid, setIsProjectionValid] = createSignal(true)
   const [checkboxAggregate, setCheckboxAggregate] = createSignal(false)
@@ -24,10 +24,11 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             <span class="label-text"><b>Query</b></span>
           </label>
 
-          <div
-            ref={editorRefQuery}
-            onKeyUp={() => {
-              setIsQueryValid(!!toSafeBSON(editorViewQuery()!.state.doc.toString()))
+          <CodeEditor
+            value={currentCodeQuery()}
+            onChange={(newCode) => {
+              setCurrentCodeQuery(newCode)
+              setIsQueryValid(!!toSafeBSON(newCode))
             }}
           />
         </div>
@@ -37,10 +38,11 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             <span class="label-text"><b>Projection</b></span>
           </label>
 
-          <div
-            ref={editorRefProjection}
-            onKeyUp={() => {
-              setIsProjectionValid(!!toSafeBSON(editorViewProjection()!.state.doc.toString()))
+          <CodeEditor
+            value={currentCodeProjection()}
+            onChange={(newCode) => {
+              setCurrentCodeProjection(newCode)
+              setIsProjectionValid(!!toSafeBSON(newCode))
             }}
           />
         </div>
@@ -57,11 +59,11 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
         <button
           class="btn bg-blue-500"
-          // disabled={!isQueryValid() || !isProjectionValid()}
+          disabled={!isQueryValid() || !isProjectionValid()}
           onClick={async () => {
             const queryStr = [
-              ...editorViewQuery()!.state.doc.toString() ? [`query=${encodeURIComponent(editorViewQuery()!.state.doc.toString())}`] : [],
-              ...editorViewProjection()!.state.doc.toString() ? [`projection=${encodeURIComponent(editorViewProjection()!.state.doc.toString())}`] : [],
+              ...currentCodeQuery() ? [`query=${encodeURIComponent(currentCodeQuery())}`] : [],
+              ...currentCodeProjection() ? [`projection=${encodeURIComponent(currentCodeProjection())}`] : [],
               ...checkboxAggregate() ? ['aggregate=true'] : []
             ].join('&')
             await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}?${queryStr}`)

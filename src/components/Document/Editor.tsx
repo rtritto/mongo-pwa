@@ -2,37 +2,38 @@ import { type Component, createSignal, untrack } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import DeleteDocument from '@/components/Collection/DeleteDocument'
-import createCodeMirror from '@/components/common/functions/createCodeMirror'
 import BackButton from './BackButton'
 import SaveButton from './SaveButton'
+import CodeEditor from '@/components/common/CodeEditor'
 import { toSafeBSON } from '@/utils/bson'
 
 const Editor: Component<{
   data: DataDocument
-  setData: SetStoreFunction<any>
+  setData: SetStoreFunction<DataDocument>
 }> = (props) => {
-  const { editorView, ref: editorRef } = createCodeMirror(
-    untrack(() => props.data.docString),
-    { readOnly: untrack(() => props.data.readOnly) }
+  const [code, setCode] = createSignal(untrack(() => props.data.docString))
+  const [isValid, setIsValid] = createSignal(true)
+
+  const handleChange = (newCode: string) => {
+    setCode(newCode)
+    setIsValid(!!toSafeBSON(newCode))
+  }
+
+  const Buttons = () => (
+    <div class="flex justify-between">
+      <BackButton data={props.data} setData={props.setData} isEqual={() => props.data.docString === code()} />
+
+      <SaveButton data={props.data} setData={props.setData} disabled={!isValid()} code={code()} />
+    </div>
   )
-  const [isTextValid, setIsTextValid] = createSignal(true)
 
   return (
     <div>
-      <BackButton view={editorView()!} data={props.data} setData={props.setData} />
+      <Buttons />
 
-      <SaveButton view={editorView()!} data={props.data} setData={props.setData} disabled={!isTextValid()} />
+      <CodeEditor value={code()} readOnly={untrack(() => props.data.readOnly)} onChange={handleChange} />
 
-      <div
-        ref={editorRef}
-        onKeyUp={() => {
-          setIsTextValid(!!toSafeBSON(editorView()!.state.doc.toString()))
-        }}
-      />
-
-      <BackButton view={editorView()!} data={props.data} setData={props.setData} />
-
-      <SaveButton view={editorView()!} data={props.data} setData={props.setData} disabled={!isTextValid()} />
+      <Buttons />
 
       <div class="m-2">
         <DeleteDocument

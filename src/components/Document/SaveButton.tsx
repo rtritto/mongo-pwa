@@ -2,16 +2,15 @@ import { type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 import { navigate } from 'vike/client/router'
 
-import type { CustomEditorView } from '@/components/common/functions/createCodeMirror'
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconSave from '@/components/Icons/IconSave'
 import { HEADERS_JSON } from '@/utils/constants'
 
 const SaveButton: Component<{
-  view: CustomEditorView
   data: DataDocument
   setData: SetStoreFunction<any>
   disabled: boolean
+  code: string
 }> = (props) => {
   return (
     <button
@@ -26,7 +25,7 @@ const SaveButton: Component<{
             body: JSON.stringify({
               database: props.data.selectedDatabase,
               collection: props.data.selectedCollection,
-              doc: props.view.state.doc.toString(),
+              doc: props.code,
               _id: props.data._id,
               sub_type: props.data.subtype
             })

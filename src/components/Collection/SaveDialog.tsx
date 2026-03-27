@@ -1,7 +1,7 @@
 import { type Component, createSignal, Show, untrack } from 'solid-js'
 
 import IconAdd from '@/components/Icons/IconAdd'
-import createCodeMirror from '@/components/common/functions/createCodeMirror'
+import CodeEditor from '@/components/common/CodeEditor'
 import { toSafeBSON } from '@/utils/bson'
 
 const SaveDialog: Component<{
@@ -12,7 +12,8 @@ const SaveDialog: Component<{
   handleSave: (doc: string, dialogRef: HTMLDialogElement) => Promise<void>
 }> = (props) => {
   let dialogRef!: HTMLDialogElement
-  const { editorView, ref: editorRef } = createCodeMirror(untrack(() => props.template))
+  const template = untrack(() => props.template)
+  const [code, setCode] = createSignal(template)
   const [isTextValid, setIsTextValid] = createSignal(true)
 
   return (
@@ -20,7 +21,7 @@ const SaveDialog: Component<{
       <button class={`btn btn-sm bg-green-500 py-0.5`} onClick={() => {
         dialogRef.showModal()
         // Reset
-        editorView()?.updateDoc(props.template)
+        setCode(template)
       }}>
         <IconAdd />
 
@@ -38,10 +39,11 @@ const SaveDialog: Component<{
               </div>
             </Show>
 
-            <div
-              ref={editorRef}
-              onKeyUp={() => {
-                setIsTextValid(!!toSafeBSON(editorView()!.state.doc.toString()))
+            <CodeEditor
+              value={code()}
+              onChange={(newCode) => {
+                setCode(newCode)
+                setIsTextValid(!!toSafeBSON(newCode))
               }}
             />
 
@@ -49,11 +51,8 @@ const SaveDialog: Component<{
               <button
                 class="btn bg-green-500 py-0.5"
                 type="submit"
-                // TODO always disabled on PROD
-                // disabled={!isTextValid()}
-                onClick={async () => (
-                  await props.handleSave(editorView()!.state.doc.toString(), dialogRef)
-                )}
+                disabled={!isTextValid()}
+                onClick={async () => await props.handleSave(code(), dialogRef)}
               >
                 Save
               </button>
