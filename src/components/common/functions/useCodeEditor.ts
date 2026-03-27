@@ -7,10 +7,14 @@ export default function useEditor(initialValue: () => string, readOnly: boolean,
   const [html, setHtml] = createSignal('')
 
   createEffect(() =>
-    // To avoid issues with text align and scroll,
-    // disable multiline to hide line numbers;
-    // after it's added manually
-    highlightText(initialValue(), 'js', false)
+    highlightText(
+      initialValue(),
+      'js',
+      // To avoid issues with text align and scroll,
+      // disable multiline to hide line numbers;
+      // after manually add line numbers
+      false
+    )
       .then((highlighted) => {
         setHtml(highlighted)
       })
