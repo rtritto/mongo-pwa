@@ -7,7 +7,7 @@ import SearchSimple from './SearchSimple'
 const SearchDocuments: Component<{
   data: DataCollection
 }> = (props) => {
-  const [activeTab, setActiveTab] = createSignal(0)
+  const [activeTab, setActiveTab] = createSignal((props.data.query || props.data.projection) ? 1 : 0)
 
   const SEARCH_LABELS = {
     Simple: <SearchSimple data={props.data} />,

@@ -12,11 +12,11 @@ const template = `{
 }`
 
 const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
-  const [currentCodeQuery, setCurrentCodeQuery] = createSignal(template)
-  const [currentCodeProjection, setCurrentCodeProjection] = createSignal(template)
+  const [currentCodeQuery, setCurrentCodeQuery] = createSignal(props.data.query || template)
+  const [currentCodeProjection, setCurrentCodeProjection] = createSignal(props.data.projection || template)
+  const [checkboxAggregate, setCheckboxAggregate] = createSignal(props.data.aggregate)
   const [isQueryValid, setIsQueryValid] = createSignal(true)
   const [isProjectionValid, setIsProjectionValid] = createSignal(true)
-  const [checkboxAggregate, setCheckboxAggregate] = createSignal(false)
 
   return (
     <div>

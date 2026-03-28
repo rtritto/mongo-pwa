@@ -65,6 +65,8 @@ export const data = async (pageContext: PageContextServer) => {
     count,
     documentsPerPage: config.options.documentsPerPage,
     aggregate: 'aggregate' in search && search.aggregate === 'true',
+    query: 'query' in search && search.query,
+    projection: 'projection' in search && search.projection,
     ..._data
   }
 }
