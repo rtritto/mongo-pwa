@@ -4,7 +4,7 @@ import { connectClient } from '@/server/db'
 import getColumnsAndSetDocs from '@/utils/mappers/getColumnsAndSetDocs'
 import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
 import isValidCollectionName from '@/utils/validations/isValidCollectionName'
-import { checkDatabase } from '@/utils/validationsServer'
+import { checkDatabase } from '@/utils/validations/serverChecks'
 
 export default async function collectionCreate(c: Context) {
   const query = await c.req.json<{

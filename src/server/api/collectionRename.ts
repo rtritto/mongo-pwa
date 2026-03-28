@@ -1,7 +1,7 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkCollection, checkDatabase } from '@/utils/validationsServer'
+import { checkCollection, checkDatabase } from '@/utils/validations/serverChecks'
 
 export default async function collectionRename(c: Context) {
   const { database, collection, newCollection } = await c.req.json<{

@@ -3,7 +3,7 @@ import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
 import { getQuery, getQueryOptions } from '@/utils/queries'
-import { checkCollection, checkDatabase } from '@/utils/validationsServer'
+import { checkCollection, checkDatabase } from '@/utils/validations/serverChecks'
 
 export default async function collectionExport(c: Context) {
   const { database, collection, query } = await c.req.json<{

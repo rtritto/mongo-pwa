@@ -1,7 +1,7 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkCollection, checkDatabase, checkDocument } from '@/utils/validationsServer'
+import { checkCollection, checkDatabase, checkDocument } from '@/utils/validations/serverChecks'
 import { buildId } from '@/utils/mappers/mapUtils'
 
 export default async function documentUpdate(c: Context) {
