@@ -1,4 +1,7 @@
 import { Binary, ObjectId } from 'bson'
+import type { Code, DBRef, Decimal128, Double, Int32, Long, Timestamp } from 'bson'
+
+type BSONValues = Binary | Code | DBRef | Date | Decimal128 | Double | Int32 | Long | ObjectId | Timestamp
 
 const SIZE_UNITS = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'] as const
 const BASE = 1024
@@ -72,4 +75,55 @@ export const buildId = (_id: string | number, sub_type: number | undefined) => {
     // Case 3 : Try as raw ID (e.g. number)
     return Number(_id)
   }
+}
+
+/**
+ * Convert BSON into a plain string:
+ * - { _bsontype: 'ObjectId', id: <Buffer> } => <ObjectId>
+ * - { _bsontype: 'Binary', __id: undefined, sub_type: 4, position: 16, buffer: <Buffer> } => <UUID>
+ * - { _bsontype: 'Binary', __id: undefined, sub_type: <number_not_4>, position: 16, buffer: <Buffer> } => <Binary>
+ */
+export const docToString = function (input: BSONValues): string | number | boolean | null | undefined | object {
+  if (input == null) return input
+
+  // Array → recursive
+  if (Array.isArray(input)) {
+    return input.map((i) => docToString(i))
+  }
+
+  /**
+   * See similar toString in BSON_TO_JS_STRING in src/utils/mongodb-query-parser/stringify.ts for the reverse operation (string to BSON)
+   * @link https://github.com/mongodb-js/devtools-shared/blob/main/packages/query-parser/src/stringify.ts
+   */
+  // Object with specific constructor (BSON types, Date, etc.)
+  if (typeof input === 'object') {
+    switch (input.constructor.name) {
+      case 'Object': {
+        // Plain object → recursive on each key
+        return Object.fromEntries(
+          Object.entries(input).map(([key, value]) => [key, docToString(value)])
+        )
+      }
+      case 'Date': {
+        return (input as Date).toISOString()
+      }
+      case 'Code': {
+        return `${(input as Code).code}${(input as Code).scope ? `,${JSON.stringify((input as Code).scope)}` : ''}`
+      }
+      case 'DBRef': {
+        return `${(input as DBRef).collection},${(input as DBRef).oid.toString()}${(input as DBRef).db ? `,${(input as DBRef).db}` : ''}`
+      }
+      case 'MaxKey':
+      case 'MinKey': {
+        return input.constructor.name
+      }
+      default: {
+        // ObjectId, UUID, Decimal128, Long, Int32, Double, etc.
+        return input.toString()
+      }
+    }
+  }
+
+  // Primitive types (string, number, boolean)
+  return input
 }

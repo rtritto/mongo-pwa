@@ -56,9 +56,7 @@ export const data = async (pageContext: PageContextServer) => {
     success: undefined,
     warning: undefined,
     error: undefined,
-    // Force "toString" method on each value to transform values like pageDocument API
-    // eslint-disable-next-line unicorn/prefer-structured-clone
-    docs: JSON.parse(JSON.stringify(docs)),
+    docs,
     // Generate an array of columns used by all documents visible on this page
     columns,
     // Pagination
