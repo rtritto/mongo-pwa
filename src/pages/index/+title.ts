@@ -1,1 +1,1 @@
-export const title = () => 'Home - Mongo Express'
+export default 'Home - Mongo Express'
