@@ -1,11 +1,11 @@
 import { connectClient } from '@/server/db'
 import { mapServerStats } from '@/utils/mappers/mapInfo'
 
-export const data: DataAsync<DataIndex> = async () => {
+export const data = async () => {
   await connectClient()
   const { config, mongo } = globalThis
 
-  const _data = {
+  return {
     databases: mongo.databases,
     // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
     options: config.options,
@@ -14,12 +14,9 @@ export const data: DataAsync<DataIndex> = async () => {
     selectedDocument: undefined,
     success: undefined,
     warning: undefined,
-    error: undefined
-  } as DataIndex
-
-  if (mongo.adminDb) {
-    _data.stats = mapServerStats(await mongo.adminDb.serverStatus() as ServerStatus)
+    error: undefined,
+    ...mongo.adminDb
+      ? { stats: mapServerStats(await mongo.adminDb.serverStatus() as ServerStatus) }
+      : {}
   }
-
-  return _data
 }

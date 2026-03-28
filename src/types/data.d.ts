@@ -1,49 +1,10 @@
-type DataIndex = {
-  title: string
-  databases: Mongo['databases']
-  options: Options
+type DataIndex = Awaited<ReturnType<typeof import('../pages/index/+data').data>>
 
-  // set undefined when navigating from another page
-  selectedDatabase: undefined
-  // set undefined when navigating from another page
-  selectedCollection: undefined
-  // set undefined when navigating from another page
-  selectedDocument: undefined
+type DataDB = Awaited<ReturnType<typeof import('../pages/db/@dbName/+data').data>>
 
-  stats?: ServerStats
+type DataCollection = Awaited<ReturnType<typeof import('../pages/db/@dbName/@collectionName/+data').data>>
 
-  success?: string
-  warning?: string
-  error?: string
-}
-
-type DataDB = Omit<DataIndex, 'stats' | 'selectedDatabase'> & {
-  collections: Mongo['collections'][string]
-
-  selectedDatabase: string
-
-  stats?: DBStats
-}
-
-type DataCollection = Omit<DataDB, 'stats' | 'selectedCollection'> & {
-  selectedCollection: string
-
-  docs: Record<string, any>[]
-  columns: string[]
-  count: number
-  documentsPerPage: number
-  stats?: CollectionStats
-  indexes?: Index[]
-}
-
-type DataDocument = Omit<DataCollection, 'selectedDocument'> & {
-  docString: string
-  _id: any
-  subtype: number | undefined
-
-  selectedDocument: string
-  readOnly: boolean
-}
+type DataDocument = Awaited<ReturnType<typeof import('../pages/db/@dbName/@collectionName/@document/+data').data>>
 
 // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
 type DataLayout = DataIndex | DataDB | DataCollection | DataDocument

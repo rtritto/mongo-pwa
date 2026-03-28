@@ -4,7 +4,7 @@ import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
 import isValidCollectionName from '@/utils/validations/isValidCollectionName'
 import { toJSString } from '@/utils/mongodb-query-parser'
 
-export const data: DataAsync<DataDocument> = async (pageContext) => {
+export const data = async (pageContext: PageContextServer) => {
   const { dbName, collectionName, document } = pageContext.routeParams
   const validationDbRes = isValidDatabaseName(dbName)
   if (validationDbRes.error) {
@@ -44,5 +44,5 @@ export const data: DataAsync<DataDocument> = async (pageContext) => {
     success: undefined,
     warning: undefined,
     error: undefined
-  } as DataDocument
+  }
 }

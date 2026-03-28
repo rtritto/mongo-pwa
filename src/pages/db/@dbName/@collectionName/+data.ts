@@ -5,7 +5,7 @@ import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
 import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
 import isValidCollectionName from '@/utils/validations/isValidCollectionName'
 
-export const data: DataAsync<DataCollection> = async (pageContext) => {
+export const data = async (pageContext: PageContextServer) => {
   const { dbName, collectionName } = pageContext.routeParams
   const validationDbRes = isValidDatabaseName(dbName)
   if (validationDbRes.error) {
@@ -26,7 +26,25 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
 
   const { columns, docs } = getColumnsAndSetDocs(items)
 
-  const _data = {
+  let _data
+  if (mongo.adminDb && !config.mongodb.awsDocumentDb) {
+    const [stats, indexes] = await Promise.all([
+      collection.aggregate<CollStats>([{ $collStats: { storageStats: {} } }]).next().then((s) => s.storageStats),
+      collection.indexes()
+    ]) as [CollStats, Index[]]
+    const { indexSizes } = stats
+    for (let n = 0, len = indexes.length; n < len; n++) {
+      indexes[n].size = indexSizes[indexes[n].name]
+    }
+    _data = {
+      stats: mapCollectionStats(stats),
+      indexes
+    }
+  } else {
+    _data = {}
+  }
+
+  return {
     title: `Collection: ${collectionName} - Mongo PWA`,
     databases: mongo.databases,
     collections: mongo.collections[dbName],
@@ -45,21 +63,8 @@ export const data: DataAsync<DataCollection> = async (pageContext) => {
     columns,
     // Pagination
     count,
-    documentsPerPage: config.options.documentsPerPage
-  } as DataCollection
-
-  if (mongo.adminDb && !config.mongodb.awsDocumentDb) {
-    const [stats, indexes] = await Promise.all([
-      collection.aggregate<CollStats>([{ $collStats: { storageStats: {} } }]).next().then((s) => s.storageStats),
-      collection.indexes()
-    ]) as [CollStats, Index[]]
-    const { indexSizes } = stats
-    for (let n = 0, len = indexes.length; n < len; n++) {
-      indexes[n].size = indexSizes[indexes[n].name]
-    }
-    _data.stats = mapCollectionStats(stats)
-    _data.indexes = indexes
+    documentsPerPage: config.options.documentsPerPage,
+    aggregate: 'aggregate' in search && search.aggregate === 'true',
+    ..._data
   }
-
-  return _data
 }

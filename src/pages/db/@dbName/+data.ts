@@ -2,7 +2,7 @@ import { connectClient } from '@/server/db'
 import { mapDatabaseStats } from '@/utils/mappers/mapInfo'
 import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
 
-export const data: DataAsync<DataDB> = async (pageContext) => {
+export const data = async (pageContext: PageContextServer) => {
   const { dbName } = pageContext.routeParams
   const validationRes = isValidDatabaseName(dbName)
   if (validationRes.error) {
@@ -11,7 +11,7 @@ export const data: DataAsync<DataDB> = async (pageContext) => {
   await connectClient()
   const { config, mongo } = globalThis
 
-  const _data = {
+  return {
     title: `DB: ${dbName} - Mongo PWA`,
     databases: mongo.databases,
     collections: mongo.collections[dbName],
@@ -22,12 +22,9 @@ export const data: DataAsync<DataDB> = async (pageContext) => {
     selectedDocument: undefined,
     success: undefined,
     warning: undefined,
-    error: undefined
-  } as DataDB
-
-  if (mongo.adminDb) {
-    _data.stats = mapDatabaseStats(await mongo.connections[dbName].db.stats() as DbStats)
+    error: undefined,
+    ...mongo.adminDb
+      ? { stats: mapDatabaseStats(await mongo.connections[dbName].db.stats() as DbStats) }
+      : {}
   }
-
-  return _data
 }
