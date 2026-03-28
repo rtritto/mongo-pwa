@@ -1,4 +1,4 @@
-import { For, createSignal, type Component } from 'solid-js'
+import { For, createEffect, createSignal, type Component } from 'solid-js'
 
 import IconSearch from '@/components/Icons/IconSearch'
 import SearchAdvanced from './SearchAdvanced'
@@ -7,7 +7,12 @@ import SearchSimple from './SearchSimple'
 const SearchDocuments: Component<{
   data: DataCollection
 }> = (props) => {
+  // eslint-disable-next-line solid/reactivity
   const [activeTab, setActiveTab] = createSignal((props.data.query || props.data.projection) ? 1 : 0)
+
+  createEffect(() => {
+    setActiveTab((props.data.query || props.data.projection) ? 1 : 0)
+  })
 
   const SEARCH_LABELS = {
     Simple: <SearchSimple data={props.data} />,

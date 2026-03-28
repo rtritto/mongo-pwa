@@ -1,4 +1,4 @@
-import { createSignal, type Component } from 'solid-js'
+import { createEffect, createSignal, type Component } from 'solid-js'
 import { navigate } from 'vike/client/router'
 
 import CodeEditor from '@/components/common/CodeEditor'
@@ -12,11 +12,20 @@ const template = `{
 }`
 
 const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
+  // eslint-disable-next-line solid/reactivity
   const [currentCodeQuery, setCurrentCodeQuery] = createSignal(props.data.query || template)
+  // eslint-disable-next-line solid/reactivity
   const [currentCodeProjection, setCurrentCodeProjection] = createSignal(props.data.projection || template)
+  // eslint-disable-next-line solid/reactivity
   const [checkboxAggregate, setCheckboxAggregate] = createSignal(props.data.aggregate)
   const [isQueryValid, setIsQueryValid] = createSignal(true)
   const [isProjectionValid, setIsProjectionValid] = createSignal(true)
+
+  createEffect(() => {
+    setCurrentCodeQuery(props.data.query || template)
+    setCurrentCodeProjection(props.data.projection || template)
+    setCheckboxAggregate(props.data.aggregate)
+  })
 
   return (
     <div>
