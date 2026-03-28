@@ -1,10 +1,29 @@
-type DataIndex = Awaited<ReturnType<typeof import('../pages/index/+data').data>>
+type Messages = {
+  success?: string
+  warning?: string
+  error?: string
+}
 
-type DataDB = Awaited<ReturnType<typeof import('../pages/db/@dbName/+data').data>>
+type DataIndex = Omit<
+  Awaited<ReturnType<typeof import('../pages/index/+data').data>>,
+  keyof Messages
+> & Messages
 
-type DataCollection = Awaited<ReturnType<typeof import('../pages/db/@dbName/@collectionName/+data').data>>
+type DataDB = Omit<
+  Awaited<ReturnType<typeof import('../pages/db/@dbName/+data').data>>,
+  keyof Messages
+> & Messages
 
-type DataDocument = Awaited<ReturnType<typeof import('../pages/db/@dbName/@collectionName/@document/+data').data>>
+type DataCollection = Omit<
+  Awaited<ReturnType<typeof import('../pages/db/@dbName/@collectionName/+data').data>>,
+  keyof Messages
+> & Messages
+
+
+type DataDocument = Omit<
+  Awaited<ReturnType<typeof import('../pages/db/@dbName/@collectionName/@document/+data').data>>,
+  keyof Messages
+> & Messages
 
 // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
 type DataLayout = DataIndex | DataDB | DataCollection | DataDocument
