@@ -3,7 +3,9 @@ import { navigate } from 'vike/client/router'
 
 import CodeEditor from '@/components/common/CodeEditor'
 import IconSearch from '@/components/Icons/IconSearch'
-import { toSafeBSON } from '@/utils/bson'
+import isValidQuery from '@/utils/validations/isValidQuery'
+import isValidProjection from '@/utils/validations/isValidProjection'
+import { isValidAggregation } from '@/utils/validations/isValidAggregation'
 
 const template = `{
   
@@ -29,7 +31,10 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             readOnly={false}
             onChange={(newCode) => {
               setCurrentCodeQuery(newCode)
-              setIsQueryValid(!!toSafeBSON(newCode))
+              setIsQueryValid(!(checkboxAggregate()
+                ? isValidAggregation
+                : isValidQuery
+              )(newCode).error)
             }}
           />
         </div>
@@ -44,7 +49,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             readOnly={false}
             onChange={(newCode) => {
               setCurrentCodeProjection(newCode)
-              setIsProjectionValid(!!toSafeBSON(newCode))
+              setIsProjectionValid(!isValidProjection(newCode).error)
             }}
           />
         </div>

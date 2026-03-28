@@ -2,7 +2,7 @@ import { type Component, createSignal, Show, untrack } from 'solid-js'
 
 import IconAdd from '@/components/Icons/IconAdd'
 import CodeEditor from '@/components/common/CodeEditor'
-import { toSafeBSON } from '@/utils/bson'
+import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
 
 const SaveDialog: Component<{
   title: string
@@ -44,7 +44,7 @@ const SaveDialog: Component<{
               readOnly={false}
               onChange={(newCode) => {
                 setCode(newCode)
-                setIsTextValid(!!toSafeBSON(newCode))
+                setIsTextValid(!isValidInsertDocument(newCode).error)
               }}
             />
 

@@ -1,6 +1,6 @@
 import { connectClient } from '@/server/db'
 import { mapDatabaseStats } from '@/utils/mappers/mapInfo'
-import { isValidDatabaseName } from '@/utils/validationsClient'
+import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
 
 export const data: DataAsync<DataDB> = async (pageContext) => {
   const { dbName } = pageContext.routeParams

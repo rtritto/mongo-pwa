@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import { HEADERS_JSON } from '@/utils/constants'
-import { isValidCollectionName } from '@/utils/validationsClient'
+import isValidCollectionName from '@/utils/validations/isValidCollectionName'
 
 const RenameCollection: Component<{
   data: DataCollection

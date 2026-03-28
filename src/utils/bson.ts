@@ -1,5 +1,5 @@
 import { ObjectId } from 'bson'
-import toBSON from 'mongodb-query-parser'
+import toBSON from '@/utils/mongodb-query-parser'
 
 // This function as the name suggests attempts to parse
 // the free form string in to BSON, since the possibilities of failure
@@ -7,8 +7,7 @@ import toBSON from 'mongodb-query-parser'
 export const toSafeBSON = (string: string) => {
   try {
     return toBSON(string)
-  } catch /* (error) */ {
-    // console.error(error)
+  } catch {
     return
   }
 }

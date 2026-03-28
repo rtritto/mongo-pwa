@@ -1,4 +1,4 @@
-import toBSON from 'mongodb-query-parser'
+import toBSON from '@/utils/mongodb-query-parser'
 
 export const checkDatabase = (dbName: string) => {
   if (!(dbName in globalThis.mongo.connections)) {

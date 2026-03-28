@@ -5,7 +5,7 @@ import DeleteDocument from '@/components/Collection/DeleteDocument'
 import BackButton from './BackButton'
 import SaveButton from './SaveButton'
 import CodeEditor from '@/components/common/CodeEditor'
-import { toSafeBSON } from '@/utils/bson'
+import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
 
 const Editor: Component<{
   data: DataDocument
@@ -16,7 +16,7 @@ const Editor: Component<{
 
   const handleChange = (newCode: string) => {
     setCode(newCode)
-    setIsValid(!!toSafeBSON(newCode))
+    setIsValid(!isValidInsertDocument(newCode).error)
   }
 
   const Buttons = () => (

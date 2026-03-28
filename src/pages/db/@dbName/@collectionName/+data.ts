@@ -2,7 +2,8 @@ import { connectClient } from '@/server/db'
 import getColumnsAndSetDocs from '@/utils/mappers/getColumnsAndSetDocs'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
 import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
-import { isValidCollectionName, isValidDatabaseName } from '@/utils/validationsClient'
+import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
+import isValidCollectionName from '@/utils/validations/isValidCollectionName'
 
 export const data: DataAsync<DataCollection> = async (pageContext) => {
   const { dbName, collectionName } = pageContext.routeParams

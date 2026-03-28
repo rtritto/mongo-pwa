@@ -9,3 +9,7 @@ type DoQueryParams = {
 type ColumnsHeader = {
   [key: string]: boolean | null
 }
+
+type ReturnValidation = {
+  error?: string
+}

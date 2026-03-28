@@ -1,8 +1,8 @@
-import { toJSString } from 'mongodb-query-parser'
-
 import { connectClient } from '@/server/db'
 import { buildId } from '@/utils/mappers/mapUtils'
-import { isValidCollectionName, isValidDatabaseName } from '@/utils/validationsClient'
+import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
+import isValidCollectionName from '@/utils/validations/isValidCollectionName'
+import { toJSString } from '@/utils/mongodb-query-parser'
 
 export const data: DataAsync<DataDocument> = async (pageContext) => {
   const { dbName, collectionName, document } = pageContext.routeParams

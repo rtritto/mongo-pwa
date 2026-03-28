@@ -3,11 +3,13 @@ import type { Sort, SortDirection } from 'mongodb'
 
 import { parseObjectId, toSafeBSON } from './bson'
 
+
+type Projection = {
+  [field: string]: number
+}
 interface QueryOptions {
   limit: number
-  projection?: {
-    [field: string]: number
-  }
+  projection?: Projection
   skip?: number
   sort?: Sort
   allowDiskUse?: boolean
@@ -16,15 +18,18 @@ interface StageMatch { $match: MongoDocument }
 interface StageSort { $sort: Sort }
 interface StageLimit { $limit: number }
 interface StageSkip { $skip: number }
-interface StageFacet { $facet: { data: Pipeline } }
+interface StageCount { $count: string }
+interface StageFacet { $facet: { [name: string]: Pipeline } }
 interface StageProject {
   $project: {
     'metadata.total': { $size: string }
-    data: { $slice: [string, number] }
-  }
+    data: {
+      $slice: [string, number] | [string, number, number]
+    }
+  } | Projection
 }
-type Stage = StageMatch | StageSort | StageLimit | StageSkip | StageFacet | StageProject
-type Pipeline = (MongoDocument | Stage)[]
+type Stage = StageMatch | StageSort | StageLimit | StageSkip | StageCount | StageFacet | StageProject
+type Pipeline = Stage[]
 
 /** @param sort example: sort=field1,-field2 */
 export const getSort = (sort: string): Sort => {
