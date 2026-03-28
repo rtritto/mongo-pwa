@@ -7,21 +7,21 @@ import isValidQuery from '@/utils/validations/isValidQuery'
 import isValidProjection from '@/utils/validations/isValidProjection'
 import { isValidAggregation } from '@/utils/validations/isValidAggregation'
 
-const template = `{
+const EMPTY_OBJECT_TEMPLATE = `{
   
 }`
 
 const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
   // eslint-disable-next-line solid/reactivity
-  const [currentCodeQuery, setCurrentCodeQuery] = createSignal(props.data.query || template)
+  const [currentCodeQuery, setCurrentCodeQuery] = createSignal(props.data.query || EMPTY_OBJECT_TEMPLATE)
   // eslint-disable-next-line solid/reactivity
-  const [currentCodeProjection, setCurrentCodeProjection] = createSignal(props.data.projection || template)
+  const [currentCodeProjection, setCurrentCodeProjection] = createSignal(props.data.projection || EMPTY_OBJECT_TEMPLATE)
   // eslint-disable-next-line solid/reactivity
   const [checkboxAggregate, setCheckboxAggregate] = createSignal(props.data.aggregate)
 
   createEffect(() => {
-    setCurrentCodeQuery(props.data.query || template)
-    setCurrentCodeProjection(props.data.projection || template)
+    setCurrentCodeQuery(props.data.query || EMPTY_OBJECT_TEMPLATE)
+    setCurrentCodeProjection(props.data.projection || EMPTY_OBJECT_TEMPLATE)
     setCheckboxAggregate(props.data.aggregate)
   })
 

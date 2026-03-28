@@ -23,10 +23,10 @@ import { HEADERS_JSON } from '@/utils/constants'
 import fetchWithRetries from '@/utils/fetchWithRetries'
 import { getLastPage } from '@/utils/queries'
 
-const docStringTemplate_Document = `{
+const DOC_STRING_TEMPLATE_DOCUMENT = `{
   _id: ObjectId()
 }`
-const docStringTemplate_Index = `{
+const DOC_STRING_TEMPLATE_INDEX = `{
   key: 1
 }`
 
@@ -187,7 +187,7 @@ const CollectionPage: Component<DataCollection> = () => {
             <SaveDialog
               title="Add Document"
               label="New Document"
-              template={docStringTemplate_Document}
+              template={DOC_STRING_TEMPLATE_DOCUMENT}
               handleSave={(doc: string, dialogRef: HTMLDialogElement) => handleFetchError(
                 fetch('/api/documentCreate', {
                   method: 'POST',
@@ -215,7 +215,7 @@ const CollectionPage: Component<DataCollection> = () => {
               title="Add Index"
               message="A document that contains the field and value pairs where the field is the index key. 1 for an ascending and -1 for a descending index."
               label="New Index"
-              template={docStringTemplate_Index}
+              template={DOC_STRING_TEMPLATE_INDEX}
               handleSave={(doc: string, dialogRef: HTMLDialogElement) => handleFetchError(
                 fetch('/api/collectionCreateIndex', {
                   method: 'POST',
