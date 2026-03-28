@@ -83,7 +83,8 @@ export default function isValidInsertDocument(str: string): ReturnValidation {
   // Must be valid JSON
   try {
     obj = toBSON(str)
-  } catch {
+  } catch /* (error) */ {
+    // console.error('Error parsing JSON:', error)
     return {
       error: 'Invalid JSON format'
     }
