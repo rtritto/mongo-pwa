@@ -5,18 +5,19 @@ import DeleteDocument from '@/components/Collection/DeleteDocument'
 import BackButton from './BackButton'
 import SaveButton from './SaveButton'
 import CodeEditor from '@/components/common/CodeEditor'
-import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
+// import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
 
 const Editor: Component<{
   data: DataDocument
   setData: SetStoreFunction<DataDocument>
 }> = (props) => {
   const [code, setCode] = createSignal(untrack(() => props.data.docString))
-  const [isValid, setIsValid] = createSignal(true)
+  const [isValid /*, setIsValid*/] = createSignal(true)
 
   const handleChange = (newCode: string) => {
     setCode(newCode)
-    setIsValid(!isValidInsertDocument(newCode).error)
+    // TODO change toBSON that uses server side code (Buffer from Node and mongodb-shell-bson-parser/scoper from bson)
+    // setIsValid(!isValidInsertDocument(newCode).error)
   }
 
   const Buttons = () => (
