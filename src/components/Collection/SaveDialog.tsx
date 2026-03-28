@@ -14,7 +14,6 @@ const SaveDialog: Component<{
   let dialogRef!: HTMLDialogElement
   const template = untrack(() => props.template)
   const [code, setCode] = createSignal(template)
-  const [isTextValid, setIsTextValid] = createSignal(true)
 
   return (
     <div>
@@ -42,17 +41,14 @@ const SaveDialog: Component<{
             <CodeEditor
               value={code()}
               readOnly={false}
-              onChange={(newCode) => {
-                setCode(newCode)
-                setIsTextValid(!isValidInsertDocument(newCode).error)
-              }}
+              onChange={(newCode) => setCode(newCode)}
             />
 
             <div class="m-2">
               <button
                 class="btn bg-green-500 py-0.5"
                 type="submit"
-                disabled={!isTextValid()}
+                disabled={!!isValidInsertDocument(code()).error}
                 onClick={async () => await props.handleSave(code(), dialogRef)}
               >
                 Save

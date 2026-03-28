@@ -12,20 +12,23 @@ const Editor: Component<{
   setData: SetStoreFunction<DataDocument>
 }> = (props) => {
   const [code, setCode] = createSignal(untrack(() => props.data.docString))
-  const [isValid /*, setIsValid*/] = createSignal(true)
-
-  const handleChange = (newCode: string) => {
-    setCode(newCode)
-    // TODO change toBSON that uses server side code (Buffer from Node and mongodb-shell-bson-parser/scoper from bson)
-    // setIsValid(!isValidInsertDocument(newCode).error)
-  }
 
   const Buttons = () => (
     <div class="flex justify-between">
-      <BackButton data={props.data} setData={props.setData} isEqual={() => props.data.docString === code()} />
+      <BackButton
+        data={props.data}
+        setData={props.setData}
+        isEqual={() => props.data.docString === code()}
+      />
 
       <Show when={!props.data.options.readOnly}>
-        <SaveButton data={props.data} setData={props.setData} disabled={!isValid()} code={code()} />
+        <SaveButton
+          data={props.data}
+          setData={props.setData}
+          // TODO change toBSON that uses server side code (Buffer from Node and mongodb-shell-bson-parser/scoper from bson)
+          disabled={/*!!isValidInsertDocument(code()).error*/ false}
+          code={code()}
+        />
       </Show>
     </div>
   )
@@ -34,7 +37,11 @@ const Editor: Component<{
     <div>
       <Buttons />
 
-      <CodeEditor value={code()} readOnly={props.data.options.readOnly} onChange={handleChange} />
+      <CodeEditor
+        value={code()}
+        readOnly={props.data.options.readOnly}
+        onChange={(value) => setCode(value)}
+      />
 
       <Buttons />
 

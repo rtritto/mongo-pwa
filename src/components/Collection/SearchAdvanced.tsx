@@ -18,8 +18,6 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
   const [currentCodeProjection, setCurrentCodeProjection] = createSignal(props.data.projection || template)
   // eslint-disable-next-line solid/reactivity
   const [checkboxAggregate, setCheckboxAggregate] = createSignal(props.data.aggregate)
-  const [isQueryValid, setIsQueryValid] = createSignal(true)
-  const [isProjectionValid, setIsProjectionValid] = createSignal(true)
 
   createEffect(() => {
     setCurrentCodeQuery(props.data.query || template)
@@ -38,13 +36,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
           <CodeEditor
             value={currentCodeQuery()}
             readOnly={false}
-            onChange={(newCode) => {
-              setCurrentCodeQuery(newCode)
-              setIsQueryValid(!(checkboxAggregate()
-                ? isValidAggregation
-                : isValidQuery
-              )(newCode).error)
-            }}
+            onChange={(newCode) => setCurrentCodeQuery(newCode)}
           />
         </div>
 
@@ -56,10 +48,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
           <CodeEditor
             value={currentCodeProjection()}
             readOnly={false}
-            onChange={(newCode) => {
-              setCurrentCodeProjection(newCode)
-              setIsProjectionValid(!isValidProjection(newCode).error)
-            }}
+            onChange={(newCode) => setCurrentCodeProjection(newCode)}
           />
         </div>
       </div>
@@ -75,7 +64,10 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
         <button
           class="btn bg-blue-500"
-          disabled={!isQueryValid() || !isProjectionValid()}
+          disabled={
+            !!((checkboxAggregate() ? isValidAggregation : isValidQuery)(currentCodeQuery()).error
+              || isValidProjection(currentCodeProjection()).error)
+          }
           onClick={async () => {
             const queryStr: string[] = []
             if (currentCodeQuery()) {
