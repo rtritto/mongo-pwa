@@ -1,10 +1,13 @@
 import { type Component, createSignal, Show, untrack } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
+import { navigate } from 'vike/client/router'
 
 import BackButton from './BackButton'
 import SaveButton from './SaveButton'
 import DeleteDocument from '@/components/Collection/DeleteDocument'
 import CodeEditor from '@/components/common/CodeEditor'
+import handleFetchError from '@/components/common/functions/handleFetchError'
+import { HEADERS_JSON } from '@/utils/constants'
 // import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
 
 const Editor: Component<{
@@ -12,6 +15,28 @@ const Editor: Component<{
   setData: SetStoreFunction<DataDocument>
 }> = (props) => {
   const [code, setCode] = createSignal(untrack(() => props.data.docString))
+
+  const handleSave = async () => {
+    const response = await handleFetchError(
+      fetch('/api/documentUpdate', {
+        method: 'POST',
+        headers: HEADERS_JSON(props.data.options),
+        body: JSON.stringify({
+          database: props.data.selectedDatabase,
+          collection: props.data.selectedCollection,
+          doc: code(),
+          _id: props.data._id,
+          sub_type: props.data.subtype
+        })
+      }),
+      props.setData
+    )
+    if (response) {
+      await response.json() as { insertedId: string }
+      localStorage.setItem('me-success', `Document "${props.data._id}" updated!`)
+      await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}`)
+    }
+  }
 
   const Buttons = () => (
     <div class="flex justify-between">
@@ -28,6 +53,7 @@ const Editor: Component<{
           // TODO change toBSON that uses server side code (Buffer from Node and mongodb-shell-bson-parser/scoper from bson)
           disabled={/*!!isValidInsertDocument(code()).error*/ false}
           code={code()}
+          onSave={handleSave}
         />
       </Show>
     </div>
@@ -41,6 +67,7 @@ const Editor: Component<{
         value={code()}
         readOnly={props.data.options.readOnly}
         onChange={(value) => setCode(value)}
+        onSave={handleSave}
       />
 
       <Buttons />

@@ -25,6 +25,20 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
     setCheckboxAggregate(props.data.aggregate)
   })
 
+  const handleSave = async () => {
+    const queryStr: string[] = []
+    if (currentCodeQuery()) {
+      queryStr.push(`query=${encodeURIComponent(currentCodeQuery())}`)
+    }
+    if (currentCodeProjection()) {
+      queryStr.push(`projection=${encodeURIComponent(currentCodeProjection())}`)
+    }
+    if (checkboxAggregate()) {
+      queryStr.push('aggregate=true')
+    }
+    await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}?${queryStr.join('&')}`)
+  }
+
   return (
     <div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -37,6 +51,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             value={currentCodeQuery()}
             readOnly={false}
             onChange={(newCode) => setCurrentCodeQuery(newCode)}
+            onSave={handleSave}
           />
         </div>
 
@@ -49,6 +64,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             value={currentCodeProjection()}
             readOnly={false}
             onChange={(newCode) => setCurrentCodeProjection(newCode)}
+            onSave={handleSave}
           />
         </div>
       </div>
@@ -68,19 +84,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             !!((checkboxAggregate() ? isValidAggregation : isValidQuery)(currentCodeQuery()).error
               || isValidProjection(currentCodeProjection()).error)
           }
-          onClick={async () => {
-            const queryStr: string[] = []
-            if (currentCodeQuery()) {
-              queryStr.push(`query=${encodeURIComponent(currentCodeQuery())}`)
-            }
-            if (currentCodeProjection()) {
-              queryStr.push(`projection=${encodeURIComponent(currentCodeProjection())}`)
-            }
-            if (checkboxAggregate()) {
-              queryStr.push('aggregate=true')
-            }
-            await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}?${queryStr.join('&')}`)
-          }}
+          onClick={handleSave}
         >
           <IconSearch />
 

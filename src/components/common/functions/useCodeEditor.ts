@@ -3,7 +3,12 @@ import { createSignal, createEffect } from 'solid-js'
 
 export type UseEditorType = ReturnType<typeof useEditor>
 
-export default function useEditor(initialValue: () => string, readOnly: boolean, onChange: (value: string) => void) {
+export default function useEditor(
+  initialValue: () => string,
+  readOnly: boolean,
+  onChange: (value: string) => void,
+  onSave: () => void
+) {
   const [html, setHtml] = createSignal('')
 
   createEffect(() =>
@@ -24,16 +29,24 @@ export default function useEditor(initialValue: () => string, readOnly: boolean,
     onChange(val)
   }
 
-  // Advanced Tab Key Handling (Shift+Tab and Tab)
   const handleKeyDown = (e: KeyboardEvent & { currentTarget: HTMLTextAreaElement }) => {
+    if (readOnly) return
+
+    // Ctrl+Enter / Cmd+Enter Handling
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault() // Prevent new line
+      onSave()
+      return
+    }
+
+    // Tab Handling
     if (e.key === 'Tab') {
       e.preventDefault() // Prevent focus from leaving
-      if (readOnly) return
-
       const ta = e.currentTarget
       const start = ta.selectionStart
       const end = ta.selectionEnd
 
+      // Shift+Tab and Tab Handling
       if (e.shiftKey) {
         // Remove 2 spaces
         if (ta.value.slice(start - 2, start) === '  ') {

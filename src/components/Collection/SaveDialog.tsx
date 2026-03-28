@@ -15,6 +15,8 @@ const SaveDialog: Component<{
   const template = untrack(() => props.template)
   const [code, setCode] = createSignal(template)
 
+  const handleSave = () => props.handleSave(code(), dialogRef)
+
   return (
     <div>
       <button class={`btn btn-sm bg-green-500 py-0.5`} onClick={() => {
@@ -42,6 +44,7 @@ const SaveDialog: Component<{
               value={code()}
               readOnly={false}
               onChange={(newCode) => setCode(newCode)}
+              onSave={handleSave}
             />
 
             <div class="m-2">
@@ -49,7 +52,7 @@ const SaveDialog: Component<{
                 class="btn bg-green-500 py-0.5"
                 type="submit"
                 disabled={!!isValidInsertDocument(code()).error}
-                onClick={async () => await props.handleSave(code(), dialogRef)}
+                onClick={handleSave}
               >
                 Save
               </button>

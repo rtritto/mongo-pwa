@@ -1,42 +1,20 @@
 import { type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
-import { navigate } from 'vike/client/router'
 
-import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconSave from '@/components/Icons/IconSave'
-import { HEADERS_JSON } from '@/utils/constants'
 
 const SaveButton: Component<{
   data: DataDocument
   setData: SetStoreFunction<any>
   disabled: boolean
   code: string
+  onSave: () => void
 }> = (props) => {
   return (
     <button
       class="btn btn-sm bg-green-500 m-1 py-0.5 text-right"
       disabled={props.disabled}
-      onClick={async () => {
-        const response = await handleFetchError(
-          fetch('/api/documentUpdate', {
-            method: 'POST',
-            headers: HEADERS_JSON(props.data.options),
-            body: JSON.stringify({
-              database: props.data.selectedDatabase,
-              collection: props.data.selectedCollection,
-              doc: props.code,
-              _id: props.data._id,
-              sub_type: props.data.subtype
-            })
-          }),
-          props.setData
-        )
-        if (response) {
-          await response.json() as { insertedId: string }
-          localStorage.setItem('me-success', `Document "${props.data._id}" updated!`)
-          await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}`)
-        }
-      }}
+      onClick={() => props.onSave()}
     >
       <IconSave />
 
