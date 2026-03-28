@@ -44,13 +44,17 @@ const AGGREGATION_STAGES = new Set([
 /**
  * Validates a string as a MongoDB aggregation pipeline.
  *
- * ✅ []
- * ✅ [{ "$match": { "status": "A" } }]
- * ✅ [{ "$group": { "_id": "$city" } }, { "$sort": { "_id": 1 } }]
- * ❌ {}
- * ❌ [{ "notAStage": 1 }]
- * ❌ [{ "$match": {}, "$sort": {} }]  — more than one key in a stage
- * ❌ [{ "$fake": {} }]
+ * Examples:
+ * ✅ Valid
+ * []
+ * [{ "$match": { "status": "A" } }]
+ * [{ "$group": { "_id": "$city" } }, { "$sort": { "_id": 1 } }]
+ * 
+ * ❌ Invalid
+ * {}
+ * [{ "notAStage": 1 }]
+ * [{ "$match": {}, "$sort": {} }]  — more than one key in a stage
+ * [{ "$fake": {} }]
  */
 export function isValidAggregation(str: string): ReturnValidation {
   let pipeline: unknown

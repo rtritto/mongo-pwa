@@ -68,14 +68,18 @@ function validateFields(obj: Record<string, unknown>, isRoot: boolean): ReturnVa
 /**
  * Validates a string as a MongoDB insert document.
  *
- * ✅ {}
- * ✅ { "name": "Alice", "age": 30 }
- * ✅ { "_id": "custom-id", "status": "active" }
- * ✅ { "tags": ["a", "b"], "meta": { "views": 0 } }
- * ❌ []                          — array (use insertMany)
- * ❌ { "$set": { "name": "X" } } — update operator, not a document
- * ❌ { "": "value" }             — empty field
- * ❌ "just a string"             — not an object
+ * Examples:
+ * ✅ Valid
+ * {}
+ * { "name": "Alice", "age": 30 }
+ * { "_id": "custom-id", "status": "active" }
+ * { "tags": ["a", "b"], "meta": { "views": 0 } }
+ *
+ * ❌ Invalid
+ * []                          — array (use insertMany)
+ * { "$set": { "name": "X" } } — update operator, not a document
+ * { "": "value" }             — empty field
+ * "just a string"             — not an object
  */
 export default function isValidInsertDocument(str: string): ReturnValidation {
   let obj: unknown

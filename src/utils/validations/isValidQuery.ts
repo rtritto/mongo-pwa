@@ -41,13 +41,16 @@ const validateFieldValue = (value: unknown): boolean => {
  * Validates a string as a MongoDB query (filter for find).
  *
  * Examples:
- * ✅ { "name": "Alice" }
- * ✅ { "age": { "$gte": 18 } }
- * ✅ { "$or": [{ "a": 1 }, { "b": 2 }] }
- * ✅ {}
- * ❌ [1, 2, 3]
- * ❌ { "$fake": 1 }
- * ❌ { "age": { "$fake": 5 } }
+ * ✅ Valid
+ * { "name": "Alice" }
+ * { "age": { "$gte": 18 } }
+ * { "$or": [{ "a": 1 }, { "b": 2 }] }
+ * {}
+ * 
+ * ❌ Invalid
+ * [1, 2, 3]
+ * { "$fake": 1 }
+ * { "age": { "$fake": 5 } }
  */
 export default function isValidQuery(str: string): ReturnValidation {
   let obj: unknown

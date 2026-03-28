@@ -15,7 +15,7 @@ type ProjectionValue = number | boolean | Record<string, unknown>
  * Additionally, you cannot mix inclusion and exclusion in the same projection (except for _id: 0).
  * 
  * Examples:
- * // ✅ Valid
+ * ✅ Valid
  * isValidProjection('{}')
  * isValidProjection('{ "name": 1, "age": 1 }')
  * isValidProjection('{ "password": 0, "secret": 0 }')
@@ -25,7 +25,7 @@ type ProjectionValue = number | boolean | Record<string, unknown>
  * isValidProjection('{ "tags": { "$slice": 5 } }')
  * isValidProjection('{ "items": { "$elemMatch": { "qty": 1 } } }')
  * 
- * // ❌ Invalid
+ * ❌ Invalid
  * isValidProjection('{ "name": 1, "age": 0 }')
  * isValidProjection('{ "name": true, "age": false }')
  * isValidProjection('{ "name": 2 }')
