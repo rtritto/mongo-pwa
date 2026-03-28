@@ -181,89 +181,91 @@ const CollectionPage: Component<DataCollection> = () => {
 
       <SearchDocuments data={data} />
 
-      <div class="flex my-1">
-        <div class="mr-2">
-          <SaveDialog
-            title="Add Document"
-            label="New Document"
-            template={docStringTemplate_Document}
-            handleSave={(doc: string, dialogRef: HTMLDialogElement) => handleFetchError(
-              fetch('/api/documentCreate', {
-                method: 'POST',
-                headers: HEADERS_JSON(data.options),
-                body: JSON.stringify({
-                  database: data.selectedDatabase,
-                  collection: data.selectedCollection,
-                  doc
-                })
-              }),
-              setData
-            ).then(async (response) => {
-              if (response) {
-                const { insertedId } = await response.json() as { insertedId: string }
-                dialogRef.close()
-                await reload()
-                setData('success', `Document "${insertedId}" added!`)
-              }
-            })}
-          />
-        </div>
-
-        <div class="mr-2">
-          <SaveDialog
-            title="Add Index"
-            message="A document that contains the field and value pairs where the field is the index key. 1 for an ascending and -1 for a descending index."
-            label="New Index"
-            template={docStringTemplate_Index}
-            handleSave={(doc: string, dialogRef: HTMLDialogElement) => handleFetchError(
-              fetch('/api/collectionCreateIndex', {
-                method: 'POST',
-                headers: HEADERS_JSON(data.options),
-                body: JSON.stringify({
-                  database: data.selectedDatabase,
-                  collection: data.selectedCollection,
-                  doc
-                })
-              }),
-              setData
-            ).then(async (response) => {
-              if (response) {
-                dialogRef.close()
-                const { indexName } = await response.json() as { indexName: string }
-                await reload()
-                setData('success', `Index "${indexName}" created!`)
-              }
-            })}
-          />
-        </div>
-      </div>
-
-      <div class="my-2">
-        <DeleteDialog
-          title="Delete All Documents"
-          message={`Are you sure you want to delete all ${data.count} documents?`}
-          label={`Delete all ${data.count} documents retrieved`}
-          handleDelete={() => handleFetchError(
-            fetch('/api/collectionDelete', {
-              method: 'POST',
-              headers: HEADERS_JSON(data.options),
-              body: JSON.stringify({
-                database: data.selectedDatabase,
-                collection: data.selectedCollection,
-                query: {
-                  key: pageContext.urlParsed.search.key,
-                  value: pageContext.urlParsed.search.value,
-                  type: pageContext.urlParsed.search.type,
-                  query: pageContext.urlParsed.search.query
+      <Show when={!data.options.readOnly}>
+        <div class="flex my-1">
+          <div class="mr-2">
+            <SaveDialog
+              title="Add Document"
+              label="New Document"
+              template={docStringTemplate_Document}
+              handleSave={(doc: string, dialogRef: HTMLDialogElement) => handleFetchError(
+                fetch('/api/documentCreate', {
+                  method: 'POST',
+                  headers: HEADERS_JSON(data.options),
+                  body: JSON.stringify({
+                    database: data.selectedDatabase,
+                    collection: data.selectedCollection,
+                    doc
+                  })
+                }),
+                setData
+              ).then(async (response) => {
+                if (response) {
+                  const { insertedId } = await response.json() as { insertedId: string }
+                  dialogRef.close()
+                  await reload()
+                  setData('success', `Document "${insertedId}" added!`)
                 }
-              })
-            }),
-            setData
-          ).then(async () => {
-            await reload()
-          })}
-        />
-      </div>
+              })}
+            />
+          </div>
+
+          <div class="mr-2">
+            <SaveDialog
+              title="Add Index"
+              message="A document that contains the field and value pairs where the field is the index key. 1 for an ascending and -1 for a descending index."
+              label="New Index"
+              template={docStringTemplate_Index}
+              handleSave={(doc: string, dialogRef: HTMLDialogElement) => handleFetchError(
+                fetch('/api/collectionCreateIndex', {
+                  method: 'POST',
+                  headers: HEADERS_JSON(data.options),
+                  body: JSON.stringify({
+                    database: data.selectedDatabase,
+                    collection: data.selectedCollection,
+                    doc
+                  })
+                }),
+                setData
+              ).then(async (response) => {
+                if (response) {
+                  dialogRef.close()
+                  const { indexName } = await response.json() as { indexName: string }
+                  await reload()
+                  setData('success', `Index "${indexName}" created!`)
+                }
+              })}
+            />
+          </div>
+        </div>
+
+        <div class="my-2">
+          <DeleteDialog
+            title="Delete All Documents"
+            message={`Are you sure you want to delete all ${data.count} documents?`}
+            label={`Delete all ${data.count} documents retrieved`}
+            handleDelete={() => handleFetchError(
+              fetch('/api/collectionDelete', {
+                method: 'POST',
+                headers: HEADERS_JSON(data.options),
+                body: JSON.stringify({
+                  database: data.selectedDatabase,
+                  collection: data.selectedCollection,
+                  query: {
+                    key: pageContext.urlParsed.search.key,
+                    value: pageContext.urlParsed.search.value,
+                    type: pageContext.urlParsed.search.type,
+                    query: pageContext.urlParsed.search.query
+                  }
+                })
+              }),
+              setData
+            ).then(async () => {
+              await reload()
+            })}
+          />
+        </div>
+      </Show>
 
       <PaginationBoxComponent />
 

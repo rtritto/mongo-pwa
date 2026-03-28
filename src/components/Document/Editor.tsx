@@ -1,4 +1,4 @@
-import { type Component, createSignal, untrack } from 'solid-js'
+import { type Component, createSignal, Show, untrack } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import DeleteDocument from '@/components/Collection/DeleteDocument'
@@ -23,7 +23,9 @@ const Editor: Component<{
     <div class="flex justify-between">
       <BackButton data={props.data} setData={props.setData} isEqual={() => props.data.docString === code()} />
 
-      <SaveButton data={props.data} setData={props.setData} disabled={!isValid()} code={code()} />
+      <Show when={!props.data.options.readOnly}>
+        <SaveButton data={props.data} setData={props.setData} disabled={!isValid()} code={code()} />
+      </Show>
     </div>
   )
 
@@ -31,7 +33,7 @@ const Editor: Component<{
     <div>
       <Buttons />
 
-      <CodeEditor value={code()} readOnly={untrack(() => props.data.readOnly)} onChange={handleChange} />
+      <CodeEditor value={code()} readOnly={props.data.options.readOnly} onChange={handleChange} />
 
       <Buttons />
 

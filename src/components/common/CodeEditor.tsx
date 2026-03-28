@@ -7,7 +7,7 @@ const CodeEditor: Component<{
   readOnly: boolean
   onChange: (value: string) => void
 }> = (props) => {
-  const isReadOnly = untrack(() => props.readOnly!)
+  const isReadOnly = untrack(() => props.readOnly)
 
   const { html, handleInput, handleKeyDown } = useCodeEditor(
     () => props.value,
