@@ -1,9 +1,9 @@
 import { type Component, createSignal, Show, untrack } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
-import DeleteDocument from '@/components/Collection/DeleteDocument'
 import BackButton from './BackButton'
 import SaveButton from './SaveButton'
+import DeleteDocument from '@/components/Collection/DeleteDocument'
 import CodeEditor from '@/components/common/CodeEditor'
 // import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
 
