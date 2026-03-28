@@ -68,12 +68,17 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
           class="btn bg-blue-500"
           disabled={!isQueryValid() || !isProjectionValid()}
           onClick={async () => {
-            const queryStr = [
-              ...currentCodeQuery() ? [`query=${encodeURIComponent(currentCodeQuery())}`] : [],
-              ...currentCodeProjection() ? [`projection=${encodeURIComponent(currentCodeProjection())}`] : [],
-              ...checkboxAggregate() ? ['aggregate=true'] : []
-            ].join('&')
-            await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}?${queryStr}`)
+            const queryStr: string[] = []
+            if (currentCodeQuery()) {
+              queryStr.push(`query=${encodeURIComponent(currentCodeQuery())}`)
+            }
+            if (currentCodeProjection()) {
+              queryStr.push(`projection=${encodeURIComponent(currentCodeProjection())}`)
+            }
+            if (checkboxAggregate()) {
+              queryStr.push('aggregate=true')
+            }
+            await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}?${queryStr.join('&')}`)
           }}
         >
           <IconSearch />
