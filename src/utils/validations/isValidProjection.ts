@@ -20,12 +20,14 @@ type ProjectionValue = number | boolean | Record<string, unknown>
  * isValidProjection('{ "name": 1, "age": 1 }')
  * isValidProjection('{ "password": 0, "secret": 0 }')
  * isValidProjection('{ "name": 1, "_id": 0 }')
- * isValidProjection('{ "name": true, "age": false }')
+ * isValidProjection('{ "name": true, "age": true }')
+ * isValidProjection('{ "name": false, "age": false }')
  * isValidProjection('{ "tags": { "$slice": 5 } }')
  * isValidProjection('{ "items": { "$elemMatch": { "qty": 1 } } }')
  * 
  * // ❌ Invalid
  * isValidProjection('{ "name": 1, "age": 0 }')
+ * isValidProjection('{ "name": true, "age": false }')
  * isValidProjection('{ "name": 2 }')
  * isValidProjection('{ "name": "hello" }')
  * isValidProjection('[1, 2, 3]')
