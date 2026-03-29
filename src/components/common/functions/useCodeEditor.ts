@@ -23,6 +23,9 @@ export default function useEditor(
       .then((highlighted) => {
         setHtml(highlighted)
       })
+      .catch(() => {
+        // Ignore
+      })
   )
 
   const handleInput = (val: string) => {
