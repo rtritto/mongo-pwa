@@ -32,7 +32,7 @@ type Stage = StageMatch | StageSort | StageLimit | StageSkip | StageCount | Stag
 type Pipeline = Stage[]
 
 /** @param sort example: sort=field1,-field2 */
-export const getSort = (sort: string): Sort => {
+const getSort = (sort: string): Sort => {
   if (sort) {
     const outSort: Writeable<Sort> = {}
     const sorts = sort.split(',')
@@ -48,7 +48,7 @@ export const getSort = (sort: string): Sort => {
   return {}
 }
 
-export const getProjection = (projection: string) => {
+const getProjection = (projection: string) => {
   return toSafeBSON(projection)
 }
 
