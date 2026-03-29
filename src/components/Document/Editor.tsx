@@ -8,14 +8,14 @@ import DeleteDocument from '@/components/Collection/DeleteDocument'
 import CodeEditor from '@/components/common/CodeEditor'
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import { HEADERS_JSON } from '@/utils/constants'
-// import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
+import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
 
 const Editor: Component<{
   data: DataDocument
   setData: SetStoreFunction<DataDocument>
 }> = (props) => {
   const [code, setCode] = createSignal(untrack(() => props.data.docString))
-  const [isCodeValid /*, setIsCodeValid*/] = createSignal(true)
+  const [isCodeValid, setIsCodeValid] = createSignal(true)
 
   const handleSave = async () => {
     if (isCodeValid()) {
@@ -70,10 +70,7 @@ const Editor: Component<{
         readOnly={props.data.options.readOnly}
         onChange={(newCode) => {
           setCode(newCode)
-          // TODO change toBSON that uses server side code:
-          // - Buffer from Node
-          // - mongodb-shell-bson-parser/scoper from bson
-          // setIsCodeValid(!isValidInsertDocument(newCode).error)
+          setIsCodeValid(!isValidInsertDocument(newCode).error)
         }}
         onSave={handleSave}
       />
