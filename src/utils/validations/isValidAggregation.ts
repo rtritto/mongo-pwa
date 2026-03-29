@@ -1,23 +1,20 @@
-import toBSON from '@/utils/mongodb-query-parser'
+import parseRelaxedJSON from './parseRelaxedJSON'
+
 import { isPlainObject } from './common'
 import isValidQuery from './isValidQuery'
 
-// Allowed stages in the aggregation pipeline
-const AGGREGATION_STAGES = new Set([
+const AGGREGATION_STAGES: ReadonlySet<string> = new Set([
   // Common
   '$match', '$group', '$sort', '$project',
   '$limit', '$skip', '$count', '$unwind',
   '$lookup', '$sample',
 
   // Transformation
-  '$addFields', '$set',
-  '$unset',
-  '$replaceRoot', '$replaceWith',
-  '$redact',
+  '$addFields', '$set', '$unset',
+  '$replaceRoot', '$replaceWith', '$redact',
 
   // Advanced grouping
-  '$bucket', '$bucketAuto', '$sortByCount',
-  '$facet',
+  '$bucket', '$bucketAuto', '$sortByCount', '$facet',
 
   // Join and graphs
   '$graphLookup', '$unionWith',
@@ -29,10 +26,8 @@ const AGGREGATION_STAGES = new Set([
   '$setWindowFields', '$densify', '$fill',
 
   // Stats & system
-  '$collStats', '$indexStats',
-  '$planCacheStats', '$currentOp',
-  '$listSessions', '$listLocalSessions',
-  '$changeStream',
+  '$collStats', '$indexStats', '$planCacheStats', '$currentOp',
+  '$listSessions', '$listLocalSessions', '$changeStream',
 
   // Search (Atlas)
   '$search', '$searchMeta',
@@ -41,36 +36,29 @@ const AGGREGATION_STAGES = new Set([
   '$documents'
 ])
 
+export type ReturnValidation = { error?: string }
+
 /**
  * Validates a string as a MongoDB aggregation pipeline.
- *
- * Examples:
- * ✅ Valid
- * []
- * [{ "$match": { "status": "A" } }]
- * [{ "$group": { "_id": "$city" } }, { "$sort": { "_id": 1 } }]
- * 
- * ❌ Invalid
- * {}
- * [{ "notAStage": 1 }]
- * [{ "$match": {}, "$sort": {} }]  — more than one key in a stage
- * [{ "$fake": {} }]
  */
 export function isValidAggregation(str: string): ReturnValidation {
+  if (!str?.trim()) {
+    return { error: 'Empty' }
+  }
+
   let pipeline: unknown
 
   try {
-    pipeline = toBSON(str)
-  } catch {
+    pipeline = parseRelaxedJSON(str)
+  } catch (e) {
     return {
-      error: 'Aggregation pipeline has invalid JSON'
+      error: `Invalid syntax: ${(e as Error).message}`
     }
   }
 
-  // Must be an array
   if (!Array.isArray(pipeline)) {
     return {
-      error: 'Aggregation pipeline must be an array of stages'
+      error: 'Must be an array of stages'
     }
   }
 
@@ -79,139 +67,149 @@ export function isValidAggregation(str: string): ReturnValidation {
     return {}
   }
 
-  for (const stage of pipeline) {
-    // Each stage must be an object
+  for (let i = 0; i < pipeline.length; i++) {
+    const stage = pipeline[i]
+
     if (!isPlainObject(stage)) {
       return {
-        error: 'Each stage in the aggregation pipeline must be an object'
+        error: `Stage at index ${i} must be an object`
       }
     }
 
     const keys = Object.keys(stage)
 
-    // Each stage must have exactly 1 key (the operator)
-    // Exception: $unset can accept a string or an array as the direct value
     if (keys.length !== 1) {
       return {
-        error: 'Each stage in the aggregation pipeline must have exactly one key (the operator)'
+        error: `Stage at index ${i} must have exactly one key (the operator)`
       }
     }
 
     const stageOp = keys[0]
 
-    // The key must start with $
-    if (!stageOp.startsWith('$')) {
+    // 36 is the character '$' (faster than startsWith)
+    if (stageOp.charCodeAt(0) !== 36) {
       return {
-        error: `Invalid stage operator: ${stageOp}. Stage operators must start with $`
+        error: `Invalid operator "${stageOp}" at index ${i}. Must start with $`
       }
     }
 
-    // Must be a known stage
     if (!AGGREGATION_STAGES.has(stageOp)) {
       return {
-        error: `Unknown stage operator: ${stageOp}`
+        error: `Unknown stage operator: "${stageOp}" at index ${i}`
       }
     }
 
-    // Stage-specific validations
-    const stageValue = stage[stageOp]
+    const stageValue = stage[stageOp] as any
 
+    // Operator-specific validations
     switch (stageOp) {
       case '$limit':
       case '$skip': {
-        // Must be positive integers
         if (typeof stageValue !== 'number' || stageValue < 0 || !Number.isInteger(stageValue)) {
           return {
-            error: `Invalid value for ${stageOp}: ${stageValue}. Must be a positive integer`
+            error: `Invalid value for ${stageOp} at index ${i}. Must be a positive integer.`
           }
         }
         break
       }
+
       case '$count': {
-        // Must be a non-empty string
-        if (typeof stageValue !== 'string' || stageValue.length === 0) {
+        if (typeof stageValue !== 'string' || !stageValue.trim()) {
           return {
-            error: `Invalid value for ${stageOp}: ${stageValue}. Must be a non-empty string`
+            error: `Invalid value for ${stageOp} at index ${i}. Must be a non-empty string.`
           }
         }
         break
       }
+
       case '$sort': {
-        // Must be an object with values 1, -1, or { $meta: "textScore" }
-        if (!isPlainObject(stageValue)) return {
-          error: `Invalid value for ${stageOp}: ${stageValue}. Must be an object`
+        if (!isPlainObject(stageValue)) {
+          return {
+            error: `Invalid value for ${stageOp} at index ${i}. Must be an object.`
+          }
         }
-        for (const val of Object.values(stageValue)) {
+
+        for (const [sortField, val] of Object.entries(stageValue)) {
           if (
-            val !== 1 && val !== -1
-            && (!isPlainObject(val) || (val as Record<string, unknown>).$meta !== 'textScore')
+            val !== 1 && val !== -1 &&
+            (!isPlainObject(val) || (val as any).$meta !== 'textScore')
           ) {
             return {
-              error: `Invalid value for ${stageOp}: ${stageValue}. Must be 1, -1, or { $meta: "textScore" }`
+              error: `Invalid sort value for field "${sortField}" in ${stageOp} at index ${i}. Must be 1, -1, or { $meta: "textScore" }.`
             }
           }
         }
         break
       }
+
       case '$match': {
-        // The content must be a valid query
         if (!isPlainObject(stageValue)) {
           return {
-            error: `Invalid value for ${stageOp}: ${stageValue}. Must be an object`
+            error: `Invalid value for ${stageOp} at index ${i}. Must be an object.`
           }
         }
-        if (isValidQuery(JSON.stringify(stageValue)).error) {
+        // Re-stringify the object to pass it to the query validation
+        const { error } = isValidQuery(JSON.stringify(stageValue))
+        if (error) {
+          // Propagate the specific error raised by isValidQuery!
           return {
-            error: `Invalid value for ${stageOp}: ${stageValue}. Must be a valid query`
+            error: `Invalid ${stageOp} at index ${i}: ${error}`
           }
         }
         break
       }
+
       case '$unwind': {
-        // String (path) or object with "path"
         if (typeof stageValue === 'string') {
           if (!stageValue.startsWith('$')) {
             return {
-              error: `Invalid value for ${stageOp}: ${stageValue}. Must start with $`
+              error: `Invalid string value for ${stageOp} at index ${i}. Must start with $.`
             }
           }
         } else if (isPlainObject(stageValue)) {
           if (typeof stageValue.path !== 'string' || !stageValue.path.startsWith('$')) {
             return {
-              error: `Invalid value for ${stageOp}: ${stageValue}. Path must be a string starting with $`
+              error: `Invalid path in ${stageOp} at index ${i}. Must be a string starting with $.`
             }
           }
         } else {
           return {
-            error: `Invalid value for ${stageOp}: ${stageValue}. Must be a string or an object with a path`
+            error: `Invalid value for ${stageOp} at index ${i}. Must be a string or an object with a path.`
           }
         }
         break
       }
+
       case '$unset': {
-        // String or array of strings
-        if (typeof stageValue !== 'string' && !Array.isArray(stageValue)) {
-          return {
-            error: `Invalid value for ${stageOp}: ${stageValue}. Must be a string or an array of strings`
+        if (typeof stageValue === 'string') {
+          if (!stageValue.trim()) {
+            return {
+              error: `Invalid value for ${stageOp} at index ${i}. String cannot be empty.`
+            }
           }
-        }
-        if (Array.isArray(stageValue) && !stageValue.every((v) => typeof v === 'string')) {
+        } else if (Array.isArray(stageValue)) {
+          if (!stageValue.every((v) => typeof v === 'string')) {
+            return {
+              error: `Invalid array for ${stageOp} at index ${i}. All elements must be strings.`
+            }
+          }
+        } else {
           return {
-            error: `Invalid value for ${stageOp}: ${stageValue}. All elements must be strings`
+            error: `Invalid value for ${stageOp} at index ${i}. Must be a string or an array of strings.`
           }
         }
         break
       }
+
       default: {
-        // For all other stages: the value must be an object or a valid type
-        // We do not validate in detail — MongoDB will perform the final validation
         if (stageValue === null || stageValue === undefined) {
           return {
-            error: `Invalid value for ${stageOp}: ${stageValue}. Must be a valid value`
+            error: `Value for ${stageOp} at index ${i} cannot be null or undefined.`
           }
         }
       }
     }
   }
+
   return {}
 }

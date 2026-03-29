@@ -1,61 +1,33 @@
-import toBSON from '@/utils/mongodb-query-parser'
+import parseRelaxedJSON from './parseRelaxedJSON'
 
-const PROJECTION_OPERATORS = new Set(['$slice', '$elemMatch', '$meta'])
+const PROJECTION_OPERATORS: ReadonlySet<string> = new Set(['$slice', '$elemMatch', '$meta'])
 
-type ProjectionValue = number | boolean | Record<string, unknown>
+export default function isValidProjection(str: string): { error?: string } {
+  if (!str?.trim()) {
+    return {
+      error: 'Empty'
+    }
+  }
 
-/**
- * Validates a string as a MongoDB projection.
- * 
- * A projection must be a non-null object where each key is a field name and each value is either:
- * - 0 or 1 (number) to indicate exclusion/inclusion
- * - true or false (boolean) to indicate inclusion/exclusion
- * - an object with exactly one of the allowed projection operators ($slice, $elemMatch, $meta) to indicate inclusion
- * 
- * Additionally, you cannot mix inclusion and exclusion in the same projection (except for _id: 0).
- * 
- * Examples:
- * ✅ Valid
- * isValidProjection('{}')
- * isValidProjection('{ "name": 1, "age": 1 }')
- * isValidProjection('{ "password": 0, "secret": 0 }')
- * isValidProjection('{ "name": 1, "_id": 0 }')
- * isValidProjection('{ "name": true, "age": true }')
- * isValidProjection('{ "name": false, "age": false }')
- * isValidProjection('{ "tags": { "$slice": 5 } }')
- * isValidProjection('{ "items": { "$elemMatch": { "qty": 1 } } }')
- * 
- * ❌ Invalid
- * isValidProjection('{ "name": 1, "age": 0 }')
- * isValidProjection('{ "name": true, "age": false }')
- * isValidProjection('{ "name": 2 }')
- * isValidProjection('{ "name": "hello" }')
- * isValidProjection('[1, 2, 3]')
- * isValidProjection('not json')
- * isValidProjection('{ "a": { "$unknown": 1 } }')
- */
-export default function isValidProjection(str: string): ReturnValidation {
   let obj: unknown
 
   try {
-    obj = toBSON(str)
+    obj = parseRelaxedJSON(str)
   } catch {
     return {
-      error: 'Projection has invalid JSON'
+      error: 'Projection has invalid syntax'
     }
   }
 
   if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
-    // Is null or Array
     return {
       error: 'Projection must be a non-null object'
     }
   }
 
-  const entries = Object.entries(obj as Record<string, ProjectionValue>)
+  const entries = Object.entries(obj as Record<string, unknown>)
 
   if (entries.length === 0) {
-    // Empty projection {} = All fields
     return {}
   }
 
@@ -63,56 +35,77 @@ export default function isValidProjection(str: string): ReturnValidation {
   let hasExclusion = false
 
   for (const [key, value] of entries) {
-    if (!key) {
+    if (!key.trim()) {
       return {
-        error: 'Projection contains an empty key'
+        error: 'Projection contains an empty or whitespace key'
       }
     }
 
-    // Numeric value: only 0 or 1
     if (typeof value === 'number') {
       if (value !== 0 && value !== 1) {
         return {
-          error: 'Projection values must be 0 or 1'
+          error: `Projection value for "${key}" must be 0 or 1`
         }
       }
       if (value === 1) {
         hasInclusion = true
-      } else if (value === 0 && key !== '_id') {
-        // _id: 0 is always allowed, does not count as "exclusion"
+      } else if (key !== '_id') {
         hasExclusion = true
       }
     } else if (typeof value === 'boolean') {
-      // Boolean value: true = 1, false = 0
       if (value) {
         hasInclusion = true
       } else if (key !== '_id') {
         hasExclusion = true
       }
     } else if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-      // Projection operators: $slice, $elemMatch, $meta
-      const opKeys = Object.keys(value)
+
+      const opObj = value as Record<string, unknown>
+      const opKeys = Object.keys(opObj)
+
       if (opKeys.length !== 1) {
+        return { error: `Projection for "${key}" must have exactly one operator` }
+      }
+
+      const opName = opKeys[0]
+      if (!PROJECTION_OPERATORS.has(opName)) {
+        return { error: `Invalid projection operator: ${opName}` }
+      }
+
+      const opVal = opObj[opName]
+
+      // Validate operator values
+      if (opName === '$meta' && typeof opVal !== 'string') {
         return {
-          error: 'Projection operators must have exactly one key'
+          error: '$meta value must be a string (e.g. "textScore")'
         }
       }
-      if (!PROJECTION_OPERATORS.has(opKeys[0])) {
+
+      if (opName === '$elemMatch' && (typeof opVal !== 'object' || opVal === null || Array.isArray(opVal))) {
         return {
-          error: `Invalid projection operator: ${opKeys[0]}`
+          error: '$elemMatch value must be an object { ... }'
         }
       }
-      // Operators count as inclusion
+
+      if (opName === '$slice') {
+        const isNum = typeof opVal === 'number'
+        const isPair = Array.isArray(opVal) && opVal.length === 2 && typeof opVal[0] === 'number' && typeof opVal[1] === 'number'
+
+        if (!isNum && !isPair) {
+          return {
+            error: '$slice value must be a number or an array of two numbers [skip, limit]'
+          }
+        }
+      }
+
       hasInclusion = true
     } else {
-      // Any other type → invalid
       return {
-        error: 'Invalid projection value type'
+        error: `Invalid projection value type for "${key}"`
       }
     }
   }
 
-  // Cannot mix inclusion and exclusion (except for _id: 0)
   if (hasInclusion && hasExclusion) {
     return {
       error: 'Cannot mix inclusion and exclusion in projection'

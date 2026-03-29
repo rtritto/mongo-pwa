@@ -1,68 +1,73 @@
-import toBSON from '@/utils/mongodb-query-parser'
+import parseRelaxedJSON from './parseRelaxedJSON'
 import { isPlainObject } from './common'
 
-// Update operators NOT allowed in an insert document
-const UPDATE_OPERATORS = new Set([
+const UPDATE_OPERATORS: ReadonlySet<string> = new Set([
   '$set', '$unset', '$push', '$pull', '$addToSet',
   '$pop', '$rename', '$inc', '$mul', '$min', '$max',
   '$currentDate', '$setOnInsert', '$bit',
   '$pullAll', '$each', '$position', '$sort', '$slice'
 ])
 
+export type ReturnValidation = { error?: string }
+
 /**
- * Recursively validates the fields of a document.
- * - No empty fields
- * - No update operators ($set, $push, etc.)
- * - Nested objects → recursion
+ * Validates document fields iteratively (Stack-based).
  */
-function validateFields(obj: Record<string, unknown>, isRoot: boolean): ReturnValidation {
-  for (const [key, value] of Object.entries(obj)) {
-    // Empty field
-    if (!key) {
-      return {
-        error: 'Empty field'
-      }
-    }
+function validateFields(root: Record<string, unknown>): ReturnValidation | undefined {
+  const stack: { obj: Record<string, unknown>; isRoot: boolean; path: string }[] = [
+    { obj: root, isRoot: true, path: '' }
+  ]
 
-    // Fields starting with $ at the top-level → always forbidden
-    // Fields with $ nested → forbidden if they are update operators
-    if (key.startsWith('$')) {
-      if (isRoot) return {
-        error: 'Top-level fields cannot start with $'
+  while (stack.length > 0) {
+    const { obj, isRoot, path } = stack.pop()!
+
+    // The for...in loop is the fastest way in V8 to iterate over object keys
+    for (const key in obj) {
+      const currentPath = path ? `${path}.${key}` : key
+
+      // Check for empty or whitespace-only key
+      if (!key.trim()) {
+        return { error: `Empty or whitespace-only field name at '${path || 'root'}'` }
       }
-      if (UPDATE_OPERATORS.has(key)) {
-        return {
-          error: `Update operator ${key} is not allowed in insert document`
+
+      // Check operator '$' (36 is the charCode of '$' -> ultra-fast)
+      if (key.charCodeAt(0) === 36) {
+        if (isRoot) {
+          return { error: `Top-level field cannot start with '$' (found '${key}')` }
+        }
+        if (UPDATE_OPERATORS.has(key)) {
+          return { error: `Update operator '${key}' is not allowed in insert document at '${currentPath}'` }
         }
       }
-    }
 
-    // Array → validate each object element recursively
-    if (Array.isArray(value)) {
-      for (const item of value) {
-        if (isPlainObject(item)) {
-          const validation = validateFields(item, false)
-          if (validation.error) {
-            return {
-              error: 'Invalid document in array'
-            }
+      const value = obj[key]
+
+      // If it's a nested object, push it onto the stack
+      if (isPlainObject(value)) {
+        stack.push({
+          obj: value as Record<string, unknown>,
+          isRoot: false,
+          path: currentPath
+        })
+      }
+      // If it's an array, analyze only the objects inside
+      else if (Array.isArray(value)) {
+        for (let i = 0; i < value.length; i++) {
+          const item = value[i]
+          if (isPlainObject(item)) {
+            stack.push({
+              obj: item as Record<string, unknown>,
+              isRoot: false,
+              path: `${currentPath}[${i}]`
+            })
           }
-        }
-      }
-    }
-
-    // Nested object → recursion
-    if (isPlainObject(value)) {
-      const validation = validateFields(value, false)
-      if (validation.error) {
-        return {
-          error: 'Invalid nested document'
         }
       }
     }
   }
 
-  return {}
+  // No error found
+  return undefined
 }
 
 /**
@@ -78,29 +83,36 @@ function validateFields(obj: Record<string, unknown>, isRoot: boolean): ReturnVa
  * ❌ Invalid
  * []                          — array (use insertMany)
  * { "$set": { "name": "X" } } — update operator, not a document
- * { "": "value" }             — empty field
+ * { "   ": "value" }          — whitespace field
  * "just a string"             — not an object
  */
 export default function isValidInsertDocument(str: string): ReturnValidation {
-  let obj: unknown
-
-  // Must be valid JSON
-  try {
-    obj = toBSON(str)
-  } catch /* (error) */ {
-    // console.error('Error parsing JSON:', error)
-    return {
-      error: 'Invalid JSON format'
-    }
+  // Early return
+  if (!str?.trim()) {
+    return { error: 'Insert document cannot be empty' }
   }
 
-  // Must be an object, not null, not an array
-  if (!isPlainObject(obj)) return {
-    error: 'Not a valid object'
+  let obj: unknown
+
+  // Safe parsing
+  try {
+    obj = parseRelaxedJSON(str)
+  } catch (e) {
+    return { error: `Invalid syntax: ${(e as Error).message}` }
+  }
+
+  // Must be a plain object {} (not array, not string, not null)
+  if (!isPlainObject(obj)) {
+    return { error: 'Must be a valid object' }
   }
 
   // {} is valid — MongoDB will automatically add _id
 
-  // Validate all fields recursively
-  return validateFields(obj, true)
+  const fieldError = validateFields(obj as Record<string, unknown>)
+
+  if (fieldError) {
+    return fieldError
+  }
+
+  return {}
 }

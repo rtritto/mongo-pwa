@@ -1,120 +1,134 @@
-import toBSON from '@/utils/mongodb-query-parser'
-import { isPlainObject } from './common'
+import parseRelaxedJSON from './parseRelaxedJSON'
 
-// Top-level operators allowed in a filter
-const TOP_LEVEL_QUERY_OPS = new Set([
-  '$and', '$or', '$nor', '$not',
-  '$expr', '$text', '$where', '$comment',
-  '$jsonSchema'
-])
+// Note: ([:\[,]\s*) ensures to match only when used as a "value"
+// and not as part of the text inside a normal string.
 
-// Field-level operators
-const FIELD_QUERY_OPS = new Set([
-  '$eq', '$gt', '$gte', '$lt', '$lte', '$ne',
-  '$in', '$nin',
-  '$exists', '$type',
+// Single combined regex for all function-style types
+const MONGO_FN_RE = /([:\[,]\s*)(ISODate|ObjectId|NumberLong|NumberInt|NumberDecimal)\(\s*(['"]?)([^'"\)\s]*)\3\s*\)/g
+
+// RegExp literal
+const REGEXP_LITERAL_RE = /([:\[,]\s*)\/([^/]+)\/([gimsuy]*)/g
+
+// Strip strings before checking for unknown functions
+const STRING_LITERAL_RE = /(["'])(?:(?!\1)[^\\]|\\.)*\1/g
+
+// Detect unknown functions (after stripping)
+const UNKNOWN_FN_RE = /:\s*([a-zA-Z_]\w*)\s*\(/
+
+// Valid operators (immutable via TS)
+const VALID_OPERATORS: ReadonlySet<string> = new Set([
+  '$gt', '$gte', '$lt', '$lte', '$eq', '$ne',
+  '$in', '$nin', '$exists', '$type',
   '$regex', '$options',
-  '$mod', '$all', '$size', '$elemMatch',
-  '$not',
-  '$geoIntersects', '$geoWithin', '$near', '$nearSphere',
-  '$bitsAllClear', '$bitsAllSet', '$bitsAnyClear', '$bitsAnySet'
+  '$and', '$or', '$not', '$nor',
+  '$elemMatch', '$size', '$all',
+  '$expr', '$mod', '$text', '$search',
+  '$geoWithin', '$geoIntersects', '$near', '$nearSphere'
 ])
 
-/**
- * Recursively validates the values of a field in the filter.
- * If the value is an object, its keys must be valid operators
- * or normal fields (nested dot notation).
- */
-const validateFieldValue = (value: unknown): boolean => {
-  if (!isPlainObject(value)) return true // primitives, arrays → ok
+// Type validators
+const TYPE_VALIDATORS = new Map<string, (value: string) => void>([
+  ['ISODate', (v) => {
+    if (isNaN(Date.parse(v))) throw new Error(`Invalid ISODate: "${v}"`)
+  }],
+  ['ObjectId', (v) => {
+    if (!/^[a-fA-F0-9]{24}$/.test(v)) throw new Error(`Invalid ObjectId: "${v}"`)
+  }],
+  ['NumberLong', (v) => {
+    if (!/^-?\d+$/.test(v)) throw new Error(`Invalid NumberLong: "${v}"`)
+  }],
+  ['NumberInt', (v) => {
+    if (!/^-?\d+$/.test(v)) throw new Error(`Invalid NumberInt: "${v}"`)
+  }],
+  ['NumberDecimal', (v) => {
+    if (isNaN(Number(v))) throw new Error(`Invalid NumberDecimal: "${v}"`)
+  }]
+])
 
-  for (const key of Object.keys(value)) {
-    if (key.startsWith('$') && !FIELD_QUERY_OPS.has(key)) return false
-    // Nested object (e.g., { address: { city: "Rome" } }) → recursion
-    if (!validateFieldValue(value[key])) return false
+function sanitize(str: string): string {
+  // All function-style types in one go
+  let sanitized = str.replace(
+    MONGO_FN_RE,
+    (_match, prefix: string, type: string, _quote: string, value: string) => {
+      TYPE_VALIDATORS.get(type)?.(value)  // validate (or throw)
+      return `${prefix}"$$${type}:${value}"`    // Re-inserts the prefix ( : [ , )
+    }
+  )
+
+  // RegExp literals
+  sanitized = sanitized.replace(
+    REGEXP_LITERAL_RE,
+    (_match, prefix: string, pattern: string, flags: string) => {
+      try { new RegExp(pattern, flags) }
+      catch { throw new Error(`Invalid RegExp: /${pattern}/${flags}`) }
+      return `${prefix}"$$RegExp:${pattern}:${flags}"`
+    }
+  )
+
+  // Strip strings before checking for unknown functions
+  // { a: { $regex: "foo(" } } → { a: { $regex: "" } } → no false positives
+  const stripped = sanitized.replace(STRING_LITERAL_RE, '""')
+  const unknownFn = stripped.match(UNKNOWN_FN_RE)
+  if (unknownFn) {
+    throw new Error(`Unrecognized type: "${unknownFn[1]}"`)
   }
 
-  return true
+  return sanitized
 }
 
-/**
- * Validates a string as a MongoDB query (filter for find).
- *
- * Examples:
- * ✅ Valid
- * { "name": "Alice" }
- * { "age": { "$gte": 18 } }
- * { "$or": [{ "a": 1 }, { "b": 2 }] }
- * {}
- * 
- * ❌ Invalid
- * [1, 2, 3]
- * { "$fake": 1 }
- * { "age": { "$fake": 5 } }
- */
-export default function isValidQuery(str: string): ReturnValidation {
-  let obj: unknown
+// Operator validation: iterative (no stack overflow)
+function validateOperators(root: Record<string, unknown>): void {
+  const stack: { obj: Record<string, unknown>; path: string }[] = [
+    { obj: root, path: '' },
+  ]
 
+  while (stack.length > 0) {
+    const { obj, path } = stack.pop()!
+    const keys = Object.keys(obj)
+
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i]
+
+      // 36 is the character '$'
+      if (key.charCodeAt(0) === 36 && !VALID_OPERATORS.has(key)) {
+        throw new Error(`Invalid operator: "${key}" in ${path || 'root'}`)
+      }
+
+      const val = obj[key]
+      if (val !== null && typeof val === 'object') {
+        stack.push({
+          obj: val as Record<string, unknown>,
+          path: path ? `${path}.${key}` : key
+        })
+      }
+    }
+  }
+}
+
+export function validateQuery(str: string): { error?: string } {
+  if (!str?.trim()) {
+    return {
+      error: 'Empty'
+    }
+  }
   try {
-    obj = toBSON(str)
-  } catch {
-    return {
-      error: 'Query has invalid JSON'
-    }
-  }
+    const sanitized = sanitize(str.trim())
+    const parsed = parseRelaxedJSON(sanitized)
 
-  if (!isPlainObject(obj)) {
-    return {
-      error: 'Query must be a non-null object'
-    }
-  }
-
-  for (const [key, value] of Object.entries(obj)) {
-    if (!key) {
+    if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
       return {
-        error: 'Query contains an empty key'
+        error: 'Not an object'
       }
     }
 
-    if (key.startsWith('$')) {
-      // top-level operator → must be known
-      if (!TOP_LEVEL_QUERY_OPS.has(key)) {
-        return {
-          error: `Invalid top-level operator: ${key}`
-        }
-      }
+    validateOperators(parsed as Record<string, unknown>)
 
-      // $and, $or, $nor require an array of objects
-      if (['$and', '$or', '$nor'].includes(key)) {
-        if (!Array.isArray(value)) {
-          return {
-            error: `${key} operator requires an array`
-          }
-        }
-        for (const item of value) {
-          if (!isPlainObject(item)) {
-            return {
-              error: `${key} operator requires an array of objects`
-            }
-          }
-          // Recursive validation
-          const validation = isValidQuery(JSON.stringify(item))
-          if ('error' in validation) {
-            return {
-              error: `Invalid query in ${key} operator: ${validation.error}`
-            }
-          }
-        }
-      }
-    } else {
-      // Normal field → validate its operators
-      if (!validateFieldValue(value)) {
-        return {
-          error: 'Invalid field value'
-        }
-      }
+    return {}
+  } catch (e) {
+    return {
+      error: (e as Error).message
     }
   }
-
-  return {}
 }
+
+export default validateQuery
