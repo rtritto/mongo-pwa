@@ -30,16 +30,31 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
   const handleSave = async () => {
     if (isCodeQueryValid() && isCodeProjectionValid()) {
       const queryStr: string[] = []
-      if (codeQuery()) {
-        queryStr.push(`query=${encodeURIComponent(codeQuery())}`)
+
+      const qVal = codeQuery()
+      // Remove all spaces, tabs, and newlines for a safe check
+      const cleanQuery = qVal.replace(/\s+/g, '')
+
+      // Adds the query only if it is not empty, not {} and not [] (for aggregations)
+      if (cleanQuery !== '' && cleanQuery !== '{}' && cleanQuery !== '[]') {
+        queryStr.push(`query=${encodeURIComponent(qVal)}`)
       }
-      if (codeProjection()) {
-        queryStr.push(`projection=${encodeURIComponent(codeProjection())}`)
+
+      const pVal = codeProjection()
+      const cleanProjection = pVal.replace(/\s+/g, '')
+
+      // Adds the projection only if it is not empty and not {}
+      if (cleanProjection !== '' && cleanProjection !== '{}') {
+        queryStr.push(`projection=${encodeURIComponent(pVal)}`)
       }
+
       if (checkboxAggregate()) {
         queryStr.push('aggregate=true')
       }
-      await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}?${queryStr.join('&')}`)
+
+      const queryString = queryStr.length > 0 ? `?${queryStr.join('&')}` : ''
+
+      await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}${queryString}`)
     }
   }
 
