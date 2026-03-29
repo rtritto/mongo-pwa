@@ -18,6 +18,8 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
   const [currentCodeProjection, setCurrentCodeProjection] = createSignal(props.data.projection || EMPTY_OBJECT_TEMPLATE)
   // eslint-disable-next-line solid/reactivity
   const [checkboxAggregate, setCheckboxAggregate] = createSignal(props.data.aggregate)
+  const [isCodeQueryValid, setIsCodeQueryValid] = createSignal(true)
+  const [isCodeProjectionValid, setIsCodeProjectionValid] = createSignal(true)
 
   createEffect(() => {
     setCurrentCodeQuery(props.data.query || EMPTY_OBJECT_TEMPLATE)
@@ -26,17 +28,19 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
   })
 
   const handleSave = async () => {
-    const queryStr: string[] = []
-    if (currentCodeQuery()) {
-      queryStr.push(`query=${encodeURIComponent(currentCodeQuery())}`)
+    if (isCodeQueryValid() && isCodeProjectionValid()) {
+      const queryStr: string[] = []
+      if (currentCodeQuery()) {
+        queryStr.push(`query=${encodeURIComponent(currentCodeQuery())}`)
+      }
+      if (currentCodeProjection()) {
+        queryStr.push(`projection=${encodeURIComponent(currentCodeProjection())}`)
+      }
+      if (checkboxAggregate()) {
+        queryStr.push('aggregate=true')
+      }
+      await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}?${queryStr.join('&')}`)
     }
-    if (currentCodeProjection()) {
-      queryStr.push(`projection=${encodeURIComponent(currentCodeProjection())}`)
-    }
-    if (checkboxAggregate()) {
-      queryStr.push('aggregate=true')
-    }
-    await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}?${queryStr.join('&')}`)
   }
 
   return (
@@ -50,7 +54,10 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
           <CodeEditor
             value={currentCodeQuery()}
             readOnly={false}
-            onChange={(newCode) => setCurrentCodeQuery(newCode)}
+            onChange={(newCode) => {
+              setCurrentCodeQuery(newCode)
+              setIsCodeQueryValid(!(checkboxAggregate() ? isValidAggregation : isValidQuery)(newCode).error)
+            }}
             onSave={handleSave}
           />
         </div>
@@ -63,7 +70,10 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
           <CodeEditor
             value={currentCodeProjection()}
             readOnly={false}
-            onChange={(newCode) => setCurrentCodeProjection(newCode)}
+            onChange={(newCode) => {
+              setCurrentCodeProjection(newCode)
+              setIsCodeProjectionValid(!isValidProjection(newCode).error)
+            }}
             onSave={handleSave}
           />
         </div>
@@ -80,10 +90,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
         <button
           class="btn bg-blue-500"
-          disabled={
-            !!((checkboxAggregate() ? isValidAggregation : isValidQuery)(currentCodeQuery()).error
-              || isValidProjection(currentCodeProjection()).error)
-          }
+          disabled={!isCodeQueryValid() || !isCodeProjectionValid()}
           onClick={handleSave}
         >
           <IconSearch />

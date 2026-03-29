@@ -14,8 +14,13 @@ const SaveDialog: Component<{
   let dialogRef!: HTMLDialogElement
   const template = untrack(() => props.template)
   const [code, setCode] = createSignal(template)
+  const [isCodeValid, setIsCodeValid] = createSignal(true)
 
-  const handleSave = () => props.handleSave(code(), dialogRef)
+  const handleSave = () => {
+    if (isCodeValid()) {
+      props.handleSave(code(), dialogRef)
+    }
+  }
 
   return (
     <div>
@@ -43,7 +48,10 @@ const SaveDialog: Component<{
             <CodeEditor
               value={code()}
               readOnly={false}
-              onChange={(newCode) => setCode(newCode)}
+              onChange={(newCode) => {
+                setCode(newCode)
+                setIsCodeValid(!isValidInsertDocument(newCode).error)
+              }}
               onSave={handleSave}
             />
 
@@ -51,7 +59,7 @@ const SaveDialog: Component<{
               <button
                 class="btn bg-green-500 py-0.5"
                 type="submit"
-                disabled={!!isValidInsertDocument(code()).error}
+                disabled={!isCodeValid()}
                 onClick={handleSave}
               >
                 Save
