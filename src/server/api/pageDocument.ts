@@ -5,7 +5,7 @@ import getColumnsAndSetDocs from '@/utils/mappers/getColumnsAndSetDocs'
 import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
 import { checkDatabase } from '@/utils/validations/serverChecks'
 
-export default async function collectionCreate(c: Context) {
+export default async function pageDocument(c: Context) {
   const query = await c.req.json<{
     database: string
     collection: string
