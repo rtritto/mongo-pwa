@@ -53,7 +53,11 @@ export default defineConfig(async ({ mode }) => {
     },
     envPrefix: 'ME_CONFIG_',
     esbuild: {
-      legalComments: 'none'
+      legalComments: 'none',
+      exclude: ['bson']
+    },
+    ssr: {
+      noExternal: ['bson']
     },
     resolve: {
       alias: {
