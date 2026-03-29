@@ -1,8 +1,7 @@
-import { Binary } from 'bson'
+import { Binary, ObjectId } from 'bson'
 import type { Sort, SortDirection } from 'mongodb'
 
-import { parseObjectId, toSafeBSON } from './bson'
-
+import toBSON from '@/utils/mongodb-query-parser'
 
 type Projection = {
   [field: string]: number
@@ -30,6 +29,24 @@ interface StageProject {
 }
 type Stage = StageMatch | StageSort | StageLimit | StageSkip | StageCount | StageFacet | StageProject
 type Pipeline = Stage[]
+
+// This function as the name suggests attempts to parse
+// the free form string in to BSON, since the possibilities of failure
+// are higher, this function uses a try..catch
+const toSafeBSON = (string: string) => {
+  try {
+    return toBSON(string)
+  } catch {
+    return
+  }
+}
+
+const parseObjectId = (string: string) => {
+  if (/^[\da-f]{24}$/i.test(string)) {
+    return new ObjectId(string)
+  }
+  return toBSON(string)
+}
 
 /** @param sort example: sort=field1,-field2 */
 const getSort = (sort: string): Sort => {
