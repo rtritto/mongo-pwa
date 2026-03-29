@@ -63,7 +63,11 @@ export default function isValidQuery(str: string): ReturnValidation {
     }
   }
 
-  if (!isPlainObject(obj)) return { error: 'Query must be a non-null object' }
+  if (!isPlainObject(obj)) {
+    return {
+      error: 'Query must be a non-null object'
+    }
+  }
 
   for (const [key, value] of Object.entries(obj)) {
     if (!key) {
@@ -82,7 +86,11 @@ export default function isValidQuery(str: string): ReturnValidation {
 
       // $and, $or, $nor require an array of objects
       if (['$and', '$or', '$nor'].includes(key)) {
-        if (!Array.isArray(value)) return { error: `${key} operator requires an array` }
+        if (!Array.isArray(value)) {
+          return {
+            error: `${key} operator requires an array`
+          }
+        }
         for (const item of value) {
           if (!isPlainObject(item)) {
             return {
