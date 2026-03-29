@@ -217,7 +217,3 @@ export const getItemsAndCount = async (
     count
   }
 }
-
-export const getLastPage = (pageSize: number, totalCount: number): number => {
-  return Math.ceil(totalCount / pageSize)
-}

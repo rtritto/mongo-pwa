@@ -21,7 +21,6 @@ import RenameCollection from './RenameCollection'
 import { getInitialColumnsHeader, getNextSort, removeColumnFromSortQp } from './functions/functionsSort'
 import { HEADERS_JSON } from '@/utils/constants'
 import fetchWithRetries from '@/utils/fetchWithRetries'
-import { getLastPage } from '@/utils/queries'
 
 const DOC_STRING_TEMPLATE_DOCUMENT = `{
   _id: ObjectId()
@@ -29,6 +28,10 @@ const DOC_STRING_TEMPLATE_DOCUMENT = `{
 const DOC_STRING_TEMPLATE_INDEX = `{
   key: 1
 }`
+
+const getLastPage = (pageSize: number, totalCount: number): number => {
+  return Math.ceil(totalCount / pageSize)
+}
 
 const CollectionPage: Component<DataCollection> = () => {
   const pageContext = usePageContext() as ReturnType<typeof usePageContext> & {
