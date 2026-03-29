@@ -8,9 +8,6 @@ export default async function collectionCreate(c: Context) {
     collection: string
   }>()
   await connectClient()
-  await globalThis.mongo.mongoClient.db(database).createCollection(collection).catch((error) => {
-    console.error(error)
-    throw new Error(`Failed to create collection. ${error.message}`)
-  })
+  await globalThis.mongo.mongoClient.db(database).createCollection(collection)
   return c.json({})
 }

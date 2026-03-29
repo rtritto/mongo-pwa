@@ -21,9 +21,6 @@ export default async function collectionDeleteIndex(c: Context) {
   if (error) {
     return c.json({ error }, 404)
   }
-  await globalThis.mongo.mongoClient.db(database).collection(collection).dropIndex(indexName).catch((error) => {
-    console.error(error)
-    throw new Error(`Failed to delete index. ${error.message}`)
-  })
+  await globalThis.mongo.mongoClient.db(database).collection(collection).dropIndex(indexName)
   return c.json({})
 }
