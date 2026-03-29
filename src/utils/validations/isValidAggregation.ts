@@ -125,6 +125,7 @@ export function isValidAggregation(str: string): ReturnValidation {
             error: `Invalid value for ${stageOp}: ${stageValue}. Must be a positive integer`
           }
         }
+        break
       }
       case '$count': {
         // Must be a non-empty string
@@ -133,6 +134,7 @@ export function isValidAggregation(str: string): ReturnValidation {
             error: `Invalid value for ${stageOp}: ${stageValue}. Must be a non-empty string`
           }
         }
+        break
       }
       case '$sort': {
         // Must be an object with values 1, -1, or { $meta: "textScore" }
@@ -149,8 +151,8 @@ export function isValidAggregation(str: string): ReturnValidation {
             }
           }
         }
+        break
       }
-
       case '$match': {
         // The content must be a valid query
         if (!isPlainObject(stageValue)) {
@@ -163,8 +165,8 @@ export function isValidAggregation(str: string): ReturnValidation {
             error: `Invalid value for ${stageOp}: ${stageValue}. Must be a valid query`
           }
         }
+        break
       }
-
       case '$unwind': {
         // String (path) or object with "path"
         if (typeof stageValue === 'string') {
@@ -184,8 +186,8 @@ export function isValidAggregation(str: string): ReturnValidation {
             error: `Invalid value for ${stageOp}: ${stageValue}. Must be a string or an object with a path`
           }
         }
+        break
       }
-
       case '$unset': {
         // String or array of strings
         if (typeof stageValue !== 'string' && !Array.isArray(stageValue)) {
@@ -198,8 +200,8 @@ export function isValidAggregation(str: string): ReturnValidation {
             error: `Invalid value for ${stageOp}: ${stageValue}. All elements must be strings`
           }
         }
+        break
       }
-
       default: {
         // For all other stages: the value must be an object or a valid type
         // We do not validate in detail — MongoDB will perform the final validation
@@ -211,6 +213,5 @@ export function isValidAggregation(str: string): ReturnValidation {
       }
     }
   }
-
   return {}
 }
