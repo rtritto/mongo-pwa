@@ -66,7 +66,11 @@ export default function isValidQuery(str: string): ReturnValidation {
   if (!isPlainObject(obj)) return { error: 'Query must be a non-null object' }
 
   for (const [key, value] of Object.entries(obj)) {
-    if (!key) return { error: 'Query contains an empty key' }
+    if (!key) {
+      return {
+        error: 'Query contains an empty key'
+      }
+    }
 
     if (key.startsWith('$')) {
       // top-level operator → must be known
@@ -96,7 +100,11 @@ export default function isValidQuery(str: string): ReturnValidation {
       }
     } else {
       // Normal field → validate its operators
-      if (!validateFieldValue(value)) return { error: 'Invalid field value' }
+      if (!validateFieldValue(value)) {
+        return {
+          error: 'Invalid field value'
+        }
+      }
     }
   }
 
