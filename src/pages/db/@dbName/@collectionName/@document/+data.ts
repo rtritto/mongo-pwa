@@ -10,9 +10,9 @@ export const data = async (pageContext: PageContextServer) => {
   if (validationDbRes.error) {
     throw new Error(validationDbRes.error)
   }
-  const validationCollRes = isValidCollectionName(collectionName)
-  if (validationCollRes.error) {
-    throw new Error(validationCollRes.error)
+  const { error } = isValidCollectionName(collectionName)
+  if (error) {
+    throw new Error(error)
   }
   await connectClient()
   const { config: { options }, mongo } = globalThis
