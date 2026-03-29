@@ -71,7 +71,10 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             readOnly={false}
             onChange={(newCode) => {
               setCodeQuery(newCode)
-              setIsCodeQueryValid(!(checkboxAggregate() ? isValidAggregation : isValidQuery)(newCode).error)
+              const cleanQuery = newCode.replace(/\s+/g, '')
+              if (cleanQuery !== '' && cleanQuery !== '{}' && (checkboxAggregate() ? cleanQuery !== '[]' : true)) {
+                setIsCodeQueryValid(!(checkboxAggregate() ? isValidAggregation : isValidQuery)(newCode).error)
+              }
             }}
             onSave={handleSave}
           />
@@ -87,7 +90,10 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             readOnly={false}
             onChange={(newCode) => {
               setCodeProjection(newCode)
-              setIsCodeProjectionValid(!isValidProjection(newCode).error)
+              const cleanProjection = newCode.replace(/\s+/g, '')
+              if (cleanProjection !== '' && cleanProjection !== '{}') {
+                setIsCodeProjectionValid(!isValidProjection(newCode).error)
+              }
             }}
             onSave={handleSave}
           />
