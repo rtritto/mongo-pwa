@@ -9,7 +9,7 @@ const ALLOWED_MIME_TYPES = new Set([
   'application/json'
 ])
 
-export default async function collectionExport(c: Context) {
+export default async function collectionImport(c: Context) {
   const formData = await c.req.formData()
   await connectClient()
   const database = formData.get('database') as string
