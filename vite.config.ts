@@ -45,19 +45,12 @@ export default defineConfig(async ({ mode }) => {
     },
     build: {
       target: 'esnext',
-      outDir: '../dist',
-      rollupOptions: {
-        external: ['bson']
-      }
+      outDir: '../dist'
       // minify: true
     },
     envPrefix: 'ME_CONFIG_',
     esbuild: {
-      legalComments: 'none',
-      exclude: ['bson']
-    },
-    ssr: {
-      noExternal: ['bson']
+      legalComments: 'none'
     },
     resolve: {
       alias: {
