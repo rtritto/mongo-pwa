@@ -13,28 +13,28 @@ const EMPTY_OBJECT_TEMPLATE = `{
 
 const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
   // eslint-disable-next-line solid/reactivity
-  const [currentCodeQuery, setCurrentCodeQuery] = createSignal(props.data.query || EMPTY_OBJECT_TEMPLATE)
+  const [codeQuery, setCodeQuery] = createSignal(props.data.query || EMPTY_OBJECT_TEMPLATE)
   // eslint-disable-next-line solid/reactivity
-  const [currentCodeProjection, setCurrentCodeProjection] = createSignal(props.data.projection || EMPTY_OBJECT_TEMPLATE)
+  const [codeProjection, setCodeProjection] = createSignal(props.data.projection || EMPTY_OBJECT_TEMPLATE)
   // eslint-disable-next-line solid/reactivity
   const [checkboxAggregate, setCheckboxAggregate] = createSignal(props.data.aggregate)
   const [isCodeQueryValid, setIsCodeQueryValid] = createSignal(true)
   const [isCodeProjectionValid, setIsCodeProjectionValid] = createSignal(true)
 
   createEffect(() => {
-    setCurrentCodeQuery(props.data.query || EMPTY_OBJECT_TEMPLATE)
-    setCurrentCodeProjection(props.data.projection || EMPTY_OBJECT_TEMPLATE)
+    setCodeQuery(props.data.query || EMPTY_OBJECT_TEMPLATE)
+    setCodeProjection(props.data.projection || EMPTY_OBJECT_TEMPLATE)
     setCheckboxAggregate(props.data.aggregate)
   })
 
   const handleSave = async () => {
     if (isCodeQueryValid() && isCodeProjectionValid()) {
       const queryStr: string[] = []
-      if (currentCodeQuery()) {
-        queryStr.push(`query=${encodeURIComponent(currentCodeQuery())}`)
+      if (codeQuery()) {
+        queryStr.push(`query=${encodeURIComponent(codeQuery())}`)
       }
-      if (currentCodeProjection()) {
-        queryStr.push(`projection=${encodeURIComponent(currentCodeProjection())}`)
+      if (codeProjection()) {
+        queryStr.push(`projection=${encodeURIComponent(codeProjection())}`)
       }
       if (checkboxAggregate()) {
         queryStr.push('aggregate=true')
@@ -52,10 +52,10 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
           </label>
 
           <CodeEditor
-            value={currentCodeQuery()}
+            value={codeQuery()}
             readOnly={false}
             onChange={(newCode) => {
-              setCurrentCodeQuery(newCode)
+              setCodeQuery(newCode)
               setIsCodeQueryValid(!(checkboxAggregate() ? isValidAggregation : isValidQuery)(newCode).error)
             }}
             onSave={handleSave}
@@ -68,10 +68,10 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
           </label>
 
           <CodeEditor
-            value={currentCodeProjection()}
+            value={codeProjection()}
             readOnly={false}
             onChange={(newCode) => {
-              setCurrentCodeProjection(newCode)
+              setCodeProjection(newCode)
               setIsCodeProjectionValid(!isValidProjection(newCode).error)
             }}
             onSave={handleSave}
