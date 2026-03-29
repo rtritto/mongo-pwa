@@ -1,20 +1,17 @@
+import { render } from 'vike/abort'
+
 import { connectClient } from '@/server/db'
 import { buildId } from '@/utils/mappers/mapUtils'
-import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
-import isValidCollectionName from '@/utils/validations/isValidCollectionName'
 import { toJSString } from '@/utils/mongodb-query-parser'
+import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 export const data = async (pageContext: PageContextServer) => {
   const { dbName, collectionName, document } = pageContext.routeParams
-  const validationDbRes = isValidDatabaseName(dbName)
-  if (validationDbRes.error) {
-    throw new Error(validationDbRes.error)
-  }
-  const { error } = isValidCollectionName(collectionName)
-  if (error) {
-    throw new Error(error)
-  }
   await connectClient()
+  const { error } = checkDatabaseCollection(dbName, collectionName)
+  if (error) {
+    render(404, error)
+  }
   const { config: { options }, mongo } = globalThis
   // TODO check if use this
   // const collection = mongo.connections[dbName].db.collection(collectionName)
@@ -25,8 +22,9 @@ export const data = async (pageContext: PageContextServer) => {
   const _id = buildId(document, subtype)
 
   const doc = await collection.findOne({ _id })
-
-  // TODO handle 404 not found
+  if (!doc) {
+    render(404, `Document "${_id}" not found!`)
+  }
 
   return {
     title: `${options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,

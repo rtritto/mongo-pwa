@@ -1,7 +1,7 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkCollection, checkDatabase } from '@/utils/validations/serverChecks'
+import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 export default async function collectionRename(c: Context) {
   const { database, collection, newCollection } = await c.req.json<{
@@ -9,8 +9,10 @@ export default async function collectionRename(c: Context) {
     collection: string
     newCollection: string
   }>()
-  checkDatabase(database)
-  checkCollection(database, collection)
+  const { error } = checkDatabaseCollection(database, collection)
+  if (error) {
+    return c.json({ error }, 404)
+  }
   await connectClient()
   await globalThis.mongo.mongoClient.db(database).collection(collection).rename(newCollection).catch((error) => {
     console.debug(error)

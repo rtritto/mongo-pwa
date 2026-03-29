@@ -3,7 +3,7 @@ import type { Context } from 'hono'
 import { connectClient } from '@/server/db'
 import csv from '@/utils/csv'
 import { getQuery, getQueryOptions } from '@/utils/queries'
-import { checkCollection, checkDatabase } from '@/utils/validations/serverChecks'
+import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 export default async function collectionExportCsv(c: Context) {
   const { database, collection, query } = await c.req.json<{
@@ -12,8 +12,10 @@ export default async function collectionExportCsv(c: Context) {
     query: QueryParameter
   }>()
   await connectClient()
-  checkDatabase(database)
-  checkCollection(database, collection)
+  const { error } = checkDatabaseCollection(database, collection)
+  if (error) {
+    return c.json({ error }, 404)
+  }
   c.header(
     'Content-Disposition',
     `attachment; filename="${encodeURI(collection)}.csv"; filename*=UTF-8''${encodeURI(collection)}.csv`

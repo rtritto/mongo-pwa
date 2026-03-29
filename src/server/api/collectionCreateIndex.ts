@@ -1,7 +1,8 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkCollection, checkDatabase, checkDocument } from '@/utils/validations/serverChecks'
+import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
+import toBSON from '@/utils/mongodb-query-parser'
 
 export default async function collectionCreateIndex(c: Context) {
   const { database, collection, doc } = await c.req.json<{
@@ -10,12 +11,16 @@ export default async function collectionCreateIndex(c: Context) {
     doc: string
   }>()
   await connectClient()
-  checkDatabase(database)
-  checkCollection(database, collection)
-  const _doc = checkDocument(doc)
-  const indexName = await globalThis.mongo.mongoClient.db(database).collection(collection).createIndex(_doc).catch((error) => {
-    console.error(error)
-    throw new Error(`Failed to create index. ${error.message}`)
-  })
+  const { error } = checkDatabaseCollection(database, collection)
+  if (error) {
+    return c.json({ error }, 404)
+  }
+  let _doc
+  try {
+    _doc = toBSON(doc)
+  } catch (error) {
+    return c.json({ error: `Failed to parse document: ${(error as Error).message}` }, 400)
+  }
+  const indexName = await globalThis.mongo.mongoClient.db(database).collection(collection).createIndex(_doc)
   return c.json({ indexName })
 }

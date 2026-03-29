@@ -3,7 +3,7 @@ import type { Context } from 'hono'
 import { connectClient } from '@/server/db'
 import getColumnsAndSetDocs from '@/utils/mappers/getColumnsAndSetDocs'
 import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
-import { checkDatabase } from '@/utils/validations/serverChecks'
+import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 export default async function pageDocument(c: Context) {
   const query = await c.req.json<{
@@ -12,7 +12,10 @@ export default async function pageDocument(c: Context) {
   } & QueryParameter>()
   const { database, collection } = query
   await connectClient()
-  checkDatabase(database)
+  const { error } = checkDatabaseCollection(database, collection)
+  if (error) {
+    return c.json({ error }, 404)
+  }
   const queryOptions = getQueryOptions(query)
   const _collection = globalThis.mongo.mongoClient.db(database).collection(collection)
   const { count, items } = await getItemsAndCount(query, queryOptions, _collection, globalThis.config)

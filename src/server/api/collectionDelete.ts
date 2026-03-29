@@ -2,20 +2,26 @@ import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
 import { getQuery } from '@/utils/queries'
-import { checkCollection, checkDatabase, checkOption } from '@/utils/validations/serverChecks'
+import { checkDatabaseCollection, checkOptions } from '@/utils/validations/serverChecks'
 
 export default async function collectionDelete(c: Context) {
-  // TODO (?) remove checkOption
-  checkOption('readOnly', true)
-  checkOption('noDelete', true)
   const { database, collection, query } = await c.req.json<{
     database: string
     collection: string
     query: QueryParameter
   }>()
   await connectClient()
-  checkDatabase(database)
-  checkCollection(database, collection)
+  const { error: optionError } = checkOptions({
+    readOnly: false,
+    noDelete: false
+  })
+  if (optionError) {
+    return c.json({ error: optionError }, 403)
+  }
+  const { error } = checkDatabaseCollection(database, collection)
+  if (error) {
+    return c.json({ error }, 404)
+  }
   const _collection = globalThis.mongo.mongoClient.db(database).collection(collection)
   if (query) {
     // Delete some documents

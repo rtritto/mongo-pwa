@@ -1,22 +1,19 @@
+import { render } from 'vike/abort'
+
 import { connectClient } from '@/server/db'
 import getColumnsAndSetDocs from '@/utils/mappers/getColumnsAndSetDocs'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
 import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
-import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
-import isValidCollectionName from '@/utils/validations/isValidCollectionName'
+import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 export const data = async (pageContext: PageContextServer) => {
   const { dbName, collectionName } = pageContext.routeParams
-  const validationDbRes = isValidDatabaseName(dbName)
-  if (validationDbRes.error) {
-    throw new Error(validationDbRes.error)
-  }
-  const { error } = isValidCollectionName(collectionName)
-  if (error) {
-    throw new Error(error)
-  }
   const { search } = pageContext.urlParsed
   await connectClient()
+  const { error } = checkDatabaseCollection(dbName, collectionName)
+  if (error) {
+    render(404, error)
+  }
   const queryOptions = getQueryOptions(search)
   const { mongo, config } = globalThis
   // TODO check if use this

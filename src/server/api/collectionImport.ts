@@ -2,7 +2,7 @@ import { EJSON } from 'bson'
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkCollection, checkDatabase } from '@/utils/validations/serverChecks'
+import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 const ALLOWED_MIME_TYPES = new Set([
   'text/csv',
@@ -11,11 +11,13 @@ const ALLOWED_MIME_TYPES = new Set([
 
 export default async function collectionImport(c: Context) {
   const formData = await c.req.formData()
-  await connectClient()
   const database = formData.get('database') as string
-  checkDatabase(database)
   const collection = formData.get('collection') as string
-  checkCollection(database, collection)
+  await connectClient()
+  const { error } = checkDatabaseCollection(database, collection)
+  if (error) {
+    return c.json({ error }, 404)
+  }
 
   // Ensure the request is multipart
   const contentType = c.req.header('Content-Type') || ''

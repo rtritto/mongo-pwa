@@ -1,7 +1,7 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { checkCollection, checkDatabase } from '@/utils/validations/serverChecks'
+import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 export default async function collectionDeleteIndex(c: Context) {
   const { database, collection, indexName } = await c.req.json<{
@@ -10,8 +10,10 @@ export default async function collectionDeleteIndex(c: Context) {
     indexName: string
   }>()
   await connectClient()
-  checkDatabase(database)
-  checkCollection(database, collection)
+  const { error } = checkDatabaseCollection(database, collection)
+  if (error) {
+    return c.json({ error }, 404)
+  }
   await globalThis.mongo.mongoClient.db(database).collection(collection).dropIndex(indexName).catch((error) => {
     console.error(error)
     throw new Error(`Failed to delete index. ${error.message}`)
