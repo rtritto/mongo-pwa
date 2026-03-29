@@ -1,5 +1,4 @@
-import { Binary, ObjectId } from 'bson'
-import type { Code, DBRef, Decimal128, Double, Int32, Long, Timestamp } from 'bson'
+import type { Binary, Code, DBRef, Decimal128, Double, Int32, Long, ObjectId, Timestamp } from 'bson'
 
 type BSONValues = Binary | Code | DBRef | Date | Decimal128 | Double | Int32 | Long | ObjectId | Timestamp
 
@@ -61,20 +60,6 @@ export const deepmerge = (target: object[] | object, src: object[] | object) => 
   }
 
   return deepmergeObject(target as object, src as object)
-}
-
-export const buildId = (_id: string | number, sub_type: number | undefined) => {
-  // Case 1 : ObjectId
-  try {
-    return ObjectId.createFromHexString(_id as string)
-  } catch {
-    // Case 2 : BinaryID (only subtype 4)
-    if (sub_type === Binary.SUBTYPE_UUID) {
-      return new Binary(Buffer.from((_id as string).replaceAll('-', ''), 'hex'), sub_type)
-    }
-    // Case 3 : Try as raw ID (e.g. number)
-    return Number(_id)
-  }
 }
 
 /**

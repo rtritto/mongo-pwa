@@ -1,7 +1,7 @@
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
-import { buildId } from '@/utils/mappers/mapUtils'
+import buildId from '@/utils/mappers/buildId'
 import { checkDatabaseCollection, checkOptions } from '@/utils/validations/serverChecks'
 
 export default async function documentDelete(c: Context) {

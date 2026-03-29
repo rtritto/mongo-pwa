@@ -1,7 +1,7 @@
 import { render } from 'vike/abort'
 
 import { connectClient } from '@/server/db'
-import { buildId } from '@/utils/mappers/mapUtils'
+import buildId from '@/utils/mappers/buildId'
 import { toJSString } from '@/utils/mongodb-query-parser'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
