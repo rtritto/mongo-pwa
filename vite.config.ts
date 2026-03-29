@@ -46,6 +46,9 @@ export default defineConfig(async ({ mode }) => {
     build: {
       target: 'esnext',
       outDir: '../dist',
+      rollupOptions: {
+        external: ['bson']
+      }
       // minify: true
     },
     envPrefix: 'ME_CONFIG_',
