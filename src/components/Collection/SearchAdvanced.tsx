@@ -41,6 +41,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
       }
 
       const pVal = codeProjection()
+      // Remove all spaces, tabs, and newlines for a safe check
       const cleanProjection = pVal.replace(/\s+/g, '')
 
       // Adds the projection only if it is not empty and not {}
@@ -71,6 +72,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             readOnly={false}
             onChange={(newCode) => {
               setCodeQuery(newCode)
+              // Remove all spaces, tabs, and newlines for a safe check
               const cleanQuery = newCode.replace(/\s+/g, '')
               if (cleanQuery !== '' && cleanQuery !== '{}' && (checkboxAggregate() ? cleanQuery !== '[]' : true)) {
                 setIsCodeQueryValid(!(checkboxAggregate() ? isValidAggregation : isValidQuery)(newCode).error)
@@ -90,6 +92,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             readOnly={false}
             onChange={(newCode) => {
               setCodeProjection(newCode)
+              // Remove all spaces, tabs, and newlines for a safe check
               const cleanProjection = newCode.replace(/\s+/g, '')
               if (cleanProjection !== '' && cleanProjection !== '{}') {
                 setIsCodeProjectionValid(!isValidProjection(newCode).error)
