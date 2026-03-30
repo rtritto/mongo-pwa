@@ -1,8 +1,8 @@
 import { render } from 'vike/abort'
+import { toJSString } from 'mongodb-query-parser'
 
 import { connectClient } from '@/server/db'
 import buildId from '@/utils/mappers/buildId'
-import { toJSString } from '@/utils/mongodb-query-parser'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 export const data = async (pageContext: PageContextServer) => {

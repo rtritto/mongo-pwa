@@ -1,8 +1,8 @@
 import type { Context } from 'hono'
+import toBSON from 'mongodb-query-parser'
 
 import { connectClient } from '@/server/db'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
-import toBSON from '@/utils/mongodb-query-parser'
 
 export default async function collectionCreateIndex(c: Context) {
   const { database, collection, doc } = await c.req.json<{

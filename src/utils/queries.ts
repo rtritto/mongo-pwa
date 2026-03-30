@@ -1,7 +1,6 @@
 import { Binary, ObjectId } from 'bson'
 import type { Sort, SortDirection } from 'mongodb'
-
-import toBSON from '@/utils/mongodb-query-parser'
+import toBSON from 'mongodb-query-parser'
 
 type Projection = {
   [field: string]: number

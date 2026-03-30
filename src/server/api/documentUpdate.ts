@@ -1,9 +1,9 @@
 import type { Context } from 'hono'
+import toBSON from 'mongodb-query-parser'
 
 import { connectClient } from '@/server/db'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 import buildId from '@/utils/mappers/buildId'
-import toBSON from '@/utils/mongodb-query-parser'
 
 export default async function documentUpdate(c: Context) {
   const { database, collection, _id, sub_type, doc } = await c.req.json<{
