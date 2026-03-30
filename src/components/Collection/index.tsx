@@ -34,9 +34,7 @@ const getLastPage = (pageSize: number, totalCount: number): number => {
 }
 
 const CollectionPage: Component<DataCollection> = () => {
-  const pageContext = usePageContext() as ReturnType<typeof usePageContext> & {
-    urlParsed: { search: QueryParameter }
-  }
+  const pageContext = usePageContext<{ urlParsed: { search: QueryParameter } }>()
   const [data, setData] = useData<DataCollection>()
   const [columnsHeader, setColumnsHeader] = createStore<ColumnsHeader>(getInitialColumnsHeader(data.columns, pageContext.urlParsed.search))
 

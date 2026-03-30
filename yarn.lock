@@ -5944,7 +5944,7 @@ __metadata:
     typescript-eslint: "npm:^8.57.2"
     vike: "patch:vike@npm%3A0.4.255#~/.yarn/patches/vike-npm-0.4.255-89540302e8.patch"
     vike-photon: "npm:^0.1.26"
-    vike-solid: "patch:vike-solid@npm%3A0.8.1#~/.yarn/patches/vike-solid-npm-0.8.1-7bd34180b2.patch"
+    vike-solid: "patch:vike-solid@npm%3A0.8.2#~/.yarn/patches/vike-solid-npm-0.8.2-01a1bb7266.patch"
     vite: "npm:^7.3.1"
     vite-plugin-pwa: "npm:^1.2.0"
     vite-plugin-solid: "npm:^2.11.11"
@@ -7790,29 +7790,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike-solid@npm:0.8.1":
-  version: 0.8.1
-  resolution: "vike-solid@npm:0.8.1"
+"vike-solid@npm:0.8.2":
+  version: 0.8.2
+  resolution: "vike-solid@npm:0.8.2"
   dependencies:
     isbot-fast: "npm:^1.2.0"
   peerDependencies:
     solid-js: ^1.8.7
     vike: ">=0.4.250"
     vite-plugin-solid: ^2.11.10
-  checksum: 10c0/5711e8f2187b82182ee0752bfc91d87231ef7691695fb2fa9b0a928d17a5f4b6a958981d967ca14e795e369325c48c98c48f828b4217ecf9f6c001772393cba7
+  checksum: 10c0/5627ea12a624f2dbc9be477e5453daf9a2791a89fe31f97d53b35b3f0d3e2bacbe08d2e4f5eb73d06ac275b98f216b081d1343f7200b32358f2032ce3b075c0c
   languageName: node
   linkType: hard
 
-"vike-solid@patch:vike-solid@npm%3A0.8.1#~/.yarn/patches/vike-solid-npm-0.8.1-7bd34180b2.patch":
-  version: 0.8.1
-  resolution: "vike-solid@patch:vike-solid@npm%3A0.8.1#~/.yarn/patches/vike-solid-npm-0.8.1-7bd34180b2.patch::version=0.8.1&hash=def004"
+"vike-solid@patch:vike-solid@npm%3A0.8.2#~/.yarn/patches/vike-solid-npm-0.8.2-01a1bb7266.patch":
+  version: 0.8.2
+  resolution: "vike-solid@patch:vike-solid@npm%3A0.8.2#~/.yarn/patches/vike-solid-npm-0.8.2-01a1bb7266.patch::version=0.8.2&hash=6e8700"
   dependencies:
     isbot-fast: "npm:^1.2.0"
   peerDependencies:
     solid-js: ^1.8.7
     vike: ">=0.4.250"
     vite-plugin-solid: ^2.11.10
-  checksum: 10c0/c8fc6a0a884c65a60b5048af62379bf15ba5b90fe2bfff872aed5d78e5623880a43459ea8dedfc9dc85047cd7080da2d903fad6c1b18cb71791569abce4b9431
+  checksum: 10c0/f4bf0f65900f66b1959fc96181ad33b258d6f0d6cbb23314a1dd83328f96c2e42726b9d8635cc9b50aafb93f15ef0dd44f054323cf5f31015537b7faef5e69d1
   languageName: node
   linkType: hard
 
