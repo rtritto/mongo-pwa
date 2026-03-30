@@ -48,6 +48,12 @@ export default defineConfig(async ({ mode }) => {
       outDir: '../dist'
       // minify: true
     },
+    ssr: {
+      noExternal: [
+        'bson',
+        'mongodb-query-parser'
+      ]
+    },
     envPrefix: 'ME_CONFIG_',
     esbuild: {
       legalComments: 'none'
