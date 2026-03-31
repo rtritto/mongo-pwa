@@ -3417,10 +3417,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bson-esm@npm:^7.2.1":
-  version: 7.2.1
-  resolution: "bson-esm@npm:7.2.1"
-  checksum: 10c0/e299e91c7cd6e76ab5e82307e6d9b0a997ba7e244228398e62b0dcefa7ffc372ca6a514a9eb70abca080bcdee8c89d2aeead98f6a1d97273dd12c1a725a801f7
+"bson-esm@npm:^7.2.2":
+  version: 7.2.2
+  resolution: "bson-esm@npm:7.2.2"
+  checksum: 10c0/c50f9543ac601781b5092dfabee657509cb49574e5809388665986a372df0816a2a730b6ad4e8a45d3237c7641b7f291319c28dd332ad3b3b199f87a42c1545c
   languageName: node
   linkType: hard
 
@@ -5922,7 +5922,7 @@ __metadata:
     "@tailwindcss/vite": "npm:^4.2.2"
     "@types/node": "npm:^25.5.0"
     "@yarnpkg/sdks": "npm:^3.2.3"
-    bson-esm: "npm:^7.2.1"
+    bson-esm: "npm:^7.2.2"
     daisyui: "npm:^5.5.19"
     eslint: "npm:^9.39.2"
     eslint-plugin-solid: "npm:^0.14.5"
