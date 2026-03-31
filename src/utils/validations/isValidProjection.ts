@@ -1,4 +1,4 @@
-import parseRelaxedJSON from './parseRelaxedJSON'
+import toBSON from 'mongodb-query-parser-esm'
 
 const PROJECTION_OPERATORS: ReadonlySet<string> = new Set(['$slice', '$elemMatch', '$meta'])
 
@@ -12,7 +12,7 @@ export default function isValidProjection(str: string): { error?: string } {
   let obj: unknown
 
   try {
-    obj = parseRelaxedJSON(str)
+    obj = toBSON(str)
   } catch {
     return {
       error: 'Projection has invalid syntax'

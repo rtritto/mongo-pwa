@@ -1,4 +1,4 @@
-import parseRelaxedJSON from './parseRelaxedJSON'
+import toBSON from 'mongodb-query-parser-esm'
 
 // Note: ([:\[,]\s*) ensures to match only when used as a "value"
 // and not as part of the text inside a normal string.
@@ -114,7 +114,7 @@ export function validateQuery(str: string): { error?: string } {
   }
   try {
     const sanitized = sanitize(str.trim())
-    const parsed = parseRelaxedJSON(sanitized)
+    const parsed = toBSON(sanitized)
 
     if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
       return {

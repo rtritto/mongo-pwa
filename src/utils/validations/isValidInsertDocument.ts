@@ -1,4 +1,5 @@
-import parseRelaxedJSON from './parseRelaxedJSON'
+import toBSON from 'mongodb-query-parser-esm'
+
 import { isPlainObject } from './common'
 
 const UPDATE_OPERATORS: ReadonlySet<string> = new Set([
@@ -97,7 +98,7 @@ export default function isValidInsertDocument(str: string): ReturnValidation {
 
   // Safe parsing
   try {
-    obj = parseRelaxedJSON(str)
+    obj = toBSON(str)
   } catch (error) {
     return { error: `Invalid syntax: ${(error as Error).message}` }
   }

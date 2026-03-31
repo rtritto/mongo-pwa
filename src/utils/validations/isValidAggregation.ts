@@ -1,4 +1,4 @@
-import parseRelaxedJSON from './parseRelaxedJSON'
+import toBSON from 'mongodb-query-parser-esm'
 
 import { isPlainObject } from './common'
 import isValidQuery from './isValidQuery'
@@ -49,7 +49,7 @@ export function isValidAggregation(str: string): ReturnValidation {
   let pipeline: unknown
 
   try {
-    pipeline = parseRelaxedJSON(str)
+    pipeline = toBSON(str)
   } catch (error) {
     return {
       error: `Invalid syntax: ${(error as Error).message}`
