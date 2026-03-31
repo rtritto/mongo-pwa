@@ -18,11 +18,11 @@
     "@photonjs/hono": "^0.1.12",
     "@solid-primitives/pagination": "^0.5.1",
     "@speed-highlight/core": "^1.2.15",
-    "bson": "^7.2.0",
+    "bson-esm": "^7.2.0",
     "flat": "^6.0.1",
     "hono": "^4.12.9",
     "mongodb": "^7.1.1",
-    "mongodb-query-parser": "^4.7.7",
+    "mongodb-query-parser-esm": "^4.7.7",
     "solid-js": "^1.9.12",
     "vike": "patch:vike@npm%3A0.4.255#~/.yarn/patches/vike-npm-0.4.255-89540302e8.patch",
     "vike-photon": "^0.1.26",
@@ -45,5 +45,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "resolutions": {
+    "bson": "npm:bson-esm@latest"
+  }
 }

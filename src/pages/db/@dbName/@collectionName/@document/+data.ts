@@ -1,5 +1,5 @@
 import { render } from 'vike/abort'
-import { toJSString } from 'mongodb-query-parser'
+import { toJSString } from 'mongodb-query-parser-esm'
 
 import { connectClient } from '@/server/db'
 import buildId from '@/utils/mappers/buildId'

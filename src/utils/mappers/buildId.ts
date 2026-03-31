@@ -1,4 +1,4 @@
-import { Binary, ObjectId } from 'bson'
+import { Binary, ObjectId } from 'bson-esm'
 
 export default function buildId(_id: string | number, sub_type: number | undefined) {
   // Case 1 : ObjectId
