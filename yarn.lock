@@ -6970,13 +6970,13 @@ __metadata:
   linkType: hard
 
 "shell-bson-parser-esm@npm:^1.5.9":
-  version: 1.5.9
-  resolution: "shell-bson-parser-esm@npm:1.5.9"
+  version: 1.5.10
+  resolution: "shell-bson-parser-esm@npm:1.5.10"
   dependencies:
     acorn: "npm:^8.14.1"
   peerDependencies:
     bson: ^7.0.0
-  checksum: 10c0/14b58c9a2ed1c2c489d105f8b3444b9edc48e8b32f988011bef5f8988a7f20ced93c82c72fe56fa104d90b342048554d330eb84edda655b411f94c81f808695e
+  checksum: 10c0/eb64af48d9a946c834a3587d411560233b869768a6b19457facae44a8ef52a4761aca692aed4657c2e49ce1e0d7539f668054bed3e32c4a6c5123c776a5813ce
   languageName: node
   linkType: hard
 
