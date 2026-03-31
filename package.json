@@ -22,7 +22,7 @@
     "flat": "^6.0.1",
     "hono": "^4.12.9",
     "mongodb": "^7.1.1",
-    "mongodb-query-parser": "^4.7.7",
+    "mongodb-query-parser-esm": "^4.7.8",
     "solid-js": "^1.9.12",
     "vike": "patch:vike@npm%3A0.4.255#~/.yarn/patches/vike-npm-0.4.255-89540302e8.patch",
     "vike-photon": "^0.1.26",

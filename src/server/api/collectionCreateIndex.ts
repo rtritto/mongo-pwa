@@ -1,5 +1,5 @@
 import type { Context } from 'hono'
-import toBSON from 'mongodb-query-parser'
+import toBSON from 'mongodb-query-parser-esm'
 
 import { connectClient } from '@/server/db'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'

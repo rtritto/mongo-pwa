@@ -1646,17 +1646,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mongodb-js/shell-bson-parser@npm:^1.5.7":
-  version: 1.5.7
-  resolution: "@mongodb-js/shell-bson-parser@npm:1.5.7"
-  dependencies:
-    acorn: "npm:^8.14.1"
-  peerDependencies:
-    bson: ^4.6.3 || ^5 || ^6.10.3 || ^7.0.0
-  checksum: 10c0/874d795170ede5321edb620b402df441a034798835c5534dc87f1eb690803227702c124b5fd104b9fc438d5a40d77fc603b371525efed731fc0d3bde83723aa2
-  languageName: node
-  linkType: hard
-
 "@napi-rs/wasm-runtime@npm:^1.0.7, @napi-rs/wasm-runtime@npm:^1.1.1":
   version: 1.1.1
   resolution: "@napi-rs/wasm-runtime@npm:1.1.1"
@@ -3760,7 +3749,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:^4.3.6, debug@npm:^4.4.0, debug@npm:^4.4.3":
+"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:^4.3.4, debug@npm:^4.3.6, debug@npm:^4.4.3":
   version: 4.4.3
   resolution: "debug@npm:4.4.3"
   dependencies:
@@ -5674,7 +5663,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.20, lodash@npm:^4.17.21":
+"lodash@npm:^4.17.20":
   version: 4.18.0
   resolution: "lodash@npm:4.18.0"
   checksum: 10c0/0c5a7c5a4ea1db59ade40ff03cc8bfc7ea79806f5639ff4c7ee581811c8d88248bf1da608199b9d3614d8db133088bd434f3307c3951a96a821044f72a5ba810
@@ -5934,7 +5923,7 @@ __metadata:
     flat: "npm:^6.0.1"
     hono: "npm:^4.12.9"
     mongodb: "npm:^7.1.1"
-    mongodb-query-parser: "npm:^4.7.7"
+    mongodb-query-parser-esm: "npm:^4.7.8"
     solid-js: "npm:^1.9.12"
     tailwindcss: "npm:^4.2.2"
     typescript: "npm:^6.0.2"
@@ -5958,17 +5947,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb-query-parser@npm:^4.7.7":
-  version: 4.7.7
-  resolution: "mongodb-query-parser@npm:4.7.7"
+"mongodb-query-parser-esm@npm:^4.7.8":
+  version: 4.7.8
+  resolution: "mongodb-query-parser-esm@npm:4.7.8"
   dependencies:
-    "@mongodb-js/shell-bson-parser": "npm:^1.5.7"
-    debug: "npm:^4.4.0"
     javascript-stringify: "npm:^2.1.0"
-    lodash: "npm:^4.17.21"
+    shell-bson-parser-esm: "npm:^1.5.9"
   peerDependencies:
-    bson: ^4.6.3 || ^5 || ^6.10.3 || ^7.0.0
-  checksum: 10c0/20a0c46d99ed72d263adc1d9f579b2a92daf5596046a1807760dc1bae438f8b65ff5460dd50f7179f3c8abad6bad02c8ccd53f299d89ee42fdecd091574d79be
+    bson: ^7.0.0
+  checksum: 10c0/15442e5cd9d7a5f95e8da00da80cd21b5a5234c853f4721974b06f556bd7ac36e93d1c0e26078f976c3a4805c437661d04cc014390bffb51588aca1acf9012cb
   languageName: node
   linkType: hard
 
@@ -6979,6 +6966,17 @@ __metadata:
   version: 3.0.0
   resolution: "shebang-regex@npm:3.0.0"
   checksum: 10c0/1dbed0726dd0e1152a92696c76c7f06084eb32a90f0528d11acd764043aacf76994b2fb30aa1291a21bd019d6699164d048286309a278855ee7bec06cf6fb690
+  languageName: node
+  linkType: hard
+
+"shell-bson-parser-esm@npm:^1.5.9":
+  version: 1.5.9
+  resolution: "shell-bson-parser-esm@npm:1.5.9"
+  dependencies:
+    acorn: "npm:^8.14.1"
+  peerDependencies:
+    bson: ^7.0.0
+  checksum: 10c0/14b58c9a2ed1c2c489d105f8b3444b9edc48e8b32f988011bef5f8988a7f20ced93c82c72fe56fa104d90b342048554d330eb84edda655b411f94c81f808695e
   languageName: node
   linkType: hard
 
