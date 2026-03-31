@@ -18,7 +18,7 @@
     "@photonjs/hono": "^0.1.12",
     "@solid-primitives/pagination": "^0.5.1",
     "@speed-highlight/core": "^1.2.15",
-    "bson-esm": "^7.2.0",
+    "bson-esm": "^7.2.1",
     "flat": "^6.0.1",
     "hono": "^4.12.9",
     "mongodb": "^7.1.1",
