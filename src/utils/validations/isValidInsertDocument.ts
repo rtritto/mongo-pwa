@@ -31,7 +31,7 @@ function validateFields(root: Record<string, unknown>): ReturnValidation | undef
       }
 
       // Check operator '$' (36 is the charCode of '$' -> ultra-fast)
-      if (key.charCodeAt(0) === 36) {
+      if (key.codePointAt(0) === 36) {
         if (isRoot) {
           return { error: `Top-level field cannot start with '$' (found '${key}')` }
         }
@@ -52,6 +52,7 @@ function validateFields(root: Record<string, unknown>): ReturnValidation | undef
       }
       // If it's an array, analyze only the objects inside
       else if (Array.isArray(value)) {
+        // eslint-disable-next-line unicorn/no-for-loop
         for (let i = 0; i < value.length; i++) {
           const item = value[i]
           if (isPlainObject(item)) {
@@ -97,8 +98,8 @@ export default function isValidInsertDocument(str: string): ReturnValidation {
   // Safe parsing
   try {
     obj = parseRelaxedJSON(str)
-  } catch (e) {
-    return { error: `Invalid syntax: ${(e as Error).message}` }
+  } catch (error) {
+    return { error: `Invalid syntax: ${(error as Error).message}` }
   }
 
   // Must be a plain object {} (not array, not string, not null)

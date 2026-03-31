@@ -50,9 +50,9 @@ export function isValidAggregation(str: string): ReturnValidation {
 
   try {
     pipeline = parseRelaxedJSON(str)
-  } catch (e) {
+  } catch (error) {
     return {
-      error: `Invalid syntax: ${(e as Error).message}`
+      error: `Invalid syntax: ${(error as Error).message}`
     }
   }
 
@@ -67,6 +67,7 @@ export function isValidAggregation(str: string): ReturnValidation {
     return {}
   }
 
+  // eslint-disable-next-line unicorn/no-for-loop
   for (let i = 0; i < pipeline.length; i++) {
     const stage = pipeline[i]
 
@@ -87,7 +88,7 @@ export function isValidAggregation(str: string): ReturnValidation {
     const stageOp = keys[0]
 
     // 36 is the character '$' (faster than startsWith)
-    if (stageOp.charCodeAt(0) !== 36) {
+    if (stageOp.codePointAt(0) !== 36) {
       return {
         error: `Invalid operator "${stageOp}" at index ${i}. Must start with $`
       }

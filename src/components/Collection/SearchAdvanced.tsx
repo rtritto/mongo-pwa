@@ -33,7 +33,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
       const qVal = codeQuery()
       // Remove all spaces, tabs, and newlines for a safe check
-      const cleanQuery = qVal.replace(/\s+/g, '')
+      const cleanQuery = qVal.replaceAll(/\s+/, '')
 
       // Adds the query only if it is not empty, not {} and not [] (for aggregations)
       if (cleanQuery !== '' && cleanQuery !== '{}' && cleanQuery !== '[]') {
@@ -42,7 +42,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
       const pVal = codeProjection()
       // Remove all spaces, tabs, and newlines for a safe check
-      const cleanProjection = pVal.replace(/\s+/g, '')
+      const cleanProjection = pVal.replaceAll(/\s+/, '')
 
       // Adds the projection only if it is not empty and not {}
       if (cleanProjection !== '' && cleanProjection !== '{}') {
@@ -73,7 +73,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             onChange={(newCode) => {
               setCodeQuery(newCode)
               // Remove all spaces, tabs, and newlines for a safe check
-              const cleanQuery = newCode.replace(/\s+/g, '')
+              const cleanQuery = newCode.replaceAll(/\s+/, '')
               if (cleanQuery !== '' && cleanQuery !== '{}' && (checkboxAggregate() ? cleanQuery !== '[]' : true)) {
                 setIsCodeQueryValid(!(checkboxAggregate() ? isValidAggregation : isValidQuery)(newCode).error)
               }
@@ -93,7 +93,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
             onChange={(newCode) => {
               setCodeProjection(newCode)
               // Remove all spaces, tabs, and newlines for a safe check
-              const cleanProjection = newCode.replace(/\s+/g, '')
+              const cleanProjection = newCode.replaceAll(/\s+/, '')
               if (cleanProjection !== '' && cleanProjection !== '{}') {
                 setIsCodeProjectionValid(!isValidProjection(newCode).error)
               }
