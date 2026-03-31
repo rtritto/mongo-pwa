@@ -3,8 +3,7 @@ import tailwindcss from '@tailwindcss/vite'
 import vike from 'vike/plugin'
 import vikeSolid from 'vike-solid/vite'
 import { defineConfig, loadEnv, type UserConfig } from 'vite'
-// TODO Enable PWA
-// import { VitePWA } from 'vite-plugin-pwa'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig(async ({ mode }) => {
   // Add ME_CONFIG_ env vars to process.env
@@ -16,27 +15,27 @@ export default defineConfig(async ({ mode }) => {
     plugins: [
       tailwindcss(),
       vike(),
-      vikeSolid()
-      // VitePWA({
-      //   registerType: 'autoUpdate', // Automatically updates the service worker
-      //   devOptions: {
-      //     // enabled: true,  // Enable PWA in development mode ~ Disable https://github.com/vikejs/vike/issues/388#issuecomment-1199280084
-      //     type: 'module'
-      //   },
-      //   manifest: {
-      //     name: 'Mongo PWA',
-      //     short_name: 'MongoPWA',
-      //     theme_color: '#3F51B5',
-      //     background_color: '#3367D6',
-      //     icons: [
-      //       {
-      //         src: '/icons/logo-192.png',
-      //         sizes: '192x192',
-      //         type: 'image/png'
-      //       }
-      //     ]
-      //   }
-      // })
+      vikeSolid(),
+      VitePWA({
+        registerType: 'autoUpdate', // Automatically updates the service worker
+        devOptions: {
+          // enabled: true,  // Enable PWA in development mode ~ Disable https://github.com/vikejs/vike/issues/388#issuecomment-1199280084
+          type: 'module'
+        },
+        manifest: {
+          name: 'Mongo PWA',
+          short_name: 'MongoPWA',
+          theme_color: '#3F51B5',
+          background_color: '#3367D6',
+          icons: [
+            {
+              src: '/icons/logo-192.png',
+              sizes: '192x192',
+              type: 'image/png'
+            }
+          ]
+        }
+      })
     ],
     server: {
       // host: '127.0.0.1',
