@@ -1,4 +1,4 @@
-import { EJSON } from 'bson-esm'
+import { EJSON } from 'bson'
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'

@@ -1,4 +1,4 @@
-import type { Binary, Code, DBRef, Decimal128, Double, Int32, Long, ObjectId, Timestamp } from 'bson-esm'
+import type { Binary, Code, DBRef, Decimal128, Double, Int32, Long, ObjectId, Timestamp } from 'bson'
 
 type BSONValues = Binary | Code | DBRef | Date | Decimal128 | Double | Int32 | Long | ObjectId | Timestamp
 
