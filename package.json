@@ -9,7 +9,8 @@
     "build": "vike build",
     "build:entry-node": "ENTRY_NODE=true vike build",
     "prod": "NODE_ENV=production node dist/server/index.mjs",
-    "preview": "yarn build:entry-node && yarn prod",
+    "prod:env": "NODE_ENV=production node --env-file=.env dist/server/index.mjs",
+    "preview": "yarn build:entry-node && yarn prod:env",
     "lint": "eslint src/**/*.{ts,tsx} *.ts",
     "od": "yarn outdated"
   },
