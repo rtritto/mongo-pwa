@@ -1,5 +1,6 @@
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
+import standaloner from 'standaloner/vite'
 import vike from 'vike/plugin'
 import vikeSolid from 'vike-solid/vite'
 import { defineConfig, loadEnv, type UserConfig } from 'vite'
@@ -16,6 +17,10 @@ export default defineConfig(async ({ mode }) => {
       tailwindcss(),
       vike(),
       vikeSolid(),
+      standaloner({
+        bundle: true,
+        minify: true
+      }),
       VitePWA({
         registerType: 'autoUpdate', // Automatically updates the service worker
         devOptions: {

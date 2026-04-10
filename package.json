@@ -16,17 +16,16 @@
   },
   "dependencies": {
     "@json2csv/plainjs": "^7.0.6",
-    "@photonjs/hono": "^0.1.12",
     "@solid-primitives/pagination": "^0.5.1",
     "@speed-highlight/core": "^1.2.15",
+    "@vikejs/hono": "^0.2.0",
     "bson": "^7.2.0",
     "flat": "^6.0.1",
     "hono": "^4.12.12",
     "mongodb": "^7.1.1",
     "mongodb-query-parser-esm": "^4.7.8",
     "solid-js": "^1.9.12",
-    "vike": "patch:vike@npm%3A0.4.256#~/.yarn/patches/vike-npm-0.4.256-ab19659305.patch",
-    "vike-photon": "^0.1.26",
+    "vike": "patch:vike@npm%3A0.4.257#~/.yarn/patches/vike-npm-0.4.257-1dc574134c.patch",
     "vike-solid": "patch:vike-solid@npm%3A0.8.2#~/.yarn/patches/vike-solid-npm-0.8.2-01a1bb7266.patch"
   },
   "devDependencies": {
@@ -37,6 +36,7 @@
     "eslint": "^9.39.2",
     "eslint-plugin-solid": "^0.14.5",
     "eslint-plugin-unicorn": "^64.0.0",
+    "standaloner": "^0.2.2",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.58.1",

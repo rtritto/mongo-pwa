@@ -1,5 +1,5 @@
 diff --git a/dist/node/vite/index.js b/dist/node/vite/index.js
-index 39b6fcf6f2d78c3590d956c18f09048c0841367f..3f5cdec4016f03b1fbf3eff4727d209cb0b61dad 100644
+index e669072b061680424cbb50888f311d700b9b3036..8b619b3e7a95f793fd7b10a330f552f5a70a5220 100644
 --- a/dist/node/vite/index.js
 +++ b/dist/node/vite/index.js
 @@ -32,7 +32,6 @@ import { pluginSuppressRollupWarning } from './plugins/build/pluginSuppressRollu
@@ -10,7 +10,7 @@ index 39b6fcf6f2d78c3590d956c18f09048c0841367f..3f5cdec4016f03b1fbf3eff4727d209c
  import { pluginReplaceConstantsNonRunnableDev } from './plugins/non-runnable-dev/pluginReplaceConstantsNonRunnableDev.js';
  import { isVikeCliOrApi } from '../../shared-server-node/api-context.js';
  import { pluginViteConfigVikeExtensions } from './plugins/pluginViteConfigVikeExtensions.js';
-@@ -86,7 +85,6 @@ function pluginBuild() {
+@@ -88,7 +87,6 @@ function pluginBuild() {
          ...pluginDistPackageJsonFile(),
          ...pluginSuppressRollupWarning(),
          ...pluginDistFileNames(),
