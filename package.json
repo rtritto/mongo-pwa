@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.2",
-    "@types/node": "^25.5.2",
+    "@types/node": "^25.6.0",
     "@yarnpkg/sdks": "^3.2.3",
     "daisyui": "^5.5.19",
     "eslint": "^9.39.2",
