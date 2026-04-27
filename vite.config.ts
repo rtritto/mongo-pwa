@@ -21,7 +21,7 @@ export default defineConfig(async ({ mode }) => {
         bundle: true,
         minify: true
       }),
-      VitePWA({
+      ...process.env.NODE_ENV === 'production' ? [VitePWA({
         registerType: 'autoUpdate', // Automatically updates the service worker
         devOptions: {
           // enabled: true,  // Enable PWA in development mode ~ Disable https://github.com/vikejs/vike/issues/388#issuecomment-1199280084
@@ -40,7 +40,13 @@ export default defineConfig(async ({ mode }) => {
             }
           ]
         }
-      })
+      }).map((plugin) => ({
+        ...plugin,
+        // Prevent from generating registerSW.js inside /dist/server/
+        applyToEnvironment(environment: { name: string }) {
+          return environment.name === 'client'
+        }
+      }))] : []
     ],
     server: {
       // host: '127.0.0.1',
