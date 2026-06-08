@@ -3,8 +3,6 @@ import { Hono } from 'hono/quick'
 // import { logger } from 'hono/logger'
 import { renderPage } from 'vike/server'
 
-// import used to load the default config in globalThis
-import '../../config.default'
 import apiRoutes from './apiRoutes'
 
 const app = new Hono()

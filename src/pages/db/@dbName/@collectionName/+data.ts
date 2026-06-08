@@ -1,5 +1,6 @@
 import { render } from 'vike/abort'
 
+import config from '@/server/config'
 import { connectClient } from '@/server/db'
 import getColumnsAndSetDocs from '@/utils/mappers/getColumnsAndSetDocs'
 import { mapCollectionStats } from '@/utils/mappers/mapInfo'
@@ -15,7 +16,7 @@ export const data = async (pageContext: PageContextServer) => {
     render(404, error)
   }
   const queryOptions = getQueryOptions(search)
-  const { mongo, config } = globalThis
+  const { mongo } = globalThis
   // TODO check if use this
   // const collection = mongo.connections[dbName].db.collection(collectionName)
   const collection = mongo.mongoClient.db(dbName).collection(collectionName)

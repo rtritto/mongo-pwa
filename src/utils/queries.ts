@@ -2,6 +2,8 @@ import { Binary, ObjectId } from 'bson'
 import type { Sort, SortDirection } from 'mongodb'
 import toBSON from 'mongodb-query-parser-esm'
 
+import config from '@/server/config'
+
 type Projection = {
   [field: string]: number
 }
@@ -70,7 +72,7 @@ const getProjection = (projection: string) => {
 
 export const getQueryOptions = (query: QueryParameter): QueryOptions => {
   const queryOptions: QueryOptions = {
-    limit: globalThis.config.options.documentsPerPage
+    limit: config.options.documentsPerPage
   }
   if (query.sort) {
     queryOptions.sort = getSort(query.sort)

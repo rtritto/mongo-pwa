@@ -1,9 +1,10 @@
+import config from '@/server/config'
 import { connectClient } from '@/server/db'
 import { mapServerStats } from '@/utils/mappers/mapInfo'
 
 export const data = async () => {
   await connectClient()
-  const { config, mongo } = globalThis
+  const { mongo } = globalThis
 
   return {
     databases: mongo.databases,

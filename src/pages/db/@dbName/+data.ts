@@ -1,5 +1,6 @@
 import { render } from 'vike/abort'
 
+import config from '@/server/config'
 import { connectClient } from '@/server/db'
 import { mapDatabaseStats } from '@/utils/mappers/mapInfo'
 import { checkDatabase } from '@/utils/validations/serverChecks'
@@ -11,7 +12,7 @@ export const data = async (pageContext: PageContextServer) => {
   if (error) {
     render(404, error)
   }
-  const { config, mongo } = globalThis
+  const { mongo } = globalThis
 
   return {
     title: `DB: ${dbName} - Mongo PWA`,

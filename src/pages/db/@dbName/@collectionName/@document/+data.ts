@@ -1,6 +1,7 @@
 import { render } from 'vike/abort'
 import { toJSString } from 'mongodb-query-parser-esm'
 
+import config from '@/server/config'
 import { connectClient } from '@/server/db'
 import buildId from '@/utils/mappers/buildId'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
@@ -12,7 +13,7 @@ export const data = async (pageContext: PageContextServer) => {
   if (error) {
     render(404, error)
   }
-  const { config: { options }, mongo } = globalThis
+  const { mongo } = globalThis
   // TODO check if use this
   // const collection = mongo.connections[dbName].db.collection(collectionName)
   const collection = mongo.mongoClient.db(dbName).collection(collectionName)
@@ -25,7 +26,7 @@ export const data = async (pageContext: PageContextServer) => {
   if (!doc) {
     render(404, `Document "${_id}" not found!`)
   }
-
+  const { options } = config
   return {
     title: `${options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
     databases: mongo.databases,

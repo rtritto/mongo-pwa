@@ -15,12 +15,12 @@ type NextApiResponse = import('next').NextApiResponse
 type NextApiHandler = import('next').NextApiHandler
 type Redirect = import('next').Redirect
 
-type Config = import('../../config.default.ts').Config
-type MongoDb = import('../../config.default.ts').MongoDb
-type ServerStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapServerStats']>
-type DBStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapDatabaseStats']>
-type CollectionStats = ReturnType<typeof import('../utils/mappers/mapInfo.ts')['mapCollectionStats']>
-type Options = import('../../config.default.ts').Config['options']
+type Config = import('@/server/config').Config
+type MongoDb = import('@/server/config').MongoDb
+type ServerStats = ReturnType<typeof import('@/utils/mappers/mapInfo.ts')['mapServerStats']>
+type DBStats = ReturnType<typeof import('@/utils/mappers/mapInfo.ts')['mapDatabaseStats']>
+type CollectionStats = ReturnType<typeof import('@/utils/mappers/mapInfo.ts')['mapCollectionStats']>
+type Options = import('@/server/config').Config['options']
 
 type PrimitiveTypes = boolean | string | number
 
