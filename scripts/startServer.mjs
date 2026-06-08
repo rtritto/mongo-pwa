@@ -8,7 +8,7 @@ import vikeApp from '../dist/server/index.mjs'
 const app = new Hono()
 
 if (process.env.ENTRY_NODE === 'true') {
-  app.use(await import('hono/compress').compress())
+  app.use((await import('hono/compress')).compress())
 }
 
 app.use('*', serveStatic({ root: './dist/client' }))

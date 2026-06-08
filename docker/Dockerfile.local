@@ -25,7 +25,7 @@ COPY src ./src
 # Install dependencies
 RUN yarn install --immutable \
 # Build the application
-&& yarn build:entry-node
+&& yarn build
 
 # ================================
 # Stage 2: Production
@@ -52,9 +52,12 @@ COPY .yarn/releases ./.yarn/releases
 RUN yarn config set nodeLinker node-modules \
 # Install production dependencies
 && yarn workspaces focus --production \
+&& yarn add @hono/node-server \
 # Clean up unnecessary files
 && yarn cache clean --all \
 && rm -rf .yarn .yarnrc.yml package.json yarn.lock
+
+COPY scripts/startServer.mjs scripts/startServer.mjs
 
 # Override some config defaults with values that will work better for docker
 ENV NODE_ENV=production \
@@ -69,4 +72,4 @@ VCAP_APP_HOST=0.0.0.0
 EXPOSE ${PORT}
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "dist/server/index.mjs"]
+CMD ["node", "scripts/startServer.mjs"]
