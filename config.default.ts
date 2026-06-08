@@ -30,7 +30,7 @@ function getFileEnv(envVariable: string) {
   if (fileVar) {
     const file = getFile(fileVar)
     if (file) {
-      return file.toString().split(/\r?\n/)[0].trim()
+      return file.toString().split(/\r?\n/, 1)[0].trim()
     }
   }
   return origVar
@@ -156,7 +156,7 @@ export const ConfigDefault = {
     documentsPerPage: 10,
 
     // editorTheme: Name of the theme you want to use for displaying documents
-    // See http://codemirror.net/demo/theme.html for all examples
+    // See https://codemirror.net/5/demo/theme.html for all examples
     editorTheme: process.env.ME_CONFIG_OPTIONS_EDITORTHEME || 'rubyblue',
 
     // Maximum size of a single property & single row
