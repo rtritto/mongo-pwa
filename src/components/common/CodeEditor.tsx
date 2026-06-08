@@ -60,28 +60,27 @@ const CodeEditor: Component<{
       {/* Area Editor */}
       {/* class="absolute inset-0 overflow-hidden pointer-events-none whitespace-pre shj-lang-js" */}
       <div class="relative w-full overflow-auto bg-[#282c34] rounded-r-md border border-[#181a1f] editor-font">
-        {/* textarea resized */}
+        <pre
+          ref={highlightRef}
+          class="relative pointer-events-none bg-transparent shj-lang-js m-0"
+          onClick={handlePreClick}
+        >
+          <code innerHTML={html()} />
+          {'\n'}
+        </pre>
+
         <textarea
           ref={textareaRef}
           value={renderData().displayCode}
           readOnly={isReadOnly}
           spellcheck={false}
           // class="absolute inset-0 overflow-hidden bg-transparent text-transparent caret-white outline-none resize-none whitespace-pre"
-          class="absolute inset-0 z-0 w-full h-full text-transparent caret-white outline-none resize-none whitespace-pre editor-font"
+          class="absolute inset-0 z-10 w-full h-full bg-transparent text-transparent caret-white outline-none resize-none whitespace-pre editor-font"
           onInput={(e) => handleInput(e.currentTarget.value)}
           onScroll={syncScroll}
           onKeyDown={handleKeyDown}
         />
 
-        {/* pre with z-10 → ignore the mouse events except where we injected clickable dots */}
-        <pre
-          ref={highlightRef}
-          class="relative z-10 pointer-events-none bg-transparent shj-lang-js m-0"
-          onClick={handlePreClick}
-        >
-          <code innerHTML={html()} />
-          {'\n'}
-        </pre>
       </div>
     </div>
   )

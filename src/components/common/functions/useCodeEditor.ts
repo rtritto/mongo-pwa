@@ -137,7 +137,7 @@ export default function useEditor(
       .then((highlighted) => {
         let finalHtml = highlighted
         for (const [magicDots, data] of renderData().hiddenTextMap.entries()) {
-          const span = `<span class="fold-ellipsis pointer-events-auto cursor-pointer select-none text-[#61afef] transition-colors rounded px-1 py-0.5 hover:bg-[#61afef33] hover:text-[#82c0ff]" data-line="${data.lineIndex}" title="Click to open">…</span>`
+          const span = `<span class="fold-ellipsis relative z-20 pointer-events-auto cursor-pointer select-none text-[#61afef] transition-colors rounded px-1 py-0.5 hover:bg-[#61afef33] hover:text-[#82c0ff]" data-line="${data.lineIndex}" title="Click to open">…</span>`
           finalHtml = finalHtml.replace(magicDots, span)
         }
         setHtml(finalHtml)
