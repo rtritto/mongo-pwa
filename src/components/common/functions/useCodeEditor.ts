@@ -34,13 +34,13 @@ export default function useEditor(
     const ranges = new Map<number, FoldableRange>()
     const stack: { line: number; char: string }[] = []
 
-    lines.forEach((line, lineIndex) => {
+    for (const [lineIndex, line] of lines.entries()) {
       let trimmed = line.trimEnd()
       if (trimmed.endsWith(',') || trimmed.endsWith(';')) {
         trimmed = trimmed.slice(0, -1).trimEnd()
       }
 
-      const lastChar = trimmed[trimmed.length - 1]
+      const lastChar = trimmed.at(-1)
 
       if (lastChar === '{' || lastChar === '[') {
         stack.push({ line: lineIndex, char: lastChar })
@@ -63,7 +63,7 @@ export default function useEditor(
           }
         }
       }
-    })
+    }
 
     const processedLines: string[] = []
     const lineMapping = []
@@ -81,14 +81,14 @@ export default function useEditor(
 
       if (isCollapsed) {
         const bin = foldCount.toString(2)
-        const invisibleId = bin.split('').map(b => b === '0' ? '\u200B' : '\u200C').join('')
+        const invisibleId = [...bin].map(b => b === '0' ? '\u200B' : '\u200C').join('')
         const magicDots = ` …${invisibleId} `
         foldCount++
 
         const openLine = lines[i]
         const closeLine = lines[range.endLine]
         const lastCharIndex = openLine.lastIndexOf(range.openChar)
-        const lineWithoutBracket = openLine.substring(0, lastCharIndex)
+        const lineWithoutBracket = openLine.slice(0, Math.max(0, lastCharIndex))
 
         const collapsedLine = `${lineWithoutBracket}${range.openChar}${magicDots}${closeLine.trimStart()}`
         processedLines.push(collapsedLine)
@@ -132,10 +132,10 @@ export default function useEditor(
       // 2. After manually add line numbers
       .then((highlighted) => {
         let finalHtml = highlighted
-        renderData().hiddenTextMap.forEach((data, magicDots) => {
+        for (const [magicDots, data] of renderData().hiddenTextMap.entries()) {
           const span = ` <span class="fold-ellipsis pointer-events-auto cursor-pointer select-none text-[#61afef] transition-colors rounded px-1 hover:bg-[#61afef33] hover:text-[#82c0ff]" data-line="${data.lineIndex}" title="Click to open">…</span> `
           finalHtml = finalHtml.replace(magicDots, span)
-        })
+        }
         setHtml(finalHtml)
       })
       .catch(() => { })
@@ -143,16 +143,16 @@ export default function useEditor(
 
   const handleInput = (val: string) => {
     let realCode = val
-    renderData().hiddenTextMap.forEach((data, magicDots) => {
+    for (const [magicDots, data] of renderData().hiddenTextMap.entries()) {
       realCode = realCode.split(magicDots).join(data.content)
-    })
+    }
     onChange(realCode)
   }
 
   const handlePreClick = (e: MouseEvent) => {
     const target = e.target as HTMLElement
     if (target.classList.contains('fold-ellipsis')) {
-      const lineStr = target.getAttribute('data-line')
+      const lineStr = target.dataset.line
       if (lineStr) {
         toggleFold(Number(lineStr))
       }
