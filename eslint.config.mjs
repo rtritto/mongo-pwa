@@ -27,6 +27,8 @@ export default pluginTypescript.config(
       'unicorn/prefer-node-protocol': 0,
       'unicorn/prevent-abbreviations': 0,
 
+      'solid/no-innerhtml': 0
+
       // 'tailwindcss/no-custom-classname': [1, {
       //   whitelist: ['is-active']
       // }]
