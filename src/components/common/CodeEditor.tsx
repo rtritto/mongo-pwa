@@ -82,7 +82,6 @@ const CodeEditor: Component<{
           <code innerHTML={html()} />
           {'\n'}
         </pre>
-
       </div>
     </div>
   )

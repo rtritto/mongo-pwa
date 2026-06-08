@@ -121,7 +121,11 @@ export default function useEditor(
       }
     }
 
-    return { displayCode: processedLines.join('\n'), lineMapping, hiddenTextMap }
+    return {
+      displayCode: processedLines.join('\n'),
+      lineMapping,
+      hiddenTextMap
+    }
   })
 
   createEffect(() => {
