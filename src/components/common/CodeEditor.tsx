@@ -37,8 +37,8 @@ const CodeEditor: Component<{
       >
         <For each={renderData().lineMapping}>
           {(line) => (
-            <div class="flex items-center justify-end px-2 hover:bg-[#2c313c] min-h-[1.5em]">
-              <span class="text-right tabular-nums min-w-5">{line.number}</span>
+            <div class="flex items-center justify-end pl-2 hover:bg-[#2c313c]">
+              <span class="text-right tabular-nums min-w-6">{line.number}</span>
 
               <button
                 class="w-4 h-4 flex items-center justify-center text-[10px] py-2.5 px-3 hover:text-white transition-colors cursor-pointer"
