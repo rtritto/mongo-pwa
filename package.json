@@ -8,7 +8,6 @@
     "dev": "vike dev",
     "build": "vike build",
     "prod": "NODE_ENV=production node dist/server/index.mjs",
-    "prod:env": "NODE_ENV=production node --env-file=.env dist/server/index.mjs",
     "preview": "NODE_ENV=production node scripts/startServer.mjs",
     "lint": "eslint src/**/*.{ts,tsx} *.ts",
     "od": "yarn outdated"
