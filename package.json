@@ -7,10 +7,9 @@
   "scripts": {
     "dev": "vike dev",
     "build": "vike build",
-    "build:entry-node": "ENTRY_NODE=true vike build",
     "prod": "NODE_ENV=production node dist/server/index.mjs",
     "prod:env": "NODE_ENV=production node --env-file=.env dist/server/index.mjs",
-    "preview": "yarn build:entry-node && yarn prod:env",
+    "preview": "NODE_ENV=production node scripts/startServer.mjs",
     "lint": "eslint src/**/*.{ts,tsx} *.ts",
     "od": "yarn outdated"
   },
@@ -18,17 +17,17 @@
     "@json2csv/plainjs": "^7.0.6",
     "@solid-primitives/pagination": "^0.5.1",
     "@speed-highlight/core": "^1.2.15",
-    "@vikejs/hono": "^0.2.0",
     "bson": "^7.2.0",
     "flat": "^6.0.1",
     "hono": "^4.12.23",
     "mongodb": "^7.2.0",
     "mongodb-query-parser-esm": "^4.7.8",
     "solid-js": "^1.9.13",
-    "vike": "patch:vike@npm%3A0.4.257#~/.yarn/patches/vike-npm-0.4.257-1dc574134c.patch",
+    "vike": "patch:vike@npm%3A0.4.259-commit-9fc8a01#~/.yarn/patches/vike-npm-0.4.259-commit-9fc8a01-d07afbf4b5.patch",
     "vike-solid": "patch:vike-solid@npm%3A0.8.2#~/.yarn/patches/vike-solid-npm-0.8.2-01a1bb7266.patch"
   },
   "devDependencies": {
+    "@hono/node-server": "^2.0.4",
     "@tailwindcss/vite": "^4.3.0",
     "@types/node": "^25.9.2",
     "@yarnpkg/sdks": "^3.3.0",

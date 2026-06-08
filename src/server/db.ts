@@ -1,7 +1,5 @@
 import { type Db, MongoClient } from 'mongodb'
 
-// import used to load the default config in globalThis
-import '../../config.default'
 import type { MongoDb } from '../../config.default'
 
 /**

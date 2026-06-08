@@ -1,8 +1,12 @@
-import type { Context } from 'hono'
+import { type Context, Hono } from 'hono'
 
-import api from '../api'
+import api from './api'
 
-export async function handlerApi(c: Context) {
+// Create a "sub-router" for the API
+const apiRoutes = new Hono()
+
+// Route with dynamic parameter
+apiRoutes.post('/:functionName', async (c: Context) => {
   if (
     process.env.ME_CONFIG_LOCAL_STORAGE_AUTH_ENABLED === 'true'
     && c.req.header(process.env.ME_CONFIG_LOCAL_STORAGE_AUTH_KEY!) !== process.env.ME_CONFIG_LOCAL_STORAGE_AUTH_PASSWORD
@@ -19,4 +23,6 @@ export async function handlerApi(c: Context) {
     console.error(error)
     return c.json({ error: (error as Error).message }, 500)
   }
-}
+})
+
+export default apiRoutes

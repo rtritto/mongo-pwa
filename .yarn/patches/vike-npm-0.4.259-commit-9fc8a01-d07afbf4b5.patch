@@ -1,0 +1,52 @@
+diff --git a/dist/node/vite/plugins/pluginUniversalDeploy.js b/dist/node/vite/plugins/pluginUniversalDeploy.js
+index 2519e3934414ccf8915fd4c49c7be230a42d0478..ea0df1e6626f9a7ba0919d2ce2c900e3e4504aa1 100644
+--- a/dist/node/vite/plugins/pluginUniversalDeploy.js
++++ b/dist/node/vite/plugins/pluginUniversalDeploy.js
+@@ -1,32 +1,19 @@
+ export { pluginUniversalDeploy };
++import { resolve } from 'node:path';
+ import { toRou3 } from 'convert-route';
+ import { addEntry } from '@universal-deploy/store';
+-import universalDeploy, { resolveTargets } from '@universal-deploy/vite';
++import universalDeploy from '@universal-deploy/vite';
+ import { pluginServerEntryInject } from './pluginUniversalDeploy/pluginServerEntryInject.js';
+ import { getDeployConfig } from './pluginUniversalDeploy/getDeployConfig.js';
+ import { pluginCommon } from './pluginUniversalDeploy/common.js';
+-import { hasVikeServerOrVikePhoton } from './pluginUniversalDeploy/detectDeprecated.js';
+-import { getServerConfig } from './pluginUniversalDeploy/getServerConfig.js';
+ import { pluginServerEntryAlias } from './pluginUniversalDeploy/pluginServerEntryAlias.js';
+-import { pluginUnwrapProdOptions } from './pluginUniversalDeploy/pluginUnwrapProdOptions.js';
+ import { unique } from '../../../utils/unique.js';
+ import { assertUsage } from '../../../utils/assert.js';
+ import '../assertEnvVite.js';
+ function pluginUniversalDeploy(vikeConfig) {
+-    if (hasVikeServerOrVikePhoton(vikeConfig))
+-        return [];
+-    const serverConfig = getServerConfig(vikeConfig);
+-    if (!serverConfig)
+-        return [
+-            resolveTargets((targets) => {
+-                // Cloudflare is supported even without universal-deploy
+-                const target = targets.filter((t) => t !== '@cloudflare/vite-plugin')[0];
+-                assertUsage(target === undefined, `${target} requires +server — see https://vike.dev/server`);
+-            }),
+-        ];
+-    const { serverEntryVike, serverEntryId, serverFilePath } = serverConfig;
++    const serverEntryVike = resolve('./src/server/entrypoint.ts');
+     return [
+-        ...universalDeploy(),
++        ...universalDeploy({ entry: serverEntryVike }),
+         {
+             name: 'vike:pluginUniversalDeploy:entries',
+             config() {
+@@ -52,8 +39,7 @@ function pluginUniversalDeploy(vikeConfig) {
+             },
+             ...pluginCommon,
+         },
+-        pluginServerEntryInject(serverFilePath ?? serverEntryId),
+-        pluginServerEntryAlias(serverFilePath),
+-        !serverFilePath ? null : pluginUnwrapProdOptions(serverFilePath),
++        pluginServerEntryInject(serverEntryVike),
++        pluginServerEntryAlias(serverEntryVike),
+     ].filter((p) => p !== null);
+ }
