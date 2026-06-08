@@ -38,10 +38,10 @@ const CodeEditor: Component<{
         <For each={renderData().lineMapping}>
           {(line) => (
             <div class="flex items-center justify-end px-2 hover:bg-[#2c313c] min-h-[1.5em]">
-              <span class="tabular-num">{line.number}</span>
+              <span class="text-right tabular-nums min-w-5">{line.number}</span>
 
               <button
-                class="w-4 h-4 flex items-center justify-center text-[10px] ml-1 hover:text-white transition-colors cursor-pointer"
+                class="w-4 h-4 flex items-center justify-center text-[10px] ml-2 hover:text-white transition-colors cursor-pointer"
                 style={{ visibility: line.hasRange ? 'visible' : 'hidden' }}
                 onClick={() => toggleFold(line.lineIndex)}
                 type="button"
