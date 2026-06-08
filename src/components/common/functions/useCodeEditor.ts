@@ -3,50 +3,11 @@ import { createSignal, createEffect, createMemo } from 'solid-js'
 
 export type UseEditorType = ReturnType<typeof useEditor>
 
-interface Block {
-  id: string
+interface FoldableRange {
   startLine: number
   endLine: number
-}
-
-function findBlocks(code: string): Block[] {
-  const blocks: Block[] = []
-  const stack: number[] = []
-  const stackChars: string[] = []
-  const lines = code.split('\n')
-
-  for (let i = 0; i < lines.length; i++) {
-    let line = lines[i].trimEnd()
-    if (!line) continue
-
-    if (line.endsWith(',') || line.endsWith(';')) {
-      line = line.slice(0, -1).trimEnd()
-    }
-
-    const lastChar = line[line.length - 1]
-
-    if (lastChar === '{' || lastChar === '[') {
-      stack.push(i)
-      stackChars.push(lastChar)
-    }
-    else if (lastChar === '}' || lastChar === ']') {
-      const expected = lastChar === '}' ? '{' : '['
-
-      if (stack.length > 0 && stackChars[stackChars.length - 1] === expected) {
-        const startLine = stack.pop()!
-        stackChars.pop()
-
-        if (i > startLine) {
-          blocks.push({
-            id: `b${startLine}-${i}`,
-            startLine,
-            endLine: i,
-          })
-        }
-      }
-    }
-  }
-  return blocks
+  openChar: string
+  closeChar: string
 }
 
 export default function useEditor(
@@ -56,142 +17,165 @@ export default function useEditor(
   onSave: () => void
 ) {
   const [html, setHtml] = createSignal('')
-  const [foldedIds, setFoldedIds] = createSignal<Set<string>>(new Set())
+  const [foldedLines, setFoldedLines] = createSignal<Set<number>>(new Set())
 
-  const toggleFold = (id: string) => {
-    setFoldedIds((prev) => {
+  const toggleFold = (lineNumber: number) => {
+    setFoldedLines((prev) => {
       const next = new Set(prev)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
+      if (next.has(lineNumber)) next.delete(lineNumber)
+      else next.add(lineNumber)
       return next
     })
   }
 
   const renderData = createMemo(() => {
-    const code = initialValue()
-    const lines = code.split('\n')
-    const blocks = findBlocks(code)
+    const text = initialValue()
+    const lines = text.split('\n')
+    const ranges = new Map<number, FoldableRange>()
+    const stack: { line: number; char: string }[] = []
 
-    const lineToBlock = new Map<number, Block>()
-    for (const b of blocks) {
-      lineToBlock.set(b.startLine, b)
-    }
+    lines.forEach((line, lineIndex) => {
+      let trimmed = line.trimEnd()
+      if (trimmed.endsWith(',') || trimmed.endsWith(';')) {
+        trimmed = trimmed.slice(0, -1).trimEnd()
+      }
 
-    const displayLines: string[] = []
-    const lineNumbers: { original: number; isStart: boolean; isFolded: boolean; blockId?: string }[] = []
-    const placeholders = new Map<string, string>()
-    const blockToDots = new Map<string, string>()
+      const lastChar = trimmed[trimmed.length - 1]
 
+      if (lastChar === '{' || lastChar === '[') {
+        stack.push({ line: lineIndex, char: lastChar })
+      } else if (lastChar === '}' || lastChar === ']') {
+        const expected = lastChar === '}' ? '{' : '['
+
+        for (let j = stack.length - 1; j >= 0; j--) {
+          if (stack[j].char === expected) {
+            const startLine = stack[j].line
+            if (lineIndex > startLine) {
+              ranges.set(startLine, {
+                startLine,
+                endLine: lineIndex,
+                openChar: stack[j].char,
+                closeChar: lastChar
+              })
+            }
+            stack.splice(j, 1)
+            break
+          }
+        }
+      }
+    })
+
+    const processedLines: string[] = []
+    const lineMapping = []
+    // Save the textual content and the line for the click
+    const hiddenTextMap = new Map<string, { content: string, lineIndex: number }>()
+    const foldedSet = foldedLines()
     let skipUntil = -1
-    let foldCounter = 0
+    let foldCount = 0
 
     for (let i = 0; i < lines.length; i++) {
       if (i <= skipUntil) continue
 
-      const block = lineToBlock.get(i)
-      const isFolded = block ? foldedIds().has(block.id) : false
+      const range = ranges.get(i)
+      const isCollapsed = range && foldedSet.has(i)
 
-      if (isFolded && block) {
-        const bin = foldCounter.toString(2)
+      if (isCollapsed) {
+        const bin = foldCount.toString(2)
         const invisibleId = bin.split('').map(b => b === '0' ? '\u200B' : '\u200C').join('')
+        const magicDots = ` …${invisibleId} `
+        foldCount++
 
-        const magicDots = `...${invisibleId}`
-        foldCounter++
+        const openLine = lines[i]
+        const closeLine = lines[range.endLine]
+        const lastCharIndex = openLine.lastIndexOf(range.openChar)
+        const lineWithoutBracket = openLine.substring(0, lastCharIndex)
 
-        const startLineText = lines[block.startLine]
-        const endLineText = lines[block.endLine]
+        const collapsedLine = `${lineWithoutBracket}${range.openChar}${magicDots}${closeLine.trimStart()}`
+        processedLines.push(collapsedLine)
 
-        displayLines.push(startLineText + magicDots + endLineText.trimStart())
-
-        lineNumbers.push({
-          original: i + 1,
-          isStart: true,
-          isFolded: true,
-          blockId: block.id
+        lineMapping.push({
+          number: i + 1,
+          hasRange: true,
+          isCollapsed: true,
+          lineIndex: i
         })
 
-        const hiddenContent = lines.slice(block.startLine + 1, block.endLine).join('\n')
-        const leadingSpaces = endLineText.match(/^\s*/)?.[0] || ''
+        const hiddenContent = lines.slice(i + 1, range.endLine).join('\n')
+        const leadingSpaces = closeLine.match(/^\s*/)?.[0] || ''
 
-        const replacement = `\n${hiddenContent}\n${leadingSpaces}`
-        placeholders.set(magicDots, replacement)
-        blockToDots.set(block.id, magicDots)
+        // Save the textual content and the line for the click
+        hiddenTextMap.set(magicDots, {
+          content: `\n${hiddenContent}\n${leadingSpaces}`,
+          lineIndex: i
+        })
 
-        skipUntil = block.endLine
+        skipUntil = range.endLine
       } else {
-        displayLines.push(lines[i])
-        lineNumbers.push({
-          original: i + 1,
-          isStart: !!block,
-          isFolded: false,
-          blockId: block?.id
+        processedLines.push(lines[i])
+        lineMapping.push({
+          number: i + 1,
+          hasRange: !!range,
+          isCollapsed: false,
+          lineIndex: i
         })
       }
     }
 
-    return { displayCode: displayLines.join('\n'), lineNumbers, placeholders, blockToDots }
+    return { displayCode: processedLines.join('\n'), lineMapping, hiddenTextMap }
   })
 
-  createEffect(() =>
-    highlightText(renderData().displayCode, 'js', false)
-      .then(setHtml)
+  createEffect(() => {
+    const { displayCode } = renderData()
+    // To avoid issues with text align and scroll:
+    // 1. Disable multiline to hide line numbers
+    highlightText(displayCode, 'js', false)
+      // 2. After manually add line numbers
+      .then((highlighted) => {
+        let finalHtml = highlighted
+        renderData().hiddenTextMap.forEach((data, magicDots) => {
+          const span = ` <span class="fold-ellipsis pointer-events-auto cursor-pointer select-none text-[#61afef] transition-colors rounded px-1 hover:bg-[#61afef33] hover:text-[#82c0ff]" data-line="${data.lineIndex}" title="Click to open">…</span> `
+          finalHtml = finalHtml.replace(magicDots, span)
+        })
+        setHtml(finalHtml)
+      })
       .catch(() => { })
-  )
+  })
 
   const handleInput = (val: string) => {
     let realCode = val
-    renderData().placeholders.forEach((replacement, magicDots) => {
-      realCode = realCode.split(magicDots).join(replacement)
+    renderData().hiddenTextMap.forEach((data, magicDots) => {
+      realCode = realCode.split(magicDots).join(data.content)
     })
     onChange(realCode)
   }
 
-  const handleClick = (e: MouseEvent & { currentTarget: HTMLTextAreaElement }) => {
-    const ta = e.currentTarget
-    const pos = ta.selectionStart
-
-    if (pos !== ta.selectionEnd) return
-
-    const displayCode = renderData().displayCode
-
-    const lineStart = displayCode.lastIndexOf('\n', pos - 1) + 1
-    const lineIndex = displayCode.substring(0, pos).split('\n').length - 1
-
-    const lineData = renderData().lineNumbers[lineIndex]
-
-    if (lineData && lineData.isFolded && lineData.blockId) {
-      const magicDots = renderData().blockToDots.get(lineData.blockId)
-
-      if (magicDots) {
-        const lineText = displayCode.substring(lineStart)
-        const dotsIndex = lineText.indexOf(magicDots)
-
-        if (dotsIndex !== -1) {
-          const caretCol = pos - lineStart
-          if (caretCol >= dotsIndex && caretCol <= dotsIndex + magicDots.length) {
-            toggleFold(lineData.blockId)
-          }
-        }
+  const handlePreClick = (e: MouseEvent) => {
+    const target = e.target as HTMLElement
+    if (target.classList.contains('fold-ellipsis')) {
+      const lineStr = target.getAttribute('data-line')
+      if (lineStr) {
+        toggleFold(Number(lineStr))
       }
     }
   }
 
   const handleKeyDown = (e: KeyboardEvent & { currentTarget: HTMLTextAreaElement }) => {
     if (readOnly) return
-
+    // Ctrl+Enter / Cmd+Enter Handling
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
-      e.preventDefault()
+      e.preventDefault() // Prevent new line
       onSave()
       return
     }
 
+    // Tab Handling
     if (e.key === 'Tab') {
-      e.preventDefault()
+      e.preventDefault() // Prevent focus from leaving
       const ta = e.currentTarget
       const start = ta.selectionStart
       const end = ta.selectionEnd
-
       if (e.shiftKey) {
+        // Remove 2 spaces
         if (ta.value.slice(start - 2, start) === '  ') {
           const val = `${ta.value.slice(0, start - 2)}${ta.value.slice(end)}`
           ta.value = val
@@ -199,6 +183,7 @@ export default function useEditor(
           handleInput(val)
         }
       } else {
+        // Insert 2 spaces
         const val = `${ta.value.slice(0, start)}  ${ta.value.slice(end)}`
         ta.value = val
         ta.selectionStart = ta.selectionEnd = start + 2
@@ -209,10 +194,10 @@ export default function useEditor(
 
   return {
     html,
-    handleClick,
+    renderData,
     handleInput,
     handleKeyDown,
-    renderData,
-    toggleFold
+    toggleFold,
+    handlePreClick
   }
 }

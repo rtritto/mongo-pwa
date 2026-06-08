@@ -9,7 +9,7 @@ const CodeEditor: Component<{
 }> = (props) => {
   const isReadOnly = untrack(() => props.readOnly)
 
-  const { html, renderData, handleInput, handleKeyDown, toggleFold, handleClick } = useCodeEditor(
+  const { html, renderData, handleInput, handleKeyDown, toggleFold, handlePreClick } = useCodeEditor(
     () => props.value,
     isReadOnly,
     (value) => props.onChange(value),
@@ -32,51 +32,57 @@ const CodeEditor: Component<{
       {/* Column for number rows */}
       <div
         ref={linesRef}
-        class="rounded-l-md bg-[#282c34] select-none text-[#636d83] border-r-2 editor-font overflow-hidden py-[1px]"
+        class="rounded-l-md bg-[#282c34] select-none text-[#636d83] border-r-2 border-[#181a1f] py-px editor-font overflow-hidden"
         aria-hidden="true"
       >
-        <For each={renderData().lineNumbers}>
+        <For each={renderData().lineMapping}>
           {(line) => (
-            <div class="flex items-center justify-end px-2 whitespace-pre">
-              <span class="mr-2">
-                {line.original}
-              </span>
-              {line.isStart && line.blockId ? (
-                <span
-                  class="cursor-pointer hover:text-white text-[10px] w-3 text-center flex-shrink-0"
-                  onClick={() => toggleFold(line.blockId!)}
-                  title={line.isFolded ? "Unfold" : "Fold"}
-                >
-                  {line.isFolded ? '▶' : '▼'}
-                </span>
-              ) : (
-                <span class="w-3 flex-shrink-0"></span>
-              )}
+            <div class="flex items-center justify-end px-2 hover:bg-[#2c313c] min-h-[1.5em]">
+              <span class="tabular-num">{line.number}</span>
+
+              <button
+                class="w-4 h-4 flex items-center justify-center text-[10px] ml-1 hover:text-white transition-colors cursor-pointer"
+                style={{ visibility: line.hasRange ? 'visible' : 'hidden' }}
+                onClick={() => toggleFold(line.lineIndex)}
+                type="button"
+                aria-label={line.isCollapsed ? 'Expand' : 'Collapse'}
+              >
+                {line.isCollapsed ? '›' : '⌄'}
+              </button>
             </div>
           )}
         </For>
+
+        {/* Prevent scrolling bug on the last line */}
         <div>{'\n'}</div>
       </div>
 
       {/* Area Editor */}
-      <div class="relative w-full overflow-auto bg-[#282c34] rounded-r-md border border-gray-700 editor-font">
-        <pre ref={highlightRef} class="shj-lang-js">
-          {/* eslint-disable-next-line solid/no-innerhtml */}
-          <code innerHTML={html()} />
-          {'\n'}
-        </pre>
-
+      {/* class="absolute inset-0 overflow-hidden pointer-events-none whitespace-pre shj-lang-js" */}
+      <div class="relative w-full overflow-auto bg-[#282c34] rounded-r-md border border-[#181a1f] editor-font">
+        {/* textarea resized */}
         <textarea
           ref={textareaRef}
           value={renderData().displayCode}
           readOnly={isReadOnly}
           spellcheck={false}
-          class="absolute inset-0 text-transparent caret-white outline-none resize-none whitespace-pre editor-font"
+          // class="absolute inset-0 overflow-hidden bg-transparent text-transparent caret-white outline-none resize-none whitespace-pre"
+          class="absolute inset-0 z-0 w-full h-full text-transparent caret-white outline-none resize-none whitespace-pre editor-font"
           onInput={(e) => handleInput(e.currentTarget.value)}
           onScroll={syncScroll}
           onKeyDown={handleKeyDown}
-          onClick={handleClick}
         />
+
+        {/* pre with z-10 → ignore the mouse events except where we injected clickable dots */}
+        <pre
+          ref={highlightRef}
+          class="relative z-10 pointer-events-none bg-transparent shj-lang-js m-0"
+          onClick={handlePreClick}
+        >
+          <code innerHTML={html()} />
+          {'\n'}
+        </pre>
+
       </div>
     </div>
   )
