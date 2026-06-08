@@ -41,7 +41,7 @@ const CodeEditor: Component<{
               <span class="text-right tabular-nums min-w-5">{line.number}</span>
 
               <button
-                class="w-4 h-4 flex items-center justify-center text-[10px] ml-2 hover:text-white transition-colors cursor-pointer"
+                class="w-4 h-4 flex items-center justify-center text-[10px] py-2.5 px-3 hover:text-white transition-colors cursor-pointer"
                 style={{ visibility: line.hasRange ? 'visible' : 'hidden' }}
                 onClick={() => toggleFold(line.lineIndex)}
                 type="button"
