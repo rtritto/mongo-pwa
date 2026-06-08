@@ -2957,7 +2957,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@universal-deploy/vite@npm:^0.1.10":
+"@universal-deploy/vite@npm:0.1.10":
   version: 0.1.10
   resolution: "@universal-deploy/vite@npm:0.1.10"
   dependencies:
@@ -2973,6 +2973,25 @@ __metadata:
     vite:
       optional: true
   checksum: 10c0/76a309971f02c3ce36f7767ce870f8dd868917956ec0f45d61f8873c6714676142e088c340d41162bb54419dca635f9d6dc38bde7379f6f93170b3d26ad13436
+  languageName: node
+  linkType: hard
+
+"@universal-deploy/vite@patch:@universal-deploy/vite@npm%3A0.1.10#~/.yarn/patches/@universal-deploy-vite-npm-0.1.10-da43242c24.patch":
+  version: 0.1.10
+  resolution: "@universal-deploy/vite@patch:@universal-deploy/vite@npm%3A0.1.10#~/.yarn/patches/@universal-deploy-vite-npm-0.1.10-da43242c24.patch::version=0.1.10&hash=61680f"
+  dependencies:
+    "@universal-deploy/netlify": "npm:^0.2.2"
+    "@universal-deploy/node": "npm:^0.1.7"
+    "@universal-deploy/store": "npm:^0.2.1"
+    "@universal-middleware/express": "npm:^0.4.26"
+    magic-string: "npm:^0.30.21"
+    rou3: "npm:^0.8.1"
+  peerDependencies:
+    vite: ">=7.1"
+  peerDependenciesMeta:
+    vite:
+      optional: true
+  checksum: 10c0/5fd5180db852bdaa7f462d8a1e07f334763703789756165272b5a7c0de1b055c38cf86c389de5ab5f14571d886fd56d38d9dce6efa2e71f2fa0ab388162f2b9f
   languageName: node
   linkType: hard
 

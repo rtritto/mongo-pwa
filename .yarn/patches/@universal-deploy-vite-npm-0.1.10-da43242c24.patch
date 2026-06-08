@@ -1,0 +1,18 @@
+diff --git a/dist/index.js b/dist/index.js
+index b11c883f542654afd0abf44ea5dc850dae4e7cb1..27bef76a4c7fdeb879679138e87d962466050cfc 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -136,7 +136,12 @@ function target(entry) {
+ 		},
+ 		transform(code, id) {
+ 			if (resolvedEntry && id === resolvedEntry) {
+-				if (!code.includes("virtual:ud:")) this.warn(`{ entry: "${entry}" } is missing "virtual:ud:catch-all" import.`);
++				const s = new MagicString(code);
++				s.prepend(`import 'virtual:vike:global-entry:server'\n`);
++				return {
++					code: s.toString(),
++					map: s.generateMap({ hires: true })
++				};
+ 			}
+ 		}
+ 	};
