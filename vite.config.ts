@@ -4,8 +4,6 @@ import vike from 'vike/plugin'
 import vikeSolid from 'vike-solid/vite'
 import { defineConfig, loadEnv, type UserConfig } from 'vite'
 
-const minify = true
-
 export default defineConfig(async ({ mode }) => {
   // Add ME_CONFIG_ env vars to process.env
   Object.assign(process.env, loadEnv(mode, process.cwd(), 'ME_CONFIG_'))
@@ -46,7 +44,7 @@ export default defineConfig(async ({ mode }) => {
         })),
         (await import('standaloner/vite')).default({
           bundle: true,
-          minify
+          minify: true
         })
       ] : []
     ],
@@ -56,8 +54,7 @@ export default defineConfig(async ({ mode }) => {
     build: {
       target: 'esnext',
       outDir: '../dist',
-      emptyOutDir: true,
-      minify
+      emptyOutDir: true
     },
     envPrefix: 'ME_CONFIG_',
     resolve: {
