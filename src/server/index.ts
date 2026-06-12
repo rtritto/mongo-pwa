@@ -18,7 +18,8 @@ app.get('*', async (c, next) => {
   // Call Vike to render the page and get httpResponse from pageContext
   const { httpResponse } = await renderPage({
     urlOriginal: c.req.url,
-    headersOriginal: c.req.raw.headers
+    headersOriginal: c.req.raw.headers,
+    _reqWeb: c.req.raw
   })
 
   // If Vike doesn't know what to do with the URL (e.g. no page exists for this route)
