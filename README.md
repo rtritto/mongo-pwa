@@ -442,3 +442,4 @@ Here is an example of a document which can be read/edited in mongo-express (medi
 
 TODO
 - https://github.com/mongo-express/mongo-express/pull/1809
+- https://github.com/mongo-express/mongo-express/pull/1877
