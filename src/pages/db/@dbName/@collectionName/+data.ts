@@ -1,4 +1,5 @@
-import { render } from 'vike/abort'
+import type { PageContextServer } from 'vike-lite'
+import { render } from 'vike-lite/server/abort'
 
 import config from '@/server/config'
 import { connectClient } from '@/server/db'
@@ -9,7 +10,8 @@ import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 export const data = async (pageContext: PageContextServer) => {
   const { dbName, collectionName } = pageContext.routeParams
-  const { search } = pageContext.urlParsed
+  const url = new URL(pageContext.urlOriginal)
+  const search = Object.fromEntries(url.searchParams.entries())
   await connectClient()
   const { error } = checkDatabaseCollection(dbName, collectionName)
   if (error) {

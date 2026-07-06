@@ -1,6 +1,6 @@
 import { type Component, For, Show } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
-import { reload } from 'vike/client/router'
+import { reload } from 'vike-lite/client/router'
 
 import IconDelete from '@/components/Icons/IconDelete'
 import handleFetchError from '@/components/common/functions/handleFetchError'

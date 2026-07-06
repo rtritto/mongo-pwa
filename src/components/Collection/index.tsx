@@ -1,9 +1,8 @@
 import { createPagination } from '@solid-primitives/pagination'
 import { type Component, createEffect, createSignal, For, onMount, Show } from 'solid-js'
 import { createStore } from 'solid-js/store'
-import { navigate, reload } from 'vike/client/router'
-import { useData } from 'vike-solid/useData'
-import { usePageContext } from 'vike-solid/usePageContext'
+import { navigate, reload } from 'vike-lite/client/router'
+import { useData, useUrl } from 'vike-lite-solid'
 
 import Alerts from '@/components/common/Alerts'
 import buildQuery from '@/components/common/functions/buildQuery'
@@ -34,15 +33,16 @@ const getLastPage = (pageSize: number, totalCount: number): number => {
 }
 
 const CollectionPage: Component<DataCollection> = () => {
-  const pageContext = usePageContext<{ urlParsed: { search: QueryParameter } }>()
+  const url = useUrl()
+  const search = Object.fromEntries(new URLSearchParams(url().search))
   const [data, setData] = useData<DataCollection>()
-  const [columnsHeader, setColumnsHeader] = createStore<ColumnsHeader>(getInitialColumnsHeader(data.columns, pageContext.urlParsed.search))
+  const [columnsHeader, setColumnsHeader] = createStore<ColumnsHeader>(getInitialColumnsHeader(data.columns, search))
 
   //#region Pagination
   const [pages, setPages] = createSignal<number>(getLastPage(data.documentsPerPage, data.count))
   const [paginationProps, page, setPage] = createPagination(() => ({
     pages: pages(),
-    initialPage: 'page' in pageContext.urlParsed.search ? Number(pageContext.urlParsed.search.page) : 1
+    initialPage: 'page' in search ? Number(search.page) : 1
   }))
 
   createEffect(() => {
@@ -51,12 +51,11 @@ const CollectionPage: Component<DataCollection> = () => {
 
   const handleSortClick = (column: string): { newSort: string; nextSort: boolean | null } => {
     const nextSort = getNextSort(columnsHeader[column])
-    const { sort } = pageContext.urlParsed.search
     const newSortQp = nextSort === true ? column : (nextSort === false ? `-${column}` : '')
     // Remove existing sort for current column
     const finalSortQp = []
-    if (sort) {
-      const cleanSortQp = removeColumnFromSortQp(sort, column)
+    if (search.sort) {
+      const cleanSortQp = removeColumnFromSortQp(search.sort, column)
       if (cleanSortQp) {
         finalSortQp.push(cleanSortQp)
       }
@@ -77,7 +76,7 @@ const CollectionPage: Component<DataCollection> = () => {
     // document.querySelector('#back-to-top-anchor')!.scrollIntoView({ behavior: 'smooth', block: 'center' })
     let nextSort: boolean | null
     const query = {
-      ...pageContext.urlParsed.search,
+      ...search,
       ...page && { page }
     } as QueryParameter
     if (sort || column) {
@@ -122,9 +121,9 @@ const CollectionPage: Component<DataCollection> = () => {
 
     if (!isBackForwardNavigation) {
       // Update route path (no reload)
-      const newQuery = buildQuery(query)
-      const newUrl = `/db/${data.selectedDatabase}/${data.selectedCollection}${newQuery ? `?${newQuery}` : ''}`
-      await navigate(newUrl, { pageContext: { search: query } })
+      const search = buildQuery(query)
+      const newUrl = `/db/${data.selectedDatabase}/${data.selectedCollection}${search ? `?${search}` : ''}`
+      navigate(newUrl, { pageContext: { search } })
     }
   }
 
@@ -133,8 +132,8 @@ const CollectionPage: Component<DataCollection> = () => {
     globalThis.addEventListener('popstate', async () => {
       // Only handle navigation triggered (added by navigate function
       // to history like pushState that uses
-      // globalThis.history.state.triggeredBy by user) by vike
-      if (globalThis.history.state.triggeredBy === 'vike') {
+      // globalThis.history.state.triggeredBy by user) by vike-lite
+      if (globalThis.history.state.triggeredBy === 'vike-navigate') {
         const urlParams = new URLSearchParams(globalThis.location.search)
         // Implement back- and forward navigation
         await doQuery({
@@ -159,7 +158,7 @@ const CollectionPage: Component<DataCollection> = () => {
                 onClick={async () => {
                   await doQuery({
                     page: paginationProps.page!,
-                    sort: pageContext.urlParsed.search.sort
+                    sort: search.sort
                   })
                 }}
               >
@@ -253,10 +252,10 @@ const CollectionPage: Component<DataCollection> = () => {
                   database: data.selectedDatabase,
                   collection: data.selectedCollection,
                   query: {
-                    key: pageContext.urlParsed.search.key,
-                    value: pageContext.urlParsed.search.value,
-                    type: pageContext.urlParsed.search.type,
-                    query: pageContext.urlParsed.search.query
+                    key: search.key,
+                    value: search.value,
+                    type: search.type,
+                    query: search.query
                   }
                 })
               }),
@@ -302,7 +301,7 @@ const CollectionPage: Component<DataCollection> = () => {
                   label="Export JSON"
                   url="/api/collectionExport"
                   collection={data.selectedCollection}
-                  query={pageContext.urlParsed.search}
+                  query={search}
                   data={data}
                   setData={setData}
                 />
@@ -313,7 +312,7 @@ const CollectionPage: Component<DataCollection> = () => {
                   label="Export CSV"
                   url="/api/collectionExportCsv"
                   collection={data.selectedCollection}
-                  query={pageContext.urlParsed.search}
+                  query={search}
                   data={data}
                   setData={setData}
                 />
@@ -357,9 +356,7 @@ const CollectionPage: Component<DataCollection> = () => {
                         success: `Collection "${data.selectedCollection}" deleted!`
                       }
                     })()
-                  ).then(async () => {
-                    await navigate(`/db/${data.selectedDatabase}`)
-                  })}
+                  ).then(() => { navigate(`/db/${data.selectedDatabase}`) })}
                 />
               </td>
             </Show>

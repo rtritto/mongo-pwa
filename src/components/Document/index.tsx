@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js'
-import { useData } from 'vike-solid/useData'
+import { useData } from 'vike-lite-solid'
 
 import Alerts from '@/components/common/Alerts'
 import Editor from './Editor'

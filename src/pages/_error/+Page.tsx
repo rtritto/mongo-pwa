@@ -1,5 +1,5 @@
 import { Show } from 'solid-js'
-import { usePageContext } from 'vike-solid/usePageContext'
+import { usePageContext } from 'vike-lite-solid'
 
 export default function Page() {
   const { is404 } = usePageContext()

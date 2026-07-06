@@ -1,5 +1,5 @@
 import { type Component, Show } from 'solid-js'
-import { useData } from 'vike-solid/useData'
+import { useData } from 'vike-lite-solid'
 
 import Alerts from '@/components/common/Alerts'
 import StatsTable from '@/components/common/StatsTable'

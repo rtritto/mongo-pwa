@@ -1,6 +1,6 @@
 import { For, Show, type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
-import { navigate } from 'vike/client/router'
+import { navigate } from 'vike-lite/client/router'
 
 import DeleteDocument from './DeleteDocument'
 import JsonViewer from './JsonViewer'

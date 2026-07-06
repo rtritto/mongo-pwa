@@ -1,5 +1,5 @@
 import { createSignal, For, type Component } from 'solid-js'
-import { navigate } from 'vike/client/router'
+import { navigate } from 'vike-lite/client/router'
 
 import IconSearch from '@/components/Icons/IconSearch'
 

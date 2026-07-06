@@ -1,6 +1,6 @@
 import { type Component, createSignal } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
-import { navigate } from 'vike/client/router'
+import { navigate } from 'vike-lite/client/router'
 
 import IconBack from '@/components/Icons/IconBack'
 

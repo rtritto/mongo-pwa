@@ -1,6 +1,6 @@
 import { type Component, untrack } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
-import { navigate, reload } from 'vike/client/router'
+import { navigate, reload } from 'vike-lite/client/router'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
 import handleFetchError from '@/components/common/functions/handleFetchError'

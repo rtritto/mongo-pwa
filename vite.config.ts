@@ -1,8 +1,8 @@
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
-import vike from 'vike/plugin'
-import vikeSolid from 'vike-solid/vite'
-import { defineConfig, loadEnv, type UserConfig } from 'vite'
+import vikeLite from 'vike-lite/vite'
+import vikeLiteSolid from 'vike-lite-solid/vite'
+import { defineConfig, loadEnv } from 'vite'
 
 export default defineConfig(async ({ mode }) => {
   // Add ME_CONFIG_ env vars to process.env
@@ -13,13 +13,13 @@ export default defineConfig(async ({ mode }) => {
     cacheDir: '../.vite',
     plugins: [
       tailwindcss(),
-      vike(),
-      vikeSolid(),
+      vikeLite(),
+      vikeLiteSolid(),
       ...process.env.NODE_ENV === 'production' ? [
         (await import('vite-plugin-pwa')).VitePWA({
           registerType: 'autoUpdate', // Automatically updates the service worker
           devOptions: {
-            // enabled: true,  // Enable PWA in development mode ~ Disable https://github.com/vikejs/vike/issues/388#issuecomment-1199280084
+            // enabled: true,  // Enable PWA in development mode
             type: 'module'
           },
           manifest: {
@@ -49,12 +49,10 @@ export default defineConfig(async ({ mode }) => {
       ] : []
     ],
     server: {
-      cors: false
+      port: 3000
     },
     build: {
-      target: 'esnext',
-      outDir: '../dist',
-      emptyOutDir: true
+      outDir: '../dist'
     },
     envPrefix: 'ME_CONFIG_',
     resolve: {
@@ -62,5 +60,5 @@ export default defineConfig(async ({ mode }) => {
         '@': path.resolve(import.meta.dirname, 'src')
       }
     }
-  } satisfies UserConfig
+  }
 })

@@ -1,5 +1,6 @@
-import { render } from 'vike/abort'
 import { toJSString } from 'mongodb-query-parser-esm'
+import type { PageContextServer } from 'vike-lite'
+import { render } from 'vike-lite/server/abort'
 
 import config from '@/server/config'
 import { connectClient } from '@/server/db'
@@ -17,8 +18,8 @@ export const data = async (pageContext: PageContextServer) => {
   // TODO check if use this
   // const collection = mongo.connections[dbName].db.collection(collectionName)
   const collection = mongo.mongoClient.db(dbName).collection(collectionName)
-
-  const subtype = 'subtype' in pageContext.urlParsed.search ? Number(pageContext.urlParsed.search.subtype) : undefined
+  const { searchParams } = new URL(pageContext.urlOriginal)
+  const subtype = searchParams.has('subtype') ? Number(searchParams.get('subtype')) : undefined
   // (?) TODO add decodeURIComponent(document)
   const _id = buildId(document, subtype)
 

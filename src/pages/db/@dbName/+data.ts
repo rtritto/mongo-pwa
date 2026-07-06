@@ -1,4 +1,5 @@
-import { render } from 'vike/abort'
+import type { PageContextServer } from 'vike-lite'
+import { render } from 'vike-lite/server/abort'
 
 import config from '@/server/config'
 import { connectClient } from '@/server/db'
