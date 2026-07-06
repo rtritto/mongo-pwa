@@ -1866,23 +1866,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@solid-primitives/pagination@npm:^0.5.1":
-  version: 0.5.1
-  resolution: "@solid-primitives/pagination@npm:0.5.1"
+"@solid-primitives/pagination@npm:^0.5.2":
+  version: 0.5.2
+  resolution: "@solid-primitives/pagination@npm:0.5.2"
   dependencies:
-    "@solid-primitives/utils": "npm:^6.4.0"
+    "@solid-primitives/utils": "npm:^6.4.1"
   peerDependencies:
     solid-js: ^1.6.12
-  checksum: 10c0/3b7e60777bdc38618f9546176ea5ed27ac8dfd4af69ae9fe54ef7973f53e2d36107e12e648dc45e1fdb2ee852621d20f8b49d8bf1c9540613f440cdcb4fac79c
+  checksum: 10c0/40f5640bf63ca3f9309f3ef89a82f750fd2f0707bceb6b960b2b5a3b6e7e368ca948ba809e36ddee009ea39a4c483f9648d290546cc4eaff40925208c5833b53
   languageName: node
   linkType: hard
 
-"@solid-primitives/utils@npm:^6.4.0":
-  version: 6.4.0
-  resolution: "@solid-primitives/utils@npm:6.4.0"
+"@solid-primitives/utils@npm:^6.4.1":
+  version: 6.4.1
+  resolution: "@solid-primitives/utils@npm:6.4.1"
   peerDependencies:
     solid-js: ^1.6.12
-  checksum: 10c0/fdac336c74be180251ac40df280571534d427c773b207e19a51aa01f013e16864f15c5c829f53a8e7d0033543bef07a6410c2dbaf364410dc29783966e14fcac
+  checksum: 10c0/fe4bf370d47ef105513da5a6e165fb82da2265823bfa6300c85b4e60581383aa3fcbeb8e3e21cabe8ef60beadb3e8ce0c4e2de5151d483681b2646078a36d3fd
   languageName: node
   linkType: hard
 
@@ -4883,7 +4883,7 @@ __metadata:
   dependencies:
     "@hono/node-server": "npm:^2.0.8"
     "@json2csv/plainjs": "npm:^7.0.6"
-    "@solid-primitives/pagination": "npm:^0.5.1"
+    "@solid-primitives/pagination": "npm:^0.5.2"
     "@speed-highlight/core": "npm:^1.2.17"
     "@tailwindcss/vite": "npm:^4.3.2"
     "@types/node": "npm:^26.1.0"

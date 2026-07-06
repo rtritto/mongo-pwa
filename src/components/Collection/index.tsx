@@ -42,7 +42,11 @@ const CollectionPage: Component<DataCollection> = () => {
   const [pages, setPages] = createSignal<number>(getLastPage(data.documentsPerPage, data.count))
   const [paginationProps, page, setPage] = createPagination(() => ({
     pages: pages(),
-    initialPage: 'page' in search ? Number(search.page) : 1
+    initialPage: 'page' in search ? Number(search.page) : 1,
+    firstContent: '«',
+    lastContent: '»',
+    nextContent: '›',
+    prevContent: '‹'
   }))
 
   createEffect(() => {
