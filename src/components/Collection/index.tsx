@@ -176,6 +176,92 @@ const CollectionPage: Component<DataCollection> = () => {
   )
   //#endregion
 
+  const handleSaveAddDocument = async (doc: string, dialogRef: HTMLDialogElement) => {
+    const response = await handleFetchError(
+      fetch('/api/documentCreate', {
+        method: 'POST',
+        headers: HEADERS_JSON(data.options),
+        body: JSON.stringify({
+          database: data.selectedDatabase,
+          collection: data.selectedCollection,
+          doc
+        })
+      }),
+      setData
+    )
+    if (response) {
+      const { insertedId } = await response.json() as { insertedId: string }
+      dialogRef.close()
+      await reload()
+      setData('success', `Document "${insertedId}" added!`)
+    }
+  }
+
+  const handleSaveAddIndex = async (doc: string, dialogRef: HTMLDialogElement) => {
+    const response = await handleFetchError(
+      fetch('/api/collectionCreateIndex', {
+        method: 'POST',
+        headers: HEADERS_JSON(data.options),
+        body: JSON.stringify({
+          database: data.selectedDatabase,
+          collection: data.selectedCollection,
+          doc
+        })
+      }),
+      setData
+    )
+    if (response) {
+      dialogRef.close()
+      const { indexName } = await response.json() as { indexName: string }
+      await reload()
+      setData('success', `Index "${indexName}" created!`)
+    }
+  }
+
+  const handleSaveDeleteAllDocuments = async () => {
+    await handleFetchError(
+      fetch('/api/collectionDelete', {
+        method: 'POST',
+        headers: HEADERS_JSON(data.options),
+        body: JSON.stringify({
+          database: data.selectedDatabase,
+          collection: data.selectedCollection,
+          query: {
+            key: search.key,
+            value: search.value,
+            type: search.type,
+            query: search.query
+          }
+        })
+      }),
+      setData
+    )
+    await reload()
+  }
+
+  const handleSaveDeleteCollection = async () => {
+    await handleFetchError(
+      fetch('/api/collectionDelete', {
+        method: 'POST',
+        headers: HEADERS_JSON(data.options),
+        body: JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection })
+      }),
+      setData,
+      (() => {
+        // Remove database from global database to update viewing databases
+        const indexToRemove = data.collections.indexOf(data.selectedCollection)
+        return {
+          collections: [
+            ...data.collections.slice(0, indexToRemove),
+            ...data.collections.slice(indexToRemove + 1)
+          ],
+          success: `Collection "${data.selectedCollection}" deleted!`
+        }
+      })()
+    )
+    navigate(`/db/${data.selectedDatabase}`)
+  }
+
   return (
     <div>
       {/* (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833 */}
@@ -192,25 +278,7 @@ const CollectionPage: Component<DataCollection> = () => {
               title="Add Document"
               label="New Document"
               template={DOC_STRING_TEMPLATE_DOCUMENT}
-              handleSave={(doc: string, dialogRef: HTMLDialogElement) => handleFetchError(
-                fetch('/api/documentCreate', {
-                  method: 'POST',
-                  headers: HEADERS_JSON(data.options),
-                  body: JSON.stringify({
-                    database: data.selectedDatabase,
-                    collection: data.selectedCollection,
-                    doc
-                  })
-                }),
-                setData
-              ).then(async (response) => {
-                if (response) {
-                  const { insertedId } = await response.json() as { insertedId: string }
-                  dialogRef.close()
-                  await reload()
-                  setData('success', `Document "${insertedId}" added!`)
-                }
-              })}
+              handleSave={handleSaveAddDocument}
             />
           </div>
 
@@ -220,25 +288,7 @@ const CollectionPage: Component<DataCollection> = () => {
               message="A document that contains the field and value pairs where the field is the index key. 1 for an ascending and -1 for a descending index."
               label="New Index"
               template={DOC_STRING_TEMPLATE_INDEX}
-              handleSave={(doc: string, dialogRef: HTMLDialogElement) => handleFetchError(
-                fetch('/api/collectionCreateIndex', {
-                  method: 'POST',
-                  headers: HEADERS_JSON(data.options),
-                  body: JSON.stringify({
-                    database: data.selectedDatabase,
-                    collection: data.selectedCollection,
-                    doc
-                  })
-                }),
-                setData
-              ).then(async (response) => {
-                if (response) {
-                  dialogRef.close()
-                  const { indexName } = await response.json() as { indexName: string }
-                  await reload()
-                  setData('success', `Index "${indexName}" created!`)
-                }
-              })}
+              handleSave={handleSaveAddIndex}
             />
           </div>
         </div>
@@ -248,25 +298,7 @@ const CollectionPage: Component<DataCollection> = () => {
             title="Delete All Documents"
             message={`Are you sure you want to delete all ${data.count} documents?`}
             label={`Delete all ${data.count} documents retrieved`}
-            handleDelete={() => handleFetchError(
-              fetch('/api/collectionDelete', {
-                method: 'POST',
-                headers: HEADERS_JSON(data.options),
-                body: JSON.stringify({
-                  database: data.selectedDatabase,
-                  collection: data.selectedCollection,
-                  query: {
-                    key: search.key,
-                    value: search.value,
-                    type: search.type,
-                    query: search.query
-                  }
-                })
-              }),
-              setData
-            ).then(async () => {
-              await reload()
-            })}
+            handleDelete={handleSaveDeleteAllDocuments}
           />
         </div>
       </Show>
@@ -342,25 +374,7 @@ const CollectionPage: Component<DataCollection> = () => {
                   label="Delete"
                   fullWidth
                   enableInput
-                  handleDelete={() => handleFetchError(
-                    fetch('/api/collectionDelete', {
-                      method: 'POST',
-                      headers: HEADERS_JSON(data.options),
-                      body: JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection })
-                    }),
-                    setData,
-                    (() => {
-                      // Remove database from global database to update viewing databases
-                      const indexToRemove = data.collections.indexOf(data.selectedCollection)
-                      return {
-                        collections: [
-                          ...data.collections.slice(0, indexToRemove),
-                          ...data.collections.slice(indexToRemove + 1)
-                        ],
-                        success: `Collection "${data.selectedCollection}" deleted!`
-                      }
-                    })()
-                  ).then(() => { navigate(`/db/${data.selectedDatabase}`) })}
+                  handleDelete={handleSaveDeleteCollection}
                 />
               </td>
             </Show>

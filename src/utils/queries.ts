@@ -21,12 +21,12 @@ interface StageSkip { $skip: number }
 interface StageCount { $count: string }
 interface StageFacet { $facet: { [name: string]: Pipeline } }
 interface StageProject {
-  $project: {
+  $project: Projection | {
     'metadata.total': { $size: string }
     data: {
       $slice: [string, number] | [string, number, number]
     }
-  } | Projection
+  }
 }
 type Stage = StageMatch | StageSort | StageLimit | StageSkip | StageCount | StageFacet | StageProject
 type Pipeline = Stage[]

@@ -25,9 +25,8 @@ export default async function collectionDelete(c: Context) {
   const _collection = globalThis.mongo.mongoClient.db(database).collection(collection)
   if (query) {
     // Delete some documents
-    await _collection.deleteMany(getQuery(query)).then((opRes) => {
-      console.info(`Deleted ${opRes.deletedCount} documents from collection "${collection}"`)
-    })
+    const { deletedCount } = await _collection.deleteMany(getQuery(query))
+    console.info(`Deleted ${deletedCount} documents from collection "${collection}"`)
   } else {
     // Drop the whole collection
     const result = await _collection.drop()

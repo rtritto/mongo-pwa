@@ -16,8 +16,6 @@ export const data = async () => {
     success: undefined,
     warning: undefined,
     error: undefined,
-    ...mongo.adminDb
-      ? { stats: mapServerStats(await mongo.adminDb.serverStatus() as ServerStatus) }
-      : {}
+    ...mongo.adminDb && { stats: mapServerStats(await mongo.adminDb.serverStatus() as ServerStatus) }
   }
 }

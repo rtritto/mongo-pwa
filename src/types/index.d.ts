@@ -2,10 +2,26 @@ type ParsedUrlQuery = import('querystring').ParsedUrlQuery
 
 type Admin = import('mongodb').Admin
 /**
- * @public
+ * import('mongodb').CollStats type is missing from deprecation
  * @see https://docs.mongodb.org/manual/reference/command/collStats
+ * Now CollStats is the result of the aggregation pipeline with $collStats stage,
+ * which is the recommended way to get collection stats
+ * @see https://www.mongodb.com/docs/manual/reference/operator/aggregation/collStats
  */
-type CollStats = import('mongodb').CollStats
+type CollStats = {
+  storageStats: {
+    size: number
+    count: number
+    avgObjSize: number
+    storageSize: number
+    freeStorageSize: number
+    nindexes: number
+    totalIndexSize: number
+    indexSizes: {
+      [indexName: string]: number
+    }
+  }
+}
 type Db = import('mongodb').Db
 type MongoDocument = import('mongodb').Document
 type MongoClient = import('mongodb').MongoClient

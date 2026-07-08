@@ -27,8 +27,6 @@ export const data = async (pageContext: PageContextServer) => {
     success: undefined,
     warning: undefined,
     error: undefined,
-    ...mongo.adminDb
-      ? { stats: mapDatabaseStats(await mongo.connections[dbName].db.stats() as DbStats) }
-      : {}
+    ...mongo.adminDb && { stats: mapDatabaseStats(await mongo.connections[dbName].db.stats() as DbStats) }
   }
 }

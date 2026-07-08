@@ -59,9 +59,9 @@ const DocumentList: Component<{
             <tr>
               <th
                 class="cursor-pointer"
-                onClick={async (e) => {
+                onClick={(e) => {
                   if (e.target === e.currentTarget) {
-                    await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`)
+                    navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`)
                   }
                 }}
               >
@@ -81,9 +81,9 @@ const DocumentList: Component<{
                 {(column) => (
                   <td
                     class="cursor-pointer"
-                    onClick={async (e) => {
+                    onClick={(e) => {
                       if (e.target === e.currentTarget) {
-                        await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`)
+                        navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`)
                       }
                     }}
                   >

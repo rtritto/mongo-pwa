@@ -14,9 +14,11 @@ export default async function collectionRename(c: Context) {
     return c.json({ error }, 404)
   }
   await connectClient()
-  await globalThis.mongo.mongoClient.db(database).collection(collection).rename(newCollection).catch((error) => {
+  try {
+    await globalThis.mongo.mongoClient.db(database).collection(collection).rename(newCollection)
+  } catch (error) {
     console.debug(error)
-    throw new Error(`Error to rename collection "${collection}" in "${newCollection}". ${error.message}`)
-  })
+    throw new Error(`Error to rename collection "${collection}" in "${newCollection}". ${(error as Error).message}`)
+  }
   return c.json({})
 }

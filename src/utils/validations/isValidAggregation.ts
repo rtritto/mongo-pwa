@@ -106,7 +106,7 @@ export function isValidAggregation(str: string): ReturnValidation {
     switch (stageOp) {
       case '$limit':
       case '$skip': {
-        if (typeof stageValue !== 'number' || stageValue < 0 || !Number.isInteger(stageValue)) {
+        if (typeof stageValue !== 'number' || stageValue < 0 || !Number.isSafeInteger(stageValue)) {
           return {
             error: `Invalid value for ${stageOp} at index ${i}. Must be a positive integer.`
           }
@@ -189,7 +189,7 @@ export function isValidAggregation(str: string): ReturnValidation {
             }
           }
         } else if (Array.isArray(stageValue)) {
-          if (!stageValue.every((v) => typeof v === 'string')) {
+          if (stageValue.some((v) => typeof v !== 'string')) {
             return {
               error: `Invalid array for ${stageOp} at index ${i}. All elements must be strings.`
             }

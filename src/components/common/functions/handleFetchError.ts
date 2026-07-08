@@ -5,7 +5,8 @@ const handleFetchError = async (
   setData: SetStoreFunction<any>,
   newData?: Record<string, any>
 ): Promise<Response | void> => {
-  return inputFetch.then(async (response) => {
+  try {
+    const response = await inputFetch
     if (response.ok) {
       if (newData) {
         setData(newData)
@@ -14,9 +15,9 @@ const handleFetchError = async (
     }
     const { error } = await response.json() as { error: string }
     setData('error', error)
-  }).catch((error) => {
+  } catch (error) {
     setData('error', (error as Error).message)
-  })
+  }
 }
 
 export default handleFetchError

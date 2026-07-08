@@ -62,23 +62,24 @@ const IndexTable: Component<{
                   <td>
                     <button
                       class="btn btn-sm w-full bg-red-700 py-0.5"
-                      onClick={() => handleFetchError(
-                        fetch('/api/collectionDeleteIndex', {
-                          method: 'POST',
-                          headers: HEADERS_JSON(props.data.options),
-                          body: JSON.stringify({
-                            database: props.data.selectedDatabase,
-                            collection: props.data.selectedCollection,
-                            indexName: index.name
-                          })
-                        }),
-                        props.setData,
-                        { success: `Index "${index.name}" deleted!` }
-                      ).then(async (response) => {
+                      onClick={async () => {
+                        const response = await handleFetchError(
+                          fetch('/api/collectionDeleteIndex', {
+                            method: 'POST',
+                            headers: HEADERS_JSON(props.data.options),
+                            body: JSON.stringify({
+                              database: props.data.selectedDatabase,
+                              collection: props.data.selectedCollection,
+                              indexName: index.name
+                            })
+                          }),
+                          props.setData,
+                          { success: `Index "${index.name}" deleted!` }
+                        )
                         if (response) {
                           await reload()
                         }
-                      })}
+                      }}
                     >
                       <IconDelete />
 

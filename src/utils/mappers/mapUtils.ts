@@ -38,11 +38,11 @@ interface IObject {
 const deepmergeObject = (target: IObject, src: IObject) => {
   const dst: IObject = {}
   if (target && typeof target === 'object') {
-    for (const key of Object.keys(target)) {
+    for (const key in target) {
       dst[key as keyof IObject] = target[key]
     }
   }
-  for (const key of Object.keys(src)) {
+  for (const key in src) {
     if (typeof src[key] !== 'object' || !src[key]) {
       dst[key] = src[key]
     } else if (target[key]) {

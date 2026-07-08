@@ -46,7 +46,10 @@ const DeleteDialog: Component<{
                 class="btn bg-red-700 py-0.5"
                 type="submit"
                 disabled={props.enableInput ? input() !== props.value : false}
-                onClick={() => props.handleDelete().then(() => dialogRef.close())}
+                onClick={async () => {
+                  await props.handleDelete()
+                  dialogRef.close()
+                }}
               >
                 Delete
               </button>

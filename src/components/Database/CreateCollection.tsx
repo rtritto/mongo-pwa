@@ -31,7 +31,7 @@ const CreateCollection: Component<{
                     props.setData,
                     // Add database to global collections to update viewing collections
                     {
-                      collections: [...props.data.collections, collection].toSorted(),
+                      collections: [...props.data.collections, collection].toSorted((a, b) => a.localeCompare(b)),
                       success: `Collection "${collection}" created!`
                     }
                   ) as Promise<void>}

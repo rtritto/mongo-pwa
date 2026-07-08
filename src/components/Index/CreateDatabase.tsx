@@ -31,7 +31,7 @@ const CreateDatabase: Component<{
                     props.setData,
                     // Add database to global databases to update viewing databases
                     {
-                      databases: [...props.data.databases, database].toSorted(),
+                      databases: [...props.data.databases, database].toSorted((a, b) => a.localeCompare(b)),
                       success: `Database "${database}" created!`
                     }
                   ) as Promise<void>}

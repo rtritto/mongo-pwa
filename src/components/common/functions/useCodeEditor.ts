@@ -81,7 +81,7 @@ export default function useEditor(
 
       if (isCollapsed) {
         const bin = foldCount.toString(2)
-        const invisibleId = [...bin].map(b => b === '0' ? '\u200B' : '\u200C').join('')
+        const invisibleId = [...bin].map(b => b === '0' ? '\u{200B}' : '\u{200C}').join('')
         const magicDots = `…${invisibleId}`
         foldCount++
 
@@ -128,22 +128,25 @@ export default function useEditor(
     }
   })
 
-  createEffect(() => {
+  const handlCreateEffect = async () => {
     const { displayCode } = renderData()
-    // To avoid issues with text align and scroll:
-    // 1. Disable multiline to hide line numbers
-    highlightText(displayCode, 'js', false)
+    try {
+      // To avoid issues with text align and scroll:
+      // 1. Disable multiline to hide line numbers
+      const highlighted = await highlightText(displayCode, 'js', false)
       // 2. After manually add line numbers
-      .then((highlighted) => {
-        let finalHtml = highlighted
-        for (const [magicDots, data] of renderData().hiddenTextMap.entries()) {
-          const span = `<span class="fold-ellipsis relative z-20 pointer-events-auto cursor-pointer select-none text-[#61afef] transition-colors rounded px-1 py-0.5 hover:bg-[#61afef33] hover:text-[#82c0ff]" data-line="${data.lineIndex}" title="Click to open">…</span>`
-          finalHtml = finalHtml.replace(magicDots, span)
-        }
-        setHtml(finalHtml)
-      })
-      .catch(() => { })
-  })
+      let finalHtml = highlighted
+      for (const [magicDots, data] of renderData().hiddenTextMap.entries()) {
+        finalHtml = finalHtml.replace(magicDots, () =>
+          `<span class="fold-ellipsis relative z-20 pointer-events-auto cursor-pointer "select-none text-[#61afef] data-line="${data.lineIndex
+          }transition-colors rounded px-1 py-0.5 hover:bg-[#61afef33] hover:text-[#82c0ff]" title="Click to open">…</span>`
+        )
+      }
+      setHtml(finalHtml)
+    } catch { }
+  }
+
+  createEffect(handlCreateEffect)
 
   const handleInput = (val: string) => {
     let realCode = val

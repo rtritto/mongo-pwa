@@ -4,7 +4,7 @@ import { render } from 'vike-lite/server/abort'
 import config from '@/server/config'
 import { connectClient } from '@/server/db'
 import getColumnsAndSetDocs from '@/utils/mappers/getColumnsAndSetDocs'
-import { mapCollectionStats } from '@/utils/mappers/mapInfo'
+import { mapStorageStats } from '@/utils/mappers/mapInfo'
 import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
@@ -29,15 +29,12 @@ export const data = async (pageContext: PageContextServer) => {
   let _data
   if (mongo.adminDb && !config.mongodb.awsDocumentDb) {
     const [stats, indexes] = await Promise.all([
-      collection.aggregate<CollStats>([{ $collStats: { storageStats: {} } }]).next().then((s) => s.storageStats),
+      collection.aggregate<CollStats>([{ $collStats: { storageStats: {} } }]).next(),
       collection.indexes()
-    ]) as [CollStats, Index[]]
-    const { indexSizes } = stats
-    for (let n = 0, len = indexes.length; n < len; n++) {
-      indexes[n].size = indexSizes[indexes[n].name]
-    }
+    ])
+    for (const index of indexes) index.size = stats!.storageStats.indexSizes[index.name!]
     _data = {
-      stats: mapCollectionStats(stats),
+      stats: mapStorageStats(stats!.storageStats),
       indexes
     }
   } else {

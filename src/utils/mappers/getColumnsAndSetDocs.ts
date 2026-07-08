@@ -29,7 +29,7 @@ const getColumnsAndSetDocs = (docs: MongoDocument[]) => {
   }
 
   return {
-    columns: [...underscoreFields.toSorted(), ...regularFields.toSorted()],
+    columns: [...underscoreFields.toSorted((a, b) => a.localeCompare(b)), ...regularFields.toSorted((a, b) => a.localeCompare(b))],
     docs
   }
 }

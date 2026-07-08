@@ -5,9 +5,11 @@ import { connectClient } from '@/server/db'
 export default async function databaseDelete(c: Context) {
   const { database } = await c.req.json<{ database: string }>()
   await connectClient()
-  await globalThis.mongo.mongoClient.db(database).createCollection('delete_me').catch((error) => {
+  try {
+    await globalThis.mongo.mongoClient.db(database).createCollection('delete_me')
+  } catch (error) {
     console.debug(error)
-    throw new Error(`Failed to create collection. ${error.message}`)
-  })
+    throw new Error(`Failed to create collection. ${(error as Error).message}`)
+  }
   return c.json({})
 }

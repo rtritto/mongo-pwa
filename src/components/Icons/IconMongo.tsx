@@ -1,4 +1,6 @@
-const IconMongo = () => (
+import type { Component } from 'solid-js'
+
+const IconMongo: Component = () => (
   <svg class="w-5" viewBox="0 0 24 24" xmlns="https://www.w3.org/2000/svg">
     <circle fill="#41a948" cx="12" cy="12" r="12" />
 

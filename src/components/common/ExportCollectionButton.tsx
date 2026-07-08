@@ -14,18 +14,19 @@ const ExportCollectionButton: Component<{
   setData: SetStoreFunction<any>
 }> = (props) => {
   return (
-    <button class="btn btn-sm w-full bg-yellow-600" onClick={() => handleFetchError(
-      fetch(props.url, {
-        method: 'POST',
-        body: JSON.stringify({
-          query: props.query,
-          database: props.data.selectedDatabase,
-          collection: props.collection
+    <button class="btn btn-sm w-full bg-yellow-600" onClick={async () => {
+      const response = await handleFetchError(
+        fetch(props.url, {
+          method: 'POST',
+          body: JSON.stringify({
+            query: props.query,
+            database: props.data.selectedDatabase,
+            collection: props.collection
+          }),
+          headers: HEADERS_JSON(props.data.options)
         }),
-        headers: HEADERS_JSON(props.data.options)
-      }),
-      props.setData
-    ).then(async (response) => {
+        props.setData
+      )
       if (response) {
         const blob = await response.blob()
         const url = globalThis.URL.createObjectURL(blob)
@@ -41,7 +42,7 @@ const ExportCollectionButton: Component<{
         // Release URL object
         globalThis.URL.revokeObjectURL(url)
       }
-    })}>
+    }}>
       <IconExport />
 
       {props.label}

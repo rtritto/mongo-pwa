@@ -43,33 +43,34 @@ const RenameCollection: Component<{
                 class="btn btn-primary mx-0.5"
                 ref={buttonRef}
                 disabled={!!isValidCollectionName(newName()).error}
-                onClick={() => handleFetchError(
-                  fetch('/api/collectionRename', {
-                    method: 'POST',
-                    headers: HEADERS_JSON(props.data.options),
-                    body: JSON.stringify({
-                      database: props.data.selectedDatabase,
-                      collection: props.data.selectedCollection,
-                      newCollection: newName()
-                    })
-                  }),
-                  props.setData,
-                  (() => {
-                    // Replace collection from global database to update viewing databases
-                    const indexToRemove = props.data.collections.indexOf(props.data.selectedCollection)
-                    return {
-                      collections: [
-                        ...props.data.collections.slice(0, indexToRemove),
-                        ...props.data.collections.slice(indexToRemove + 1),
-                        newName()
-                      ].toSorted(),
-                      selectedCollection: newName(),
-                      success: `Collection renamed to "${newName()}"!`
-                    }
-                  })()
-                ).then(() => {
+                onClick={async () => {
+                  await handleFetchError(
+                    fetch('/api/collectionRename', {
+                      method: 'POST',
+                      headers: HEADERS_JSON(props.data.options),
+                      body: JSON.stringify({
+                        database: props.data.selectedDatabase,
+                        collection: props.data.selectedCollection,
+                        newCollection: newName()
+                      })
+                    }),
+                    props.setData,
+                    (() => {
+                      // Replace collection from global database to update viewing databases
+                      const indexToRemove = props.data.collections.indexOf(props.data.selectedCollection)
+                      return {
+                        collections: [
+                          ...props.data.collections.slice(0, indexToRemove),
+                          ...props.data.collections.slice(indexToRemove + 1),
+                          newName()
+                        ].toSorted((a, b) => a.localeCompare(b)),
+                        selectedCollection: newName(),
+                        success: `Collection renamed to "${newName()}"!`
+                      }
+                    })()
+                  )
                   setNewName('')
-                })}
+                }}
               >
                 Rename Collection
               </button>

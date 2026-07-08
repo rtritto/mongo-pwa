@@ -10,7 +10,7 @@ import config, { type MongoDb } from '@/server/config'
 
 // update the collections list
 function getDatabases() {
-  return Object.keys(globalThis.mongo.connections).toSorted()
+  return Object.keys(globalThis.mongo.connections).toSorted((a, b) => a.localeCompare(b))
 }
 
 async function updateCollections(dbConnection: Connection) {
@@ -23,7 +23,7 @@ async function updateCollections(dbConnection: Connection) {
   for (const { name } of collections) {
     names.push(name)
   }
-  globalThis.mongo.collections[dbConnection.fullName] = names.toSorted()
+  globalThis.mongo.collections[dbConnection.fullName] = names.toSorted((a, b) => a.localeCompare(b))
   // return collections
 }
 

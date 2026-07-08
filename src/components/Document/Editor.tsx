@@ -36,7 +36,7 @@ const Editor: Component<{
       if (response) {
         await response.json() as { insertedId: string }
         localStorage.setItem('me-success', `Document "${props.data._id}" updated!`)
-        await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}`)
+        navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}`)
       }
     }
   }

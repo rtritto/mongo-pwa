@@ -13,10 +13,11 @@ export default async function databaseDelete(c: Context) {
   if (optionError) {
     return c.json({ error: optionError }, 403)
   }
-  await globalThis.mongo.mongoClient.db(database).dropDatabase()
-    .catch((error) => {
-      console.debug(error)
-      throw new Error(`Failed to delete database. ${error.message}`)
-    })
+  try {
+    await globalThis.mongo.mongoClient.db(database).dropDatabase()
+  } catch (error) {
+    console.debug(error)
+    throw new Error(`Failed to delete database. ${(error as Error).message}`)
+  }
   return c.json({})
 }

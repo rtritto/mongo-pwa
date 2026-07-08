@@ -1,7 +1,7 @@
 import config from '@/server/config'
 
 export const checkDatabase = (dbName: string) => {
-  if (!(dbName in globalThis.mongo.connections)) {
+  if (!(globalThis.mongo.connections.hasOwnProperty(dbName))) {
     return {
       error: `Database "${dbName}" not found!`
     }
@@ -10,7 +10,7 @@ export const checkDatabase = (dbName: string) => {
 }
 
 export const checkDatabaseCollection = (dbName: string, collectionName: string) => {
-  if (!(dbName in globalThis.mongo.connections)) {
+  if (!(globalThis.mongo.connections.hasOwnProperty(dbName))) {
     return {
       error: `Database "${dbName}" not found!`
     }

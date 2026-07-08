@@ -193,41 +193,41 @@ export const mapAddCollection = (databaseStats) => {
   }
 }
 
-export const mapCollectionStats = (collStats: CollStats) => ({
+export const mapStorageStats = (storageStats: CollStats['storageStats']) => ({
   count: {
     label: 'Documents',
-    value: collStats.count
+    value: storageStats.count
   },
   size: {
     label: 'Total doc size',
-    value: bytesToSize(collStats.size)
+    value: bytesToSize(storageStats.size)
   },
   avgObjSize: {
     label: 'Average doc size',
-    value: bytesToSize(collStats.avgObjSize)
+    value: bytesToSize(storageStats.avgObjSize)
   },
   storageSize: {
     label: 'Pre-allocated size',
-    value: bytesToSize(collStats.storageSize)
+    value: bytesToSize(storageStats.storageSize)
   },
   nindexes: {
     label: 'Indexes',
-    value: collStats.nindexes
+    value: storageStats.nindexes
   },
   totalIndexSize: {
     label: 'Total index size',
-    value: bytesToSize(collStats.totalIndexSize)
+    value: bytesToSize(storageStats.totalIndexSize)
   },
-  /* (?) deprecated */ ...'paddingFactor' in collStats && {
+  /* (?) deprecated */ ...'paddingFactor' in storageStats && {
     paddingFactor: {
       label: 'Padding factor',
-      value: collStats.paddingFactor
+      value: storageStats.paddingFactor
     }
   },
-  /* (?) deprecated */ ...'numExtents' in collStats && {
+  /* (?) deprecated */ ...'numExtents' in storageStats && {
     numExtents: {
       label: 'Extents',
-      value: collStats.numExtents
+      value: storageStats.numExtents
     }
   }
 })
