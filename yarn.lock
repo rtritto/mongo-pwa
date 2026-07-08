@@ -3092,10 +3092,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^5.6.15":
-  version: 5.6.15
-  resolution: "daisyui@npm:5.6.15"
-  checksum: 10c0/8ce06a014162334f43b8ffd3c952a37a271bcfbb39d217caba55154dc4a0c35c2675cb8d20e8c44b126a217851c2a50a51462b6738a55f17201716671339effe
+"daisyui@npm:^5.6.16":
+  version: 5.6.16
+  resolution: "daisyui@npm:5.6.16"
+  checksum: 10c0/1e7781b45470418e9ef3fb264ab4ed300a9f838fa2ba53627ed8d918984c0250f3b10e93911513f1a81929f2ffc8a6d4ddf0122e42237ed1e052d560edd76ba7
   languageName: node
   linkType: hard
 
@@ -5024,7 +5024,7 @@ __metadata:
     "@types/node": "npm:^26.1.1"
     "@yarnpkg/sdks": "npm:^3.3.0"
     bson: "npm:^7.3.1"
-    daisyui: "npm:^5.6.15"
+    daisyui: "npm:^5.6.16"
     eslint: "npm:^10.6.0"
     eslint-plugin-solid: "npm:^0.14.5"
     eslint-plugin-tailwindcss: "npm:^4.0.6"
