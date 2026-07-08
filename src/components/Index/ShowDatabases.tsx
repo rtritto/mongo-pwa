@@ -12,7 +12,7 @@ const ShowDatabases: Component<{
   setData: SetStoreFunction<any>
 }> = (props) => {
   return (
-    <div class="border border-base-300 rounded-box my-2">
+    <div class="my-2 rounded-box border border-base-300">
       <CreateDatabase data={props.data} setData={props.setData} />
 
       <table class="table">
@@ -21,7 +21,7 @@ const ShowDatabases: Component<{
             {(database) => (
               <tr>
                 <td class="p-0.5">
-                  <a class="btn btn-sm w-full bg-green-600" href={`/db/${encodeURIComponent(database)}`}>
+                  <a class="btn w-full bg-green-600 btn-sm" href={`/db/${encodeURIComponent(database)}`}>
                     <IconVisibility />
 
                     View

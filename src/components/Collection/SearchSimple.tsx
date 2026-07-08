@@ -55,7 +55,7 @@ const SearchSimple: Component<{
       />
 
       <select
-        class="select list"
+        class="list select"
         value={selectValue()}
         onKeyUp={(event) => {
           if (event.key === 'Enter') {

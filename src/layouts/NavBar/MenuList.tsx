@@ -21,18 +21,18 @@ const MenuList: Component<{ data: DataLayout }> = (props) => {
     <ul class="menu menu-horizontal px-1 py-0">
       <li class="px-1">
         <Show when={props.data.selectedDatabase}>
-          <a class="btn btn-sm btn-ghost px-1 py-0 mx-0" href={`/db/${encodeURIComponent(props.data.selectedDatabase!)}`}>Database:</a>
+          <a class="btn mx-0 btn-ghost px-1 py-0 btn-sm" href={`/db/${encodeURIComponent(props.data.selectedDatabase!)}`}>Database:</a>
         </Show>
 
         <details id="databases-details" ref={refDatabasesDetails}>
           <Show
             when={props.data.selectedDatabase}
-            fallback={<summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}>Databases</summary>}
+            fallback={<summary class="btn mx-0 btn-ghost px-1 py-0 btn-sm" onClick={handleClickToCloseCollectionsDetails}>Databases</summary>}
           >
-            <summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseCollectionsDetails}><b>{props.data.selectedDatabase}</b></summary>
+            <summary class="btn mx-0 btn-ghost px-1 py-0 btn-sm" onClick={handleClickToCloseCollectionsDetails}><b>{props.data.selectedDatabase}</b></summary>
           </Show>
 
-          <ul class="p-0 m-0">
+          <ul class="m-0 p-0">
             <For each={props.data.databases}>
               {(database) => (
                 <li>
@@ -47,15 +47,15 @@ const MenuList: Component<{ data: DataLayout }> = (props) => {
       <Show when={props.data.selectedDatabase}>
         <li class="px-1">
           <Show when={props.data.selectedCollection}>
-            <a class="btn btn-sm btn-ghost px-1 py-0 mx-0" href={`/db/${props.data.selectedDatabase}/${encodeURIComponent(props.data.selectedCollection!)}`}>Collection:</a>
+            <a class="btn mx-0 btn-ghost px-1 py-0 btn-sm" href={`/db/${props.data.selectedDatabase}/${encodeURIComponent(props.data.selectedCollection!)}`}>Collection:</a>
           </Show>
 
           <details id="collections-details" ref={refCollectionsDetails}>
-            <Show when={props.data.selectedCollection} fallback={<summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseDatabaseDetails}>Collections</summary>}>
-              <summary class="btn btn-sm btn-ghost px-1 py-0 mx-0" onClick={handleClickToCloseDatabaseDetails}><b>{props.data.selectedCollection}</b></summary>
+            <Show when={props.data.selectedCollection} fallback={<summary class="btn mx-0 btn-ghost px-1 py-0 btn-sm" onClick={handleClickToCloseDatabaseDetails}>Collections</summary>}>
+              <summary class="btn mx-0 btn-ghost px-1 py-0 btn-sm" onClick={handleClickToCloseDatabaseDetails}><b>{props.data.selectedCollection}</b></summary>
             </Show>
 
-            <ul class="p-0 m-0">
+            <ul class="m-0 p-0">
               <For each={props.data.collections}>
                 {(collection) => (
                   <li>
@@ -69,7 +69,7 @@ const MenuList: Component<{ data: DataLayout }> = (props) => {
       </Show>
 
       <Show when={props.data.selectedDocument}>
-        <li class="disabled">
+        <li class="menu-disabled">
           <label>Document: <b>{props.data.selectedDocument}</b></label>
         </li>
       </Show>

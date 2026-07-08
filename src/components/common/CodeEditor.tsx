@@ -32,16 +32,16 @@ const CodeEditor: Component<{
       {/* Column for number rows */}
       <div
         ref={linesRef}
-        class="rounded-l-md bg-[#282c34] select-none text-[#636d83] border-r-2 border-[#181a1f] py-px editor-font overflow-hidden"
+        class="editor-font overflow-hidden rounded-l-md border-r-2 border-[#181a1f] bg-[#282c34] py-px text-[#636d83] select-none"
         aria-hidden="true"
       >
         <For each={renderData().lineMapping}>
           {(line) => (
             <div class="flex items-center justify-end pl-2 hover:bg-[#2c313c]">
-              <span class="text-right tabular-nums min-w-6">{line.number}</span>
+              <span class="min-w-6 text-right tabular-nums">{line.number}</span>
 
               <button
-                class="w-4 h-4 flex items-center justify-center text-[10px] py-2.5 px-3 hover:text-white transition-colors cursor-pointer"
+                class="flex size-4 cursor-pointer items-center justify-center px-3 py-2.5 text-[10px] transition-colors hover:text-white"
                 style={{ visibility: line.hasRange ? 'visible' : 'hidden' }}
                 onClick={() => toggleFold(line.lineIndex)}
                 type="button"
@@ -59,10 +59,10 @@ const CodeEditor: Component<{
 
       {/* Area Editor */}
       {/* class="absolute inset-0 overflow-hidden pointer-events-none whitespace-pre shj-lang-js" */}
-      <div class="relative w-full overflow-auto bg-[#282c34] rounded-r-md border border-[#181a1f] editor-font">
+      <div class="editor-font relative w-full overflow-auto rounded-r-md border border-[#181a1f] bg-[#282c34]">
         <pre
           ref={highlightRef}
-          class="relative pointer-events-none bg-transparent shj-lang-js m-0"
+          class="shj-lang-js pointer-events-none relative m-0 bg-transparent"
           onClick={handlePreClick}
         >
           <code innerHTML={html()} />
@@ -75,7 +75,7 @@ const CodeEditor: Component<{
           readOnly={isReadOnly}
           spellcheck={false}
           // class="absolute inset-0 overflow-hidden bg-transparent text-transparent caret-white outline-none resize-none whitespace-pre"
-          class="absolute inset-0 z-10 w-full h-full bg-transparent text-transparent caret-white outline-none resize-none whitespace-pre editor-font"
+          class="editor-font absolute inset-0 z-10 size-full resize-none bg-transparent whitespace-pre text-transparent caret-white outline-none"
           onInput={(e) => handleInput(e.currentTarget.value)}
           onScroll={syncScroll}
           onKeyDown={handleKeyDown}

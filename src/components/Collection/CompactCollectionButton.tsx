@@ -12,7 +12,7 @@ const CompactCollectionButton: Component<{
 }> = (props) => {
   return (
     <button
-      class="btn btn-sm w-full bg-red-700 py-0.5"
+      class="btn w-full bg-red-700 py-0.5 btn-sm"
       type="submit"
       onClick={() => handleFetchError(
         fetch('/api/collectionCompact', {

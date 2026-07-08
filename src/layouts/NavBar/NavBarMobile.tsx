@@ -9,7 +9,7 @@ const NavBarMobile: Component<{ data: DataLayout }> = (props) => {
       <input id="my-drawer" type="checkbox" class="drawer-toggle" />
 
       <div class="drawer-content">
-        <label for="my-drawer" class="btn btn-sm btn-ghost drawer-button bg-gray-800">
+        <label for="my-drawer" class="btn bg-gray-800 btn-ghost btn-sm">
           <IconHamburger />
         </label>
       </div>

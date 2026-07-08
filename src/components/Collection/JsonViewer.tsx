@@ -136,7 +136,7 @@ const JsonNode: Component<{
         </span>
 
         <Show when={open()}>
-          <div class="ml-1 border-l border-gray-600 pl-2 mt-1">
+          <div class="mt-1 ml-1 border-l border-gray-600 pl-2">
             <Show when={isArray}>
               <For each={displayedArrayElements()}>
                 {(item, i) => (
@@ -154,7 +154,7 @@ const JsonNode: Component<{
               <Show when={hasMoreElements}>
                 <div class="ml-2">
                   <button
-                    class="text-blue-400 hover:text-blue-300 text-xs"
+                    class="text-xs text-blue-400 hover:text-blue-300"
                     onClick={(e) => {
                       e.stopPropagation()
                       setShowAllArrayElements(!showAllArrayElements())
@@ -194,7 +194,7 @@ const JsonNode: Component<{
 
 const JsonViewer: Component<{ value: any }> = (props) => {
   return (
-    <div class="font-mono text-sm bg-gray-900 text-white p-2.5 rounded-xl shadow overflow-auto">
+    <div class="overflow-auto rounded-xl bg-gray-900 p-2.5 font-mono text-sm text-white shadow">
       <JsonNode keyName={null} value={props.value} level={0} isLast={true} />
     </div>
   )

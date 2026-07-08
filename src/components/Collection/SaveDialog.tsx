@@ -24,7 +24,7 @@ const SaveDialog: Component<{
 
   return (
     <div>
-      <button class={`btn btn-sm bg-green-500 py-0.5`} onClick={() => {
+      <button class={`btn bg-green-500 py-0.5 btn-sm`} onClick={() => {
         dialogRef.showModal()
         // Reset
         setCode(template)

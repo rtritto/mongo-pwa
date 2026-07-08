@@ -267,12 +267,12 @@ const CollectionPage: Component<DataCollection> = () => {
       {/* (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833 */}
       <Alerts data={data} />
 
-      <h1 class="text-2xl pb-2">Viewing Collection: <b>{data.selectedCollection}</b></h1>
+      <h1 class="pb-2 text-2xl">Viewing Collection: <b>{data.selectedCollection}</b></h1>
 
       <SearchDocuments data={data} />
 
       <Show when={!data.options.readOnly}>
-        <div class="flex my-1">
+        <div class="my-1 flex">
           <div class="mr-2">
             <SaveDialog
               title="Add Document"
@@ -305,7 +305,7 @@ const CollectionPage: Component<DataCollection> = () => {
 
       <PaginationBoxComponent />
 
-      <div class="border border-base-300 rounded-box my-2 overflow-x-auto">
+      <div class="my-2 overflow-x-auto rounded-box border border-base-300">
         <DocumentList
           columnsHeader={columnsHeader}
           doQuery={doQuery}
@@ -392,11 +392,11 @@ const CollectionPage: Component<DataCollection> = () => {
             </>
           )}
         >
-          <div class="border border-base-300 rounded-box my-2 overflow-x-auto">
+          <div class="my-2 overflow-x-auto rounded-box border border-base-300">
             <StatsTable label="Collection Stats" fields={data.stats} />
           </div>
 
-          <div class="border border-base-300 rounded-box my-2 overflow-x-auto">
+          <div class="my-2 overflow-x-auto rounded-box border border-base-300">
             <IndexTable data={data} setData={setData} />
           </div>
         </Show>

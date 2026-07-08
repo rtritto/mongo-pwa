@@ -12,7 +12,7 @@ const SaveButton: Component<{
 }> = (props) => {
   return (
     <button
-      class="btn btn-sm bg-green-500 m-1 py-0.5 text-right"
+      class="btn m-1 bg-green-500 py-0.5 text-right btn-sm"
       disabled={props.disabled}
       onClick={() => props.onSave()}
     >

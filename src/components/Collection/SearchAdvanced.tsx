@@ -61,10 +61,10 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
   return (
     <div>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
           <label class="label">
-            <span class="label-text"><b>Query</b></span>
+            <span><b>Query</b></span>
           </label>
 
           <CodeEditor
@@ -84,7 +84,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
         <div>
           <label class="label">
-            <span class="label-text"><b>Projection</b></span>
+            <span><b>Projection</b></span>
           </label>
 
           <CodeEditor
@@ -103,8 +103,8 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
         </div>
       </div>
 
-      <div class="flex items-center gap-4 mt-4">
-        <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+      <div class="mt-4 flex items-center gap-4">
+        <fieldset class="fieldset w-64 rounded-box border border-base-300 bg-base-100 p-4">
           <label class="label">
             <input class="checkbox" type="checkbox" checked={checkboxAggregate()} onChange={() => setCheckboxAggregate(!checkboxAggregate())} />
 

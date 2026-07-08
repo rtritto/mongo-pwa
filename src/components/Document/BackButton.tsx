@@ -13,7 +13,7 @@ const BackButton: Component<{
   const [discardChanges, setDiscardChanges] = createSignal(false)
 
   return (
-    <button class="btn btn-sm bg-yellow-500 m-1 py-0.5 text-right" onClick={() => {
+    <button class="btn m-1 bg-yellow-500 py-0.5 text-right btn-sm" onClick={() => {
       if (props.isEqual() || discardChanges()) {
         navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}`)
       } else {

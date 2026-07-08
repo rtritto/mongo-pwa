@@ -20,13 +20,13 @@ const RenameCollection: Component<{
 
           <th class="p-0">
             <div class="input w-full">
-              <label class="label mx-0.5">
-                <span class="label-text">{props.data.selectedDatabase} . </span>
+              <label class="mx-0.5 label">
+                <span>{props.data.selectedDatabase} . </span>
 
                 <input
                   type="text"
                   placeholder={props.data.selectedCollection}
-                  class="input input-bordered w-full"
+                  class="input w-full"
                   value={newName()}
                   onKeyUp={(event) => {
                     if (event.key === 'Enter') {
@@ -40,7 +40,7 @@ const RenameCollection: Component<{
               </label>
 
               <button
-                class="btn btn-primary mx-0.5"
+                class="btn mx-0.5 btn-primary"
                 ref={buttonRef}
                 disabled={!!isValidCollectionName(newName()).error}
                 onClick={async () => {

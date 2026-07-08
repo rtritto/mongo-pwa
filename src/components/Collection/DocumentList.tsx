@@ -23,11 +23,11 @@ const DocumentList: Component<{
                 <Show
                   when={props.columnsHeader[column] === null}
                   fallback={(
-                    <ul class="menu p-0 w-full">
+                    <ul class="menu w-full p-0">
                       <li>
                         <details open={props.columnsHeader[column]!} class="w-full">
                           <summary
-                            class="btn btn-sm btn-ghost w-full"
+                            class="btn w-full btn-ghost btn-sm"
                             onClick={async (element) => {
                               await props.doQuery({ column })
                               element.target.parentElement!.removeAttribute('open')
@@ -41,7 +41,7 @@ const DocumentList: Component<{
                   )}
                 >
                   <button
-                    class="btn btn-sm btn-ghost w-full"
+                    class="btn w-full btn-ghost btn-sm"
                     onClick={async () => await props.doQuery({ column })}
                   >
                     <b>{column}</b>

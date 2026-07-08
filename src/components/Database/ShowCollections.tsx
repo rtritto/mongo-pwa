@@ -16,7 +16,7 @@ const ShowCollections: Component<{
 }> = (props) => {
 
   return (
-    <div class="border border-base-300 rounded-box my-2">
+    <div class="my-2 rounded-box border border-base-300">
       <CreateCollection data={props.data} setData={props.setData} />
 
       <table class="table">
@@ -26,7 +26,7 @@ const ShowCollections: Component<{
               return (
                 <tr>
                   <td class="p-0.5">
-                    <a class="btn btn-sm w-full bg-green-600" href={`/db/${encodeURIComponent(props.data.selectedDatabase)}/${encodeURIComponent(collection)}`}>
+                    <a class="btn w-full bg-green-600 btn-sm" href={`/db/${encodeURIComponent(props.data.selectedDatabase)}/${encodeURIComponent(collection)}`}>
                       <IconVisibility />
 
                       View

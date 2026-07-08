@@ -21,7 +21,7 @@ const SearchDocuments: Component<{
 
   return (
     <div class="my-2">
-      <div role="tablist" class="tabs tabs-lift tabs-xs">
+      <div role="tablist" class="tabs-lift tabs tabs-xs">
         <For each={Object.keys(SEARCH_LABELS)}>{(label, index) => (
           <a
             role="tab"
@@ -40,7 +40,7 @@ const SearchDocuments: Component<{
           {(content, index) => (
             <div
               role="tabpanel"
-              class={`tab-content rounded-b-lg rounded-r-lg bg-zinc-800 px-6 py-4 ${activeTab() === index() ? 'block' : 'hidden'}`}
+              class={`tab-content rounded-r-lg rounded-b-lg bg-zinc-800 px-6 py-4 ${activeTab() === index() ? 'block' : 'hidden'}`}
             >
               {content}
             </div>
