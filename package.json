@@ -34,7 +34,7 @@
     "flat": "^6.0.1",
     "hono": "^4.12.30",
     "mongodb": "^7.5.0",
-    "mongodb-query-parser-esm": "^4.7.8",
+    "mongodb-query-parser-esm": "^4.7.9",
     "solid-js": "^1.9.14"
   },
   "devDependencies": {

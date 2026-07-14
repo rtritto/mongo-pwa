@@ -2551,12 +2551,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.14.1, acorn@npm:^8.15.0, acorn@npm:^8.16.0, acorn@npm:^8.6.0":
-  version: 8.16.0
-  resolution: "acorn@npm:8.16.0"
+"acorn@npm:^8.15.0, acorn@npm:^8.16.0, acorn@npm:^8.17.0, acorn@npm:^8.6.0":
+  version: 8.17.0
+  resolution: "acorn@npm:8.17.0"
   bin:
     acorn: bin/acorn
-  checksum: 10c0/c9c52697227661b68d0debaf972222d4f622aa06b185824164e153438afa7b08273432ca43ea792cadb24dada1d46f6f6bb1ef8de9956979288cc1b96bf9914e
+  checksum: 10c0/5dcefea5f8f023b6cc24cbe71fb5a8112b601d36c4fa07d14e4e6ffc2ee47383332c46b36c766d9437725aa6660156eae50efa0c838719823b50d7c327c4ed42
   languageName: node
   linkType: hard
 
@@ -5032,7 +5032,7 @@ __metadata:
     flat: "npm:^6.0.1"
     hono: "npm:^4.12.30"
     mongodb: "npm:^7.5.0"
-    mongodb-query-parser-esm: "npm:^4.7.8"
+    mongodb-query-parser-esm: "npm:^4.7.9"
     solid-js: "npm:^1.9.14"
     standaloner: "npm:^0.3.3"
     tailwindcss: "npm:^4.3.2"
@@ -5056,15 +5056,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb-query-parser-esm@npm:^4.7.8":
-  version: 4.7.8
-  resolution: "mongodb-query-parser-esm@npm:4.7.8"
+"mongodb-query-parser-esm@npm:^4.7.9":
+  version: 4.7.9
+  resolution: "mongodb-query-parser-esm@npm:4.7.9"
   dependencies:
     javascript-stringify: "npm:^2.1.0"
-    shell-bson-parser-esm: "npm:^1.5.9"
+    shell-bson-parser-esm: "npm:^1.5.11"
   peerDependencies:
     bson: ^7.0.0
-  checksum: 10c0/15442e5cd9d7a5f95e8da00da80cd21b5a5234c853f4721974b06f556bd7ac36e93d1c0e26078f976c3a4805c437661d04cc014390bffb51588aca1acf9012cb
+  checksum: 10c0/6968eab4d7e3bc4c60223f096b903caa569470f1e89a7db9427b5c60ac3198a4b3d54420cf9369831fbbc78a8488f95724ab5095dd50246fdcacaa19f3be2260
   languageName: node
   linkType: hard
 
@@ -5992,14 +5992,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shell-bson-parser-esm@npm:^1.5.9":
-  version: 1.5.10
-  resolution: "shell-bson-parser-esm@npm:1.5.10"
+"shell-bson-parser-esm@npm:^1.5.11":
+  version: 1.5.11
+  resolution: "shell-bson-parser-esm@npm:1.5.11"
   dependencies:
-    acorn: "npm:^8.14.1"
+    acorn: "npm:^8.17.0"
   peerDependencies:
-    bson: ^7.0.0
-  checksum: 10c0/eb64af48d9a946c834a3587d411560233b869768a6b19457facae44a8ef52a4761aca692aed4657c2e49ce1e0d7539f668054bed3e32c4a6c5123c776a5813ce
+    bson: ^7.3.1
+  checksum: 10c0/7fa57cede06bd03477ef3814e536d15396f6109f9765e28b455e8dc86a2a722eb27ad70391fa6b0a28587718d975ce606acde7d9ba2e85583a0837015fadf865
   languageName: node
   linkType: hard
 
