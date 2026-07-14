@@ -5012,9 +5012,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongo-pwa@workspace:.":
+"mongo-solid@workspace:.":
   version: 0.0.0-use.local
-  resolution: "mongo-pwa@workspace:."
+  resolution: "mongo-solid@workspace:."
   dependencies:
     "@hono/node-server": "npm:^2.0.8"
     "@json2csv/plainjs": "npm:^7.0.6"

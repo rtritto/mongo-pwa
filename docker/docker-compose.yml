@@ -10,9 +10,9 @@ services:
     volumes:
       - mongodb_data:/bitnami/mongodb
 
-  mongo-pwa:
-    container_name: mongo-pwa
-    image: mongo-pwa
+  mongo-solid:
+    container_name: mongo-solid
+    image: mongo-solid
     ports:
       - 3000:3000
     restart: always

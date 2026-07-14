@@ -39,11 +39,11 @@ View the album for more screenshots: (server status, database views, etc..)
 To test or develop with the latest version (_master_ branch) you can install using this git repository:
 
 ```sh
-  npm i mongo-pwa@github:mongo-pwa/mongo-pwa
+  npm i mongo-solid@github:mongo-solid/mongo-solid
   OR
-  yarn add mongo-pwa@github:mongo-pwa/mongo-pwa
+  yarn add mongo-solid@github:mongo-solid/mongo-solid
   OR
-  pnpm add mongo-pwa@github:mongo-pwa/mongo-pwa
+  pnpm add mongo-solid@github:mongo-solid/mongo-solid
 ```
 
 Copy config.default.js to config.js and edit the default property to fit your local environment
@@ -60,33 +60,33 @@ Copy config.default.js to config.js and edit the default property to fit your lo
 
 ## Usage (npm / yarn / pnpm / CLI)
 
-_mongo-pwa_ requires Node.js v18.18 or higher.
+_mongo-solid_ requires Node.js v18.18 or higher.
 
 **To install:**
 
 ```sh
-  npm i -g mongo-pwa
+  npm i -g mongo-solid
   OR
-  yarn add -g mongo-pwa
+  yarn add -g mongo-solid
   OR
-  pnpm add -g mongo-pwa
+  pnpm add -g mongo-solid
 ```
 
 Or if you want to install a non-global copy:
 
 ```sh
-  npm i mongo-pwa
+  npm i mongo-solid
   OR
-  yarn add mongo-pwa
+  yarn add mongo-solid
   OR
-  pnpm add mongo-pwa
+  pnpm add mongo-solid
 ```
 
 By default `config.default.js` is used where the basic access authentication is `admin`:`pass`. This is obviously not safe, and there are warnings in the console.
 
 **To configure:**
 
-Copy `YOUR_PATH/node_modules/mongo-pwa/config.default.js` into a new file called `YOUR_PATH/node_modules/mongo-pwa/config.js`.
+Copy `YOUR_PATH/node_modules/mongo-solid/config.default.js` into a new file called `YOUR_PATH/node_modules/mongo-solid/config.js`.
 
 _Note:_ YOUR_PATH will depend on your current OS user and system configuration. You can see it in the output text shown after executing npm install.
 
@@ -102,13 +102,13 @@ Fill in your MongoDB connection details and any other options you want to change
 **To run:**
 
 ```sh
-cd YOUR_PATH/node_modules/mongo-pwa/ && node app.js
+cd YOUR_PATH/node_modules/mongo-solid/ && node app.js
 ```
 
-or if you installed it globally, you can immediately start mongo-pwa like this:
+or if you installed it globally, you can immediately start mongo-solid like this:
 
 ```sh
-mongo-pwa
+mongo-solid
 ```
 
 You can add some configuration options. Example:
@@ -120,7 +120,7 @@ node app.js --url mongodb://127.0.0.1:27017
 or:
 
 ```sh
-mongo-pwa --URL mongodb://127.0.0.1:27017
+mongo-solid --URL mongodb://127.0.0.1:27017
 ```
 
 Configuration options:
