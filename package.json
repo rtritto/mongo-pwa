@@ -4,6 +4,14 @@
   "license": "MIT",
   "type": "module",
   "packageManager": "yarn@4.17.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/node-ecosystem/mongo-solid.git"
+  },
+  "homepage": "https://github.com/node-ecosystem/mongo-solid#readme",
+  "bugs": {
+    "url": "https://github.com/node-ecosystem/mongo-solid/issues"
+  },
   "scripts": {
     "dev": "vite dev",
     "type:check": "tsc",
