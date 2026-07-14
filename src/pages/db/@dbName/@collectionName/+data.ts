@@ -42,7 +42,7 @@ export const data = async (pageContext: PageContextServer) => {
   }
 
   return {
-    title: `Collection: ${collectionName} - Mongo PWA`,
+    title: `Collection: ${collectionName} - Mongo Solid`,
     databases: mongo.databases,
     collections: mongo.collections[dbName],
     // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833

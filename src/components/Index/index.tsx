@@ -13,7 +13,7 @@ const IndexPage: Component<DataIndex> = () => {
       {/* (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833 */}
       <Alerts data={data} />
 
-      <h1>Mongo PWA</h1>
+      <h1>Mongo Solid</h1>
 
       <div class="divider m-1.5" />
 

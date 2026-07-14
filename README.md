@@ -1,9 +1,9 @@
-# Mongo PWA
+# Mongo Solid
 
 [![npm version](https://badge.fury.io/js/mongo-express.svg)](https://www.npmjs.com/package/mongo-express) [![npm](https://img.shields.io/npm/dm/mongo-express.svg)](https://www.npmjs.com/package/mongo-express) [![GitHub stars](https://img.shields.io/github/stars/mongo-express/mongo-express.svg)](https://github.com/mongo-express/mongo-express/stargazers) [![Known Vulnerabilities](https://snyk.io/test/npm/name/badge.svg)](https://snyk.io/test/npm/mongo-express)
 [![Build Status](https://github.com/mongo-express/mongo-express/actions/workflows/standard-ci.yml/badge.svg?branch=master)](https://github.com/mongo-express/mongo-express/actions/workflows/standard-ci.yml)
 
-A web-based MongoDB admin interface written in Node.js with SolidJS, TailwindCSS, daisyUI, Hono, Vike and that supports SSR and PWA
+A web-based MongoDB admin interface written in Node.js with SolidJS, TailwindCSS, daisyUI, Hono, Vike Lite and that supports SSR and PWA
 
 ## Features
 

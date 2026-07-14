@@ -23,8 +23,8 @@ export default defineConfig(async ({ mode }) => {
             type: 'module'
           },
           manifest: {
-            name: 'Mongo PWA',
-            short_name: 'MongoPWA',
+            name: 'Mongo Solid',
+            short_name: 'MongoSolid',
             theme_color: '#3F51B5',
             background_color: '#3367D6',
             icons: [
