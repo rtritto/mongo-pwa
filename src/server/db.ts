@@ -90,6 +90,7 @@ export async function connectClient() {
   const connections = Array.isArray(config.mongodb) ? config.mongodb : [config.mongodb]
   const clients = await Promise.all(connections.map(async (connectionInfo: MongoDb, index: number) => {
     const { connectionString, connectionName, admin, connectionOptions } = connectionInfo
+    if (!connectionString) throw new Error(`Missing connectionString for connection ${index}`)
     try {
       const client = await MongoClient.connect(connectionString, connectionOptions)
       const adminDb = admin ? client.db().admin() : null
