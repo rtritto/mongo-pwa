@@ -20,5 +20,7 @@
   },
   "terminal.integrated.defaultProfile.windows": "Command Prompt",
   "window.commandCenter": false,
-  "workbench.startupEditor": "none"
+  "workbench.startupEditor": "none",
+  "typescript.tsdk": ".yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

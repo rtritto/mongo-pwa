@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "type": "module",
-  "packageManager": "yarn@4.16.0",
+  "packageManager": "yarn@4.17.1",
   "scripts": {
     "dev": "vite dev",
     "type:check": "tsc",
