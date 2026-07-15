@@ -16,9 +16,8 @@ if (process.env.NODE_ENV === 'production') {
 app.route('/api', apiRoutes)
 
 // Catch-all remaining requests using Vike rendering
-app.get('*', async (c, next) => {
-  const response = await renderPage(c.req.raw)
-  return response ?? next()
+app.get('*', async (c) => {
+  return await renderPage(c.req.raw)
 })
 
 app.onError((error, c) => {

@@ -13,7 +13,9 @@ export default defineConfig(async ({ mode }) => {
     cacheDir: '../.vite',
     plugins: [
       tailwindcss(),
-      vikeLite(),
+      vikeLite({
+        serverEntry: 'server/index'
+      }),
       vikeLiteSolid(),
       ...process.env.NODE_ENV === 'production' ? [
         (await import('vite-plugin-pwa')).VitePWA({
