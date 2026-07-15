@@ -14,7 +14,7 @@ apiRoutes.post('/:functionName', async (c: Context) => {
     return c.json({ error: 'Not authenticated' }, 401)
   }
   const functionName = c.req.param('functionName') as keyof typeof api
-  if (!(functionName in api)) {
+  if (!Object.hasOwn(api, functionName)) {
     return c.json({ error: 'Function not found' }, 400)
   }
   try {
