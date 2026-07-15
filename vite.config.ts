@@ -14,7 +14,7 @@ export default defineConfig(async ({ mode }) => {
     plugins: [
       tailwindcss(),
       vikeLite({
-        serverEntry: 'server/index'
+        serverEntry: 'server/index.ts'
       }),
       vikeLiteSolid(),
       ...process.env.NODE_ENV === 'production' ? [
