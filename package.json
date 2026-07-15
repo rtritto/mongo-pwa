@@ -42,7 +42,7 @@
     "eslint": "^10.7.0",
     "eslint-plugin-solid": "^0.14.5",
     "eslint-plugin-tailwindcss": "^4.2.0",
-    "eslint-plugin-unicorn": "^71.1.0",
+    "eslint-plugin-unicorn": "^72.0.0",
     "flat": "^6.0.1",
     "hono": "^4.12.30",
     "mongodb": "^7.5.0",
