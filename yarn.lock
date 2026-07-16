@@ -5172,8 +5172,8 @@ __metadata:
     tailwindcss: "npm:^4.3.3"
     typescript: "npm:^6.0.3"
     typescript-eslint: "npm:^8.64.0"
-    vike-lite: "npm:^1.15.7"
-    vike-lite-solid: "npm:^1.10.2"
+    vike-lite: "npm:^1.15.8"
+    vike-lite-solid: "npm:^1.10.3"
     vite: "npm:^8.1.5"
     vite-plugin-pwa: "npm:^1.3.0"
     vite-plugin-solid: "npm:^2.11.12"
@@ -6884,24 +6884,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike-lite-solid@npm:^1.10.2":
-  version: 1.10.2
-  resolution: "vike-lite-solid@npm:1.10.2"
+"vike-lite-solid@npm:^1.10.3":
+  version: 1.10.3
+  resolution: "vike-lite-solid@npm:1.10.3"
   peerDependencies:
     solid-js: "*"
     vike-lite: "*"
     vite: ">=8"
     vite-plugin-solid: ">=2"
-  checksum: 10c0/6fa77dfce91ea9a79cb37580578609d22167a4d2669f99968c876fec72fc68da01a013d3a93bb44ed6ee85ce7597953e311c2c0fdcfa87d422e13b42db896a3b
+  checksum: 10c0/79922871c25f089296b2a6f82213bdb92a52aa47aadd46df28f12b1117fb2097ce8bd28f6627fb5145f5b50f1de115643df2ee7e01ceeb23a972d26ffa36d429
   languageName: node
   linkType: hard
 
-"vike-lite@npm:^1.15.7":
-  version: 1.15.7
-  resolution: "vike-lite@npm:1.15.7"
+"vike-lite@npm:^1.15.8":
+  version: 1.15.8
+  resolution: "vike-lite@npm:1.15.8"
   peerDependencies:
     vite: ">=8"
-  checksum: 10c0/707627559a351c5a88a900ca0fc4a06695c105c2ada6aecedc163f0354562279f787141c15bc2afc4f65b2882b95dabd9f0bae5c0ac971b0f2f36d3fa5d9b92d
+  checksum: 10c0/fb48e900d7cf3461d09bfb62fba12b4c18e3ab844d34c704016b340864eb721477454b42adc85e09fe4ebeeefa5cf755915f34f9d6e5b67b7af894d553346c1c
   languageName: node
   linkType: hard
 
