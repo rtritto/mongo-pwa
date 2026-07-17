@@ -7,7 +7,7 @@ import { useData } from 'vike-lite-solid'
 
 import NavBar from './NavBar'
 
-export const LayoutDefault: Component<{ children?: JSX.Element }> = (props) => {
+export const Layout: Component<{ children?: JSX.Element }> = (props) => {
   const [data] = useData<DataLayout>()
 
   const [password, setPassword] = createSignal<string | null>(null)
