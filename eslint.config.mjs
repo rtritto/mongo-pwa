@@ -13,7 +13,7 @@ export default defineConfig({
   ],
   settings: {
     tailwindcss: {
-      cssConfigPath: './src/layouts/tailwind.css'
+      cssConfigPath: './src/styles/tailwind.css'
     }
   },
   rules: {
