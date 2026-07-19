@@ -52,8 +52,8 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.64.0",
-    "vike-lite": "^1.15.14",
-    "vike-lite-solid": "^1.10.9",
+    "vike-lite": "^1.15.17",
+    "vike-lite-solid": "^1.10.12",
     "vite": "^8.1.5",
     "vite-plugin-pwa": "^1.3.0",
     "vite-plugin-solid": "^2.11.13"
