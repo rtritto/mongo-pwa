@@ -2,9 +2,9 @@ import { ReadableStream } from 'node:stream/web'
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
+import { generateCollectionJson } from '@/server/utils/generateCollectionJson'
 import { getQuery, getQueryOptions } from '@/utils/queries'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
-import { generateCollectionJson } from '@/server/utils/generateCollectionJson'
 
 export default async function collectionExport(c: Context) {
   const { database, collection, query } = await c.req.json<{
