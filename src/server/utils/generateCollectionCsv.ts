@@ -12,7 +12,7 @@ function isPlainObject(value: unknown): value is Record<string, unknown> {
  */
 function normalizeValue(value: unknown): unknown {
   if (value === null || value === undefined) return value
-  if (Array.isArray(value)) return value.map(normalizeValue)
+  if (Array.isArray(value)) return value.map((element) => normalizeValue(element))
   if (value instanceof Date) return value.toISOString()
 
   const ctorName = (value as { constructor?: { name?: string } }).constructor?.name
@@ -42,11 +42,11 @@ function flatten(value: unknown, prefix = '', result: Record<string, unknown> = 
 function csvEscape(value: unknown): string {
   if (value === null || value === undefined) return ''
   const str = typeof value === 'object' ? JSON.stringify(value) : String(value)
-  return /[",\n\r]/.test(str) ? `"${str.replace(/"/g, '""')}"` : str
+  return /[",\n\r]/.test(str) ? `"${str.replaceAll('"', '""')}"` : str
 }
 
 function toCsvRow(values: unknown[]): string {
-  return values.map(csvEscape).join(',')
+  return values.map((value) => csvEscape(value)).join(',')
 }
 
 /**
