@@ -32,7 +32,7 @@ const ImportCollectionButton: Component<{
       fetch('/api/collectionImport', {
         method: 'POST',
         body: formData,
-        headers: getHeaders(props.data.options)
+        headers: getHeaders(props.data.options, false)  // Let the browser set the correct Content-Type for multipart/form-data
       }),
       props.setData
     )
