@@ -19,7 +19,7 @@ import SaveDialog from './SaveDialog'
 import RenameCollection from './RenameCollection'
 import { getInitialColumnsHeader, getNextSort, removeColumnFromSortQp } from './functions/functionsSort'
 import { getHeaders } from '@/components/utils/getHeaders'
-import fetchWithRetries from '@/utils/fetchWithRetries'
+import fetchWithRetries from '@/components/utils/fetchWithRetries'
 
 const DOC_STRING_TEMPLATE_DOCUMENT = `{
   _id: ObjectId()
