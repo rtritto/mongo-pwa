@@ -1405,23 +1405,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@json2csv/formatters@npm:^7.0.7":
-  version: 7.0.7
-  resolution: "@json2csv/formatters@npm:7.0.7"
-  checksum: 10c0/62c7027f225be3f7ddb73ec6c85062e70a1006e7243cf8519babca7f3c1ba33065fb074493e10804c4cbd9b85333bf8c89211e54547624f81a1d6211d2238761
-  languageName: node
-  linkType: hard
-
-"@json2csv/plainjs@npm:^7.0.7":
-  version: 7.0.7
-  resolution: "@json2csv/plainjs@npm:7.0.7"
-  dependencies:
-    "@json2csv/formatters": "npm:^7.0.7"
-    "@streamparser/json": "npm:^0.0.22"
-  checksum: 10c0/cbd0d579f4a17f016a5af0e4601fabe90316fc5f249498fc89138545b65fefc9fe021698f29a6680f5384dbfa8223ed47c162c2c82da0fef3ac672213a248f3b
-  languageName: node
-  linkType: hard
-
 "@mapbox/node-pre-gyp@npm:^2.0.0":
   version: 2.0.3
   resolution: "@mapbox/node-pre-gyp@npm:2.0.3"
@@ -2023,13 +2006,6 @@ __metadata:
   version: 1.2.17
   resolution: "@speed-highlight/core@npm:1.2.17"
   checksum: 10c0/867b896388e9131dca5e49292ea4c6b025d1a8d3d3bd08504d1a43e49dad208d1199e2708bd592135706504a0048e99ea28c1a33a57320e11e39075fe8c680e6
-  languageName: node
-  linkType: hard
-
-"@streamparser/json@npm:^0.0.22":
-  version: 0.0.22
-  resolution: "@streamparser/json@npm:0.0.22"
-  checksum: 10c0/4496e286d607e37552c75e1e63ed7e722392d4d91939401ec11eb63c8c7d1fb7a2cf5733f1a60dc63ad95996f12d62f5639724b2c31584bb8ace51b1f3910ccc
   languageName: node
   linkType: hard
 
@@ -3905,15 +3881,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flat@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "flat@npm:6.0.1"
-  bin:
-    flat: cli.js
-  checksum: 10c0/9dc0dbe6e2acc012512a53130d9ba1c82c1a596cdca91b23d11716348361c4a68928409bb4433c4493a17595c3efd0cab9f09e23dd3f9962a58af225c3efc23a
-  languageName: node
-  linkType: hard
-
 "flatted@npm:^3.2.9":
   version: 3.4.2
   resolution: "flatted@npm:3.4.2"
@@ -5150,7 +5117,6 @@ __metadata:
   resolution: "mongo-solid@workspace:."
   dependencies:
     "@hono/node-server": "npm:^2.0.10"
-    "@json2csv/plainjs": "npm:^7.0.7"
     "@solid-primitives/pagination": "npm:^0.5.2"
     "@speed-highlight/core": "npm:^1.2.17"
     "@tailwindcss/vite": "npm:^4.3.3"
@@ -5162,7 +5128,6 @@ __metadata:
     eslint-plugin-solid: "npm:^0.14.5"
     eslint-plugin-tailwindcss: "npm:^4.2.0"
     eslint-plugin-unicorn: "npm:^72.0.0"
-    flat: "npm:^6.0.1"
     hono: "npm:^4.12.31"
     mongodb: "npm:^7.5.0"
     mongodb-query-parser-esm: "npm:^4.7.9"
