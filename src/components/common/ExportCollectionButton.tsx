@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconExport from '@/components/Icons/IconExport'
-import { HEADERS_JSON } from '@/components/utils/constants'
+import { getHeaders } from '@/components/utils/getHeaders'
 
 const ExportCollectionButton: Component<{
   label: string
@@ -23,7 +23,7 @@ const ExportCollectionButton: Component<{
             database: props.data.selectedDatabase,
             collection: props.collection
           }),
-          headers: HEADERS_JSON(props.data.options)
+          headers: getHeaders(props.data.options)
         }),
         props.setData
       )

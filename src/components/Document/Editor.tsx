@@ -7,7 +7,7 @@ import SaveButton from './SaveButton'
 import DeleteDocument from '@/components/Collection/DeleteDocument'
 import CodeEditor from '@/components/common/CodeEditor'
 import handleFetchError from '@/components/common/functions/handleFetchError'
-import { HEADERS_JSON } from '@/components/utils/constants'
+import { getHeaders } from '@/components/utils/getHeaders'
 import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
 
 const Editor: Component<{
@@ -22,7 +22,7 @@ const Editor: Component<{
       const response = await handleFetchError(
         fetch('/api/documentUpdate', {
           method: 'POST',
-          headers: HEADERS_JSON(props.data.options),
+          headers: getHeaders(props.data.options),
           body: JSON.stringify({
             database: props.data.selectedDatabase,
             collection: props.data.selectedCollection,

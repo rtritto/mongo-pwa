@@ -4,7 +4,7 @@ import { reload } from 'vike-lite/client/router'
 
 import IconDelete from '@/components/Icons/IconDelete'
 import handleFetchError from '@/components/common/functions/handleFetchError'
-import { HEADERS_JSON } from '@/components/utils/constants'
+import { getHeaders } from '@/components/utils/getHeaders'
 import { bytesToSize } from '@/utils/mappers/mapUtils'
 
 const IndexTable: Component<{
@@ -66,7 +66,7 @@ const IndexTable: Component<{
                         const response = await handleFetchError(
                           fetch('/api/collectionDeleteIndex', {
                             method: 'POST',
-                            headers: HEADERS_JSON(props.data.options),
+                            headers: getHeaders(props.data.options),
                             body: JSON.stringify({
                               database: props.data.selectedDatabase,
                               collection: props.data.selectedCollection,

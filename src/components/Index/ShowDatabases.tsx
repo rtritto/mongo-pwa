@@ -5,7 +5,7 @@ import DeleteDialog from '@/components/common/DeleteDialog'
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import CreateDatabase from './CreateDatabase'
-import { HEADERS_JSON } from '@/components/utils/constants'
+import { getHeaders } from '@/components/utils/getHeaders'
 
 const ShowDatabases: Component<{
   data: DataIndex
@@ -46,7 +46,7 @@ const ShowDatabases: Component<{
                       handleDelete={() => handleFetchError(
                         fetch('/api/databaseDelete', {
                           method: 'POST',
-                          headers: HEADERS_JSON(props.data.options),
+                          headers: getHeaders(props.data.options),
                           body: JSON.stringify({ database })
                         }),
                         props.setData,

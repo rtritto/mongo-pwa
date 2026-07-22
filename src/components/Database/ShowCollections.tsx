@@ -7,7 +7,7 @@ import ImportCollectionButton from '@/components/common/ImportCollectionButton'
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import CreateCollection from './CreateCollection'
-import { HEADERS_JSON } from '@/components/utils/constants'
+import { getHeaders } from '@/components/utils/getHeaders'
 
 const ShowCollections: Component<{
   query?: QueryParameter
@@ -68,7 +68,7 @@ const ShowCollections: Component<{
                         handleDelete={() => handleFetchError(
                           fetch('/api/collectionDelete', {
                             method: 'POST',
-                            headers: HEADERS_JSON(props.data.options),
+                            headers: getHeaders(props.data.options),
                             body: JSON.stringify({ database: props.data.selectedDatabase, collection })
                           }),
                           props.setData,

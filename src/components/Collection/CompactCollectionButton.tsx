@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconCompact from '@/components/Icons/IconCompact'
-import { HEADERS_JSON } from '@/components/utils/constants'
+import { getHeaders } from '@/components/utils/getHeaders'
 
 const CompactCollectionButton: Component<{
   collection: string
@@ -21,7 +21,7 @@ const CompactCollectionButton: Component<{
             database: props.data.selectedDatabase,
             collection: props.collection
           }),
-          headers: HEADERS_JSON(props.data.options)
+          headers: getHeaders(props.data.options)
         }),
         props.setData,
         { success: 'Collection compacted!' }
