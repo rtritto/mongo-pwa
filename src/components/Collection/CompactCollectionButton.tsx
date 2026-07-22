@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconCompact from '@/components/Icons/IconCompact'
-import { HEADERS_JSON } from '@/utils/constants'
+import { HEADERS_JSON } from '@/components/utils/constants'
 
 const CompactCollectionButton: Component<{
   collection: string

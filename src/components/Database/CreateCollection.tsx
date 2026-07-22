@@ -4,7 +4,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 import CreateForm from '@/components/common/CreateForm'
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import isValidCollectionName from '@/utils/validations/isValidCollectionName'
-import { HEADERS_JSON } from '@/utils/constants'
+import { HEADERS_JSON } from '@/components/utils/constants'
 
 const CreateCollection: Component<{
   data: DataDB

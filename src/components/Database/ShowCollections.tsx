@@ -7,7 +7,7 @@ import ImportCollectionButton from '@/components/common/ImportCollectionButton'
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import CreateCollection from './CreateCollection'
-import { HEADERS_JSON } from '@/utils/constants'
+import { HEADERS_JSON } from '@/components/utils/constants'
 
 const ShowCollections: Component<{
   query?: QueryParameter

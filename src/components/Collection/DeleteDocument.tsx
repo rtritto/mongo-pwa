@@ -4,7 +4,7 @@ import { navigate, reload } from 'vike-lite/client/router'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
 import handleFetchError from '@/components/common/functions/handleFetchError'
-import { HEADERS_JSON } from '@/utils/constants'
+import { HEADERS_JSON } from '@/components/utils/constants'
 
 const DeleteDocument: Component<{
   data: DataLayout

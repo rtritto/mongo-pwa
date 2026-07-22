@@ -2,7 +2,7 @@ import { createSignal, type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import handleFetchError from '@/components/common/functions/handleFetchError'
-import { HEADERS_JSON } from '@/utils/constants'
+import { HEADERS_JSON } from '@/components/utils/constants'
 import isValidCollectionName from '@/utils/validations/isValidCollectionName'
 
 const RenameCollection: Component<{

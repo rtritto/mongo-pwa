@@ -7,7 +7,7 @@ import SaveButton from './SaveButton'
 import DeleteDocument from '@/components/Collection/DeleteDocument'
 import CodeEditor from '@/components/common/CodeEditor'
 import handleFetchError from '@/components/common/functions/handleFetchError'
-import { HEADERS_JSON } from '@/utils/constants'
+import { HEADERS_JSON } from '@/components/utils/constants'
 import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
 
 const Editor: Component<{

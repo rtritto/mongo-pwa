@@ -4,7 +4,7 @@ import { reload } from 'vike-lite/client/router'
 
 import IconDelete from '@/components/Icons/IconDelete'
 import handleFetchError from '@/components/common/functions/handleFetchError'
-import { HEADERS_JSON } from '@/utils/constants'
+import { HEADERS_JSON } from '@/components/utils/constants'
 import { bytesToSize } from '@/utils/mappers/mapUtils'
 
 const IndexTable: Component<{

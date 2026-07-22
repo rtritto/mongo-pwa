@@ -18,7 +18,7 @@ import IndexTable from './IndexTable'
 import SaveDialog from './SaveDialog'
 import RenameCollection from './RenameCollection'
 import { getInitialColumnsHeader, getNextSort, removeColumnFromSortQp } from './functions/functionsSort'
-import { HEADERS_JSON } from '@/utils/constants'
+import { HEADERS_JSON } from '@/components/utils/constants'
 import fetchWithRetries from '@/utils/fetchWithRetries'
 
 const DOC_STRING_TEMPLATE_DOCUMENT = `{

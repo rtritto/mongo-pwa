@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import CreateForm from '@/components/common/CreateForm'
 import handleFetchError from '@/components/common/functions/handleFetchError'
-import { HEADERS_JSON } from '@/utils/constants'
+import { HEADERS_JSON } from '@/components/utils/constants'
 import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
 
 const CreateDatabase: Component<{
