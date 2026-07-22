@@ -55,19 +55,28 @@ function parseCsv(text: string): CsvCell[][] {
       continue
     }
 
-    if (char === '"') {
-      inQuotes = true
-      wasQuoted = true
-    } else if (char === ',') {
-      pushField()
-    } else if (char === '\r') {
-      continue
-    } else if (char === '\n') {
-      pushField()
-      rows.push(row)
-      row = []
-    } else {
-      field += char
+    switch (char) {
+      case '"': {
+        inQuotes = true
+        wasQuoted = true
+        break
+      }
+      case ',': {
+        pushField()
+        break
+      }
+      case '\r': {
+        continue
+      }
+      case '\n': {
+        pushField()
+        rows.push(row)
+        row = []
+        break
+      }
+      default: {
+        field += char
+      }
     }
   }
 
@@ -111,11 +120,12 @@ function castCsvValue(cell: CsvCell): unknown {
 /** Reverses the dot-notation flattening done at export time. */
 function unflattenRow(header: string[], cells: CsvCell[]): Record<string, unknown> {
   const doc: Record<string, unknown> = {}
-  header.forEach((key, index) => {
-    const value = castCsvValue(cells[index] ?? { value: '', quoted: false })
-    if (value === undefined) return
+  for (const index in header) {
 
-    const parts = key.split('.')
+    const value = castCsvValue(cells[index] ?? { value: '', quoted: false })
+    if (value === undefined) continue
+
+    const parts = header[index].split('.')
     let node = doc
     for (let i = 0; i < parts.length - 1; i++) {
       const part = parts[i]
@@ -123,7 +133,7 @@ function unflattenRow(header: string[], cells: CsvCell[]): Record<string, unknow
       node = node[part] as Record<string, unknown>
     }
     node[parts.at(-1) as string] = value
-  })
+  }
   return doc
 }
 
