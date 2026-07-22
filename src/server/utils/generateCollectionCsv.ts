@@ -76,8 +76,12 @@ export async function* generateCollectionCsv(cursor: AbstractCursor<Document>): 
   const fieldList = [...fields]
   yield encoder.encode(`${toCsvRow(fieldList)}\n`)
 
-  for await (const doc of cursor) {
-    const flat = flatten(normalizeValue(doc))
-    yield encoder.encode(`${toCsvRow(fieldList.map(field => flat[field]))}\n`)
+  try {
+    for await (const doc of cursor) {
+      const flat = flatten(normalizeValue(doc))
+      yield encoder.encode(`${toCsvRow(fieldList.map(field => flat[field]))}\n`)
+    }
+  } finally {
+    await cursor.close()
   }
 }
