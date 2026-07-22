@@ -1,0 +1,21 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": [
+      "ESNext"
+    ],
+    "paths": {
+      "@/*": [
+        "../src/*"
+      ]
+    },
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "types/**/*.d.ts",
+    "pages/**/+data.ts",
+    "server/**/*.ts"
+  ]
+}
