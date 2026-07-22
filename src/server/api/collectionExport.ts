@@ -1,9 +1,10 @@
-import { EJSON } from 'bson'
+import { ReadableStream } from 'node:stream/web'
 import type { Context } from 'hono'
 
 import { connectClient } from '@/server/db'
 import { getQuery, getQueryOptions } from '@/utils/queries'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
+import { generateCollectionJson } from '@/server/utils/generateCollectionJson'
 
 export default async function collectionExport(c: Context) {
   const { database, collection, query } = await c.req.json<{
@@ -13,19 +14,17 @@ export default async function collectionExport(c: Context) {
   }>()
   await connectClient()
   const { error } = checkDatabaseCollection(database, collection)
-  if (error) {
-    return c.json({ error }, 404)
-  }
-  c.header(
-    'Content-Disposition',
-    `attachment; filename="${encodeURI(collection)}.json"; filename*=UTF-8''${encodeURI(collection)}.json`
-  )
-  c.header('Content-Type', 'application/json')
-  c.header('Filename', encodeURI(collection))
-  return c.body(EJSON.stringify(
-    await globalThis.mongo.mongoClient.db(database).collection(collection).find(
-      getQuery(query),
-      getQueryOptions(query)
-    ).toArray()
-  ))
+  if (error) return c.json({ error }, 404)
+
+  const cursor = globalThis.mongo.mongoClient.db(database).collection(collection).find(getQuery(query), getQueryOptions(query))
+  const webStream = ReadableStream.from(generateCollectionJson(cursor))
+  const fileName = encodeURI(collection)
+  return new Response(webStream, {
+    status: 200,
+    headers: {
+      'Content-Disposition': `attachment; filename="${fileName}.json"; filename*=UTF-8''${fileName}.json`,
+      'Content-Type': 'application/json',
+      'Filename': fileName
+    }
+  })
 }
