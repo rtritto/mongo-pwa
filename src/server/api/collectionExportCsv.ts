@@ -1,4 +1,5 @@
 import type { Context } from 'hono'
+import { ReadableStream } from 'node:stream/web'
 
 import { connectClient } from '@/server/db'
 import { generateCollectionCsv } from '@/server/utils/generateCollectionCsv'
@@ -17,11 +18,13 @@ export default async function collectionExportCsv(c: Context) {
 
   const cursor = globalThis.mongo.mongoClient.db(database).collection(collection).find(getQuery(query), getQueryOptions(query))
   const webStream = ReadableStream.from(generateCollectionCsv(cursor))
+  const filename = encodeURI(collection)
   return new Response(webStream, {
     status: 200,
     headers: {
-      'Content-Disposition': `attachment; filename="${encodeURI(collection)}.csv"`,
-      'Content-Type': 'text/csv; charset=utf-8'
+      'Content-Disposition': `attachment; filename="${filename}"`,
+      'Content-Type': 'text/csv; charset=utf-8',
+      Filename: filename
     }
   })
 }

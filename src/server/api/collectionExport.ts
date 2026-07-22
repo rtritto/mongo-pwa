@@ -18,11 +18,13 @@ export default async function collectionExport(c: Context) {
 
   const cursor = globalThis.mongo.mongoClient.db(database).collection(collection).find(getQuery(query), getQueryOptions(query))
   const webStream = ReadableStream.from(generateCollectionJson(cursor))
+  const filename = encodeURI(collection)
   return new Response(webStream, {
     status: 200,
     headers: {
-      'Content-Disposition': `attachment; filename="${encodeURI(collection)}.json"`,
-      'Content-Type': 'application/json; charset=utf-8'
+      'Content-Disposition': `attachment; filename="${filename}"`,
+      'Content-Type': 'application/json; charset=utf-8',
+      Filename: filename
     }
   })
 }
