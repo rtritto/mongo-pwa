@@ -17,7 +17,7 @@ export const data = async (pageContext: PageContextServer) => {
   const { mongo } = globalThis
   // TODO check if use this
   // const collection = mongo.connections[dbName].db.collection(collectionName)
-  const collection = mongo.mongoClient.db(dbName).collection(collectionName)
+  const collection = mongo.mongoClient.db(dbName).collection<{ _id: ReturnType<typeof buildId> }>(collectionName)
   const { searchParams } = new URL(pageContext.urlOriginal)
   const subtype = searchParams.has('subtype') ? Number(searchParams.get('subtype')) : undefined
   // (?) TODO add decodeURIComponent(document)
