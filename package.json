@@ -15,9 +15,7 @@
   "scripts": {
     "dev": "vite dev",
     "type:check": "tsc",
-    "build": "yarn build:client && yarn build:server",
-    "build:client": "vite build",
-    "build:server": "vite build --ssr",
+    "build": "vite build",
     "prod": "NODE_ENV=production node dist/server/index.mjs",
     "preview": "NODE_ENV=production node --env-file=.env scripts/startServer.mjs",
     "lint": "eslint src/**/*.{ts,tsx} *.ts",
