@@ -43,18 +43,15 @@ export default defineConfig(async ({ mode }) => {
           applyToEnvironment(environment: { name: string }) {
             return environment.name === 'client'
           }
-        })),
-        (await import('standaloner/vite')).default({
-          bundle: true,
-          minify: true
-        })
+        }))
       ] : []
     ],
     server: {
       port: 3000
     },
     build: {
-      outDir: '../dist'
+      outDir: '../dist',
+      minify: true
     },
     envPrefix: 'ME_CONFIG_',
     resolve: {

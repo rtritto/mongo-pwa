@@ -46,8 +46,6 @@
     "hono": "^4.12.31",
     "mongodb": "^7.5.0",
     "mongodb-query-parser-esm": "^4.7.9",
-    "rolldown": "^1.2.0",
-    "standaloner": "^0.3.3",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.65.0",
