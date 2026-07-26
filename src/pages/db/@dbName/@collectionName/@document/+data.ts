@@ -6,8 +6,11 @@ import config from '@/server/config'
 import { connectClient } from '@/server/db'
 import buildId from '@/utils/mappers/buildId'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
+import { getIsAuthorized } from '@/utils/getIsAuthorized'
 
 export const data = async (pageContext: PageContextServer) => {
+  const isAuthorized = getIsAuthorized(pageContext)
+  if (!isAuthorized) return { isAuthorized }
   const { dbName, collectionName, document } = pageContext.routeParams
   await connectClient()
   const { error } = checkDatabaseCollection(dbName, collectionName)
@@ -29,6 +32,7 @@ export const data = async (pageContext: PageContextServer) => {
   }
   const { options } = config
   return {
+    isAuthorized,
     title: `${options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
     databases: mongo.databases,
     collections: mongo.collections[dbName],

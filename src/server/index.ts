@@ -15,9 +15,9 @@ if (process.env.NODE_ENV === 'production') {
 
 app.route('/api', apiRoutes)
 
-// Catch-all remaining requests using Vike rendering
+// Catch-all remaining requests using custom rendering
 app.get('*', async (c) => {
-  return await renderPage(c.req.raw)
+  return await renderPage(c.req.raw, { headers: c.req.raw.headers })
 })
 
 app.onError((error, c) => {

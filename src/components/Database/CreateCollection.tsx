@@ -4,7 +4,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 import CreateForm from '@/components/common/CreateForm'
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import isValidCollectionName from '@/utils/validations/isValidCollectionName'
-import { getHeaders } from '@/components/utils/getHeaders'
+import { HEADERS } from '@/components/utils/getHeaders'
 
 const CreateCollection: Component<{
   data: DataDB
@@ -26,7 +26,7 @@ const CreateCollection: Component<{
                     fetch('/api/collectionCreate', {
                       method: 'POST',
                       body: JSON.stringify({ collection, database: props.data.selectedDatabase }),
-                      headers: getHeaders(props.data.options)
+                      headers: HEADERS
                     }),
                     props.setData,
                     // Add database to global collections to update viewing collections

@@ -18,7 +18,7 @@ import IndexTable from './IndexTable'
 import SaveDialog from './SaveDialog'
 import RenameCollection from './RenameCollection'
 import { getInitialColumnsHeader, getNextSort, removeColumnFromSortQp } from './functions/functionsSort'
-import { getHeaders } from '@/components/utils/getHeaders'
+import { HEADERS } from '@/components/utils/getHeaders'
 import fetchWithRetries from '@/components/utils/fetchWithRetries'
 
 const DOC_STRING_TEMPLATE_DOCUMENT = `{
@@ -107,7 +107,7 @@ const CollectionPage: Component<DataCollection> = () => {
         collection: data.selectedCollection,
         ...query
       }),
-      headers: getHeaders(data.options)
+      headers: HEADERS
     })
     const { count, columns, docs } = await res!.json()
     if (page) {
@@ -180,7 +180,7 @@ const CollectionPage: Component<DataCollection> = () => {
     const response = await handleFetchError(
       fetch('/api/documentCreate', {
         method: 'POST',
-        headers: getHeaders(data.options),
+        headers: HEADERS,
         body: JSON.stringify({
           database: data.selectedDatabase,
           collection: data.selectedCollection,
@@ -201,7 +201,7 @@ const CollectionPage: Component<DataCollection> = () => {
     const response = await handleFetchError(
       fetch('/api/collectionCreateIndex', {
         method: 'POST',
-        headers: getHeaders(data.options),
+        headers: HEADERS,
         body: JSON.stringify({
           database: data.selectedDatabase,
           collection: data.selectedCollection,
@@ -222,7 +222,7 @@ const CollectionPage: Component<DataCollection> = () => {
     await handleFetchError(
       fetch('/api/collectionDelete', {
         method: 'POST',
-        headers: getHeaders(data.options),
+        headers: HEADERS,
         body: JSON.stringify({
           database: data.selectedDatabase,
           collection: data.selectedCollection,
@@ -243,7 +243,7 @@ const CollectionPage: Component<DataCollection> = () => {
     await handleFetchError(
       fetch('/api/collectionDelete', {
         method: 'POST',
-        headers: getHeaders(data.options),
+        headers: HEADERS,
         body: JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection })
       }),
       setData,

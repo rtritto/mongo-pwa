@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import CreateForm from '@/components/common/CreateForm'
 import handleFetchError from '@/components/common/functions/handleFetchError'
-import { getHeaders } from '@/components/utils/getHeaders'
+import { HEADERS } from '@/components/utils/getHeaders'
 import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
 
 const CreateDatabase: Component<{
@@ -26,7 +26,7 @@ const CreateDatabase: Component<{
                     fetch('/api/databaseCreate', {
                       method: 'POST',
                       body: JSON.stringify({ database }),
-                      headers: getHeaders(props.data.options)
+                      headers: HEADERS
                     }),
                     props.setData,
                     // Add database to global databases to update viewing databases

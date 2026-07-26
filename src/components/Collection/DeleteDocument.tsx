@@ -4,7 +4,7 @@ import { navigate, reload } from 'vike-lite/client/router'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
 import handleFetchError from '@/components/common/functions/handleFetchError'
-import { getHeaders } from '@/components/utils/getHeaders'
+import { HEADERS } from '@/components/utils/getHeaders'
 
 const DeleteDocument: Component<{
   data: DataLayout
@@ -19,7 +19,7 @@ const DeleteDocument: Component<{
     const response = await handleFetchError(
       fetch('/api/documentDelete', {
         method: 'POST',
-        headers: getHeaders(props.data.options),
+        headers: HEADERS,
         body: JSON.stringify({
           database: props.data.selectedDatabase,
           collection: props.data.selectedCollection,

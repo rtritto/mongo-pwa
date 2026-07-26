@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import IconImport from '@/components/Icons/IconImport'
 import handleFetchError from './functions/handleFetchError'
-import { getHeaders } from '@/components/utils/getHeaders'
+import { HEADERS } from '@/components/utils/getHeaders'
 
 const ImportCollectionButton: Component<{
   collection: string
@@ -32,7 +32,7 @@ const ImportCollectionButton: Component<{
       fetch('/api/collectionImport', {
         method: 'POST',
         body: formData,
-        headers: getHeaders(props.data.options, false)  // Let the browser set the correct Content-Type for multipart/form-data
+        headers: HEADERS  // Let the browser set the correct Content-Type for multipart/form-data
       }),
       props.setData
     )

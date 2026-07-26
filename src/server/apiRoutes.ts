@@ -1,15 +1,29 @@
 import { type Context, Hono } from 'hono'
 
 import api from './api'
+import { ConfigDefault, IS_PRODUCTION } from '../../config.default'
+
+const { authCookieKey, authCookiePassword } = ConfigDefault.options.auth
 
 // Create a "sub-router" for the API
 const apiRoutes = new Hono()
 
+apiRoutes.post('/login', async (c: Context) => {
+  if (!IS_PRODUCTION) return c.json({ success: true })
+  const { password } = await c.req.json()
+  if (password === authCookiePassword) {
+    c.header('Set-Cookie', `${authCookieKey}=${authCookiePassword}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=34560000`) // 400 days
+    return c.json({ success: true })
+  }
+  return c.json({ error: 'Unauthorized' }, 401)
+})
+
 // Route with dynamic parameter
 apiRoutes.post('/:functionName', async (c: Context) => {
   if (
-    process.env.ME_CONFIG_LOCAL_STORAGE_AUTH_ENABLED === 'true'
-    && c.req.header(process.env.ME_CONFIG_LOCAL_STORAGE_AUTH_KEY!) !== process.env.ME_CONFIG_LOCAL_STORAGE_AUTH_PASSWORD
+    IS_PRODUCTION
+    && ConfigDefault.options.auth.enabled
+    && c.req.raw.headers.get('cookie')?.includes(`${authCookieKey}=${authCookiePassword}`) !== true
   ) {
     return c.json({ error: 'Not authenticated' }, 401)
   }

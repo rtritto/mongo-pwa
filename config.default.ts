@@ -137,19 +137,17 @@ export const ConfigDefault = {
     console: true,
 
     // TODO add to README
-    localStorageAuth: (() => {
-      // set to true if you want to authenticate mongo-express logins
+    auth: (() => {
+      // set to true if you want to authenticate mongo-solid logins
       // against credentials stored in browser local storage (in addition to basic auth)
-      const enabled = getBoolean(getFileEnv('ME_CONFIG_LOCAL_STORAGE_AUTH_ENABLED'))
+      const enabled = getBoolean(getFileEnv('ME_CONFIG_AUTH_COOKIE_ENABLED'))
       return enabled ? {
         enabled,
         // key to lookup in browser local storage for username
-        localStorageAuthKey: getFileEnv('ME_CONFIG_LOCAL_STORAGE_AUTH_KEY') || 'mongo-express-key',
+        authCookieKey: getFileEnv('ME_CONFIG_AUTH_COOKIE_KEY') || 'mongo-solid-key',
         // key to lookup in browser local storage for password
-        localStorageAuthPassword: getFileEnv('ME_CONFIG_LOCAL_STORAGE_AUTH_PASSWORD') || 'mongo-express-password'
-      } : {
-        enabled
-      }
+        authCookiePassword: getFileEnv('ME_CONFIG_AUTH_COOKIE_PASSWORD') || 'mongo-solid-password'
+      } : { enabled }
     })(),
 
     // documentsPerPage: how many documents you want to see at once in collection view
@@ -209,6 +207,8 @@ export const ConfigDefault = {
     noDelete: getBoolean(process.env.ME_CONFIG_OPTIONS_NO_DELETE)
   }
 }
+
+export const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 export type Config = typeof ConfigDefault
 export type MongoDb = Config['mongodb'] & {

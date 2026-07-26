@@ -7,8 +7,11 @@ import getColumnsAndSetDocs from '@/utils/mappers/getColumnsAndSetDocs'
 import { mapStorageStats } from '@/utils/mappers/mapInfo'
 import { getItemsAndCount, getQueryOptions } from '@/utils/queries'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
+import { getIsAuthorized } from '@/utils/getIsAuthorized'
 
 export const data = async (pageContext: PageContextServer) => {
+  const isAuthorized = getIsAuthorized(pageContext)
+  if (!isAuthorized) return { isAuthorized }
   const { dbName, collectionName } = pageContext.routeParams
   const url = new URL(pageContext.urlOriginal)
   const search = Object.fromEntries(url.searchParams.entries())
@@ -42,6 +45,7 @@ export const data = async (pageContext: PageContextServer) => {
   }
 
   return {
+    isAuthorized,
     title: `Collection: ${collectionName} - Mongo Solid`,
     databases: mongo.databases,
     collections: mongo.collections[dbName],

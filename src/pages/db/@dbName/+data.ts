@@ -5,8 +5,11 @@ import config from '@/server/config'
 import { connectClient } from '@/server/db'
 import { mapDatabaseStats } from '@/utils/mappers/mapInfo'
 import { checkDatabase } from '@/utils/validations/serverChecks'
+import { getIsAuthorized } from '@/utils/getIsAuthorized'
 
 export const data = async (pageContext: PageContextServer) => {
+  const isAuthorized = getIsAuthorized(pageContext)
+  if (!isAuthorized) return { isAuthorized }
   const { dbName } = pageContext.routeParams
   await connectClient()
   const { error } = checkDatabase(dbName)
@@ -16,6 +19,7 @@ export const data = async (pageContext: PageContextServer) => {
   const { mongo } = globalThis
 
   return {
+    isAuthorized,
     title: `DB: ${dbName} - Mongo Solid`,
     databases: mongo.databases,
     collections: mongo.collections[dbName],
