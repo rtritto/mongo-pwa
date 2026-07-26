@@ -1285,12 +1285,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hono/node-server@npm:^2.0.11":
-  version: 2.0.11
-  resolution: "@hono/node-server@npm:2.0.11"
+"@hono/node-server@npm:^2.0.12":
+  version: 2.0.12
+  resolution: "@hono/node-server@npm:2.0.12"
   peerDependencies:
     hono: ^4
-  checksum: 10c0/eedfff2122bcb23b368f4a785c2f8d93ecd653c14ecdbf47422fedeb559fb7201c183b10020c3cc01457d856cdda6868fdc5e8f60c3af1d6c6ddd77291689736
+  checksum: 10c0/c3f56e286ddf81394cab02f74391ebead7d601c1140f2bbcafe24e09b49ceb77519982965b0e069b0c2c9ad1840cba088ac67844a6c98b356f7eedf28801db0d
   languageName: node
   linkType: hard
 
@@ -4878,7 +4878,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "mongo-solid@workspace:."
   dependencies:
-    "@hono/node-server": "npm:^2.0.11"
+    "@hono/node-server": "npm:^2.0.12"
     "@solid-primitives/pagination": "npm:^0.5.2"
     "@speed-highlight/core": "npm:^1.2.17"
     "@tailwindcss/vite": "npm:^4.3.3"
@@ -4897,7 +4897,7 @@ __metadata:
     tailwindcss: "npm:^4.3.3"
     typescript: "npm:^6.0.3"
     typescript-eslint: "npm:^8.65.0"
-    vike-lite: "npm:^1.19.8"
+    vike-lite: "npm:^1.20.0"
     vike-lite-solid: "npm:^1.11.1"
     vite: "npm:^8.1.5"
     vite-plugin-pwa: "npm:^1.3.0"
@@ -6490,12 +6490,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vike-lite@npm:^1.19.8":
-  version: 1.19.8
-  resolution: "vike-lite@npm:1.19.8"
+"vike-lite@npm:^1.20.0":
+  version: 1.20.0
+  resolution: "vike-lite@npm:1.20.0"
   peerDependencies:
     vite: ">=8"
-  checksum: 10c0/9468e17033c79e5a0f97d98a8a8f6ad472003e8318223445cf78fea175698e9648b59aeb1d58eb6267b694212da88ea80eef8017b50d1d57aa5b9a886a8fd048
+  checksum: 10c0/2e916c80f9732f0ac54279b6b3395b224a0ebc03db1b7e65795a39918a6322dceabbd139d525c22250bfdad4a10e88fb5b2014364fe4340725fd9ccc6bff3d4b
   languageName: node
   linkType: hard
 
