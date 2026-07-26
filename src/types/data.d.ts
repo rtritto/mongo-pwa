@@ -1,28 +1,51 @@
-type Messages = {
-  success?: string
-  warning?: string
-  error?: string
+type DataCumulative = {
+  isAuthorized: boolean
+  options: import('@/server/config').ConfigOptions
+  databases: import('@/server/db').MongoDatabases
+  selectedDatabase: string | undefined
+  selectedCollection: string | undefined
+  selectedDocument: string | undefined
+  success: string | undefined
+  warning: string | undefined
+  error: string | undefined
 }
 
-type DataIndex = Omit<
-  Awaited<ReturnType<typeof import('../pages/index/+data').data>>,
-  keyof Messages
-> & Messages & { isAuthorized: boolean }
+type DataIndex = {
+  stats?: ServerStats
+} & DataCumulative
 
-type DataDB = Omit<
-  Awaited<ReturnType<typeof import('../pages/db/@dbName/+data').data>>,
-  keyof Messages
-> & Messages & { isAuthorized: boolean }
+type DataDB = {
+  title: string
+  stats?: DBStats
+  collections: import('@/server/db').MongoCollections[string]
+  selectedDatabase: string
+} & DataCumulative
 
-type DataCollection = Omit<
-  Awaited<ReturnType<typeof import('../pages/db/@dbName/@collectionName/+data').data>>,
-  keyof Messages
-> & Messages & { isAuthorized: boolean }
+type DataCollection = {
+  title: string
+  stats?: CollectionStats
+  indexes?: import('mongodb').IndexDescriptionInfo[]
+  collections: import('@/server/db').MongoCollections[string]
+  selectedDatabase: string
+  selectedCollection: string
+  docs: Record<string, unknown>[]
+  columns: string[]
+  count: number
+  documentsPerPage: number
+  aggregate?: boolean
+  query?: string
+  projection?: string
+} & DataCumulative
 
-type DataDocument = Omit<
-  Awaited<ReturnType<typeof import('../pages/db/@dbName/@collectionName/@document/+data').data>>,
-  keyof Messages
-> & Messages & { isAuthorized: boolean }
+type DataDocument = {
+  title: string
+  docString: string
+  _id: string
+  subtype?: number
+  collections: import('@/server/db').MongoCollections[string]
+  selectedDatabase: string
+  selectedCollection: string
+  selectedDocument: string
+} & DataCumulative
 
-// (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
 type DataLayout = DataIndex | DataDB | DataCollection | DataDocument

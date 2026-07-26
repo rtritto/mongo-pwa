@@ -30,7 +30,7 @@ const IndexPage: Component<DataIndex> = () => {
           )}
         >
           <div class="my-2 overflow-x-auto rounded-box border border-base-300">
-            <StatsTable label="Server Status" fields={data.stats! as ServerStats} />
+            <StatsTable label="Server Status" fields={data.stats!} />
           </div>
         </Show>
       </div>

@@ -3,20 +3,15 @@ import type { PageContextServer } from 'vike-lite'
 import { render } from 'vike-lite/server/abort'
 
 import config from '@/server/config'
-import { connectClient } from '@/server/db'
 import buildId from '@/utils/mappers/buildId'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
-import { getIsAuthorized } from '@/utils/getIsAuthorized'
 
-export const data = async (pageContext: PageContextServer) => {
-  const isAuthorized = getIsAuthorized(pageContext)
+export const data = async (pageContext: PageContextServer<DataDocument>) => {
+  const isAuthorized = pageContext.data.isAuthorized
   if (!isAuthorized) return { isAuthorized }
   const { dbName, collectionName, document } = pageContext.routeParams
-  await connectClient()
   const { error } = checkDatabaseCollection(dbName, collectionName)
-  if (error) {
-    render(404, error)
-  }
+  if (error) throw render(404, error)
   const { mongo } = globalThis
   // TODO check if use this
   // const collection = mongo.connections[dbName].db.collection(collectionName)
@@ -25,28 +20,18 @@ export const data = async (pageContext: PageContextServer) => {
   const subtype = searchParams.has('subtype') ? Number(searchParams.get('subtype')) : undefined
   // (?) TODO add decodeURIComponent(document)
   const _id = buildId(document, subtype)
-
   const doc = await collection.findOne({ _id })
-  if (!doc) {
-    render(404, `Document "${_id}" not found!`)
-  }
+  if (!doc) throw render(404, `Document "${_id}" not found!`)
   const { options } = config
   return {
-    isAuthorized,
     title: `${options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
-    databases: mongo.databases,
     collections: mongo.collections[dbName],
     // TODO add env variable to set indentation spaces
     docString: toJSString(doc!, '  ')!,
     _id: document,
     subtype,
-    // (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833
-    options,
     selectedDatabase: dbName,
     selectedCollection: collectionName,
-    selectedDocument: document,
-    success: undefined,
-    warning: undefined,
-    error: undefined
-  }
+    selectedDocument: document
+  } satisfies Partial<DataDocument>
 }
