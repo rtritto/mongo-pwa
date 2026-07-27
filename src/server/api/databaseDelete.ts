@@ -17,7 +17,7 @@ export default async function databaseDelete(c: Context) {
     await globalThis.mongo.mongoClient.db(database).dropDatabase()
   } catch (error) {
     console.debug(error)
-    throw new Error(`Failed to delete database. ${(error as Error).message}`)
+    throw new Error(`Failed to delete database "${database}". ${(error as Error).message}`)
   }
   return c.json({})
 }
