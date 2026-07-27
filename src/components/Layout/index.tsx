@@ -31,7 +31,7 @@ export const Layout: Component<{ children?: JSX.Element }> = (props) => {
   return (
     <Show when={!data.options.auth.enabled || isAuthorized()} fallback={
       <label>
-        <span class="label">Insert LocalStorage Password</span>
+        <span class="label">Insert Auth Password</span>
 
         <input
           type="password"
