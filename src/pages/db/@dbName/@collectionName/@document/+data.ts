@@ -2,7 +2,6 @@ import { toJSString } from 'mongodb-query-parser-esm'
 import type { PageContextServer } from 'vike-lite'
 import { render } from 'vike-lite/server/abort'
 
-import config from '@/server/config'
 import buildId from '@/utils/mappers/buildId'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
@@ -22,9 +21,8 @@ export const data = async (pageContext: PageContextServer<DataDocument>) => {
   const _id = buildId(document, subtype)
   const doc = await collection.findOne({ _id })
   if (!doc) throw render(404, `Document "${_id}" not found!`)
-  const { options } = config
   return {
-    title: `${options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
+    title: `${pageContext.data.options.readOnly ? 'Viewing' : 'Editing'} Document: ${document}`,
     collections: mongo.collections[dbName],
     // TODO add env variable to set indentation spaces
     docString: toJSString(doc!, '  ')!,
