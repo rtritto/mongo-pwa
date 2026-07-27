@@ -1,4 +1,5 @@
 import { createSignal } from 'solid-js'
+import { reload } from 'vike-lite/client/router'
 
 import { HEADERS } from '../getHeaders'
 
@@ -15,6 +16,7 @@ export function useManagerAuth(initialState: boolean) {
 
       if (res.ok) {
         setIsAuthorized(true)
+        await reload()
       } else {
         alert('Invalid Password')
         setIsAuthorized(false)
