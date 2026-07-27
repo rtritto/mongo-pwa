@@ -11,25 +11,19 @@ const CompactCollectionButton: Component<{
   setData: SetStoreFunction<any>
 }> = (props) => {
   return (
-    <button
-      class="btn w-full bg-red-700 py-0.5 btn-sm"
-      type="submit"
-      onClick={() => handleFetchError(
-        fetch('/api/collectionCompact', {
-          method: 'POST',
-          body: JSON.stringify({
-            database: props.data.selectedDatabase,
-            collection: props.collection
-          }),
-          headers: HEADERS
-        }),
-        props.setData,
-        { success: 'Collection compacted!' }
-      )}
-    >
-      <IconCompact />
-
-      Compact
+    <button class="btn w-full bg-red-700 py-0.5 btn-sm" onClick={() => handleFetchError(
+      fetch('/api/collectionCompact', {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify({
+          database: props.data.selectedDatabase,
+          collection: props.collection
+        })
+      }),
+      props.setData,
+      { success: 'Collection compacted!' }
+    )}>
+      <IconCompact /> Compact
     </button>
   )
 }
