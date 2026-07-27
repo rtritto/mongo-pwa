@@ -21,7 +21,6 @@
     "prod": "NODE_ENV=production node dist/server/index.mjs",
     "preview": "NODE_ENV=production node --env-file=.env scripts/startServer.mjs",
     "lint": "eslint src/**/*.{ts,tsx} *.ts",
-    "tsc": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p ./src/tsconfig.json",
     "od": "yarn outdated"
   },
   "files": [
