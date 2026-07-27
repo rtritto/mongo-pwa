@@ -52,6 +52,6 @@
     "vike-lite-solid": "^1.11.3",
     "vite": "^8.1.5",
     "vite-plugin-pwa": "^1.3.0",
-    "vite-plugin-solid": "^2.11.13"
+    "vite-plugin-solid": "^2.11.14"
   }
 }
