@@ -19,6 +19,9 @@ export default async function collectionExport(c: Context) {
   const cursor = globalThis.mongo.mongoClient.db(database).collection(collection).find(getQuery(query), getQueryOptions(query))
   const webStream = ReadableStream.from(generateCollectionJson(cursor))
   const filename = encodeURI(collection)
+  // @ts-expect-error Response should be from Node.js, not from the DOM lib
+  // tsconfig.json lib imports Client (DOM and DOM.Iterable) and Server (@types/node)
+  // Both includes Response but TypeScript resolves Response as Client
   return new Response(webStream, {
     status: 200,
     headers: {
