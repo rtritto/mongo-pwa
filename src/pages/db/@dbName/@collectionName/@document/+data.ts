@@ -8,7 +8,7 @@ import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 export const data = async (pageContext: PageContextServer<DataDocument>) => {
   const isAuthorized = pageContext.data.isAuthorized
-  if (!isAuthorized) return { isAuthorized }
+  if (!isAuthorized) return {}
   const { dbName, collectionName, document } = pageContext.routeParams
   const { error } = checkDatabaseCollection(dbName, collectionName)
   if (error) throw render(404, error)

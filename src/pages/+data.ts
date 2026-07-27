@@ -6,12 +6,15 @@ import { getIsAuthorized } from '@/utils/getIsAuthorized'
 
 export const data = async (pageContext: PageContextServer<DataCumulative>) => {
   const isAuthorized = getIsAuthorized(pageContext)
-  if (!isAuthorized) return { isAuthorized }
+  const _data = {
+    options: config.options,
+    isAuthorized
+  }
+  if (!isAuthorized) return _data
   await connectClient()
   const { mongo } = globalThis
   return {
-    isAuthorized,
-    options: config.options,
+    ..._data,
     databases: mongo.databases,
     selectedDatabase: undefined,
     selectedCollection: undefined,

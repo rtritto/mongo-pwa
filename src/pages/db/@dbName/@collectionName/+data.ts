@@ -9,7 +9,7 @@ import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
 
 export const data = async (pageContext: PageContextServer<DataCollection>) => {
   const isAuthorized = pageContext.data.isAuthorized
-  if (!isAuthorized) return { isAuthorized }
+  if (!isAuthorized) return {}
   const { dbName, collectionName, document } = pageContext.routeParams
   const url = new URL(pageContext.urlOriginal)
   const search = Object.fromEntries(url.searchParams.entries())
