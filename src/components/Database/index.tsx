@@ -1,7 +1,6 @@
 import { type Component, Show } from 'solid-js'
 import { useData, useUrl } from 'vike-lite-solid'
 
-import Alerts from '@/components/common/Alerts'
 import StatsTable from '@/components/common/StatsTable'
 import ShowCollections from './ShowCollections'
 
@@ -15,9 +14,6 @@ const DatabasePage: Component<DataDB> = () => {
 
   return (
     <div class="p-1">
-      {/* (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833 */}
-      <Alerts data={data} />
-
       <h4>Viewing Database: <strong>{data.selectedDatabase}</strong></h4>
 
       <div class="divider m-1.5" />

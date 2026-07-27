@@ -6,6 +6,7 @@ import { type Component, type JSX, Show } from 'solid-js'
 import { useData } from 'vike-lite-solid'
 
 import NavBar from './NavBar'
+import Alerts from './Alerts'
 import { useManagerAuth } from '../utils/hooks/useManagerAuth'
 
 export const Layout: Component<{ children?: JSX.Element }> = (props) => {
@@ -22,6 +23,16 @@ export const Layout: Component<{ children?: JSX.Element }> = (props) => {
 
       <div class="px-24">
         <div class="max-w-7xl">
+          {/*
+            To test:
+            - navigate to /db/<DB>/<COL>
+            - click view doc to navigate to /db/<DB>/<COL>/<DOC>
+            - change the doc
+            - click BackButton
+            - the alert should appear if it works
+          */}
+          <Alerts data={data} />
+
           {props.children}
         </div>
       </div>

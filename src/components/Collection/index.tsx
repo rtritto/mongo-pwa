@@ -4,7 +4,6 @@ import { createStore } from 'solid-js/store'
 import { navigate, reload } from 'vike-lite/client/router'
 import { useData, useUrl } from 'vike-lite-solid'
 
-import Alerts from '@/components/common/Alerts'
 import buildQuery from '@/components/common/functions/buildQuery'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportCollectionButton from '@/components/common/ExportCollectionButton'
@@ -264,9 +263,6 @@ const CollectionPage: Component<DataCollection> = () => {
 
   return (
     <div>
-      {/* (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833 */}
-      <Alerts data={data} />
-
       <h1 class="pb-2 text-2xl">Viewing Collection: <b>{data.selectedCollection}</b></h1>
 
       <SearchDocuments data={data} />

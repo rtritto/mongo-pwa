@@ -1,7 +1,6 @@
 import { type Component, Show } from 'solid-js'
 import { useData } from 'vike-lite-solid'
 
-import Alerts from '@/components/common/Alerts'
 import StatsTable from '@/components/common/StatsTable'
 import ShowDatabases from './ShowDatabases'
 
@@ -10,9 +9,6 @@ const IndexPage: Component<DataIndex> = () => {
 
   return (
     <div class="p-1">
-      {/* (?) TODO Move to +data.once https://github.com/vikejs/vike/issues/1833 */}
-      <Alerts data={data} />
-
       <h1>Mongo Solid</h1>
 
       <div class="divider m-1.5" />

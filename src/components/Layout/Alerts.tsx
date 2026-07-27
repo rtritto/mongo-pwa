@@ -14,9 +14,7 @@ const ButtonClose: Component<{
   )
 }
 
-const Alerts: Component<{
-  data: DataLayout
-}> = (props) => {
+const Alerts: Component<{ data: DataLayout }> = (props) => {
   const [success, setSuccess] = createSignal<string>()
   const [warning, setWarning] = createSignal<string>()
   const [error, setError] = createSignal<string>()
