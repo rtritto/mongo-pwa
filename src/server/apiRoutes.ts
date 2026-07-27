@@ -12,7 +12,7 @@ apiRoutes.post('/login', async (c: Context) => {
   if (!IS_PRODUCTION) return c.json({ success: true })
   const { password } = await c.req.json()
   if (password === authCookiePassword) {
-    c.header('Set-Cookie', `${authCookieKey}=${authCookiePassword}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=34560000`) // 400 days
+    c.header('Set-Cookie', `${authCookieKey}=${authCookiePassword}; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=34560000`) // 400 days
     return c.json({ success: true })
   }
   return c.json({ error: 'Unauthorized' }, 401)
