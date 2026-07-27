@@ -20,5 +20,8 @@ export default async function collectionCompact(c: Context) {
     return c.json({ error }, 404)
   }
   const { session: { success } } = await globalThis.mongo.mongoClient.db(database).command({ compact: collection }) as ResultCompact
-  return c.json({}, success ? 200 : 500)
+  if (!success) {
+    return c.json({ error: `Failed to compact collection "${collection}"` }, 500)
+  }
+  return c.json({})
 }
