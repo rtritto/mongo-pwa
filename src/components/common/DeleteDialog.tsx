@@ -26,7 +26,7 @@ const DeleteDialog: Component<{
         {props.label}
       </button>
 
-      <dialog class="modal" id="modal_drawer" ref={dialogRef}>
+      <dialog class="modal" ref={dialogRef}>
         <div class="modal-box">
           <h3 class="text-lg font-bold">{props.title} {props.value && <b>"{props.value}"</b>}</h3>
 
