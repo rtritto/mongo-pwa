@@ -74,8 +74,8 @@ const SearchSimple: Component<{
         class="btn bg-blue-500"
         disabled={!inputKey() || !inputValue()}
         ref={buttonRef}
-        onClick={() => {
-          navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}?key=${encodeURIComponent(inputKey())}&value=${encodeURIComponent(inputValue())}&type=${SELECT_VALUES[selectValue()]}`)
+        onClick={async () => {
+          await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}?key=${encodeURIComponent(inputKey())}&value=${encodeURIComponent(inputValue())}&type=${SELECT_VALUES[selectValue()]}`)
         }}
       >
         <IconSearch />

@@ -27,7 +27,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
     setCheckboxAggregate(props.data.aggregate)
   })
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (isCodeQueryValid() && isCodeProjectionValid()) {
       const queryStr: string[] = []
 
@@ -55,7 +55,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
 
       const queryString = queryStr.length > 0 ? `?${queryStr.join('&')}` : ''
 
-      navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}${queryString}`)
+      await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}${queryString}`)
     }
   }
 

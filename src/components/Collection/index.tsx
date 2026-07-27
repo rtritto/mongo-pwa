@@ -126,7 +126,7 @@ const CollectionPage: Component<DataCollection> = () => {
       // Update route path (no reload)
       const search = buildQuery(query)
       const newUrl = `/db/${data.selectedDatabase}/${data.selectedCollection}${search ? `?${search}` : ''}`
-      navigate(newUrl, { pageContext: { search } })
+      await navigate(newUrl, { pageContext: { search } })
     }
   }
 
@@ -191,8 +191,9 @@ const CollectionPage: Component<DataCollection> = () => {
     if (response) {
       const { insertedId } = await response.json() as { insertedId: string }
       dialogRef.close()
+      const message = `Document "${insertedId}" added!`
       await reload()
-      setData('success', `Document "${insertedId}" added!`)
+      setData('success', message)
     }
   }
 
@@ -212,8 +213,9 @@ const CollectionPage: Component<DataCollection> = () => {
     if (response) {
       dialogRef.close()
       const { indexName } = await response.json() as { indexName: string }
+      const message = `Index "${indexName}" created!`
       await reload()
-      setData('success', `Index "${indexName}" created!`)
+      setData('success', message)
     }
   }
 

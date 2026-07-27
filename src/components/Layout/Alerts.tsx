@@ -1,8 +1,6 @@
 import { type Component, createEffect, createSignal, onMount, Show } from 'solid-js'
 
-const ButtonClose: Component<{
-  onClick: () => void
-}> = (props) => {
+const ButtonClose: Component<{ onClick: () => void }> = (props) => {
   return (
     <button
       class="btn btn-ghost text-gray-500 btn-xs hover:text-gray-700"
@@ -18,27 +16,38 @@ const Alerts: Component<{ data: DataLayout }> = (props) => {
   const [success, setSuccess] = createSignal<string>()
   const [warning, setWarning] = createSignal<string>()
   const [error, setError] = createSignal<string>()
-
-  onMount(() => {
-    // Used on redirect after action
-    setSuccess(localStorage.getItem('me-success') || undefined)
-    localStorage.removeItem('me-success')
-    setWarning(localStorage.getItem('me-warning') || undefined)
-    localStorage.removeItem('me-warning')
-    setError(localStorage.getItem('me-error') || undefined)
-    localStorage.removeItem('me-error')
-  })
+  let isInitial = true
 
   createEffect(() => {
-    if (props.data.success) {
-      setSuccess(props.data.success)
+    const s = props.data.success
+    // On initial mount, only set them if they actually exist in props
+    // to prevent overwriting the localStorage flash messages with undefined.
+    if (isInitial) {
+      isInitial = false
+      if (s) setSuccess(s)
+      return
     }
-    if (props.data.warning) {
-      setWarning(props.data.warning)
+    // On subsequent updates (e.g., navigating), strictly sync the state
+    // so undefined correctly clears the alerts out.
+    setSuccess(s)
+  })
+  createEffect(() => {
+    const w = props.data.warning
+    if (isInitial) {
+      isInitial = false
+      if (w) setWarning(w)
+      return
     }
-    if (props.data.error) {
-      setError(props.data.error)
+    setWarning(w)
+  })
+  createEffect(() => {
+    const e = props.data.error
+    if (isInitial) {
+      isInitial = false
+      if (e) setError(e)
+      return
     }
+    setError(e)
   })
 
   return (
@@ -51,7 +60,7 @@ const Alerts: Component<{ data: DataLayout }> = (props) => {
 
           <span>{success()}</span>
 
-          <ButtonClose onClick={setSuccess} />
+          <ButtonClose onClick={() => setSuccess(undefined)} />
         </div>
       </Show>
 
@@ -63,7 +72,7 @@ const Alerts: Component<{ data: DataLayout }> = (props) => {
 
           <span>Warning: {warning()}</span>
 
-          <ButtonClose onClick={setWarning} />
+          <ButtonClose onClick={() => setWarning(undefined)} />
         </div>
       </Show>
 
@@ -75,7 +84,7 @@ const Alerts: Component<{ data: DataLayout }> = (props) => {
 
           <span>Error: {error()}</span>
 
-          <ButtonClose onClick={setError} />
+          <ButtonClose onClick={() => setError(undefined)} />
         </div>
       </Show>
     </div>

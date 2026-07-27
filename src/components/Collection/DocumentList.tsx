@@ -59,9 +59,9 @@ const DocumentList: Component<{
             <tr>
               <th
                 class="cursor-pointer"
-                onClick={(e) => {
+                onClick={async (e) => {
                   if (e.target === e.currentTarget) {
-                    navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`)
+                    await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`)
                   }
                 }}
               >
