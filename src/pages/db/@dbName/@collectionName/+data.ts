@@ -38,6 +38,7 @@ export const data = async (pageContext: PageContextServer<DataCollection>) => {
   }
   return {
     title: `Collection: ${collectionName} - Mongo Solid`,
+    ..._data,
     docs,
     // Generate an array of columns used by all documents visible on this page
     columns,
@@ -46,7 +47,6 @@ export const data = async (pageContext: PageContextServer<DataCollection>) => {
     documentsPerPage: config.options.documentsPerPage,
     aggregate: search?.aggregate === 'true',
     query: search?.query,
-    projection: search?.projection,
-    ..._data
+    projection: search?.projection
   } satisfies Partial<DataCollection>
 }

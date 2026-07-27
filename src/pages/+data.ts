@@ -14,8 +14,8 @@ export const data = async (pageContext: PageContextServer<DataCumulative>) => {
   await connectClient()
   const { mongo } = globalThis
   return {
-    ..._data,
     databases: mongo.databases,
+    ..._data,
     selectedDatabase: undefined,
     selectedCollection: undefined,
     selectedDocument: undefined,
