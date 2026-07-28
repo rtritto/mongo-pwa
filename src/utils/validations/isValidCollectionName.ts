@@ -1,7 +1,11 @@
-export default function isValidCollectionName(name: string): ReturnValidation {
+export default function isValidCollectionName(name: string, existingCollections: string[]): ReturnValidation {
   // if (name === undefined || name.length === 0) {
   //   return { error: true, message: 'You forgot to enter a collection name!' }
   // }
+
+  if (existingCollections.includes(name)) {
+    return { error: `Collection "${name}" already exists!` }
+  }
 
   // Collection names must begin with a letter, underscore, hyphen or slash, (tested v3.2.4)
   // and can contain only letters, underscores, hyphens, numbers, dots or slashes

@@ -20,7 +20,7 @@ const CreateCollection: Component<{
               <Show when={!props.data.options.readOnly}>
                 <CreateForm
                   entity="Collection"
-                  isValidInput={(input) => isValidCollectionName(input)}
+                  isValidInput={(input) => isValidCollectionName(input, props.data.collections)}
                   onButtonClick={(collection: string) => apiCall(
                     '/api/collectionCreate',
                     JSON.stringify({ collection, database: props.data.selectedDatabase }),

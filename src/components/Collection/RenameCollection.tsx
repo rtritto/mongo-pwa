@@ -41,7 +41,7 @@ const RenameCollection: Component<{
               <button
                 class="btn mx-0.5 btn-primary"
                 ref={buttonRef}
-                disabled={!!isValidCollectionName(newName()).error}
+                disabled={!!isValidCollectionName(newName(), props.data.collections).error}
                 onClick={async () => {
                   await apiCall(
                     '/api/collectionRename',
