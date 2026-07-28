@@ -3,7 +3,6 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import IconImport from '@/components/Icons/IconImport'
 import handleFetchError from './functions/handleFetchError'
-import { HEADERS } from '@/components/utils/getHeaders'
 
 const ImportCollectionButton: Component<{
   collection: string
@@ -28,14 +27,7 @@ const ImportCollectionButton: Component<{
     formData.append('database', props.data.selectedDatabase)
     formData.append('collection', props.collection)
 
-    const response = await handleFetchError(
-      fetch('/api/collectionImport', {
-        method: 'POST',
-        body: formData,
-        headers: HEADERS  // Let the browser set the correct Content-Type for multipart/form-data
-      }),
-      props.setData
-    )
+    const response = await handleFetchError('/api/collectionImport', formData, props.setData)
     if (response) {
       const { insertedCount } = await response.json()
       props.setData('success', `${insertedCount} document(s) inserted`)

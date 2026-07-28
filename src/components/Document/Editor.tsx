@@ -7,7 +7,6 @@ import SaveButton from './SaveButton'
 import DeleteDocument from '@/components/Collection/DeleteDocument'
 import CodeEditor from '@/components/common/CodeEditor'
 import handleFetchError from '@/components/common/functions/handleFetchError'
-import { HEADERS } from '@/components/utils/getHeaders'
 import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
 
 const Editor: Component<{
@@ -20,16 +19,13 @@ const Editor: Component<{
   const handleSave = async () => {
     if (isCodeValid()) {
       const response = await handleFetchError(
-        fetch('/api/documentUpdate', {
-          method: 'POST',
-          headers: HEADERS,
-          body: JSON.stringify({
-            database: props.data.selectedDatabase,
-            collection: props.data.selectedCollection,
-            doc: code(),
-            _id: props.data._id,
-            sub_type: props.data.subtype
-          })
+        '/api/documentUpdate',
+        JSON.stringify({
+          database: props.data.selectedDatabase,
+          collection: props.data.selectedCollection,
+          doc: code(),
+          _id: props.data._id,
+          sub_type: props.data.subtype
         }),
         props.setData
       )

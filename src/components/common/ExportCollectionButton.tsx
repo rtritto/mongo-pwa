@@ -3,7 +3,6 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconExport from '@/components/Icons/IconExport'
-import { HEADERS } from '@/components/utils/getHeaders'
 
 const ExportCollectionButton: Component<{
   label: string
@@ -16,14 +15,11 @@ const ExportCollectionButton: Component<{
   return (
     <button class="btn w-full bg-yellow-600 btn-sm" onClick={async () => {
       const response = await handleFetchError(
-        fetch(props.url, {
-          method: 'POST',
-          body: JSON.stringify({
-            query: props.query,
-            database: props.data.selectedDatabase,
-            collection: props.collection
-          }),
-          headers: HEADERS
+        props.url,
+        JSON.stringify({
+          query: props.query,
+          database: props.data.selectedDatabase,
+          collection: props.collection
         }),
         props.setData
       )

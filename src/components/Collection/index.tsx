@@ -17,7 +17,6 @@ import IndexTable from './IndexTable'
 import SaveDialog from './SaveDialog'
 import RenameCollection from './RenameCollection'
 import { getInitialColumnsHeader, getNextSort, removeColumnFromSortQp } from './functions/functionsSort'
-import { HEADERS } from '@/components/utils/getHeaders'
 import fetchWithRetries from '@/components/utils/fetchWithRetries'
 
 const DOC_STRING_TEMPLATE_DOCUMENT = `{
@@ -99,15 +98,11 @@ const CollectionPage: Component<DataCollection> = () => {
       delete query.sort
     }
 
-    const res = await fetchWithRetries('/api/pageDocument', {
-      method: 'POST',
-      body: JSON.stringify({
-        database: data.selectedDatabase,
-        collection: data.selectedCollection,
-        ...query
-      }),
-      headers: HEADERS
-    })
+    const res = await fetchWithRetries('/api/pageDocument', JSON.stringify({
+      database: data.selectedDatabase,
+      collection: data.selectedCollection,
+      ...query
+    }))
     const { count, columns, docs } = await res!.json()
     if (page) {
       setPage(page)
@@ -177,15 +172,8 @@ const CollectionPage: Component<DataCollection> = () => {
 
   const handleSaveAddDocument = async (doc: string, dialogRef: HTMLDialogElement) => {
     const response = await handleFetchError(
-      fetch('/api/documentCreate', {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify({
-          database: data.selectedDatabase,
-          collection: data.selectedCollection,
-          doc
-        })
-      }),
+      '/api/documentCreate',
+      JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection, doc }),
       setData
     )
     if (response) {
@@ -199,15 +187,8 @@ const CollectionPage: Component<DataCollection> = () => {
 
   const handleSaveAddIndex = async (doc: string, dialogRef: HTMLDialogElement) => {
     const response = await handleFetchError(
-      fetch('/api/collectionCreateIndex', {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify({
-          database: data.selectedDatabase,
-          collection: data.selectedCollection,
-          doc
-        })
-      }),
+      '/api/collectionCreateIndex',
+      JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection, doc }),
       setData
     )
     if (response) {
@@ -221,19 +202,11 @@ const CollectionPage: Component<DataCollection> = () => {
 
   const handleSaveDeleteAllDocuments = async () => {
     await handleFetchError(
-      fetch('/api/collectionDelete', {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify({
-          database: data.selectedDatabase,
-          collection: data.selectedCollection,
-          query: {
-            key: search.key,
-            value: search.value,
-            type: search.type,
-            query: search.query
-          }
-        })
+      '/api/collectionDelete',
+      JSON.stringify({
+        database: data.selectedDatabase,
+        collection: data.selectedCollection,
+        query: { key: search.key, value: search.value, type: search.type, query: search.query }
       }),
       setData
     )
@@ -242,11 +215,8 @@ const CollectionPage: Component<DataCollection> = () => {
 
   const handleSaveDeleteCollection = async () => {
     await handleFetchError(
-      fetch('/api/collectionDelete', {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection })
-      }),
+      '/api/collectionDelete',
+      JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection }),
       setData,
       (() => {
         // Remove database from global database to update viewing databases

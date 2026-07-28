@@ -1,6 +1,8 @@
+import { HEADERS } from "./getHeaders"
+
 export default async function fetchWithRetries(
   url: string,
-  options: RequestInit = {},
+  body: BodyInit,
   retries = 3,
   delay = 500
 ): Promise<Response> {
@@ -8,7 +10,11 @@ export default async function fetchWithRetries(
 
   for (let i = 0; i < retries; i++) {
     try {
-      const response = await fetch(url, options)
+      const response = await fetch(url, {
+        method: 'POST',
+        body,
+        headers: HEADERS
+      })
       if (response.ok) return response
       throw new Error(`HTTP ${response.status}`)
     } catch (error_: unknown) {

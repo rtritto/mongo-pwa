@@ -5,7 +5,6 @@ import DeleteDialog from '@/components/common/DeleteDialog'
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import CreateDatabase from './CreateDatabase'
-import { HEADERS } from '@/components/utils/getHeaders'
 
 const ShowDatabases: Component<{
   data: DataIndex
@@ -44,11 +43,8 @@ const ShowDatabases: Component<{
                       fullWidth
                       enableInput
                       handleDelete={() => handleFetchError(
-                        fetch('/api/databaseDelete', {
-                          method: 'POST',
-                          headers: HEADERS,
-                          body: JSON.stringify({ database })
-                        }),
+                        '/api/databaseDelete',
+                        JSON.stringify({ database }),
                         props.setData,
                         (() => {
                           // Remove database from global database to update viewing databases

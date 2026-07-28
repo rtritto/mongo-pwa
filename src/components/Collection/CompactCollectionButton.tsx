@@ -3,7 +3,6 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import handleFetchError from '@/components/common/functions/handleFetchError'
 import IconCompact from '@/components/Icons/IconCompact'
-import { HEADERS } from '@/components/utils/getHeaders'
 
 const CompactCollectionButton: Component<{
   collection: string
@@ -12,14 +11,8 @@ const CompactCollectionButton: Component<{
 }> = (props) => {
   return (
     <button class="btn w-full bg-red-700 py-0.5 btn-sm" onClick={() => handleFetchError(
-      fetch('/api/collectionCompact', {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify({
-          database: props.data.selectedDatabase,
-          collection: props.collection
-        })
-      }),
+      '/api/collectionCompact',
+      JSON.stringify({ database: props.data.selectedDatabase, collection: props.collection }),
       props.setData,
       { success: 'Collection compacted!' }
     )}>

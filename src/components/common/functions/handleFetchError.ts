@@ -1,12 +1,19 @@
 import type { SetStoreFunction } from 'solid-js/store'
 
+import { HEADERS } from '@/components/utils/getHeaders'
+
 const handleFetchError = async (
-  inputFetch: Promise<Response>,
+  url: string,
+  body: BodyInit,
   setData: SetStoreFunction<any>,
   newData?: Record<string, any>
 ): Promise<Response | void> => {
   try {
-    const response = await inputFetch
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: HEADERS,
+      body
+    })
     if (response.ok) {
       if (newData) {
         setData(newData)
