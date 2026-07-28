@@ -27,7 +27,8 @@ const ImportCollectionButton: Component<{
     formData.append('database', props.data.selectedDatabase)
     formData.append('collection', props.collection)
 
-    const response = await apiCall('/api/collectionImport', formData, props.setData)
+    // Let the browser set the correct Content-Type for multipart/form-data
+    const response = await apiCall('/api/collectionImport', formData, props.setData, undefined, false)
     if (response) {
       const { insertedCount } = await response.json()
       props.setData('success', `${insertedCount} document(s) inserted`)

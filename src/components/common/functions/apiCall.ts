@@ -6,12 +6,13 @@ const apiCall = async (
   url: string,
   body: BodyInit,
   setData: SetStoreFunction<any>,
-  newData?: Record<string, any>
+  newData?: Record<string, any>,
+  addHeaders = true
 ): Promise<Response | void> => {
   try {
     const response = await fetch(url, {
       method: 'POST',
-      headers: HEADERS,
+      headers: addHeaders ? HEADERS : undefined,
       body
     })
     if (response.ok) {
