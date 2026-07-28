@@ -2,14 +2,14 @@ import '@/styles/styles.css'
 import '@/styles/tailwind.css'
 import '@/styles/speed-highlight.css'
 
-import { type Component, type JSX, Show } from 'solid-js'
+import { type ParentComponent, Show } from 'solid-js'
 import { useData } from 'vike-lite-solid'
 
 import NavBar from './NavBar'
 import Alerts from './Alerts'
 import { useManagerAuth } from '../utils/hooks/useManagerAuth'
 
-export const Layout: Component<{ children?: JSX.Element }> = (props) => {
+export const Layout: ParentComponent = (props) => {
   const [data] = useData<DataLayout>()
   const { isAuthorized, login } = useManagerAuth(data.isAuthorized)
 
