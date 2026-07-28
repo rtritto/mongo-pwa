@@ -2,7 +2,7 @@ import type { Component, JSX } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import IconImport from '@/components/Icons/IconImport'
-import handleFetchError from './functions/handleFetchError'
+import apiCall from './functions/apiCall'
 
 const ImportCollectionButton: Component<{
   collection: string
@@ -27,7 +27,7 @@ const ImportCollectionButton: Component<{
     formData.append('database', props.data.selectedDatabase)
     formData.append('collection', props.collection)
 
-    const response = await handleFetchError('/api/collectionImport', formData, props.setData)
+    const response = await apiCall('/api/collectionImport', formData, props.setData)
     if (response) {
       const { insertedCount } = await response.json()
       props.setData('success', `${insertedCount} document(s) inserted`)

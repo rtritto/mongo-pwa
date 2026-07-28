@@ -4,7 +4,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 import DeleteDialog from '@/components/common/DeleteDialog'
 import ExportCollectionButton from '@/components/common/ExportCollectionButton'
 import ImportCollectionButton from '@/components/common/ImportCollectionButton'
-import handleFetchError from '@/components/common/functions/handleFetchError'
+import apiCall from '@/components/common/functions/apiCall'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import CreateCollection from './CreateCollection'
 
@@ -64,7 +64,7 @@ const ShowCollections: Component<{
                         label="Delete"
                         fullWidth
                         enableInput
-                        handleDelete={() => handleFetchError(
+                        handleDelete={() => apiCall(
                           '/api/collectionDelete',
                           JSON.stringify({ database: props.data.selectedDatabase, collection }),
                           props.setData,

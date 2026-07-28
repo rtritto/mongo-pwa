@@ -2,7 +2,7 @@ import { type Component, Show } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import CreateForm from '@/components/common/CreateForm'
-import handleFetchError from '@/components/common/functions/handleFetchError'
+import apiCall from '@/components/common/functions/apiCall'
 import isValidDatabaseName from '@/utils/validations/isValidDatabaseName'
 
 const CreateDatabase: Component<{
@@ -21,7 +21,7 @@ const CreateDatabase: Component<{
                 <CreateForm
                   entity="Database"
                   isValidInput={(input) => isValidDatabaseName(input)}
-                  onButtonClick={(database: string) => handleFetchError(
+                  onButtonClick={(database: string) => apiCall(
                     '/api/databaseCreate',
                     JSON.stringify({ database }),
                     props.setData,

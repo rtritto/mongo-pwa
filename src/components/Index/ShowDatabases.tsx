@@ -2,7 +2,7 @@ import { type Component, For, Show } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
-import handleFetchError from '@/components/common/functions/handleFetchError'
+import apiCall from '@/components/common/functions/apiCall'
 import IconVisibility from '@/components/Icons/IconVisibility'
 import CreateDatabase from './CreateDatabase'
 
@@ -42,7 +42,7 @@ const ShowDatabases: Component<{
                       label="Delete"
                       fullWidth
                       enableInput
-                      handleDelete={() => handleFetchError(
+                      handleDelete={() => apiCall(
                         '/api/databaseDelete',
                         JSON.stringify({ database }),
                         props.setData,

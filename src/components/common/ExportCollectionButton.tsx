@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
-import handleFetchError from '@/components/common/functions/handleFetchError'
+import apiCall from '@/components/common/functions/apiCall'
 import IconExport from '@/components/Icons/IconExport'
 
 const ExportCollectionButton: Component<{
@@ -14,7 +14,7 @@ const ExportCollectionButton: Component<{
 }> = (props) => {
   return (
     <button class="btn w-full bg-yellow-600 btn-sm" onClick={async () => {
-      const response = await handleFetchError(
+      const response = await apiCall(
         props.url,
         JSON.stringify({
           query: props.query,

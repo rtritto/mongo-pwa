@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 import { reload } from 'vike-lite/client/router'
 
 import IconDelete from '@/components/Icons/IconDelete'
-import handleFetchError from '@/components/common/functions/handleFetchError'
+import apiCall from '@/components/common/functions/apiCall'
 import { bytesToSize } from '@/utils/mappers/mapUtils'
 
 const IndexTable: Component<{
@@ -62,7 +62,7 @@ const IndexTable: Component<{
                     <button
                       class="btn w-full bg-red-700 py-0.5 btn-sm"
                       onClick={async () => {
-                        const response = await handleFetchError(
+                        const response = await apiCall(
                           '/api/collectionDeleteIndex',
                           JSON.stringify({
                             database: props.data.selectedDatabase,

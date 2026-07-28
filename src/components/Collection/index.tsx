@@ -10,7 +10,7 @@ import ExportCollectionButton from '@/components/common/ExportCollectionButton'
 import ImportCollectionButton from '@/components/common/ImportCollectionButton'
 import CompactCollectionButton from './CompactCollectionButton'
 import StatsTable from '@/components/common/StatsTable'
-import handleFetchError from '@/components/common/functions/handleFetchError'
+import apiCall from '@/components/common/functions/apiCall'
 import SearchDocuments from './SearchDocuments'
 import DocumentList from './DocumentList'
 import IndexTable from './IndexTable'
@@ -171,7 +171,7 @@ const CollectionPage: Component<DataCollection> = () => {
   //#endregion
 
   const handleSaveAddDocument = async (doc: string, dialogRef: HTMLDialogElement) => {
-    const response = await handleFetchError(
+    const response = await apiCall(
       '/api/documentCreate',
       JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection, doc }),
       setData
@@ -186,7 +186,7 @@ const CollectionPage: Component<DataCollection> = () => {
   }
 
   const handleSaveAddIndex = async (doc: string, dialogRef: HTMLDialogElement) => {
-    const response = await handleFetchError(
+    const response = await apiCall(
       '/api/collectionCreateIndex',
       JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection, doc }),
       setData
@@ -201,7 +201,7 @@ const CollectionPage: Component<DataCollection> = () => {
   }
 
   const handleSaveDeleteAllDocuments = async () => {
-    await handleFetchError(
+    await apiCall(
       '/api/collectionDelete',
       JSON.stringify({
         database: data.selectedDatabase,
@@ -214,7 +214,7 @@ const CollectionPage: Component<DataCollection> = () => {
   }
 
   const handleSaveDeleteCollection = async () => {
-    await handleFetchError(
+    await apiCall(
       '/api/collectionDelete',
       JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection }),
       setData,

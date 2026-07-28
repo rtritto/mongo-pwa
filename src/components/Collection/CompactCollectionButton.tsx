@@ -1,7 +1,7 @@
 import type { Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
-import handleFetchError from '@/components/common/functions/handleFetchError'
+import apiCall from '@/components/common/functions/apiCall'
 import IconCompact from '@/components/Icons/IconCompact'
 
 const CompactCollectionButton: Component<{
@@ -10,7 +10,7 @@ const CompactCollectionButton: Component<{
   setData: SetStoreFunction<any>
 }> = (props) => {
   return (
-    <button class="btn w-full bg-red-700 py-0.5 btn-sm" onClick={() => handleFetchError(
+    <button class="btn w-full bg-red-700 py-0.5 btn-sm" onClick={() => apiCall(
       '/api/collectionCompact',
       JSON.stringify({ database: props.data.selectedDatabase, collection: props.collection }),
       props.setData,

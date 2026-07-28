@@ -6,7 +6,7 @@ import BackButton from './BackButton'
 import SaveButton from './SaveButton'
 import DeleteDocument from '@/components/Collection/DeleteDocument'
 import CodeEditor from '@/components/common/CodeEditor'
-import handleFetchError from '@/components/common/functions/handleFetchError'
+import apiCall from '@/components/common/functions/apiCall'
 import isValidInsertDocument from '@/utils/validations/isValidInsertDocument'
 
 const Editor: Component<{
@@ -18,7 +18,7 @@ const Editor: Component<{
 
   const handleSave = async () => {
     if (isCodeValid()) {
-      const response = await handleFetchError(
+      const response = await apiCall(
         '/api/documentUpdate',
         JSON.stringify({
           database: props.data.selectedDatabase,

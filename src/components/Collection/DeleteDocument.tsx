@@ -3,7 +3,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 import { navigate, reload } from 'vike-lite/client/router'
 
 import DeleteDialog from '@/components/common/DeleteDialog'
-import handleFetchError from '@/components/common/functions/handleFetchError'
+import apiCall from '@/components/common/functions/apiCall'
 
 const DeleteDocument: Component<{
   data: DataLayout
@@ -15,7 +15,7 @@ const DeleteDocument: Component<{
   fullWidth?: boolean
 }> = (props) => {
   const handleDelete = async () => {
-    const response = await handleFetchError(
+    const response = await apiCall(
       '/api/documentDelete',
       JSON.stringify({
         database: props.data.selectedDatabase,

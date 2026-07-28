@@ -2,7 +2,7 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import { HEADERS } from '@/components/utils/getHeaders'
 
-const handleFetchError = async (
+const apiCall = async (
   url: string,
   body: BodyInit,
   setData: SetStoreFunction<any>,
@@ -27,4 +27,4 @@ const handleFetchError = async (
   }
 }
 
-export default handleFetchError
+export default apiCall

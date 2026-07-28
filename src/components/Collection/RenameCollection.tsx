@@ -1,7 +1,7 @@
 import { createSignal, type Component } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 
-import handleFetchError from '@/components/common/functions/handleFetchError'
+import apiCall from '@/components/common/functions/apiCall'
 import isValidCollectionName from '@/utils/validations/isValidCollectionName'
 
 const RenameCollection: Component<{
@@ -43,7 +43,7 @@ const RenameCollection: Component<{
                 ref={buttonRef}
                 disabled={!!isValidCollectionName(newName()).error}
                 onClick={async () => {
-                  await handleFetchError(
+                  await apiCall(
                     '/api/collectionRename',
                     JSON.stringify({
                       database: props.data.selectedDatabase,
