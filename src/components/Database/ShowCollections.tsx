@@ -66,7 +66,7 @@ const ShowCollections: Component<{
                         enableInput
                         handleDelete={() => apiCall(
                           '/api/collectionDelete',
-                          JSON.stringify({ database: props.data.selectedDatabase, collection }),
+                          { database: props.data.selectedDatabase, collection },
                           props.setData,
                           (() => {
                             // Remove database from global database to update viewing databases
@@ -79,7 +79,7 @@ const ShowCollections: Component<{
                               success: `Collection "${collection}" deleted!`
                             }
                           })()
-                        ) as Promise<void>}
+                        )}
                       />
                     </td>
                   </Show>

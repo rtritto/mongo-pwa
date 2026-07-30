@@ -20,17 +20,16 @@ const Editor: Component<{
     if (isCodeValid()) {
       const response = await apiCall(
         '/api/documentUpdate',
-        JSON.stringify({
+        {
           database: props.data.selectedDatabase,
           collection: props.data.selectedCollection,
           doc: code(),
           _id: props.data._id,
           sub_type: props.data.subtype
-        }),
+        },
         props.setData
       )
       if (response) {
-        await response.json() as { insertedId: string }
         const message = `Document "${props.data._id}" updated!`
         await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}`)
         props.setData('success', message)

@@ -5,7 +5,7 @@ import IconAdd from '@/components/Icons/IconAdd'
 const CreateForm: Component<{
   entity: string
   isValidInput: (input: string) => { error?: string }
-  onButtonClick: (input: string) => Promise<void>
+  onButtonClick: (input: string) => Promise<unknown>
 }> = (props) => {
   const [input, setInput] = createSignal('')
   const [invalidMessage, setInvalidMessage] = createSignal()

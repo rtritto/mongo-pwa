@@ -9,7 +9,7 @@ const DeleteDialog: Component<{
   label?: string
   fullWidth?: boolean
   enableInput?: boolean
-  handleDelete: () => Promise<void>
+  handleDelete: () => Promise<unknown>
 }> = (props) => {
   let dialogRef!: HTMLDialogElement
   const [input, setInput] = createSignal('')

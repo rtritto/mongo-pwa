@@ -23,14 +23,14 @@ const CreateCollection: Component<{
                   isValidInput={(input) => isValidCollectionName(input, props.data.collections)}
                   onButtonClick={(collection: string) => apiCall(
                     '/api/collectionCreate',
-                    JSON.stringify({ collection, database: props.data.selectedDatabase }),
+                    { collection, database: props.data.selectedDatabase },
                     props.setData,
                     // Add database to global collections to update viewing collections
                     {
                       collections: [...props.data.collections, collection].toSorted((a, b) => a.localeCompare(b)),
                       success: `Collection "${collection}" created!`
                     }
-                  ) as Promise<void>}
+                  )}
                 />
               </Show>
             </span>

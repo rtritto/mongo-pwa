@@ -173,13 +173,12 @@ const CollectionPage: Component<DataCollection> = () => {
   const handleSaveAddDocument = async (doc: string, dialogRef: HTMLDialogElement) => {
     const response = await apiCall(
       '/api/documentCreate',
-      JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection, doc }),
+      { database: data.selectedDatabase, collection: data.selectedCollection, doc },
       setData
     )
     if (response) {
-      const { insertedId } = await response.json() as { insertedId: string }
       dialogRef.close()
-      const message = `Document "${insertedId}" added!`
+      const message = `Document "${response.insertedId}" added!`
       await reload()
       setData('success', message)
     }
@@ -188,13 +187,12 @@ const CollectionPage: Component<DataCollection> = () => {
   const handleSaveAddIndex = async (doc: string, dialogRef: HTMLDialogElement) => {
     const response = await apiCall(
       '/api/collectionCreateIndex',
-      JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection, doc }),
+      { database: data.selectedDatabase, collection: data.selectedCollection, doc },
       setData
     )
     if (response) {
       dialogRef.close()
-      const { indexName } = await response.json() as { indexName: string }
-      const message = `Index "${indexName}" created!`
+      const message = `Index "${response.indexName}" created!`
       await reload()
       setData('success', message)
     }
@@ -203,11 +201,11 @@ const CollectionPage: Component<DataCollection> = () => {
   const handleSaveDeleteAllDocuments = async () => {
     await apiCall(
       '/api/collectionDelete',
-      JSON.stringify({
+      {
         database: data.selectedDatabase,
         collection: data.selectedCollection,
         query: { key: search.key, value: search.value, type: search.type, query: search.query }
-      }),
+      },
       setData
     )
     await reload()
@@ -216,7 +214,7 @@ const CollectionPage: Component<DataCollection> = () => {
   const handleSaveDeleteCollection = async () => {
     await apiCall(
       '/api/collectionDelete',
-      JSON.stringify({ database: data.selectedDatabase, collection: data.selectedCollection }),
+      { database: data.selectedDatabase, collection: data.selectedCollection },
       setData,
       (() => {
         // Remove database from global database to update viewing databases

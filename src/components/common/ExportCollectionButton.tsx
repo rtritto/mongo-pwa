@@ -6,7 +6,7 @@ import IconExport from '@/components/Icons/IconExport'
 
 const ExportCollectionButton: Component<{
   label: string
-  url: string
+  url: '/api/collectionExport'
   collection: string
   query: QueryParameter
   data: DataDB | DataCollection
@@ -16,11 +16,11 @@ const ExportCollectionButton: Component<{
     <button class="btn w-full bg-yellow-600 btn-sm" onClick={async () => {
       const response = await apiCall(
         props.url,
-        JSON.stringify({
+        {
           query: props.query,
           database: props.data.selectedDatabase,
           collection: props.collection
-        }),
+        },
         props.setData
       )
       if (response) {

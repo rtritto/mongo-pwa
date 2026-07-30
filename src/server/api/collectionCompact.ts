@@ -1,4 +1,4 @@
-import type { Context } from 'hono'
+import { HTTPException } from 'hono/http-exception'
 
 import { connectClient } from '@/server/db'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
@@ -9,19 +9,16 @@ type ResultCompact = {
   }
 }
 
-export default async function collectionCompact(c: Context) {
-  const { database, collection } = await c.req.json<{
-    database: string
-    collection: string
-  }>()
+export default async function collectionCompact({ database, collection }: {
+  database: string
+  collection: string
+}) {
   await connectClient()
   const { error } = checkDatabaseCollection(database, collection)
-  if (error) {
-    return c.json({ error }, 404)
-  }
+  if (error) throw new HTTPException(404, { message: error })
+
   const { session: { success } } = await globalThis.mongo.mongoClient.db(database).command({ compact: collection }) as ResultCompact
-  if (!success) {
-    return c.json({ error: `Failed to compact collection "${collection}"` }, 500)
-  }
-  return c.json({})
+  if (!success) throw new HTTPException(500, { message: `Failed to compact collection "${collection}"` })
+
+  return {}
 }

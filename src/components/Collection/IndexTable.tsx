@@ -47,7 +47,7 @@ const IndexTable: Component<{
           <For each={props.data.indexes}>
             {(index) => (
               <tr>
-                <td>{index.name}</td>
+                <td>{index.name!}</td>
 
                 <td>{`${Object.keys(index.key)[0]} ${Object.values(index.key)[0] === 1 ? 'ASC' : 'DESC'}`}</td>
 
@@ -64,13 +64,13 @@ const IndexTable: Component<{
                       onClick={async () => {
                         const response = await apiCall(
                           '/api/collectionDeleteIndex',
-                          JSON.stringify({
+                          {
                             database: props.data.selectedDatabase,
                             collection: props.data.selectedCollection,
-                            indexName: index.name
-                          }),
+                            indexName: index.name!
+                          },
                           props.setData,
-                          { success: `Index "${index.name}" deleted!` }
+                          { success: `Index "${index.name!}" deleted!` }
                         )
                         if (response) {
                           await reload()

@@ -23,14 +23,14 @@ const CreateDatabase: Component<{
                   isValidInput={(input) => isValidDatabaseName(input)}
                   onButtonClick={(database: string) => apiCall(
                     '/api/databaseCreate',
-                    JSON.stringify({ database }),
+                    { database },
                     props.setData,
                     // Add database to global databases to update viewing databases
                     {
                       databases: [...props.data.databases, database].toSorted((a, b) => a.localeCompare(b)),
                       success: `Database "${database}" created!`
                     }
-                  ) as Promise<void>}
+                  )}
                 />
               </Show>
             </span>

@@ -1,34 +1,27 @@
-import type { Context } from 'hono'
+import { HTTPException } from 'hono/http-exception'
 
 import { connectClient } from '@/server/db'
 import buildId from '@/utils/mappers/buildId'
 import { checkDatabaseCollection, checkOptions } from '@/utils/validations/serverChecks'
 
-export default async function documentDelete(c: Context) {
-  const { error: optionError } = checkOptions({
-    readOnly: false,
-    noDelete: false
-  })
-  if (optionError) {
-    return c.json({ error: optionError }, 403)
-  }
-  const { database, collection, _id, sub_type } = await c.req.json<{
-    database: string
-    collection: string
-    _id: string | number
-    sub_type: number | undefined
-  }>()
+export default async function documentDelete({ database, collection, _id, sub_type }: {
+  database: string
+  collection: string
+  _id: string | number
+  sub_type: number | undefined
+}) {
+  const { error: optionError } = checkOptions({ readOnly: false, noDelete: false })
+  if (optionError) throw new HTTPException(403, { message: optionError })
   await connectClient()
   const { error } = checkDatabaseCollection(database, collection)
-  if (error) {
-    return c.json({ error }, 404)
-  }
+  if (error) throw new HTTPException(404, { message: error })
+
+  const filter = { _id: buildId(_id, sub_type) }
   const { deletedCount } = await globalThis.mongo.mongoClient
     .db(database)
-    .collection(collection)
-    .deleteOne({ _id: buildId(_id, sub_type) })
-  if (deletedCount) {
-    return c.json({})
-  }
-  return c.json({ error: `Document "${_id}" not deleted!` }, 500)
+    .collection<typeof filter>(collection)
+    .deleteOne(filter)
+  if (deletedCount === 0)
+    throw new HTTPException(500, { message: `Document "${_id}" not deleted!` })
+  return {}
 }

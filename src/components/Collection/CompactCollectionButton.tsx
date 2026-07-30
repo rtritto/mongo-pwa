@@ -12,7 +12,7 @@ const CompactCollectionButton: Component<{
   return (
     <button class="btn w-full bg-red-700 py-0.5 btn-sm" onClick={() => apiCall(
       '/api/collectionCompact',
-      JSON.stringify({ database: props.data.selectedDatabase, collection: props.collection }),
+      { database: props.data.selectedDatabase, collection: props.collection },
       props.setData,
       { success: 'Collection compacted!' }
     )}>

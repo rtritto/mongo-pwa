@@ -1,27 +1,21 @@
-import type { Context } from 'hono'
+import { HTTPException } from 'hono/http-exception'
 
 import { connectClient } from '@/server/db'
 import { getQuery } from '@/utils/queries'
 import { checkDatabaseCollection, checkOptions } from '@/utils/validations/serverChecks'
 
-export default async function collectionDelete(c: Context) {
-  const { database, collection, query } = await c.req.json<{
-    database: string
-    collection: string
-    query: QueryParameter
-  }>()
+export default async function collectionDelete({ database, collection, query }: {
+  database: string
+  collection: string
+  query?: QueryParameter
+}) {
   await connectClient()
-  const { error: optionError } = checkOptions({
-    readOnly: false,
-    noDelete: false
-  })
-  if (optionError) {
-    return c.json({ error: optionError }, 403)
-  }
+  const { error: optionError } = checkOptions({ readOnly: false, noDelete: false })
+  if (optionError) throw new HTTPException(403, { message: optionError })
+
   const { error } = checkDatabaseCollection(database, collection)
-  if (error) {
-    return c.json({ error }, 404)
-  }
+  if (error) throw new HTTPException(404, { message: error })
+
   const _collection = globalThis.mongo.mongoClient.db(database).collection(collection)
   if (query) {
     // Delete some documents
@@ -30,9 +24,7 @@ export default async function collectionDelete(c: Context) {
   } else {
     // Drop the whole collection
     const result = await _collection.drop()
-    if (!result) {
-      throw new Error(`Failed to delete collection "${collection}"`)
-    }
+    if (!result) throw new Error(`Failed to delete collection "${collection}"`)
   }
-  return c.json({})
+  return {}
 }

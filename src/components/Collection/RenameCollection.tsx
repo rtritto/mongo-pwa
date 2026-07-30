@@ -45,11 +45,11 @@ const RenameCollection: Component<{
                 onClick={async () => {
                   await apiCall(
                     '/api/collectionRename',
-                    JSON.stringify({
+                    {
                       database: props.data.selectedDatabase,
                       collection: props.data.selectedCollection,
                       newCollection: newName()
-                    }),
+                    },
                     props.setData,
                     (() => {
                       // Replace collection from global database to update viewing databases

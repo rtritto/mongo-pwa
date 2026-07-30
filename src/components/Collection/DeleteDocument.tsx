@@ -17,12 +17,12 @@ const DeleteDocument: Component<{
   const handleDelete = async () => {
     const response = await apiCall(
       '/api/documentDelete',
-      JSON.stringify({
-        database: props.data.selectedDatabase,
-        collection: props.data.selectedCollection,
+      {
+        database: props.data.selectedDatabase!,
+        collection: props.data.selectedCollection!,
         _id: props._id,
         sub_type: props.sub_type
-      }),
+      },
       props.setData
     )
     if (response) {

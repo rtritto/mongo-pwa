@@ -1,5 +1,5 @@
 import { EJSON, type Document } from 'bson'
-import type { Context } from 'hono'
+import { HTTPException } from 'hono/http-exception'
 
 import { connectClient } from '@/server/db'
 import { checkDatabaseCollection } from '@/utils/validations/serverChecks'
@@ -157,44 +157,29 @@ function parseCsvFile(fileContent: string): Document[] {
   return dataRows.map(cells => unflattenRow(headerNames, cells))
 }
 
-export default async function collectionImport(c: Context) {
-  const formData = await c.req.formData()
-  const database = formData.get('database') as string
-  const collection = formData.get('collection') as string
+export default async function collectionImport({ file, collection, database }: {
+  file: File
+  collection: string
+  database: string
+}) {
+  if (!file) throw new HTTPException(400, { message: 'No file' })
+  if (!ALLOWED_MIME_TYPES.has(file.type) || !(file instanceof File) || file.size === 0) throw new HTTPException(400, { message: 'Bad file' })
+
   await connectClient()
   const { error } = checkDatabaseCollection(database, collection)
-  if (error) {
-    return c.json({ error }, 404)
-  }
-
-  const contentType = c.req.header('Content-Type') || ''
-  if (!contentType.includes('multipart/form-data')) {
-    return c.json({ message: 'Unsupported Content-Type' }, 415)
-  }
-
-  const file = formData.get('file') as File
-
-  if (!file) {
-    return c.json({ message: 'No file' }, 400)
-  }
-  if (!ALLOWED_MIME_TYPES.has(file.type) || !(file instanceof File) || file.size === 0) {
-    return c.json({ message: 'Bad file' }, 400)
-  }
-
-  const fileContent = await file.text()
+  if (error) throw new HTTPException(404, { message: error })
 
   let docs: Document[]
   try {
+    const fileContent = await file.text()
     docs = file.type === 'text/csv' ? parseCsvFile(fileContent) : parseJsonFile(fileContent)
   } catch (error) {
     console.error(error)
-    return c.json({ message: 'Bad file content' }, 400)
+    throw new HTTPException(400, { message: 'Bad file content' })
   }
 
-  if (docs.length === 0) {
-    return c.json({ message: 'No documents found in file' }, 400)
-  }
+  if (docs.length === 0) throw new HTTPException(400, { message: 'No documents found in file' })
 
   const { insertedCount } = await globalThis.mongo.mongoClient.db(database).collection(collection).insertMany(docs)
-  return c.json({ insertedCount })
+  return { insertedCount }
 }

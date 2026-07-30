@@ -29,10 +29,7 @@ const ImportCollectionButton: Component<{
 
     // Let the browser set the correct Content-Type for multipart/form-data
     const response = await apiCall('/api/collectionImport', formData, props.setData, undefined, false)
-    if (response) {
-      const { insertedCount } = await response.json()
-      props.setData('success', `${insertedCount} document(s) inserted`)
-    }
+    if (response) props.setData('success', `${response.insertedCount} document(s) inserted`)
   }
 
   return (

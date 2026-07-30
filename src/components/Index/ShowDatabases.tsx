@@ -44,7 +44,7 @@ const ShowDatabases: Component<{
                       enableInput
                       handleDelete={() => apiCall(
                         '/api/databaseDelete',
-                        JSON.stringify({ database }),
+                        { database },
                         props.setData,
                         (() => {
                           // Remove database from global database to update viewing databases
@@ -57,7 +57,7 @@ const ShowDatabases: Component<{
                             success: `Database "${database}" deleted!`
                           }
                         })()
-                      ) as Promise<void>}
+                      )}
                     />
                   </td>
                 </Show>
