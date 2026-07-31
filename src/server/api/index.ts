@@ -34,7 +34,7 @@ export default {
 
 export type ApiRoutesMap = {
   [K in keyof typeof import('./index').default as `/api/${K}`]: {
-    body: Parameters<typeof import('./index').default[K]>[0]; // Infers the typed input (database, collection, etc.)
-    response: Awaited<ReturnType<typeof import('./index').default[K]>>; // Infers the return object ({ indexName: string })
+    body: Parameters<typeof import('./index').default[K]>[0]
+    response: Awaited<ReturnType<typeof import('./index').default[K]>>
   }
 }
