@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === 'production') app.use(cors())
 
 app.route('/api', apiRoutes)
 
-// Catch-all remaining requests using custom rendering
 app.get('*', async (c) => {
   return await renderPage(c.req.raw, { headers: c.req.raw.headers })
 })
