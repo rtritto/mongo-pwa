@@ -9,9 +9,7 @@ const app = new Hono()
 
 // app.use(logger())
 
-if (process.env.NODE_ENV === 'production') {
-  app.use(cors())
-}
+if (process.env.NODE_ENV === 'production') app.use(cors())
 
 app.route('/api', apiRoutes)
 
