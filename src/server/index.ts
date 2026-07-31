@@ -1,5 +1,6 @@
 import { cors } from 'hono/cors'
 import { Hono } from 'hono/quick'
+// (?) TODO logger can help
 // import { logger } from 'hono/logger'
 import { renderPage } from 'vike-lite/server'
 
