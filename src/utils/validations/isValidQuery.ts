@@ -4,13 +4,13 @@ import toBSON from 'mongodb-query-parser-esm'
 // and not as part of the text inside a normal string.
 
 // Single combined regex for all function-style types
-const MONGO_FN_RE = /([:\[,]\s*)(ISODate|ObjectId|NumberLong|NumberInt|NumberDecimal)\(\s*(['"]?)([^'"\)\s]*)\3\s*\)/
+const MONGO_FN_RE = /([:\[,]\s*)(ISODate|ObjectId|NumberLong|NumberInt|NumberDecimal)\(\s*(['"]?)([^'"\)\s]*)\3\s*\)/g
 
 // RegExp literal
-const REGEXP_LITERAL_RE = /([:\[,]\s*)\/([^/]+)\/([gimsuy]*)/
+const REGEXP_LITERAL_RE = /([:\[,]\s*)\/([^/]+)\/([gimsuy]*)/g
 
 // Strip strings before checking for unknown functions
-const STRING_LITERAL_RE = /(["'])(?:(?!\1)[^\\]|\\.)*\1/
+const STRING_LITERAL_RE = /(["'])(?:(?!\1)[^\\]|\\.)*\1/g
 
 // Detect unknown functions (after stripping)
 const UNKNOWN_FN_RE = /:\s*([a-zA-Z_]\w*)\s*\(/
