@@ -31,5 +31,5 @@ export const data = async (pageContext: PageContextServer<DataDocument>) => {
     selectedDatabase: dbName,
     selectedCollection: collectionName,
     selectedDocument: document
-  } satisfies Partial<DataDocument>
+  } as DataDocument
 }

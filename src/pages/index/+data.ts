@@ -8,5 +8,5 @@ export const data = async (pageContext: PageContextServer<DataIndex>) => {
   const { mongo } = globalThis
   return {
     ...mongo.adminDb && { stats: mapServerStats(await mongo.adminDb.serverStatus() as ServerStatus) }
-  } satisfies Partial<DataIndex>
+  } as DataIndex
 }

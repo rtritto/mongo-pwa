@@ -32,9 +32,9 @@ type DataCollection = {
   columns: string[]
   count: number
   documentsPerPage: number
-  aggregate?: boolean
-  query?: string
-  projection?: string
+  aggregate: boolean
+  query: string
+  projection: string
 } & DataCumulative
 
 type DataDocument = {

@@ -45,8 +45,8 @@ export const data = async (pageContext: PageContextServer<DataCollection>) => {
     // Pagination
     count,
     documentsPerPage: config.options.documentsPerPage,
-    aggregate: search?.aggregate === 'true',
-    query: search?.query,
-    projection: search?.projection
-  } satisfies Partial<DataCollection>
+    aggregate: search.aggregate === 'true',
+    query: search.query,
+    projection: search.projection
+  } as DataCollection
 }

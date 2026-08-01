@@ -22,5 +22,5 @@ export const data = async (pageContext: PageContextServer<DataCumulative>) => {
     success: undefined,
     warning: undefined,
     error: undefined
-  } satisfies DataCumulative
+  } as DataCumulative
 }

@@ -22,5 +22,5 @@ export const data = async (pageContext: PageContextServer<DataDB>) => {
     title: `DB: ${dbName} - Mongo Solid`,
     ..._data,
     ...mongo.adminDb && { stats: mapDatabaseStats(await mongo.connections[dbName].db.stats() as DbStats) }
-  } satisfies Partial<DataDB>
+  } as DataDB
 }
