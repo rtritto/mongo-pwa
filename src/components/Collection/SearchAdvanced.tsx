@@ -106,7 +106,7 @@ const SearchAdvanced: Component<{ data: DataCollection }> = (props) => {
       <div class="mt-4 flex items-center gap-4">
         <fieldset class="fieldset w-64 rounded-box border border-base-300 bg-base-100 p-4">
           <label class="label">
-            <input class="checkbox" type="checkbox" checked={checkboxAggregate()} onChange={() => setCheckboxAggregate(!checkboxAggregate())} />
+            <input class="checkbox" type="checkbox" checked={checkboxAggregate()} onChange={(e) => setCheckboxAggregate(e.target.checked)} />
 
             Aggregate query
           </label>
