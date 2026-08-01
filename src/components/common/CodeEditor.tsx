@@ -1,4 +1,5 @@
 import { type Component, untrack, For } from 'solid-js'
+
 import useCodeEditor from './functions/useCodeEditor'
 
 const CodeEditor: Component<{
@@ -80,7 +81,6 @@ const CodeEditor: Component<{
           onScroll={syncScroll}
           onKeyDown={handleKeyDown}
         />
-
       </div>
     </div>
   )
