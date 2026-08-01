@@ -9,18 +9,17 @@ export const data = async (pageContext: PageContextServer<DataCumulative>) => {
   const _data = {
     options: config.options,
     isAuthorized
-  }
-  if (!isAuthorized) return _data
-  await connectClient()
-  const { mongo } = globalThis
-  return {
-    databases: mongo.databases,
-    ..._data,
-    selectedDatabase: undefined,
-    selectedCollection: undefined,
-    selectedDocument: undefined,
-    success: undefined,
-    warning: undefined,
-    error: undefined
   } as DataCumulative
+  if (isAuthorized) {
+    await connectClient()
+    const { mongo } = globalThis
+    _data.databases = mongo.databases
+    _data.selectedDatabase = undefined
+    _data.selectedCollection = undefined
+    _data.selectedDocument = undefined
+    _data.success = undefined
+    _data.warning = undefined
+    _data.error = undefined
+  }
+  return _data
 }
