@@ -21,7 +21,7 @@ const SearchDocuments: Component<{
 
   return (
     <div class="my-2">
-      <div role="tablist" class="tabs-lift tabs tabs-xs">
+      <div role="tablist" class="tabs tabs-lift tabs-xs">
         <For each={Object.keys(SEARCH_LABELS)}>{(label, index) => (
           <a
             role="tab"
