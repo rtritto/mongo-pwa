@@ -1,4 +1,4 @@
-import { type Component, untrack, For } from 'solid-js'
+import { type Component, untrack, For, onMount } from 'solid-js'
 
 import useCodeEditor from './functions/useCodeEditor'
 
@@ -26,6 +26,12 @@ const CodeEditor: Component<{
     highlightRef.scrollLeft = textareaRef.scrollLeft
     linesRef.scrollTop = textareaRef.scrollTop
   }
+
+  onMount(() => {
+    if (textareaRef) {
+      textareaRef.value = renderData().displayCode
+    }
+  })
 
   return (
     <div class="flex">
