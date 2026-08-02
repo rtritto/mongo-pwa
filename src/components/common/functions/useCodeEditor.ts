@@ -16,7 +16,6 @@ export default function useEditor(
   onSave: () => void,
   readOnly: true | undefined
 ) {
-  const [html, setHtml] = createSignal('')
   const [foldedLines, setFoldedLines] = createSignal<Set<number>>(new Set())
 
   const toggleFold = (lineNumber: number) => {
@@ -127,6 +126,24 @@ export default function useEditor(
       hiddenTextMap
     }
   })
+
+  const getInitialHtml = () => {
+    const snapshot = renderData()
+    let safeHtml = snapshot.displayCode
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+
+    for (const [magicDots, data] of snapshot.hiddenTextMap.entries()) {
+      safeHtml = safeHtml.replace(magicDots, () =>
+        `<span class="fold-ellipsis relative z-20 pointer-events-auto cursor-pointer select-none text-[#61afef] transition-colors rounded px-1 py-0.5 hover:bg-[#61afef33] hover:text-[#82c0ff]" data-line="${data.lineIndex}" title="Click to open">…</span>`
+      )
+    }
+    return safeHtml
+  }
+
+  // 3. Initialize the signal with the safe text, NOT an empty string!
+  const [html, setHtml] = createSignal(getInitialHtml())
 
   const handlCreateEffect = async () => {
     const { displayCode } = renderData()
