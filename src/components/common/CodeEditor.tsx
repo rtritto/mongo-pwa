@@ -8,13 +8,12 @@ const CodeEditor: Component<{
   onChange: (value: string) => void
   onSave: () => void
 }> = (props) => {
-  const isReadOnly = untrack(() => props.readOnly)
-
+  const readOnlyValue = untrack(() => props.readOnly ? true : undefined)
   const { html, renderData, handleInput, handleKeyDown, toggleFold, handlePreClick } = useCodeEditor(
     () => props.value,
-    isReadOnly,
     (value) => props.onChange(value),
-    () => props.onSave()
+    () => props.onSave(),
+    readOnlyValue
   )
 
   let textareaRef!: HTMLTextAreaElement
@@ -73,7 +72,7 @@ const CodeEditor: Component<{
         <textarea
           ref={textareaRef}
           value={renderData().displayCode}
-          readOnly={isReadOnly}
+          readOnly={readOnlyValue}
           spellcheck={false}
           // class="absolute inset-0 overflow-hidden bg-transparent text-transparent caret-white outline-none resize-none whitespace-pre"
           class="editor-font absolute inset-0 z-10 size-full resize-none bg-transparent whitespace-pre text-transparent caret-white outline-none"

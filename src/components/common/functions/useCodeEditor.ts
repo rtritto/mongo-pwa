@@ -12,9 +12,9 @@ interface FoldableRange {
 
 export default function useEditor(
   initialValue: () => string,
-  readOnly: boolean,
   onChange: (value: string) => void,
-  onSave: () => void
+  onSave: () => void,
+  readOnly: true | undefined
 ) {
   const [html, setHtml] = createSignal('')
   const [foldedLines, setFoldedLines] = createSignal<Set<number>>(new Set())
