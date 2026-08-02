@@ -55,44 +55,54 @@ const DocumentList: Component<{
 
       <tbody>
         <For each={props.data.docs}>
-          {(document) => (
-            <tr>
-              <th
-                class="cursor-pointer"
-                onClick={async (e) => {
-                  if (e.target === e.currentTarget) {
-                    await navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`)
-                  }
-                }}
-              >
-                <div class="my-1">
-                  <DeleteDocument
-                    data={props.data}
-                    setData={props.setData}
-                    _id={document._id}
-                    sub_type={document.sub_type}
-                    doReload
-                    fullWidth
-                  />
-                </div>
-              </th>
+          {(document) => {
+            // Extract the URL so we don't duplicate the string interpolation
+            const docUrl = `/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`
 
-              <For each={props.data.columns}>
-                {(column) => (
-                  <td
-                    class="cursor-pointer"
-                    onClick={(e) => {
-                      if (e.target === e.currentTarget) {
-                        navigate(`/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`)
-                      }
-                    }}
-                  >
-                    <JsonViewer value={document[column]} />
-                  </td>
-                )}
-              </For>
-            </tr>
-          )}
+            // Reusable click handler for both TH and TD
+            const handleRowClick = async (e: MouseEvent) => {
+              if (e.target === e.currentTarget) {
+                if (e.ctrlKey || e.metaKey) {
+                  // Open in new tab on Ctrl/Cmd+Click
+                  window.open(docUrl, '_blank')
+                } else {
+                  // Navigate in current tab on normal click
+                  await navigate(docUrl)
+                }
+              }
+            }
+
+            return (
+              <tr>
+                <th
+                  class="cursor-pointer"
+                  onClick={handleRowClick}
+                >
+                  <div class="my-1">
+                    <DeleteDocument
+                      data={props.data}
+                      setData={props.setData}
+                      _id={document._id}
+                      sub_type={document.sub_type}
+                      doReload
+                      fullWidth
+                    />
+                  </div>
+                </th>
+
+                <For each={props.data.columns}>
+                  {(column) => (
+                    <td
+                      class="cursor-pointer"
+                      onClick={handleRowClick}
+                    >
+                      <JsonViewer value={document[column]} />
+                    </td>
+                  )}
+                </For>
+              </tr>
+            )
+          }}
         </For>
       </tbody>
     </table>
