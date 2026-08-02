@@ -6,7 +6,7 @@ import IconExport from '@/components/Icons/IconExport'
 
 const ExportCollectionButton: Component<{
   label: string
-  url: '/api/collectionExport'
+  url: '/api/collectionExport' | '/api/collectionExportCsv'
   collection: string
   query: QueryParameter
   data: DataDB | DataCollection
