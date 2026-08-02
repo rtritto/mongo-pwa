@@ -1,4 +1,4 @@
-import { type Component, createSignal, Show, untrack } from 'solid-js'
+import { type Component, createSignal, Show, Suspense, untrack } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
 import { navigate } from 'vike-lite/client/router'
 
@@ -61,15 +61,17 @@ const Editor: Component<{
     <div>
       <Buttons />
 
-      <CodeEditor
-        value={code()}
-        readOnly={props.data.options.readOnly}
-        onChange={(newCode) => {
-          setCode(newCode)
-          setIsCodeValid(!isValidInsertDocument(newCode).error)
-        }}
-        onSave={handleSave}
-      />
+      <Suspense>
+        <CodeEditor
+          value={code()}
+          readOnly={props.data.options.readOnly}
+          onChange={(newCode) => {
+            setCode(newCode)
+            setIsCodeValid(!isValidInsertDocument(newCode).error)
+          }}
+          onSave={handleSave}
+        />
+      </Suspense>
 
       <Buttons />
 

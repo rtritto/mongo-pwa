@@ -1,4 +1,4 @@
-import { type Component, untrack, For, onMount } from 'solid-js'
+import { type Component, untrack, For, createEffect } from 'solid-js'
 
 import useCodeEditor from './functions/useCodeEditor'
 
@@ -9,6 +9,7 @@ const CodeEditor: Component<{
   onSave: () => void
 }> = (props) => {
   const readOnlyValue = untrack(() => props.readOnly ? true : undefined)
+
   const { html, renderData, handleInput, handleKeyDown, toggleFold, handlePreClick } = useCodeEditor(
     () => props.value,
     (value) => props.onChange(value),
@@ -27,9 +28,14 @@ const CodeEditor: Component<{
     linesRef.scrollTop = textareaRef.scrollTop
   }
 
-  onMount(() => {
-    if (textareaRef) {
-      textareaRef.value = renderData().displayCode
+  createEffect(() => {
+    if (!textareaRef) return
+
+    // Since Suspense no longer unmounts the component, this check natively works 
+    // perfectly and NEVER interrupts user typing!
+    const code = renderData().displayCode
+    if (textareaRef.value !== code) {
+      textareaRef.value = code
     }
   })
 
@@ -77,12 +83,11 @@ const CodeEditor: Component<{
 
         <textarea
           ref={textareaRef}
-          value={renderData().displayCode}
           readOnly={readOnlyValue}
           spellcheck={false}
           // class="absolute inset-0 overflow-hidden bg-transparent text-transparent caret-white outline-none resize-none whitespace-pre"
           class="editor-font absolute inset-0 z-10 size-full resize-none bg-transparent whitespace-pre text-transparent caret-white outline-none"
-          onInput={(e) => handleInput(e.currentTarget.value)}
+          onInput={handleInput}
           onScroll={syncScroll}
           onKeyDown={handleKeyDown}
         />
