@@ -1878,10 +1878,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@speed-highlight/core@npm:^1.2.17":
-  version: 1.2.17
-  resolution: "@speed-highlight/core@npm:1.2.17"
-  checksum: 10c0/867b896388e9131dca5e49292ea4c6b025d1a8d3d3bd08504d1a43e49dad208d1199e2708bd592135706504a0048e99ea28c1a33a57320e11e39075fe8c680e6
+"@speed-highlight/core@npm:^1.2.23":
+  version: 1.2.23
+  resolution: "@speed-highlight/core@npm:1.2.23"
+  checksum: 10c0/94a55c67fb0c3978e0574d4c2c130d7fce1ae7ad9ef00c0a33ddcc420533305d620dde9ad64d117c9523ba6ad38829b3be4c374957663e4ba829f607d0dbbfef
   languageName: node
   linkType: hard
 
@@ -3000,10 +3000,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"daisyui@npm:^5.7.9":
-  version: 5.7.9
-  resolution: "daisyui@npm:5.7.9"
-  checksum: 10c0/085d0b697a4139383f731ecce0d46861b374114732969fa8eee0f73e695bafb8f6ee1138bdc9cf427c1a883bbee6fa2b48e5a83073af5a85d6637c014fb5b212
+"daisyui@npm:^5.7.14":
+  version: 5.7.14
+  resolution: "daisyui@npm:5.7.14"
+  checksum: 10c0/d20fec82550824495f3678d15ba0bb83ac9b7190836439f411ab03864f4eb3fda7747555e61afccb647994d4b74ba5c1beb0cfdfadcb8538139b86dbe651968d
   languageName: node
   linkType: hard
 
@@ -3990,10 +3990,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hono@npm:^4.12.32":
-  version: 4.12.32
-  resolution: "hono@npm:4.12.32"
-  checksum: 10c0/3bb2fc0b042af87202e0cb0e5f77ee5b578684d868e1e321ed3de53e02f1ef02fe700811fa0d2fc765636a217bae7633d552d55934175f3dec6307a1f63f4ecb
+"hono@npm:^4.12.33":
+  version: 4.12.33
+  resolution: "hono@npm:4.12.33"
+  checksum: 10c0/519d7e40acd8dcf9015f2012d536e56fd4896909602264a2cbc590a480ba5418dd56f68051dd5e624f3fd383abe766aaa95b5399261e9ab298dff2471271f3da
   languageName: node
   linkType: hard
 
@@ -5006,17 +5006,17 @@ __metadata:
   dependencies:
     "@hono/node-server": "npm:^2.0.12"
     "@solid-primitives/pagination": "npm:^0.5.2"
-    "@speed-highlight/core": "npm:^1.2.17"
+    "@speed-highlight/core": "npm:^1.2.23"
     "@tailwindcss/vite": "npm:^4.3.3"
     "@types/node": "npm:^26.1.2"
     "@yarnpkg/sdks": "npm:^3.3.1"
     bson: "npm:^7.3.1"
-    daisyui: "npm:^5.7.9"
+    daisyui: "npm:^5.7.14"
     eslint: "npm:^10.8.0"
     eslint-plugin-solid: "npm:^0.14.5"
     eslint-plugin-tailwindcss: "npm:^4.2.0"
     eslint-plugin-unicorn: "npm:^72.0.0"
-    hono: "npm:^4.12.32"
+    hono: "npm:^4.12.33"
     mongodb: "npm:^7.5.0"
     mongodb-query-parser-esm: "npm:^4.7.9"
     solid-js: "npm:^1.9.14"
