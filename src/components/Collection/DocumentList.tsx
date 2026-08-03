@@ -11,6 +11,11 @@ const DocumentList: Component<{
   data: DataCollection
   setData: SetStoreFunction<any>
 }> = (props) => {
+  //  Prevent auto-scroll
+  const handleMouseDown = (e: MouseEvent) => {
+    if (e.button === 1) e.preventDefault()
+  }
+
   return (
     <table class="table table-zebra">
       <thead>
@@ -56,27 +61,26 @@ const DocumentList: Component<{
       <tbody>
         <For each={props.data.docs}>
           {(document) => {
-            // Extract the URL so we don't duplicate the string interpolation
             const docUrl = `/db/${props.data.selectedDatabase}/${props.data.selectedCollection}/${document._id}${document.sub_type === undefined ? '' : `?subtype=${document.sub_type}`}`
 
-            // Reusable click handler for both TH and TD
             const handleRowClick = async (e: MouseEvent) => {
               if (e.target === e.currentTarget) {
-                if (e.ctrlKey || e.metaKey) {
-                  // Open in new tab on Ctrl/Cmd+Click
+                if (e.ctrlKey || e.metaKey || e.button === 1) {
+                  // Open in new tab on Ctrl/Cmd+Click or Middle-Click
                   window.open(docUrl, '_blank')
-                } else {
-                  // Navigate in current tab on normal click
+                } else if (e.button === 0) {
+                  // Navigate in current tab on normal left click
                   await navigate(docUrl)
                 }
               }
             }
-
             return (
               <tr>
                 <th
                   class="cursor-pointer"
                   onClick={handleRowClick}
+                  onAuxClick={handleRowClick}
+                  onMouseDown={handleMouseDown}
                 >
                   <div class="my-1">
                     <DeleteDocument
@@ -95,6 +99,8 @@ const DocumentList: Component<{
                     <td
                       class="cursor-pointer"
                       onClick={handleRowClick}
+                      onAuxClick={handleRowClick}
+                      onMouseDown={handleMouseDown}
                     >
                       <JsonViewer value={document[column]} />
                     </td>
