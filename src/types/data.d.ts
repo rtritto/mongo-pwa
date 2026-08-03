@@ -28,7 +28,10 @@ type DataCollection = {
   collections: import('@/server/db').MongoCollections[string]
   selectedDatabase: string
   selectedCollection: string
-  docs: Record<string, unknown>[]
+  docs: (Record<string, unknown> & {
+    _id: string
+    sub_type?: number
+  })[]
   columns: string[]
   count: number
   documentsPerPage: number
