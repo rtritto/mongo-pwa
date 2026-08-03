@@ -11,7 +11,7 @@ const DocumentList: Component<{
   data: DataCollection
   setData: SetStoreFunction<any>
 }> = (props) => {
-  //  Prevent auto-scroll
+  // Prevent auto-scroll
   const handleMouseDown = (e: MouseEvent) => {
     if (e.button === 1) e.preventDefault()
   }
