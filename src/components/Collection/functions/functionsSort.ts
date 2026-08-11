@@ -1,4 +1,4 @@
-/* Sort initial order: ascending (true) | descending (false) | none (null) */
+// Sort initial order: ascending (true) | descending (false) | none (null)
 export const getInitialColumnsHeader = (columns: string[], query: QueryParameter) => {
   const header: { [key: string]: boolean | null } = {}
 
@@ -20,7 +20,7 @@ export const getInitialColumnsHeader = (columns: string[], query: QueryParameter
   return header
 }
 
-/* Sort order: ascending (true) > descending (false) > none (null) > ascending (true) */
+// Sort order: ascending (true) > descending (false) > none (null) > ascending (true)
 export const getNextSort = (columnHeader: boolean | null) => {
   switch (columnHeader) {
     case null: {

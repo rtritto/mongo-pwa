@@ -50,7 +50,9 @@ export const ConfigDefault = {
     // If a connection string options such as server/port/etc are ignored
     connectionString: process.env.VCAP_SERVICES ? getBlueMixConfig()! : process.env.ME_CONFIG_MONGODB_URL!,
 
-    /** @type {import('mongodb').MongoClientOptions} */
+    /**
+     * @type {import('mongodb').MongoClientOptions}
+     */
     connectionOptions: {
       // tls: connect to the server using secure SSL
       tls: getBoolean(process.env.ME_CONFIG_MONGODB_SSL),

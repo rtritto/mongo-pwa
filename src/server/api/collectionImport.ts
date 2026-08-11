@@ -117,7 +117,7 @@ function castCsvValue(cell: CsvCell): unknown {
   return raw
 }
 
-/** Reverses the dot-notation flattening done at export time. */
+// Reverses the dot-notation flattening done at export time.
 function unflattenRow(header: string[], cells: CsvCell[]): Record<string, unknown> {
   const doc: Record<string, unknown> = {}
   for (const index in header) {

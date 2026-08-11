@@ -1,4 +1,4 @@
-import { type Component, createEffect, createSignal, onMount, Show } from 'solid-js'
+import { type Component, createEffect, createSignal, Show } from 'solid-js'
 
 const ButtonClose: Component<{ onClick: () => void }> = (props) => {
   return (

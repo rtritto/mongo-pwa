@@ -24,6 +24,7 @@ export default defineConfig({
     '@typescript-eslint/no-unused-vars': [1, { argsIgnorePattern: '^_' }],
 
     'unicorn/consistent-boolean-name': 0,
+    'unicorn/consistent-function-scoping': 0,
     'unicorn/empty-brace-spaces': 0,
     'unicorn/filename-case': 0,
     'unicorn/max-nested-calls': 0,
@@ -42,6 +43,7 @@ export default defineConfig({
 
     'solid/no-innerhtml': 0,
 
+    'tailwindcss/classnames-order': 0,
     'tailwindcss/no-custom-classname': [1, {
       whitelist: [
         'drawer-overlay',
