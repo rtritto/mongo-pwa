@@ -1,4 +1,4 @@
-import { type Component, untrack, For, createEffect } from 'solid-js'
+import { type Component, untrack, Index, createEffect } from 'solid-js'
 
 import useCodeEditor from './functions/useCodeEditor'
 
@@ -9,7 +9,6 @@ const CodeEditor: Component<{
   onSave: () => void
 }> = (props) => {
   const readOnlyValue = untrack(() => props.readOnly ? true : undefined)
-
   const { html, renderData, handleInput, handleKeyDown, toggleFold, handlePreClick } = useCodeEditor(
     () => props.value,
     (value) => props.onChange(value),
@@ -32,7 +31,7 @@ const CodeEditor: Component<{
     if (!textareaRef) return
 
     // Since Suspense no longer unmounts the component, this check natively works 
-    // perfectly and NEVER interrupts user typing!
+    // perfectly and NEVER interrupts user typing
     const code = renderData().displayCode
     if (textareaRef.value !== code) {
       textareaRef.value = code
@@ -47,23 +46,23 @@ const CodeEditor: Component<{
         class="editor-font overflow-hidden rounded-l-md border-r-2 border-[#181a1f] bg-[#282c34] py-px text-[#636d83] select-none"
         aria-hidden="true"
       >
-        <For each={renderData().lineMapping}>
+        <Index each={renderData().lineMapping}>
           {(line) => (
             <div class="flex items-center justify-end pl-2 hover:bg-[#2c313c]">
-              <span class="min-w-6 text-right tabular-nums">{line.number}</span>
+              <span class="min-w-6 text-right tabular-nums">{line().number}</span>
 
               <button
                 class="flex size-4 cursor-pointer items-center justify-center px-3 py-2.5 text-[10px] transition-colors hover:text-white"
-                style={{ visibility: line.hasRange ? 'visible' : 'hidden' }}
-                onClick={() => toggleFold(line.lineIndex)}
+                style={{ visibility: line().hasRange ? 'visible' : 'hidden' }}
+                onClick={() => toggleFold(line().lineIndex)}
                 type="button"
-                aria-label={line.isCollapsed ? 'Expand' : 'Collapse'}
+                aria-label={line().isCollapsed ? 'Expand' : 'Collapse'}
               >
-                {line.isCollapsed ? '›' : '⌄'}
+                {line().isCollapsed ? '›' : '⌄'}
               </button>
             </div>
           )}
-        </For>
+        </Index>
 
         {/* Prevent scrolling bug on the last line */}
         <div>{'\n'}</div>
