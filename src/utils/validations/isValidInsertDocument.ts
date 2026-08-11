@@ -39,19 +39,14 @@ function validateFields(root: Record<string, unknown>): ReturnValidation | undef
           return { error: `Update operator '${key}' is not allowed in insert document at '${currentPath}'` }
         }
       }
-
       const value = obj[key]
-
-      // If it's a nested object, push it onto the stack
       if (isPlainObject(value)) {
         stack.push({
           obj: value as Record<string, unknown>,
           isRoot: false,
           path: currentPath
         })
-      }
-      // If it's an array, analyze only the objects inside
-      else if (Array.isArray(value)) {
+      } else if (Array.isArray(value)) {
         // eslint-disable-next-line unicorn/no-for-loop
         for (let i = 0; i < value.length; i++) {
           const item = value[i]
@@ -87,33 +82,28 @@ function validateFields(root: Record<string, unknown>): ReturnValidation | undef
  * { "   ": "value" }          — whitespace field
  * "just a string"             — not an object
  */
-export default function isValidInsertDocument(str: string): ReturnValidation {
-  // Early return
-  if (!str?.trim()) {
-    return { error: 'Insert document cannot be empty' }
-  }
-
+function parseAndValidate(str: string): ReturnValidation {
+  if (!str?.trim()) return { error: 'Insert document cannot be empty' }
   let obj: unknown
-
-  // Safe parsing
   try {
     obj = toBSON(str)
   } catch (error) {
     return { error: `Invalid syntax: ${(error as Error).message}` }
   }
+  if (!isPlainObject(obj)) return { error: 'Must be a valid object' }
+  return validateFields(obj as Record<string, unknown>) ?? {}
+}
 
-  // Must be a plain object {} (not array, not string, not null)
-  if (!isPlainObject(obj)) {
-    return { error: 'Must be a valid object' }
-  }
+/**
+ * Validates a single top-level `key: value` fragment (as produced by
+ * `getTopLevelEntries`) using the same rules as a full document, since a
+ * fragment always represents exactly one top-level property of the real doc.
+ */
+export function isValidInsertDocumentEntry(entryText: string): ReturnValidation {
+  const trimmed = entryText.trim().replace(/,$/, '')
+  return parseAndValidate(`{ ${trimmed} }`)
+}
 
-  // {} is valid — MongoDB will automatically add _id
-
-  const fieldError = validateFields(obj as Record<string, unknown>)
-
-  if (fieldError) {
-    return fieldError
-  }
-
-  return {}
+export default function isValidInsertDocument(str: string): ReturnValidation {
+  return parseAndValidate(str)
 }
