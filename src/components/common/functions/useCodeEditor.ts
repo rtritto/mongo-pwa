@@ -154,9 +154,7 @@ export default function useCodeEditor(
 
   createEffect(() => {
     const val = htmlResource()
-    if (val !== undefined) {
-      setHighlightedCode(val)
-    }
+    if (val !== undefined) setHighlightedCode(val)
   })
 
   const html = () => {
