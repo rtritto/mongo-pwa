@@ -3,10 +3,9 @@ import toBSON from 'mongodb-query-parser-esm'
 import { isPlainObject } from './common'
 
 const UPDATE_OPERATORS: ReadonlySet<string> = new Set([
-  '$set', '$unset', '$push', '$pull', '$addToSet',
-  '$pop', '$rename', '$inc', '$mul', '$min', '$max',
-  '$currentDate', '$setOnInsert', '$bit',
-  '$pullAll', '$each', '$position', '$sort', '$slice'
+  '$set', '$unset', '$push', '$pull', '$addToSet', '$pop', '$rename', '$inc', '$mul',
+  '$min', '$max', '$currentDate', '$setOnInsert', '$bit', '$pullAll', '$each', '$position',
+  '$sort', '$slice'
 ])
 
 export type ReturnValidation = { error?: string }

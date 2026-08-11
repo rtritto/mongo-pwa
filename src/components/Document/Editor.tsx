@@ -39,20 +39,10 @@ const Editor: Component<{
 
   const Buttons = () => (
     <div class="flex justify-between">
-      <BackButton
-        data={props.data}
-        setData={props.setData}
-        isEqual={() => props.data.docString === code()}
-      />
+      <BackButton data={props.data} setData={props.setData} isEqual={() => props.data.docString === code()} />
 
       <Show when={!props.data.options.readOnly}>
-        <SaveButton
-          data={props.data}
-          setData={props.setData}
-          disabled={!isCodeValid()}
-          code={code()}
-          onSave={handleSave}
-        />
+        <SaveButton data={props.data} setData={props.setData} disabled={!isCodeValid()} code={code()} onSave={handleSave} />
       </Show>
     </div>
   )
@@ -76,14 +66,7 @@ const Editor: Component<{
       <Buttons />
 
       <div class="m-2">
-        <DeleteDocument
-          data={props.data}
-          _id={props.data._id}
-          sub_type={props.data.subtype}
-          doReload={false}
-          setData={props.setData}
-          label="Delete"
-        />
+        <DeleteDocument data={props.data} _id={props.data._id} sub_type={props.data.subtype} doReload={false} setData={props.setData} label="Delete" />
       </div>
     </div>
   )
