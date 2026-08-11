@@ -27,8 +27,7 @@ const injectEllipsis = (htmlString: string, hiddenTextMap: Map<string, HiddenTex
   for (const [magicDots, data] of hiddenTextMap) {
     finalHtml = finalHtml.replace(
       magicDots,
-      () =>
-        `<span class="fold-ellipsis relative z-20 pointer-events-auto cursor-pointer select-none text-[#61afef] transition-colors rounded px-1 py-0.5 hover:bg-[#61afef33] hover:text-[#82c0ff]" data-line="${data.lineIndex}" title="Click to open">…</span>`
+      () => `<span class="fold-ellipsis relative z-20 pointer-events-auto cursor-pointer select-none text-[#61afef] transition-colors rounded px-1 py-0.5 hover:bg-[#61afef33] hover:text-[#82c0ff]" data-line="${data.lineIndex}" title="Click to open">…</span>`
     )
   }
   return finalHtml
@@ -56,7 +55,6 @@ export default function useCodeEditor(
     const lines = text.split('\n')
     const ranges = new Map<number, FoldableRange>()
     const stack: { line: number; char: string }[] = []
-
     const pairs: Record<string, string> = { '}': '{', ']': '[' }
 
     for (const [i, line] of lines.entries()) {
@@ -64,7 +62,6 @@ export default function useCodeEditor(
       if (trimmed.endsWith(',') || trimmed.endsWith(';')) {
         trimmed = trimmed.slice(0, -1).trimEnd()
       }
-
       const lastChar = trimmed.at(-1)
       if (lastChar === '{' || lastChar === '[') {
         stack.push({ line: i, char: lastChar })
@@ -93,13 +90,11 @@ export default function useCodeEditor(
     // Save the textual content and the line for the click
     const hiddenTextMap = new Map<string, HiddenTextData>()
     const foldedSet = foldedLines()
-
     let skipUntil = -1
     let foldCount = 0
 
     for (let i = 0; i < lines.length; i++) {
       if (i <= skipUntil) continue
-
       const range = ranges.get(i)
       const isCollapsed = range && foldedSet.has(i)
 
@@ -108,16 +103,18 @@ export default function useCodeEditor(
         const invisibleId = [...bin].map((b) => (b === '0' ? '\u{200B}' : '\u{200C}')).join('')
         const magicDots = `…${invisibleId}`
         foldCount++
-
         const openLine = lines[i]
         const closeLine = lines[range.endLine]
         const lastCharIndex = openLine.lastIndexOf(range.openChar)
         const lineWithoutBracket = openLine.slice(0, Math.max(0, lastCharIndex))
-
         const collapsedLine = `${lineWithoutBracket}${range.openChar}${magicDots}${closeLine.trimStart()}`
         processedLines.push(collapsedLine)
-
-        lineMapping.push({ number: i + 1, hasRange: true, isCollapsed: true, lineIndex: i })
+        lineMapping.push({
+          number: i + 1,
+          hasRange: true,
+          isCollapsed: true,
+          lineIndex: i
+        })
 
         const hiddenContent = lines.slice(i + 1, range.endLine).join('\n')
         const leadingSpaces = closeLine.match(/^\s*/)?.[0] || ''
@@ -206,7 +203,6 @@ export default function useCodeEditor(
       const start = ta.selectionStart
       const end = ta.selectionEnd
       const val = ta.value
-
       if (e.shiftKey) {
         // Remove 2 spaces
         if (val.slice(start - 2, start) === '  ') {
